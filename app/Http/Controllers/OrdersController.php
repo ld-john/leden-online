@@ -689,8 +689,6 @@ class OrdersController extends Controller
             $order_details['delivery_date'] = null;
             $order_details['vehicle_registered_on'] = null;
 
-
-
             if ($request->input('due_date')) {
                 $order_details['due_date'] = Carbon::createFromFormat('d/m/Y', $request->input('due_date'));
             }
@@ -820,11 +818,15 @@ class OrdersController extends Controller
             return redirect()->route('order.edit', $order->id)->with('successMsg',
                 'Your order has been updated successfully!');
         } elseif (Helper::roleCheck(Auth::user()->id)->role == 'dealer') {
+
+
+            $vehicle_registered_on = $request->input('vehicle_registered_on') ? Carbon::createFromFormat('d/m/Y',$request->input('vehicle_registered_on')) : null;
+
             $order->update([
                 'chassis_prefix' => $request->input('chassis_prefix'),
                 'chassis' => $request->input('chassis'),
                 'vehicle_reg' => $request->input('vehicle_reg'),
-                'vehicle_registered_on' => $request->input('vehicle_registered_on'),
+                'vehicle_registered_on' => $vehicle_registered_on,
                 'vehicle_status' => $request->input('vehicle_status'),
             ]);
 
@@ -1204,15 +1206,25 @@ class OrdersController extends Controller
             $order->delivery_postcode,
         ]);
 
-        $invoiceAddress  = array_filter([
-            $order->invoice_company_details->name,
-            nl2br($order->invoice_company_details->address)
-        ]);
+        if($order->invoice_company_details){
+            $invoiceAddress  = array_filter([
+                $order->invoice_company_details->name,
+                nl2br($order->invoice_company_details->address)
+            ]);
+        }else{
+            $invoiceAddress = [];
+        }
 
-        $registrationAddress  = array_filter([
-            $order->registration_company_details->name,
-            nl2br($order->registration_company_details->address)
-        ]);
+
+        if($order->registration_company_details){
+            $registrationAddress  = array_filter([
+                $order->registration_company_details->name,
+                nl2br($order->registration_company_details->address)
+            ]);
+        }else{
+            $registrationAddress = [];
+        }
+
 
 
         $vehicleDetails = [
