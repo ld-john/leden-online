@@ -206,6 +206,10 @@ class OrdersController extends Controller
             $order['vehicle_registered_on']);
         $order['created_at'] = Carbon::now();
 
+        $order['vehicle_type'] = ( $order['vehicle_type'] == null ? 'Car' : $order['vehicle_type'] );
+
+        
+
         // Add $order array to the order table and return the rows ID
         $order_id = DB::table('order')->insertGetId($order);
 
@@ -625,10 +629,11 @@ class OrdersController extends Controller
         $order = DB::table('order')
             ->select('id')
             ->where('id', $order_id)
-            ->where('customer_name', null)
-            ->orWhere('company_name', null)
+            // ->where('customer_name', null)
+            // ->orWhere('company_name', null)
             ->first();
 
+            //dd( $order );
         if (is_null($order->id) && Helper::roleCheck(Auth::user()->id)->role != 'admin') {
             return false;
         } else {

@@ -74,3 +74,12 @@ Route::get('/companies/add', 'ProfileController@showAddCompany')->name('company.
 Route::post('/companies/add', 'ProfileController@executeAddCompany')->name('company.create');
 Route::get('/companies/edit/{company_id}', 'ProfileController@showEditCompany')->name('company.edit');
 Route::post('/companies/edit/{company_id}', 'ProfileController@executeEditCompany')->name('company.update');
+
+/*
+ * Data Management Routes
+ * Added by Link Digital
+
+Route::get('/link/test/', 'VehicleController@buildNewVehicle')->name('test');
+Route::get('/link/test2/', 'CustomerController@buildNewCustomer')->name('test2');
+
+*/

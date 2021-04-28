@@ -312,7 +312,7 @@ class Order extends Model
 
 
     public function invoiceDifferenceIncVat(){
-        return $this->invoice_funder_for - $this->invoiceValue();
+        return $this->invoiceValue() - $this->invoice_funder_for;
     }
 
     public function invoiceDifferenceExVat(){

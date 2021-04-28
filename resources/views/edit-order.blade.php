@@ -1054,7 +1054,9 @@
 
         @push('custom-scripts')
             <script>
+                debugger;
                 $('.discount').change(function () {
+                    
                     let value = 0
                     $('.discount').each(function () {
                         if ($(this).val()) {
