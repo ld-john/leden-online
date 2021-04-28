@@ -10903,3 +10903,29 @@ a.text-dark:focus {
   }
 }
 
+#wrapper {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  gap: 16px;
+}
+
+.sidebar {
+  padding-top: 100px;
+}
+
+.sidebar .sidebar-brand {
+  padding: 10px 30px;
+}
+
+.sidebar .nav-item {
+  padding: 0 30px;
+}
+
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+  padding-top: 100px;
+}
+

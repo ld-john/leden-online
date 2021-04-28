@@ -1,0 +1,19 @@
+#wrapper {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  gap: 16px;
+}
+
+.sidebar {
+  padding-top: 100px;
+  .sidebar-brand {
+    padding: 10px 30px;
+  }
+  .nav-item {
+    padding: 0 30px;
+  }
+}
+
+.container-fluid {
+  padding-top: 100px;
+}
