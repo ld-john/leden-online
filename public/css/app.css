@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css);@charset "UTF-8";
 
 /*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
@@ -10902,6 +10902,145 @@ a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
+
+/* General */
+
+.nav-background-white {
+  background-color: #fff;
+}
+
+.blue-background {
+  background: #1f3458;
+}
+
+.sidebar-brand img {
+  width: 100%;
+  height: auto;
+}
+
+li.nav-item {
+  transition: all 0.5s ease-in-out;
+}
+
+.sidebar li.nav-item:hover,
+.sidebar li.nav-item:focus,
+.sidebar li.nav-item:active {
+  background: #ededed;
+}
+
+.sidebar li.active,
+.sidebar li.active:hover,
+.sidebar li.active:focus,
+.sidebar li.active:active {
+  background: #1f3458;
+}
+
+.border-left-l-blue {
+  border-left: 0.25rem solid #1f3458 !important;
+}
+
+.text-l-blue {
+  color: #1f3458 !important;
+}
+
+.btn-tooltip {
+  background: #fff;
+  color: #1f3458;
+  border: 0px;
+}
+
+.force-min-height {
+  min-height: 95vh;
+}
+
+.notification {
+  text-decoration: none !important;
+}
+
+.notification span {
+  color: #3a3b45 !important;
+}
+
+.notification span.text-white {
+  color: #fff !important;
+}
+
+.edit {
+  margin-right: 20px;
+}
+
+select option:disabled {
+  background: #eee;
+}
+
+/* Login Screen */
+
+.login {
+  background: url("/images/mustang-medium.jpg") no-repeat bottom right;
+  background-size: cover;
+  height: 100vh;
+}
+
+.login-cont {
+  margin: 40% 0 0;
+}
+
+.login-cont h1 {
+  font-size: 35px;
+  color: #333;
+}
+
+.login-cont form {
+  background: #fff;
+  box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  color: #333;
+  margin-top: 30px;
+}
+
+.login-cont input {
+  padding-right: 44px;
+  border-radius: 0 !important;
+  border-color: #d2d6de;
+}
+
+.login-cont .has-feedback {
+  position: relative;
+}
+
+.login-cont .form-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Orders */
+
+.datepicker table tr td span {
+  width: 100% !important;
+  display: block;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dataTable tr th {
+  background: #1f3458;
+  color: #fff;
+}
+
+/*
+.dataTable .even {
+  background: #f6f6f6 !important;
+}*/
 
 #wrapper {
   display: grid;
