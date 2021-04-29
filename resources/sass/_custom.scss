@@ -1,0 +1,118 @@
+
+/* General */
+.nav-background-white {
+  background-color: #fff;
+}
+
+.blue-background {
+  background: $leden-dark-blue;
+}
+
+.sidebar {
+  padding-top: 100px;
+  li {
+    &.active, &.active:hover, &.active:focus, &.active:active {
+      background: $leden-dark-blue;
+      a {
+        color: white;
+      }
+    }
+    &.nav-item {
+      transition: all 0.2s ease-in-out;
+      padding: 0 30px;
+      &:hover, &:focus, &:active {
+        background: #ededed;
+        a {
+          color: #3490dc;
+        }
+      }
+    }
+  }
+  .sidebar-brand {
+    padding: 10px 30px;
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}
+
+.notification {
+  text-decoration: none !important;
+  span {
+    color: #3a3b45 !important;
+    &.text-white {
+      color: #fff !important;
+    }
+  }
+}
+
+.edit {
+  margin-right: 20px;
+}
+
+select option:disabled {
+  background: #eee;
+}
+
+.btn-tooltip {
+  background: #fff;
+  color: #1f3458;
+  border: 0;
+}
+
+/* Login Screen */
+.login {
+  background: url('/images/mustang-medium.jpg') no-repeat bottom right;
+  background-size: cover;
+  height: 100vh;
+}
+
+.login-cont {
+  margin: 40% 0 0;
+  h1 {
+    font-size: 35px;
+    color: #333;
+  }
+  form {
+    background: #fff;
+    box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.4);
+    padding: 20px;
+    color: #333;
+    margin-top: 30px;
+  }
+  input {
+    padding-right: 44px;
+    border-radius: 0 !important;
+    border-color: #d2d6de;
+  }
+  .has-feedback {
+    position: relative;
+  }
+  .form-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    pointer-events: none;
+  }
+}
+
+.datepicker table tr td span {
+  width: 100% !important;
+  display: block;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dataTable tr th {
+  background: $leden-dark-blue;
+  color: #fff;
+}

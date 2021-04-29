@@ -18,14 +18,13 @@
 
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
   <!-- Scripts -->
   <script src="{{ asset('js/custom.js') }}" defer></script>
 
 </head>
 <body class="login">
-    
+
     @yield('content')
 
 </body>
