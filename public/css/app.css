@@ -10913,19 +10913,8 @@ a.text-dark:focus {
   background: #1f3458;
 }
 
-.sidebar-brand img {
-  width: 100%;
-  height: auto;
-}
-
-li.nav-item {
-  transition: all 0.5s ease-in-out;
-}
-
-.sidebar li.nav-item:hover,
-.sidebar li.nav-item:focus,
-.sidebar li.nav-item:active {
-  background: #ededed;
+.sidebar {
+  padding-top: 100px;
 }
 
 .sidebar li.active,
@@ -10935,22 +10924,37 @@ li.nav-item {
   background: #1f3458;
 }
 
-.border-left-l-blue {
-  border-left: 0.25rem solid #1f3458 !important;
+.sidebar li.active a,
+.sidebar li.active:hover a,
+.sidebar li.active:focus a,
+.sidebar li.active:active a {
+  color: white;
 }
 
-.text-l-blue {
-  color: #1f3458 !important;
+.sidebar li.nav-item {
+  transition: all 0.2s ease-in-out;
+  padding: 0 30px;
 }
 
-.btn-tooltip {
-  background: #fff;
-  color: #1f3458;
-  border: 0px;
+.sidebar li.nav-item:hover,
+.sidebar li.nav-item:focus,
+.sidebar li.nav-item:active {
+  background: #ededed;
 }
 
-.force-min-height {
-  min-height: 95vh;
+.sidebar li.nav-item:hover a,
+.sidebar li.nav-item:focus a,
+.sidebar li.nav-item:active a {
+  color: #3490dc;
+}
+
+.sidebar .sidebar-brand {
+  padding: 10px 30px;
+}
+
+.sidebar .sidebar-brand img {
+  max-width: 100%;
+  height: auto;
 }
 
 .notification {
@@ -10973,6 +10977,12 @@ select option:disabled {
   background: #eee;
 }
 
+.btn-tooltip {
+  background: #fff;
+  color: #1f3458;
+  border: 0;
+}
+
 /* Login Screen */
 
 .login {
@@ -10992,7 +11002,7 @@ select option:disabled {
 
 .login-cont form {
   background: #fff;
-  box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.4);
   padding: 20px;
   color: #333;
   margin-top: 30px;
@@ -11021,8 +11031,6 @@ select option:disabled {
   pointer-events: none;
 }
 
-/* Orders */
-
 .datepicker table tr td span {
   width: 100% !important;
   display: block;
@@ -11037,27 +11045,10 @@ select option:disabled {
   color: #fff;
 }
 
-/*
-.dataTable .even {
-  background: #f6f6f6 !important;
-}*/
-
 #wrapper {
   display: grid;
   grid-template-columns: 1fr 5fr;
   gap: 16px;
-}
-
-.sidebar {
-  padding-top: 100px;
-}
-
-.sidebar .sidebar-brand {
-  padding: 10px 30px;
-}
-
-.sidebar .nav-item {
-  padding: 0 30px;
 }
 
 .container-fluid,
