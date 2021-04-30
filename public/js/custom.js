@@ -31,12 +31,12 @@
 
   });
 
-  // On change of select, place value in form field
-  $('.value-change').change(function() {
-      $get_val = $(this).val();
-      $parent = $(this).parent().parent('.form-group');
-      value = $($parent.find('input')).val($get_val);
-  });
+  // // On change of select, place value in form field
+  // $('.value-change').change(function() {
+  //     $get_val = $(this).val();
+  //     $parent = $(this).parent().parent('.form-group');
+  //     value = $($parent.find('input')).val($get_val);
+  // });
 
   // Add new factory option
   $('#add-factory-option').click(function() {

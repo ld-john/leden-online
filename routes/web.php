@@ -22,7 +22,7 @@ Route::get('/notifications', 'DashboardController@showNotifications')->name('not
 Route::get('/notifications/delete', 'DashboardController@executeDeleteNotifications')->name('notifications.delete');
 
 /* OrdersController routes */
-Route::get('/create-order', 'OrdersController@showCreateOrder')->name('create_order');
+Route::get('/create-order', 'OrdersController@create')->name('create_order');
 Route::post('/create-order', 'OrdersController@executeAddOrder')->name('add_order');
 Route::post('/create-exclude', 'OrdersController@executeAddExcludeField')->name('exclude_field');
 Route::get('/completed-orders', 'OrdersController@showCompletedOrders')->name('completed_orders');
@@ -83,3 +83,4 @@ Route::post('/companies/edit/{company_id}', 'ProfileController@executeEditCompan
 
 Route::get('/link/test/', 'VehicleController@buildNewVehicle')->name('test');
 Route::get('/link/test2/', 'CustomerController@buildNewCustomer')->name('test2');
+Route::get('/link/test3/', 'ManufacturerController@buildManufacturerTable')->name('test3');

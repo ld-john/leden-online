@@ -12,11 +12,7 @@
 
             <!-- Doughnut Chart -->
             <div class="col-lg-10">
-                @if($edit_mode)
                     <h1 class="h3 mb-4 text-gray-800">Edit Order - #{{ $order_details->id }}</h1>
-                @else
-                    <h1 class="h3 mb-4 text-gray-800">Create Order</h1>
-                @endif
                 @if (!empty(session('successMsg')))
                     <div class="row">
                         <div class="col-md-12">
@@ -108,7 +104,7 @@
                         <div class="card-body">
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="vehicle_make">Vehicle Make <small
-                                        class="text-danger">(required)</small></label>
+                                            class="text-danger">(required)</small></label>
                                 <div class="col-md-4">
                                     <input type="text" required name="vehicle_make" id="vehicle_make"
                                            class="form-control" autocomplete="off" placeholder="e.g. Ford"
@@ -131,7 +127,7 @@
 
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="vehicle_model">Vehicle Model <small
-                                        class="text-danger">(required)</small></label>
+                                            class="text-danger">(required)</small></label>
                                 <div class="col-md-4">
                                     <input type="text" required name="vehicle_model" id="vehicle_model"
                                            class="form-control" autocomplete="off" placeholder="e.g. Fiesta"
@@ -154,7 +150,7 @@
 
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="vehicle_type">Vehicle Type <small
-                                        class="text-danger">(required)</small></label>
+                                            class="text-danger">(required)</small></label>
                                 <div class="col-md-6">
                                     <select class="form-control value-change" name="vehicle_type" id="vehicle_type">
                                         <option value="">Please Select</option>
@@ -176,7 +172,7 @@
 
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="vehicle_derivative">Derivative <small
-                                        class="text-danger">(required)</small></label>
+                                            class="text-danger">(required)</small></label>
                                 <div class="col-md-4">
                                     <input type="text" required name="vehicle_derivative" id="vehicle_derivative"
                                            class="form-control" autocomplete="off" placeholder="e.g. ST-Line X PHEV"
@@ -199,7 +195,7 @@
 
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="vehicle_engine">Engine <small
-                                        class="text-danger">(required)</small></label>
+                                            class="text-danger">(required)</small></label>
                                 <div class="col-md-4">
                                     <input type="text" required name="vehicle_engine" id="vehicle_engine"
                                            class="form-control" autocomplete="off" placeholder="e.g. 1.6 Litre"
@@ -222,7 +218,7 @@
 
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="vehicle_trans">Transmission <small
-                                        class="text-danger">(required)</small></label>
+                                            class="text-danger">(required)</small></label>
                                 <div class="col-md-4">
                                     <input type="text" required name="vehicle_trans" id="vehicle_trans"
                                            class="form-control" autocomplete="off" placeholder="e.g. Manual"
@@ -245,7 +241,7 @@
 
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="vehicle_fuel_type">Fuel Type <small
-                                        class="text-danger">(required)</small></label>
+                                            class="text-danger">(required)</small></label>
                                 <div class="col-md-4">
                                     <input type="text" required name="vehicle_fuel_type" id="vehicle_fuel_type"
                                            class="form-control" autocomplete="off" placeholder="e.g. Petrol"
@@ -291,7 +287,7 @@
 
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="vehicle_colour">Colour <small
-                                        class="text-danger">(required)</small></label>
+                                            class="text-danger">(required)</small></label>
                                 <div class="col-md-4">
                                     <input type="text" required name="vehicle_colour" id="vehicle_colour"
                                            class="form-control" autocomplete="off" placeholder="e.g. Pearl White"
@@ -314,7 +310,7 @@
 
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="vehicle_body">Body <small
-                                        class="text-danger">(required)</small></label>
+                                            class="text-danger">(required)</small></label>
                                 <div class="col-md-4">
                                     <input type="text" required name="vehicle_body" id="vehicle_body"
                                            class="form-control" autocomplete="off" placeholder="e.g. 5 door"
@@ -337,7 +333,7 @@
 
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="vehicle_trim">Trim <small
-                                        class="text-danger">(required)</small></label>
+                                            class="text-danger">(required)</small></label>
                                 <div class="col-md-4">
                                     <input type="text" required name="vehicle_trim" id="vehicle_trim"
                                            class="form-control" autocomplete="off" placeholder="e.g. Standard"
@@ -415,7 +411,7 @@
 
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="vehicle_status">Vehicle Status <small
-                                        class="text-danger">(required)</small></label>
+                                            class="text-danger">(required)</small></label>
                                 <div class="col-md-6">
                                     <select class="form-control" required name="vehicle_status" id="vehicle_status">
                                         <option value="">Please Select Status</option>
@@ -465,14 +461,14 @@
                                 </div>
                             </div>
                             @if(Auth()->user()->role != 'broker')
-                            <div class="form-group row">
-                                <label class="col-md-2 col-form-label" for="model_year">Model Year</label>
-                                <div class="col-md-6">
-                                    <input type="text" name="model_year" id="model_year" class="form-control"
-                                           autocomplete="off" placeholder="e.g. 2020 .50"
-                                           value="{{ old('model_year') ?? $order_details->model_year }}"/>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="model_year">Model Year</label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="model_year" id="model_year" class="form-control"
+                                               autocomplete="off" placeholder="e.g. 2020 .50"
+                                               value="{{ old('model_year') ?? $order_details->model_year }}"/>
+                                    </div>
                                 </div>
-                            </div>
                             @endif
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="vehicle_registered_on">Vehicle
@@ -529,9 +525,9 @@
                                             class="selectpicker form-control invoice-total" data-style="btn-secondary">
                                         @foreach ($factory_options as $factory_option)
 
-                                                <option data-cost="{{ $factory_option->option_price }}" value="{{ $factory_option->id }}"
-                                                        @if (in_array($factory_option->id, $factory_fit_options)) selected @endif>{{ $factory_option->option_name }} -
-                                                    &pound;{{ $factory_option->option_price }}</option>
+                                            <option data-cost="{{ $factory_option->option_price }}" value="{{ $factory_option->id }}"
+                                                    @if (in_array($factory_option->id, $factory_fit_options)) selected @endif>{{ $factory_option->option_name }} -
+                                                &pound;{{ $factory_option->option_price }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -568,9 +564,9 @@
                                             class="selectpicker form-control invoice-total" data-style="btn-secondary">
                                         @foreach ($dealer_options as $dealer_option)
 
-                                                <option data-cost="{{ $dealer_option->option_price }}" value="{{ $dealer_option->id }}"
-                                                        @if (in_array($dealer_option->id, $dealer_fit_options)) selected @endif>{{ $dealer_option->option_name }} -
-                                                    &pound;{{ $dealer_option->option_price }}</option>
+                                            <option data-cost="{{ $dealer_option->option_price }}" value="{{ $dealer_option->id }}"
+                                                    @if (in_array($dealer_option->id, $dealer_fit_options)) selected @endif>{{ $dealer_option->option_name }} -
+                                                &pound;{{ $dealer_option->option_price }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -1027,7 +1023,7 @@
                                                 <a class="btn btn-sm btn-danger btn-attachment-delete"
                                                    data-upload-id="{{$file->id}}"
                                                    href="{{route('order.attachment.delete', $file->id)}}"><i
-                                                        class="far fa-trash-alt"></i></a>
+                                                            class="far fa-trash-alt"></i></a>
                                             </div>
                                         @endforeach
                                     </div>
@@ -1037,9 +1033,7 @@
                         <!-- Card Footer -->
                         <div class="card-footer text-right">
                             <button class="btn btn-primary" type="submit">Save Order</button>
-                            @if($edit_mode)
-                                <a href="{{ route('order.show', $order_details->id) }}" class="btn btn-secondary">View Order</a>
-                            @endif
+                            <a href="{{ route('order.show', $order_details->id) }}" class="btn btn-secondary">View Order</a>
                         </div>
                     </div>
                     {{--</div>--}}
@@ -1056,7 +1050,7 @@
             <script>
                 //debugger;
                 $('.discount').change(function () {
-                    
+
                     let value = 0
                     $('.discount').each(function () {
                         if ($(this).val()) {
@@ -1095,8 +1089,8 @@
                         }
 
                         if(this.name == 'factory_option[]'){
-                           discount =  (itemTotal / 100) * (
-                               parseFloat($('#dealer_discount').val()) +
+                            discount =  (itemTotal / 100) * (
+                                parseFloat($('#dealer_discount').val()) +
                                 parseFloat($('#manufacturer_discount').val())
                             );
                         }

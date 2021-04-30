@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\FitOption;
 use App\InvoiceCompany;
+use App\Manufacturer;
 use App\Notifications\notifications;
 use App\Order;
 use App\OrderUpload;
@@ -59,29 +61,37 @@ class OrdersController extends Controller
 
     public static function getCompanyInfo($type)
     {
-        $company_info = DB::table('company')
-            ->select('id', 'company_name')
-            ->where('company_type', $type)
-            ->get();
+        $company_info = Company::where('company_type', $type)->get();
 
         return $company_info;
     }
 
     /* Get previous field values for each of input */
 
-    public function showCreateOrder()
+    public function create()
     {
         if (Helper::roleCheck(Auth::user()->id)->role != 'admin') {
             return view('unauthorised');
         } else {
-            return view('edit-order', $this->addEditVars());
+            return view('order.create', $this->OrderDetails());
+        }
+    }
+
+    public function edit()
+    {
+        if (Helper::roleCheck(Auth::user()->id)->role != 'admin') {
+            return view('unauthorised');
+        } else {
+            return view('order.edit', $this->OrderDetails());
         }
     }
 
     /* Get Company details */
 
-    protected function addEditVars($id = null)
+    protected function OrderDetails($id = null)
     {
+        $manufacturers = Manufacturer::latest()->get();
+
         $order = new Order();
         $editMode = false;
         $route = 'add_order';
@@ -114,7 +124,8 @@ class OrdersController extends Controller
             'invoice_companies' => InvoiceCompany::orderBy('name')->get(),
             'registration_companies' => RegistrationCompany::orderBy('name')->get(),
             'factory_options' => $this->getFitOptions('factory', $id),
-            'dealer_options' => $this->getFitOptions('dealer', $id)
+            'dealer_options' => $this->getFitOptions('dealer', $id),
+            'manufacturers' => $manufacturers
         ];
     }
 
@@ -305,7 +316,7 @@ class OrdersController extends Controller
             Notification::send($broker, new notifications($message, $order_id, $type));
         }
 
-        return view('edit-order', $this->addEditVars())->with('successMsg', 'Your order has been added successfully!');
+        return view('edit-order', $this->OrderDetails())->with('successMsg', 'Your order has been added successfully!');
     }
 
     /* Show Ford Stock and Pipeline */
@@ -494,10 +505,7 @@ class OrdersController extends Controller
                 })
                 ->addColumn('broker_name', function ($row) {
                     if (!is_null($row->broker)) {
-                        $broker_name = DB::table('company')
-                            ->select('company_name')
-                            ->where('id', $row->broker)
-                            ->first();
+                        $broker_name = Company::where('id', $row->broker)->first();
 
                         return $broker_name->company_name;
                     } else {
@@ -506,10 +514,7 @@ class OrdersController extends Controller
                 })
                 ->addColumn('dealer_name', function ($row) {
                     if (!is_null($row->dealership)) {
-                        $dealer_name = DB::table('company')
-                            ->select('company_name')
-                            ->where('id', $row->dealership)
-                            ->first();
+                        $dealer_name = Company::where('id', $row->dealership)->first();
 
                         return $dealer_name->company_name;
                     } else {
@@ -578,10 +583,7 @@ class OrdersController extends Controller
                 })
                 ->addColumn('broker_name', function ($row) {
                     if (!is_null($row->broker)) {
-                        $broker_name = DB::table('company')
-                            ->select('company_name')
-                            ->where('id', $row->broker)
-                            ->first();
+                        $broker_name = Company::where('id', $row->broker)->first();
 
                         return $broker_name->company_name;
                     } else {
@@ -590,10 +592,7 @@ class OrdersController extends Controller
                 })
                 ->addColumn('dealer_name', function ($row) {
                     if (!is_null($row->dealership)) {
-                        $dealer_name = DB::table('company')
-                            ->select('company_name')
-                            ->where('id', $row->dealership)
-                            ->first();
+                        $dealer_name = Company::where('id', $row->dealership)->first();
 
                         return $dealer_name->company_name;
                     } else {
@@ -644,7 +643,7 @@ class OrdersController extends Controller
     public function showEditOrder(Request $request, Order $order)
     {
         if (Helper::roleCheck(Auth::user()->id)->role == 'admin') {
-            return view('edit-order', $this->addEditVars($order->id));
+            return view('edit-order', $this->OrderDetails($order->id));
         } elseif (Helper::roleCheck(Auth::user()->id)->role == 'dealer') {
             return view('edit-order-dealer', [
                 'order_details' => $this->getOrderInfo($order->id),
