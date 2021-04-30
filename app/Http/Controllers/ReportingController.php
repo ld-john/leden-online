@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
+use App\OrderLegacy;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Dashboard;
@@ -135,10 +135,10 @@ class ReportingController extends Controller
         //dump($headers);
 
 
-        $orders = Order::whereIn('vehicle_status', [2,7])->get();
+        $orders = OrderLegacy::whereIn('vehicle_status', [2,7])->get();
         $orderItems = [];
 
-        /** @var Order $order */
+        /** @var OrderLegacy $order */
         foreach ($orders as $order) {
             $orderItems[$order->id] = [
                 $order->vehicle_make, //0

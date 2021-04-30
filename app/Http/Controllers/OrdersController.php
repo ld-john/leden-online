@@ -7,7 +7,7 @@ use App\FitOption;
 use App\InvoiceCompany;
 use App\Manufacturer;
 use App\Notifications\notifications;
-use App\Order;
+use App\OrderLegacy;
 use App\OrderUpload;
 use App\RegistrationCompany;
 use App\User;
@@ -92,7 +92,7 @@ class OrdersController extends Controller
     {
         $manufacturers = Manufacturer::latest()->get();
 
-        $order = new Order();
+        $order = new OrderLegacy();
         $editMode = false;
         $route = 'add_order';
         $dealer_fit_options = [];
@@ -102,7 +102,7 @@ class OrdersController extends Controller
         $activePage = 'create-order';
 
         if ($id) {
-            $order = Order::find($id);
+            $order = OrderLegacy::find($id);
             $route = 'order.update';
             $editMode = true;
             $dealer_fit_options = $this->getOrderFitOptions($order->id, 'factory');
@@ -365,7 +365,7 @@ class OrdersController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = Order::select('id', 'vehicle_make', 'vehicle_model', 'vehicle_derivative', 'vehicle_reg',
+            $data = OrderLegacy::select('id', 'vehicle_make', 'vehicle_model', 'vehicle_derivative', 'vehicle_reg',
                 'vehicle_type',
                 'vehicle_doors', 'vehicle_engine', 'vehicle_colour')
                 ->where('show_in_ford_pipeline', false)
@@ -410,7 +410,7 @@ class OrdersController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = Order::select('id', 'vehicle_make', 'vehicle_model', 'vehicle_derivative', 'vehicle_reg',
+            $data = OrderLegacy::select('id', 'vehicle_make', 'vehicle_model', 'vehicle_derivative', 'vehicle_reg',
                 'vehicle_type',
                 'vehicle_doors', 'vehicle_engine', 'vehicle_colour')
                 ->where('show_in_ford_pipeline', true)
@@ -454,7 +454,7 @@ class OrdersController extends Controller
 
         if ($ids) {
             foreach ($ids as $id) {
-                $order = Order::find($id);
+                $order = OrderLegacy::find($id);
 
                 if ($order) {
                     $order->delete();
@@ -468,7 +468,7 @@ class OrdersController extends Controller
     public function showOrderBank(Request $request)
     {
         if ($request->ajax()) {
-            $data = Order::select('id', 'vehicle_model', 'vehicle_derivative', 'order_ref', 'vehicle_reg', 'due_date',
+            $data = OrderLegacy::select('id', 'vehicle_model', 'vehicle_derivative', 'order_ref', 'vehicle_reg', 'due_date',
                     'customer_name', 'company_name', 'preferred_name', 'broker_order_ref', 'broker', 'dealership')
                 ->whereIn('vehicle_status', [1,2,4,10,11]) //In Stock, Orders Placed, Factory Order, Europe VHC, UK VHC
                 ->where(function ($query) {
@@ -611,7 +611,7 @@ class OrdersController extends Controller
         return view('deliveries');
     }
 
-    public function showOrder(Request $request, Order $order)
+    public function showOrder(Request $request, OrderLegacy $order)
     {
         if ($this->canAccessOrder($order->id) == false) {
             return view('unauthorised');
@@ -640,7 +640,7 @@ class OrdersController extends Controller
         }
     }
 
-    public function showEditOrder(Request $request, Order $order)
+    public function showEditOrder(Request $request, OrderLegacy $order)
     {
         if (Helper::roleCheck(Auth::user()->id)->role == 'admin') {
             return view('edit-order', $this->OrderDetails($order->id));
@@ -662,7 +662,7 @@ class OrdersController extends Controller
         return $order_details;
     }
 
-    public function executeEditOrder(Request $request, Order $order)
+    public function executeEditOrder(Request $request, OrderLegacy $order)
     {
         if (Helper::roleCheck(Auth::user()->id)->role == 'admin') {
             // Place all standard inputs into their own array
@@ -860,14 +860,14 @@ class OrdersController extends Controller
         }
     }
 
-    public function showReserveOrder(Request $request, Order $order)
+    public function showReserveOrder(Request $request, OrderLegacy $order)
     {
         return view('reserve-order', [
             'order_details' => $this->getOrderInfo($order->id),
         ]);
     }
 
-    public function executeReserveOrder(Request $request, Order $order)
+    public function executeReserveOrder(Request $request, OrderLegacy $order)
     {
         $is_reserved = DB::table('order')
             ->select('reserved_on')
@@ -931,7 +931,7 @@ class OrdersController extends Controller
         return redirect()->route('order_bank')->with('successMsg', $flash_message);
     }
 
-    public function executeDateAccept(Request $request, Order $order)
+    public function executeDateAccept(Request $request, OrderLegacy $order)
     {
         if (Helper::roleCheck(Auth::user()->id)->role == 'admin') {
             DB::table('order')
@@ -1027,14 +1027,14 @@ class OrdersController extends Controller
             'You have accepted the proposed delivery date');
     }
 
-    public function showDateChange(Request $request, Order $order)
+    public function showDateChange(Request $request, OrderLegacy $order)
     {
         return view('order-date-change', [
             'order_details' => $this->getOrderInfo($order->id),
         ]);
     }
 
-    public function executeDateChange(Request $request, Order $order)
+    public function executeDateChange(Request $request, OrderLegacy $order)
     {
         $old = DB::table('order')
             ->select('admin_accepted', 'dealer_accepted', 'broker_accepted')
@@ -1163,7 +1163,7 @@ class OrdersController extends Controller
             'You have successfully change the propsed delivery date');
     }
 
-    public function executeDeleteOrder(Request $request,$type, Order $order)
+    public function executeDeleteOrder(Request $request, $type, OrderLegacy $order)
     {
         $order->delete();
 
@@ -1177,7 +1177,7 @@ class OrdersController extends Controller
     }
 
 
-    public function executePDF(Order $order)
+    public function executePDF(OrderLegacy $order)
     {
 
         /*dump($order->totalDiscount());

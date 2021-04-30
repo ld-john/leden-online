@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Notifications\notifications;
-use App\Order;
+use App\OrderLegacy;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DataTables;
@@ -113,7 +113,7 @@ class DashboardController extends Controller
     public static function GetOrdersById($vehicle_status, $role = null) {
 
 
-            $vehicles = Order::where('vehicle_status', $vehicle_status);
+            $vehicles = OrderLegacy::where('vehicle_status', $vehicle_status);
 
             if($vehicle_status == 1){
                 $vehicles->where(function($query){

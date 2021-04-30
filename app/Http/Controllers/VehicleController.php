@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
+use App\OrderLegacy;
 use App\Vehicle;
 use Illuminate\Http\Request;
 
@@ -87,7 +87,7 @@ class VehicleController extends Controller
     public function buildNewVehicle()
     {
 
-        $orders = Order::withTrashed()->get();
+        $orders = OrderLegacy::withTrashed()->get();
 
         foreach ( $orders as $order ) {
 

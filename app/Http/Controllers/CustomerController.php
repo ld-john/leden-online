@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
-use App\Order;
+use App\OrderLegacy;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -87,7 +87,7 @@ class CustomerController extends Controller
     public function buildNewCustomer()
     {
 
-        $orders = Order::withTrashed()->get();
+        $orders = OrderLegacy::withTrashed()->get();
         //$order = Order::where('id', $orderId)->withTrashed()->firstOrFail();
 
         foreach( $orders as $order ) {
