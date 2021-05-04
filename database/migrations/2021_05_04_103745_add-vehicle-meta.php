@@ -16,7 +16,7 @@ class AddVehicleMeta extends Migration
         Schema::create('vehicle-types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('make_id');
+            $table->unsignedBigInteger('make_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -24,7 +24,7 @@ class AddVehicleMeta extends Migration
         Schema::create('vehicle-derivatives', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('make_id');
+            $table->unsignedBigInteger('make_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,7 +32,7 @@ class AddVehicleMeta extends Migration
         Schema::create('vehicle-engines', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('make_id');
+            $table->unsignedBigInteger('make_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -54,7 +54,7 @@ class AddVehicleMeta extends Migration
         Schema::create('vehicle-colours', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('make_id');
+            $table->unsignedBigInteger('make_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -62,10 +62,19 @@ class AddVehicleMeta extends Migration
         Schema::create('vehicle-trims', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('make_id');
+            $table->unsignedBigInteger('make_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('vehicle-bodies', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->unsignedBigInteger('make_id')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
     }
 
     /**
@@ -82,5 +91,6 @@ class AddVehicleMeta extends Migration
         Schema::dropIfExists('vehicle-fuels');
         Schema::dropIfExists('vehicle-colours');
         Schema::dropIfExists('vehicle-trims');
+        Schema::dropIfExists('vehicle-bodies');
     }
 }

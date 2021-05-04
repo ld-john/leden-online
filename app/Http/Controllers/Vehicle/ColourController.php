@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Vehicle;
 
-use App\VehicleType;
+use App\Colour;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class VehicleTypeController extends Controller
+class ColourController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class VehicleTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\VehicleType  $vehicleType
+     * @param  \App\Colour  $colour
      * @return \Illuminate\Http\Response
      */
-    public function show(VehicleType $vehicleType)
+    public function show(Colour $colour)
     {
         //
     }
@@ -52,10 +53,10 @@ class VehicleTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\VehicleType  $vehicleType
+     * @param  \App\Colour  $colour
      * @return \Illuminate\Http\Response
      */
-    public function edit(VehicleType $vehicleType)
+    public function edit(Colour $colour)
     {
         //
     }
@@ -64,10 +65,10 @@ class VehicleTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\VehicleType  $vehicleType
+     * @param  \App\Colour  $colour
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, VehicleType $vehicleType)
+    public function update(Request $request, Colour $colour)
     {
         //
     }
@@ -75,10 +76,10 @@ class VehicleTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\VehicleType  $vehicleType
+     * @param  \App\Colour  $colour
      * @return \Illuminate\Http\Response
      */
-    public function destroy(VehicleType $vehicleType)
+    public function destroy(Colour $colour)
     {
         //
     }

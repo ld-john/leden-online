@@ -3,7 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\OrderLegacy;
+
 use App\Vehicle;
+
+use App\VehicleMeta\Body;
+use App\VehicleMeta\Colour;
+use App\VehicleMeta\Derivative;
+use App\VehicleMeta\Engine;
+use App\VehicleMeta\Fuel;
+use App\VehicleMeta\Transmission;
+use App\VehicleMeta\Trim;
+use App\VehicleMeta\Type;
+
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
@@ -126,6 +137,28 @@ class VehicleController extends Controller
 
         dd( 'Done' );
 
+    }
+
+    public function getVehicleMeta()
+    {
+        $vehicles = Vehicle::all();
+
+        $colours = $vehicles->pluck('body')->unique();
+
+        foreach ( $colours as $colour ) {
+            if ( !empty ( $colour ) ) {
+
+                $output = ucwords( strtolower( $colour ) );
+
+                $color = new Body();
+
+                $color->name = $output;
+
+                $color->save();
+            }
+        }
+
+        dd ( 'boop Let the bodies hit the floor' );
     }
 
 
