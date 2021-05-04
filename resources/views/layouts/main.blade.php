@@ -14,13 +14,12 @@
 
   <title>Leden | {{ $title }}</title>
 
-  <link href="{{ asset('css/font-awesome/all.min.css') }}" rel="stylesheet" type="text/css">
-
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/bootstrap-select.css') }}" rel="stylesheet">
   <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet">
   <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+  <livewire:styles />
 
   <!-- Scripts -->
   <script src="{{ asset('js/custom.js') }}" defer></script>
@@ -276,6 +275,7 @@
   <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
   <script src="{{ asset('js/jquery-easing/jquery.easing.min.js') }}"></script>
   <script src="{{ asset('js/Chart.min.js') }}"></script>
+  <livewire:scripts />
 
   <!-- Custom scripts for all pages-->
   <script src="{{ asset('js/dashboard.js') }}"></script>

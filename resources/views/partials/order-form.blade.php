@@ -1,4 +1,3 @@
-
 <form method="POST" action="{{ route($post_route, $order_details->id) }}" enctype="multipart/form-data">
     @csrf
     <div class="card shadow mb-4">
@@ -61,10 +60,6 @@
                 <div class="col-md-4">
                     <select class="form-control value-change" field-parent="vehicle_make">
                         <option value="">Please Select</option>
-{{--                        @foreach (Order::getFieldValues('vehicle_make') as $vehicle_make)--}}
-{{--                            <option value="{{ $vehicle_make }}">{{ $vehicle_make }}</option>--}}
-{{--                        @endforeach--}}
-
                         @foreach ( $manufacturers as $manufacturer )
                             <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
                         @endforeach
