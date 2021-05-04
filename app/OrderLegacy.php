@@ -170,7 +170,7 @@ class OrderLegacy extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'order';
+    protected $table = 'orderLegacy';
 
     protected $dates = ['due_date','delivery_date','vehicle_registered_on'];
 
