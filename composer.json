@@ -19,7 +19,6 @@
         "livewire/livewire": "^2.4",
         "yajra/laravel-datatables-oracle": "^9.10",
         "ext-json": "*"
-        "yajra/laravel-datatables-oracle": "^9.10"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
