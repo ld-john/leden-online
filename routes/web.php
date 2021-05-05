@@ -23,7 +23,7 @@ Route::get('/notifications/delete', 'DashboardController@executeDeleteNotificati
 
 /* OrdersController routes */
 Route::get('/create-order', 'OrdersController@create')->name('create_order');
-Route::post('/create-order', 'OrdersController@executeAddOrder')->name('add_order');
+// Route::post('/create-order', 'OrdersController@executeAddOrder')->name('add_order');
 Route::post('/create-exclude', 'OrdersController@executeAddExcludeField')->name('exclude_field');
 Route::get('/completed-orders', 'OrdersController@showCompletedOrders')->name('completed_orders');
 Route::get('/pipeline', 'OrdersController@showPipeline')->name('pipeline');

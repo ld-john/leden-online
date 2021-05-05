@@ -1,6 +1,11 @@
 <div>
-    <form method="POST" enctype="multipart/form-data">
+    <form wire:submit.prevent="orderFormSubmit" method="POST" enctype="multipart/form-data">
         @csrf
+        @if ($successMsg)
+            <div class="alert alert-success" role="alert">
+                {{$successMsg}}
+            </div>
+        @endif
         <div class="card shadow mb-4">
             <!-- Card Header -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -8,6 +13,21 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
+                <div class="form-group row">
+                    <label for="customer" class="col-md-2 col-form-label">Select Existing Customer</label>
+                    <div class="col-md-6">
+                        <select wire:model="customer_id" name="preferred_name" id="preferred_name" class="form-control" wire:model="preferred">
+                            <option value="">Select Customer</option>
+                            @foreach ( $customers as $customer )
+                                <option value="{{ $customer->id }}">
+                                    {{ $customer->customer_name }}
+                                    @if ( $customer->customer_name && $customer->company_name )/@endif
+                                    {{$customer->company_name}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="customer_name">Customer Name</label>
                     <div class="col-md-6">
@@ -66,6 +86,7 @@
                                 class="text-danger">(required)</small></label>
                     <div class="col-md-4">
                         <select class="form-control value-change" field-parent="vehicle_model" wire:model="model">
+                            <option value="">Please select make</option>
                             @foreach(json_decode($manufacturers[$make-1]['models']) as $model)
                                 <option value="{{$model}}">{{$model}}</option>
                             @endforeach
@@ -88,7 +109,7 @@
                         <select wire:model="type" class="form-control value-change" name="vehicle_type" id="vehicle_type">
                             <option value="">Please Select</option>
                             @foreach($types as $type)
-                                <option value="{{$type}}">{{$type}}</option>
+                                <option value="{{$type->name}}">{{$type->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -106,7 +127,7 @@
                         <select wire:model="derivative" class="form-control value-change" field-parent="vehicle_derivative">
                             <option value="">Please Select</option>
                             @foreach ($derivatives as $vehicle_derivative)
-                                <option value="{{ $vehicle_derivative }}">{{ $vehicle_derivative }}</option>
+                                <option value="{{ $vehicle_derivative->name }}">{{ $vehicle_derivative->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -126,7 +147,7 @@
                         <select wire:model="engine" class="form-control value-change" field-parent="vehicle_engine">
                             <option value="">Please Select</option>
                             @foreach ($engines as $vehicle_engine)
-                                <option value="{{ $vehicle_engine }}">{{ $vehicle_engine }}</option>
+                                <option value="{{ $vehicle_engine->name }}">{{ $vehicle_engine->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -149,7 +170,7 @@
                         <select wire:model="transmission" class="form-control value-change" field-parent="vehicle_trans">
                             <option value="">Please Select</option>
                             @foreach ($transmissions as $vehicle_trans)
-                                <option value="{{ $vehicle_trans }}">{{ $vehicle_trans }}</option>
+                                <option value="{{ $vehicle_trans->name }}">{{ $vehicle_trans->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -171,7 +192,7 @@
                         <select wire:model="fuel_type" class="form-control value-change" field-parent="vehicle_fuel_type">
                             <option value="">Please Select</option>
                             @foreach ($fuel_types as $vehicle_fuel_type)
-                                <option value="{{ $vehicle_fuel_type }}">{{ $vehicle_fuel_type }}</option>
+                                <option value="{{ $vehicle_fuel_type->name }}">{{ $vehicle_fuel_type->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -193,7 +214,7 @@
                         <select wire:model="colour" class="form-control value-change" field-parent="vehicle_colour">
                             <option value="">Please Select</option>
                             @foreach ($colours as $vehicle_colour)
-                                <option value="{{ $vehicle_colour }}">{{ $vehicle_colour }}</option>
+                                <option value="{{ $vehicle_colour->name }}">{{ $vehicle_colour->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -215,7 +236,7 @@
                         <select wire:model="body" class="form-control value-change" field-parent="vehicle_body">
                             <option value="">Please Select</option>
                             @foreach ($bodies as $vehicle_body)
-                                <option value="{{ $vehicle_body }}">{{ $vehicle_body }}</option>
+                                <option value="{{ $vehicle_body->name }}">{{ $vehicle_body->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -237,7 +258,7 @@
                         <select wire:model="trim" class="form-control value-change" field-parent="vehicle_trim">
                             <option value="">Please Select</option>
                             @foreach ($trims as $vehicle_trim)
-                                <option value="{{ $vehicle_trim }}">{{ $vehicle_trim }}</option>
+                                <option value="{{ $vehicle_trim->name }}">{{ $vehicle_trim->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -684,7 +705,7 @@
                 <div class="form-group row">
                     <label for="invoice_broker" class="col-md-2 col-form-label">Invoice to Broker (£)</label>
                     <div class="col-md-6">
-                        <input wire:model="invoice_broker" type="number" name="invoice_broker" id="invoice_broker" step=".01"
+                        <input wire:model="invoice_value_to_broker" type="number" name="invoice_broker" id="invoice_broker" step=".01"
                                class="form-control" autocomplete="off" placeholder="e.g. 85.71" />
                     </div>
                 </div>
@@ -724,95 +745,106 @@
                     </div>
                 </div>
             </div>
-        <!-- Card Header -->
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-l-blue">Delivery Details</h6>
-        </div>
-        <!-- Card Body -->
-        <div class="card-body">
-            <div class="form-group row">
-                <label for="customer_phone" class="col-md-2 col-form-label">Customer Phone Number</label>
-                <div class="col-md-6">
-                    <input wire:model="customer_phone" type="text" name="customer_phone" id="customer_phone"
-                           class="form-control" autocomplete="off" placeholder="e.g. 07900 000 000"/>
-                </div>
+            <!-- Card Header -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-l-blue">Delivery Details</h6>
             </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="form-group row">
+                    <label for="customer_phone" class="col-md-2 col-form-label">Customer Phone Number</label>
+                    <div class="col-md-6">
+                        <input wire:model="customer_phone" type="text" name="customer_phone" id="customer_phone"
+                               class="form-control" autocomplete="off" placeholder="e.g. 07900 000 000"/>
+                    </div>
+                </div>
 
-            <div class="form-group row">
-                <label for="delivery_address_1" class="col-md-2 col-form-label">Address Line 1</label>
-                <div class="col-md-6">
-                    <input wire:model="delivery_address_1" type="text" name="delivery_address_1" id="delivery_address_1"
-                           class="form-control" autocomplete="off" placeholder="e.g. 20 Saturn Road"/>
+                <div class="form-group row">
+                    <label for="delivery_address_1" class="col-md-2 col-form-label">Address Line 1</label>
+                    <div class="col-md-6">
+                        <input wire:model="delivery_address_1" type="text" name="delivery_address_1" id="delivery_address_1"
+                               class="form-control" autocomplete="off" placeholder="e.g. 20 Saturn Road"/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <label for="delivery_address_2" class="col-md-2 col-form-label">Address Line 2</label>
-                <div class="col-md-6">
-                    <input wire:model="delivery_address_2" type="text" name="delivery_address_2" id="delivery_address_2"
-                           class="form-control" autocomplete="off" placeholder="Optional"/>
+                <div class="form-group row">
+                    <label for="delivery_address_2" class="col-md-2 col-form-label">Address Line 2</label>
+                    <div class="col-md-6">
+                        <input wire:model="delivery_address_2" type="text" name="delivery_address_2" id="delivery_address_2"
+                               class="form-control" autocomplete="off" placeholder="Optional"/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <label for="delivery_town" class="col-md-2 col-form-label">Town</label>
-                <div class="col-md-6">
-                    <input wire:model="delivery_town" type="text" name="delivery_town" id="delivery_town" class="form-control"
-                           autocomplete="off" placeholder="e.g. Blisworth"/>
+                <div class="form-group row">
+                    <label for="delivery_town" class="col-md-2 col-form-label">Town</label>
+                    <div class="col-md-6">
+                        <input wire:model="delivery_town" type="text" name="delivery_town" id="delivery_town" class="form-control"
+                               autocomplete="off" placeholder="e.g. Blisworth"/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <label for="delivery_city" class="col-md-2 col-form-label">City</label>
-                <div class="col-md-6">
-                    <input wire:model="delivery_city" type="text" name="delivery_city" id="delivery_city" class="form-control"
-                           autocomplete="off" placeholder="e.g. Northampton"/>
+                <div class="form-group row">
+                    <label for="delivery_city" class="col-md-2 col-form-label">City</label>
+                    <div class="col-md-6">
+                        <input wire:model="delivery_city" type="text" name="delivery_city" id="delivery_city" class="form-control"
+                               autocomplete="off" placeholder="e.g. Northampton"/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <label for="delivery_county" class="col-md-2 col-form-label">County</label>
-                <div class="col-md-6">
-                    <input wire:model="delivery_county" type="text" name="delivery_county" id="delivery_county" class="form-control"
-                           autocomplete="off" placeholder="e.g. Northamptonshire"/>
+                <div class="form-group row">
+                    <label for="delivery_county" class="col-md-2 col-form-label">County</label>
+                    <div class="col-md-6">
+                        <input wire:model="delivery_county" type="text" name="delivery_county" id="delivery_county" class="form-control"
+                               autocomplete="off" placeholder="e.g. Northamptonshire"/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <label for="delivery_postcode" class="col-md-2 col-form-label">Postcode</label>
-                <div class="col-md-6">
-                    <input wire:model="delivery_postcode" type="text" name="delivery_postcode" id="delivery_postcode"
-                           class="form-control" autocomplete="off" placeholder="e.g. NN7 3DB"/>
+                <div class="form-group row">
+                    <label for="delivery_postcode" class="col-md-2 col-form-label">Postcode</label>
+                    <div class="col-md-6">
+                        <input wire:model="delivery_postcode" type="text" name="delivery_postcode" id="delivery_postcode"
+                               class="form-control" autocomplete="off" placeholder="e.g. NN7 3DB"/>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Card Header -->
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-l-blue">Additional Information</h6>
-        </div>
-        <!-- Card Body -->
-        <div class="card-body">
-            <div class="form-group row">
-                <label class="col-md-2 col-form-label" for="comments">Comments</label>
-                <div class="col-md-6">
-                    <textarea wire:model="comments" name="comments" id="comments" class="form-control" rows="4"></textarea>
-                </div>
+            <!-- Card Header -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-l-blue">Additional Information</h6>
             </div>
-            <div class="row">
-                <label class="col-md-2 col-form-label" for="file">Upload Document(s)<br>
-                    <small>Allowed file types - JPEG, PNG, PDF, DOC & DOCX</small>
-                </label>
-                <div class="col-md-6">
-                    <input wire:model="attachments" type="file"
-                           accept=".pdf, applicaion/pdf, image/png, .png, image/jpg, .jpg, image/jpeg, .jpeg, .doc, .docx, application/msword"
-                           name="file"
-                           id="file"
-                           multiple/>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="comments">Comments</label>
+                    <div class="col-md-6">
+                        <textarea wire:model="comments" name="comments" id="comments" class="form-control" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-2 col-form-label" for="file">Upload Document(s)<br>
+                        <small>Allowed file types - JPEG, PNG, PDF, DOC & DOCX</small>
+                    </label>
+                    <div class="col-md-6">
+                        @for($i = 0; $i < $fields; $i++)
+                            <input wire:model="attachments"
+                                   type="file"
+                                   accept=".pdf, applicaion/pdf, image/png, .png, image/jpg, .jpg, image/jpeg, .jpeg, .doc, .docx, application/msword"
+                                   name="file"
+                                   id="file"/>
+                        @endfor
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" wire:click.prevent="handleAddField">Add New File</button>
+                    </div>
                 </div>
                 <div wire:loading wire:target="attachments">Uploading...</div>
+                @error('attachments.*') <div class="alert alert-danger">{{ $message }}</div>@enderror
+                <ul>
+                @foreach($attachments as $key => $attachment)
+                    <li>{{$attachment->getClientOriginalName()}} <button wire:click.prevent="removeAttachment({{$key}})">Delete</button></li>
+                @endforeach
+                </ul>
             </div>
-        </div>
-        <!-- Card Footer -->
+            <!-- Card Footer -->
             <div class="card-footer text-right">
                 <button class="btn btn-primary" type="submit">Save Order</button>
             </div>
