@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Vehicle;
 
-use App\Body;
+use App\VehicleMeta\Body;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -15,7 +15,7 @@ class BodyController extends Controller
      */
     public function index()
     {
-        //
+        return response()->view('dashboard.meta.body.index');
     }
 
     /**
@@ -77,7 +77,7 @@ class BodyController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Body  $body
-     * @return \Illuminate\Http\Response
+     *
      */
     public function destroy(Body $body)
     {

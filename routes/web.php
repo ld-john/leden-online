@@ -75,6 +75,28 @@ Route::post('/companies/add', 'ProfileController@executeAddCompany')->name('comp
 Route::get('/companies/edit/{company_id}', 'ProfileController@showEditCompany')->name('company.edit');
 Route::post('/companies/edit/{company_id}', 'ProfileController@executeEditCompany')->name('company.update');
 
+
+/* Vehicle Meta CRUD Routes
+ * Added 04.05.2021 - By Link
+*/
+
+// Vehicle\Body
+Route::get('/manage/vehiclemeta/body', 'Vehicle\BodyController@index')->name('meta.body.index');
+// Vehicle\Colour
+Route::get('/manage/vehiclemeta/colour', 'Vehicle\ColourController@index')->name('meta.colour.index');
+// Vehicle\Derivative
+Route::get('/manage/vehiclemeta/derivative', 'Vehicle\DerivativeController@index')->name('meta.derivative.index');
+// Vehicle\Engine
+Route::get('/manage/vehiclemeta/engine', 'Vehicle\EngineController@index')->name('meta.engine.index');
+// Vehicle\Fuel
+Route::get('/manage/vehiclemeta/fuel', 'Vehicle\FuelController@index')->name('meta.fuel.index');
+// Vehicle\Transmission
+Route::get('/manage/vehiclemeta/transmission', 'Vehicle\TransmissionController@index')->name('meta.transmission.index');
+// Vehicle\Trim
+Route::get('/manage/vehiclemeta/trim', 'Vehicle\TrimController@index')->name('meta.trim.index');
+// Vehicle\Type
+Route::get('/manage/vehiclemeta/type', 'Vehicle\TypeController@index')->name('meta.type.index');
+
 /*
  * Data Management Routes
  * Added by Link Digital
