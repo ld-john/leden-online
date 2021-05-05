@@ -82,7 +82,6 @@ Route::post('/companies/edit/{company_id}', 'ProfileController@executeEditCompan
 
 // Vehicle\Body
 Route::get('/manage/vehiclemeta/body', 'Vehicle\BodyController@index')->name('meta.body.index');
-Route::get('/manage/vehiclemeta/body/delete/{body}', 'Vehicle\BodyController@destroy')->name('meta.body.destroy');
 // Vehicle\Colour
 Route::get('/manage/vehiclemeta/colour', 'Vehicle\ColourController@index')->name('meta.colour.index');
 // Vehicle\Derivative

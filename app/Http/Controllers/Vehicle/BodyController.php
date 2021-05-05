@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Vehicle;
 
-use App\Helpers\Helper;
 use App\VehicleMeta\Body;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Yajra\DataTables\Facades\DataTables;
 
 class BodyController extends Controller
 {
@@ -84,12 +81,6 @@ class BodyController extends Controller
      */
     public function destroy(Body $body)
     {
-        $targetName = $body->name;
-
-        $body->delete();
-
-        return redirect()->route('meta.body.index')->with('successMsg', 'Body Type "' . $targetName . '" Deleted');
-
-
+        //
     }
 }

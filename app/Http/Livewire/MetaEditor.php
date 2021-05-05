@@ -2,40 +2,70 @@
 
 namespace App\Http\Livewire;
 
-use App\VehicleMeta\Colour;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class MetaEditor extends Component
 {
-//    public $metatype;
-//    public $metadata;
-//
-//    protected $rules = [
-//        'metadata.*.name' => 'required|string|min:6',
-//    ];
-//
-//
-//    public function mount(){
-//        //$namespace = '\\App\\VehicleMeta\\';
-//
-//        //$items = $namespace . $this->metatype;
-//
-//        $this->metadata = Body::all();
-//    }
+    public $metatype;
+    public $metadata;
+    public $newname;
 
+    protected $namespace = '\\App\\VehicleMeta\\';
 
-
-    public $posts;
-    public function mount()
-    {
-        $this->posts = Colour::all();
-    }
     protected $rules = [
-        'posts.*.name' => 'required|string|min:6',
+        'metadata.*.name' => 'required',
     ];
+
+
+    public function mount(){
+
+        $items = $this->namespace . $this->metatype;
+        $this->metadata = $items::all();
+
+    }
+
+    public function new()
+    {
+        $model = $this->namespace . $this->metatype;
+
+        $meta = new $model();
+
+        $meta->name = $this->newname;
+        $meta->save();
+
+        session()->flash('successMsg', Str::plural($this->metatype) . ' entry : "' . $meta->name . '" [id: ' . $meta->id. '] added');
+        return redirect(route('meta.' . strtolower($this->metatype) . '.index'));
+    }
+
+    public function removeEntry($id, $name) {
+        $model = $this->namespace . $this->metatype;
+
+        $model::destroy($id);
+
+        session()->flash('successMsg', Str::plural($this->metatype) . ' entry : "' . $name . '" [id: ' . $id. '] deleted');
+        return redirect(route('meta.' . strtolower($this->metatype) . '.index'));
+
+    }
+
+    public function save()
+    {
+        $this->validate();
+
+        foreach ($this->metadata as $meta) {
+            $meta->update();
+        }
+
+        session()->flash('successMsg', Str::plural($this->metatype) . ' updated!');
+        return redirect(route('meta.' . strtolower($this->metatype) . '.index'));
+
+
+    }
+
     public function render()
     {
         return view('livewire.meta-editor');
     }
+
 
 }
