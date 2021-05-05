@@ -1,7 +1,7 @@
 <?php
 
-use App\User;
 use Illuminate\Database\Seeder;
+use App\User;
 
 class UserSeeder extends Seeder
 {
@@ -14,45 +14,45 @@ class UserSeeder extends Seeder
     {
         User::create([
             'firstname' => 'Link',
-            'lastname'  => 'Testadmin',
+            'lastname'  => 'Admin',
             'email'      => 'testadmin@linkdigital.co.uk',
             'password'   => bcrypt('test'),
             'created_at' => now(),
             'updated_at' => now(),
+            'company_id' => 1,
             'role' => 'admin',
-            'phone' => '1234567890',
-            'company_id' => 1,
-            'is_deleted' => null,
-            'email_verified_at' => now()
-        ]);
-
-        User::create([
-
-            'firstname' => 'Link',
-            'lastname'  => 'Testdealer',
-            'email'      => 'testdealer@linkdigital.co.uk',
-            'password'   => bcrypt('test'),
-            'created_at' => now(),
-            'updated_at' => now(),
-            'role' => 'dealer',
-            'phone' => '1234567890',
-            'company_id' => 1,
+            'phone' => '07423080324',
             'is_deleted' => null,
             'email_verified_at' => now()
         ]);
 
         User::create([
             'firstname' => 'Link',
-            'lastname'  => 'Testbroker',
+            'lastname'  => 'Broker',
             'email'      => 'testbroker@linkdigital.co.uk',
             'password'   => bcrypt('test'),
             'created_at' => now(),
             'updated_at' => now(),
-            'role' => 'broker',
-            'phone' => '1234567890',
             'company_id' => 1,
+            'role' => 'broker',
+            'phone' => '07423080324',
             'is_deleted' => null,
             'email_verified_at' => now()
         ]);
+
+        User::create([
+            'firstname' => 'Link',
+            'lastname'  => 'Dealer',
+            'email'      => 'testdealer@linkdigital.co.uk',
+            'password'   => bcrypt('test'),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'company_id' => 1,
+            'role' => 'dealer',
+            'phone' => '07423080324',
+            'is_deleted' => null,
+            'email_verified_at' => now()
+        ]);
+
     }
 }

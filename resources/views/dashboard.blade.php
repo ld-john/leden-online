@@ -191,7 +191,7 @@
               </div>
               <div class="col-md-11">
                   <div class="small text-gray-500">{{ date('l jS F Y \a\t g:ia', strtotime($show_message->created_at)) }}</div>
-                  <span class="@if ($notification->read_at == null) font-weight-bold @endif ">{{ $show_message->subject }}</span>
+                  <span class="@if ($show_message->read_at == null) font-weight-bold @endif ">{{ $show_message->subject }}</span>
               </div>
           </div>
         </a>

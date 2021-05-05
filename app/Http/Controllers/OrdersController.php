@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\FitOption;
 use App\InvoiceCompany;
+use App\Manufacturer;
 use App\Notifications\notifications;
-use App\Order;
+use App\OrderLegacy;
 use App\OrderUpload;
 use App\RegistrationCompany;
 use App\User;
@@ -59,30 +61,38 @@ class OrdersController extends Controller
 
     public static function getCompanyInfo($type)
     {
-        $company_info = DB::table('company')
-            ->select('id', 'company_name')
-            ->where('company_type', $type)
-            ->get();
+        $company_info = Company::where('company_type', $type)->get();
 
         return $company_info;
     }
 
     /* Get previous field values for each of input */
 
-    public function showCreateOrder()
+    public function create()
     {
         if (Helper::roleCheck(Auth::user()->id)->role != 'admin') {
             return view('unauthorised');
         } else {
-            return view('edit-order', $this->addEditVars());
+            return view('order.create', $this->OrderDetails());
+        }
+    }
+
+    public function edit()
+    {
+        if (Helper::roleCheck(Auth::user()->id)->role != 'admin') {
+            return view('unauthorised');
+        } else {
+            return view('order.edit', $this->OrderDetails());
         }
     }
 
     /* Get Company details */
 
-    protected function addEditVars($id = null)
+    protected function OrderDetails($id = null)
     {
-        $order = new Order();
+        $manufacturers = Manufacturer::latest()->get();
+
+        $order = new OrderLegacy();
         $editMode = false;
         $route = 'add_order';
         $dealer_fit_options = [];
@@ -92,7 +102,7 @@ class OrdersController extends Controller
         $activePage = 'create-order';
 
         if ($id) {
-            $order = Order::find($id);
+            $order = OrderLegacy::find($id);
             $route = 'order.update';
             $editMode = true;
             $dealer_fit_options = $this->getOrderFitOptions($order->id, 'factory');
@@ -114,7 +124,8 @@ class OrdersController extends Controller
             'invoice_companies' => InvoiceCompany::orderBy('name')->get(),
             'registration_companies' => RegistrationCompany::orderBy('name')->get(),
             'factory_options' => $this->getFitOptions('factory', $id),
-            'dealer_options' => $this->getFitOptions('dealer', $id)
+            'dealer_options' => $this->getFitOptions('dealer', $id),
+            'manufacturers' => $manufacturers
         ];
     }
 
@@ -206,8 +217,12 @@ class OrdersController extends Controller
             $order['vehicle_registered_on']);
         $order['created_at'] = Carbon::now();
 
+        $order['vehicle_type'] = ( $order['vehicle_type'] == null ? 'Car' : $order['vehicle_type'] );
+
+
+
         // Add $order array to the order table and return the rows ID
-        $order_id = DB::table('order')->insertGetId($order);
+        $order_id = DB::table('orderlegacy')->insertGetId($order);
 
         $options = [];
 
@@ -301,7 +316,7 @@ class OrdersController extends Controller
             Notification::send($broker, new notifications($message, $order_id, $type));
         }
 
-        return view('edit-order', $this->addEditVars())->with('successMsg', 'Your order has been added successfully!');
+        return view('edit-order', $this->OrderDetails())->with('successMsg', 'Your order has been added successfully!');
     }
 
     /* Show Ford Stock and Pipeline */
@@ -350,7 +365,7 @@ class OrdersController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = Order::select('id', 'vehicle_make', 'vehicle_model', 'vehicle_derivative', 'vehicle_reg',
+            $data = OrderLegacy::select('id', 'vehicle_make', 'vehicle_model', 'vehicle_derivative', 'vehicle_reg',
                 'vehicle_type',
                 'vehicle_doors', 'vehicle_engine', 'vehicle_colour')
                 ->where('show_in_ford_pipeline', false)
@@ -395,7 +410,7 @@ class OrdersController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = Order::select('id', 'vehicle_make', 'vehicle_model', 'vehicle_derivative', 'vehicle_reg',
+            $data = OrderLegacy::select('id', 'vehicle_make', 'vehicle_model', 'vehicle_derivative', 'vehicle_reg',
                 'vehicle_type',
                 'vehicle_doors', 'vehicle_engine', 'vehicle_colour')
                 ->where('show_in_ford_pipeline', true)
@@ -439,7 +454,7 @@ class OrdersController extends Controller
 
         if ($ids) {
             foreach ($ids as $id) {
-                $order = Order::find($id);
+                $order = OrderLegacy::find($id);
 
                 if ($order) {
                     $order->delete();
@@ -453,7 +468,7 @@ class OrdersController extends Controller
     public function showOrderBank(Request $request)
     {
         if ($request->ajax()) {
-            $data = Order::select('id', 'vehicle_model', 'vehicle_derivative', 'order_ref', 'vehicle_reg', 'due_date',
+            $data = OrderLegacy::select('id', 'vehicle_model', 'vehicle_derivative', 'order_ref', 'vehicle_reg', 'due_date',
                     'customer_name', 'company_name', 'preferred_name', 'broker_order_ref', 'broker', 'dealership')
                 ->whereIn('vehicle_status', [1,2,4,10,11]) //In Stock, Orders Placed, Factory Order, Europe VHC, UK VHC
                 ->where(function ($query) {
@@ -490,10 +505,7 @@ class OrdersController extends Controller
                 })
                 ->addColumn('broker_name', function ($row) {
                     if (!is_null($row->broker)) {
-                        $broker_name = DB::table('company')
-                            ->select('company_name')
-                            ->where('id', $row->broker)
-                            ->first();
+                        $broker_name = Company::where('id', $row->broker)->first();
 
                         return $broker_name->company_name;
                     } else {
@@ -502,10 +514,7 @@ class OrdersController extends Controller
                 })
                 ->addColumn('dealer_name', function ($row) {
                     if (!is_null($row->dealership)) {
-                        $dealer_name = DB::table('company')
-                            ->select('company_name')
-                            ->where('id', $row->dealership)
-                            ->first();
+                        $dealer_name = Company::where('id', $row->dealership)->first();
 
                         return $dealer_name->company_name;
                     } else {
@@ -574,10 +583,7 @@ class OrdersController extends Controller
                 })
                 ->addColumn('broker_name', function ($row) {
                     if (!is_null($row->broker)) {
-                        $broker_name = DB::table('company')
-                            ->select('company_name')
-                            ->where('id', $row->broker)
-                            ->first();
+                        $broker_name = Company::where('id', $row->broker)->first();
 
                         return $broker_name->company_name;
                     } else {
@@ -586,10 +592,7 @@ class OrdersController extends Controller
                 })
                 ->addColumn('dealer_name', function ($row) {
                     if (!is_null($row->dealership)) {
-                        $dealer_name = DB::table('company')
-                            ->select('company_name')
-                            ->where('id', $row->dealership)
-                            ->first();
+                        $dealer_name = Company::where('id', $row->dealership)->first();
 
                         return $dealer_name->company_name;
                     } else {
@@ -608,7 +611,7 @@ class OrdersController extends Controller
         return view('deliveries');
     }
 
-    public function showOrder(Request $request, Order $order)
+    public function showOrder(Request $request, OrderLegacy $order)
     {
         if ($this->canAccessOrder($order->id) == false) {
             return view('unauthorised');
@@ -625,10 +628,11 @@ class OrdersController extends Controller
         $order = DB::table('order')
             ->select('id')
             ->where('id', $order_id)
-            ->where('customer_name', null)
-            ->orWhere('company_name', null)
+            // ->where('customer_name', null)
+            // ->orWhere('company_name', null)
             ->first();
 
+            //dd( $order );
         if (is_null($order->id) && Helper::roleCheck(Auth::user()->id)->role != 'admin') {
             return false;
         } else {
@@ -636,10 +640,10 @@ class OrdersController extends Controller
         }
     }
 
-    public function showEditOrder(Request $request, Order $order)
+    public function showEditOrder(Request $request, OrderLegacy $order)
     {
         if (Helper::roleCheck(Auth::user()->id)->role == 'admin') {
-            return view('edit-order', $this->addEditVars($order->id));
+            return view('edit-order', $this->OrderDetails($order->id));
         } elseif (Helper::roleCheck(Auth::user()->id)->role == 'dealer') {
             return view('edit-order-dealer', [
                 'order_details' => $this->getOrderInfo($order->id),
@@ -658,7 +662,7 @@ class OrdersController extends Controller
         return $order_details;
     }
 
-    public function executeEditOrder(Request $request, Order $order)
+    public function executeEditOrder(Request $request, OrderLegacy $order)
     {
         if (Helper::roleCheck(Auth::user()->id)->role == 'admin') {
             // Place all standard inputs into their own array
@@ -856,14 +860,14 @@ class OrdersController extends Controller
         }
     }
 
-    public function showReserveOrder(Request $request, Order $order)
+    public function showReserveOrder(Request $request, OrderLegacy $order)
     {
         return view('reserve-order', [
             'order_details' => $this->getOrderInfo($order->id),
         ]);
     }
 
-    public function executeReserveOrder(Request $request, Order $order)
+    public function executeReserveOrder(Request $request, OrderLegacy $order)
     {
         $is_reserved = DB::table('order')
             ->select('reserved_on')
@@ -927,7 +931,7 @@ class OrdersController extends Controller
         return redirect()->route('order_bank')->with('successMsg', $flash_message);
     }
 
-    public function executeDateAccept(Request $request, Order $order)
+    public function executeDateAccept(Request $request, OrderLegacy $order)
     {
         if (Helper::roleCheck(Auth::user()->id)->role == 'admin') {
             DB::table('order')
@@ -1023,14 +1027,14 @@ class OrdersController extends Controller
             'You have accepted the proposed delivery date');
     }
 
-    public function showDateChange(Request $request, Order $order)
+    public function showDateChange(Request $request, OrderLegacy $order)
     {
         return view('order-date-change', [
             'order_details' => $this->getOrderInfo($order->id),
         ]);
     }
 
-    public function executeDateChange(Request $request, Order $order)
+    public function executeDateChange(Request $request, OrderLegacy $order)
     {
         $old = DB::table('order')
             ->select('admin_accepted', 'dealer_accepted', 'broker_accepted')
@@ -1159,7 +1163,7 @@ class OrdersController extends Controller
             'You have successfully change the propsed delivery date');
     }
 
-    public function executeDeleteOrder(Request $request,$type, Order $order)
+    public function executeDeleteOrder(Request $request, $type, OrderLegacy $order)
     {
         $order->delete();
 
@@ -1173,7 +1177,7 @@ class OrdersController extends Controller
     }
 
 
-    public function executePDF(Order $order)
+    public function executePDF(OrderLegacy $order)
     {
 
         /*dump($order->totalDiscount());

@@ -1,0 +1,17 @@
+#wrapper {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  gap: 16px;
+}
+
+
+
+.container-fluid {
+  padding-top: 100px;
+}
+
+.footer-contents {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}

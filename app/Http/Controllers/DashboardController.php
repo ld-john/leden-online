@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Notifications\notifications;
-use App\Order;
+use App\OrderLegacy;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DataTables;
@@ -75,7 +75,7 @@ class DashboardController extends Controller
     }
 
     protected function adminDashboard(){
-        $vehicles_registered = DB::table('order')
+        $vehicles_registered = DB::table('orderLegacy')
             ->select(DB::raw('MONTHNAME(vehicle_registered_on) as month, COUNT(id) as orders'))
             ->where('vehicle_status', 1)
             ->where("vehicle_registered_on",">", Carbon::now()->subMonths(6))
@@ -113,7 +113,7 @@ class DashboardController extends Controller
     public static function GetOrdersById($vehicle_status, $role = null) {
 
 
-            $vehicles = Order::where('vehicle_status', $vehicle_status);
+            $vehicles = OrderLegacy::where('vehicle_status', $vehicle_status);
 
             if($vehicle_status == 1){
                 $vehicles->where(function($query){

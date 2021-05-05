@@ -22,8 +22,8 @@ Route::get('/notifications', 'DashboardController@showNotifications')->name('not
 Route::get('/notifications/delete', 'DashboardController@executeDeleteNotifications')->name('notifications.delete');
 
 /* OrdersController routes */
-Route::get('/create-order', 'OrdersController@showCreateOrder')->name('create_order');
-Route::post('/create-order', 'OrdersController@executeAddOrder')->name('add_order');
+Route::get('/create-order', 'OrdersController@create')->name('create_order');
+// Route::post('/create-order', 'OrdersController@executeAddOrder')->name('add_order');
 Route::post('/create-exclude', 'OrdersController@executeAddExcludeField')->name('exclude_field');
 Route::get('/completed-orders', 'OrdersController@showCompletedOrders')->name('completed_orders');
 Route::get('/pipeline', 'OrdersController@showPipeline')->name('pipeline');
@@ -74,3 +74,13 @@ Route::get('/companies/add', 'ProfileController@showAddCompany')->name('company.
 Route::post('/companies/add', 'ProfileController@executeAddCompany')->name('company.create');
 Route::get('/companies/edit/{company_id}', 'ProfileController@showEditCompany')->name('company.edit');
 Route::post('/companies/edit/{company_id}', 'ProfileController@executeEditCompany')->name('company.update');
+
+/*
+ * Data Management Routes
+ * Added by Link Digital
+ *
+ */
+
+Route::get('/link/test/', 'VehicleController@getVehicleMeta')->name('test');
+Route::get('/link/test2/', 'CustomerController@buildNewCustomer')->name('test2');
+Route::get('/link/test3/', 'ManufacturerController@buildManufacturerTable')->name('test3');
