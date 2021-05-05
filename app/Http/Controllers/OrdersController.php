@@ -219,10 +219,10 @@ class OrdersController extends Controller
 
         $order['vehicle_type'] = ( $order['vehicle_type'] == null ? 'Car' : $order['vehicle_type'] );
 
-        
+
 
         // Add $order array to the order table and return the rows ID
-        $order_id = DB::table('order')->insertGetId($order);
+        $order_id = DB::table('orderlegacy')->insertGetId($order);
 
         $options = [];
 

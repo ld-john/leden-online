@@ -11,6 +11,8 @@ class Vehicle extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $guarded = [];
+
     /**
      * @var mixed|string
      */
