@@ -19,6 +19,7 @@ use App\VehicleMeta\Transmission;
 use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -26,11 +27,13 @@ class OrderForm extends Component
 {
 	use WithFileUploads;
 
+    public $newCustomer = true;
 	public $customer_id;
 	public $name;
 	public $company;
 	public $preferred = "customer";
-	public $make = 1;
+	public $make;
+    public $newmake;
 	public $model;
 	public $type;
 	public $registration;
@@ -95,7 +98,7 @@ class OrderForm extends Component
 	public $fields = 1;
 	public $successMsg;
 	protected $rules = [
-		'make' => 'required',
+		'make' => 'required_without:newmake',
 		'model' => 'required',
 		'type' => 'required',
 		'derivative' => 'required',
@@ -107,7 +110,18 @@ class OrderForm extends Component
 		'trim' => 'required',
 		'status' => 'required',
 		'attachments.*' => 'max:1024',
+        'broker' => 'required',
 	];
+
+	public function mount()
+    {
+        $newCustomer = $this->newCustomer;
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
 	public function newFactoryFit() {
 		$factory_fit_option = new FitOption();
@@ -143,6 +157,22 @@ class OrderForm extends Component
 	public function orderFormSubmit()
 	{
 		$this->validate();
+
+		if ( isset($this->newmake) ) {
+
+		    $slug = Str::slug($this->newmake);
+
+            $manufacturer = Manufacturer::firstOrCreate(
+                ['slug' => $slug],
+                [
+                    'name' => ucwords($this->newmake),
+                    'models' => json_encode( $this->model )
+                ]
+            );
+
+            $this->make = $manufacturer->id;
+
+        }
 
 		if ( !isset ( $this->chassis ) || $this->chassis === '' ) {
 			$vehicle = new Vehicle();
@@ -255,7 +285,7 @@ class OrderForm extends Component
 
 	    $options = [
 	    	'customers'         => Customer::all(),
-		    'manufacturers'     => Manufacturer::all(),
+		    'manufacturers'     => Manufacturer::all()->keyBy('id'),
 		    'types'             => Type::all(),
 		    'derivatives'       => Derivative::all(),
 	        'engines'           => Engine::all(),

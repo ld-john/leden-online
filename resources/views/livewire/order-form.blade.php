@@ -14,64 +14,71 @@
             <!-- Card Body -->
             <div class="card-body">
 
-                <!-- Group the Customer Creation -->
-
-                <ul class="nav nav-tabs border-0 mb-2" id="orderCustomerTabs">
-                    <li class="nav-item orderCustomerTab" data-tab="orderUseExistingCustomer">
-                        <p class="nav-link active">Use existing customer</p>
-                    </li>
-                    <li class="nav-item orderCustomerTab" data-tab="orderCreateNewCustomer">
-                        <p class="nav-link" >Create new customer</p>
-                    </li>
-                </ul>
-
-                <div class="form-group row order-tab-group" id="orderUseExistingCustomer" data-tab="orderUseExistingCustomer">
-
-                    <label for="customer" class="col-md-2 col-form-label">Select Existing Customer</label>
-                    <div class="col-md-6">
-                        <select wire:model="customer_id" name="preferred_name" id="preferred_name" class="form-control" wire:model="preferred">
-                            <option value="">Select Customer</option>
-                            @foreach ( $customers as $customer )
-                                <option value="{{ $customer->id }}">
-                                    {{ $customer->customer_name }}
-                                    @if ( $customer->customer_name && $customer->company_name )/@endif
-                                    {{$customer->company_name}}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                <div class="mb-5">
+                    <button type="button" class="btn btn-primary" wire:click.debounce.300ms="$set('newCustomer', true)">New Customer</button>
+                    <button type="button" class="btn btn-primary" wire:click.debounce.300ms="$set('newCustomer', false)">Existing Customer</button>
                 </div>
 
-                <div id="orderCreateNewCustomer" class="order-tab-group" data-tab="orderCreateNewCustomer">
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label" for="customer_name">Customer Name</label>
-                        <div class="col-md-6">
-                            <input wire:model="name" type="text" name="customer_name" id="customer_name" class="form-control" placeholder="e.g. Ted Moseby" />
+                <!-- Group the Customer Creation -->
+
+
+                @if($newCustomer)
+
+                    <div id="orderCreateNewCustomer" class="order-tab-group" data-tab="orderCreateNewCustomer">
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="customer_name">Customer Name</label>
+                            <div class="col-md-6">
+                                <input wire:model="name" type="text" name="customer_name" id="customer_name" class="form-control" placeholder="e.g. Ted Moseby" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="company_name">Company Name</label>
+                            <div class="col-md-6">
+                                <input type="text" name="company_name" id="company_name" class="form-control" placeholder="e.g. Mosbius Designs" wire:model="company"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <Label class="col-md-2 col-form-label" for="preferred_name">Preferred name to show</label>
+                            <div class="col-md-6">
+                                <select name="preferred_name" id="preferred_name" class="form-control" wire:model="preferred">
+                                    <option value="customer">
+                                        Customer Name
+                                    </option>
+                                    <option value="company">
+                                        Company Name
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+            </div>
 
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label" for="company_name">Company Name</label>
-                        <div class="col-md-6">
-                            <input type="text" name="company_name" id="company_name" class="form-control" placeholder="e.g. Mosbius Designs" wire:model="company"/>
-                        </div>
-                    </div>
+                @else
 
-                    <div class="form-group row">
-                        <Label class="col-md-2 col-form-label" for="preferred_name">Preferred name to show</label>
+                    <div class="form-group row order-tab-group">
+
+                        <label for="customer" class="col-md-2 col-form-label">Select Existing Customer</label>
                         <div class="col-md-6">
-                            <select name="preferred_name" id="preferred_name" class="form-control" wire:model="preferred">
-                                <option value="customer">
-                                    Customer Name
-                                </option>
-                                <option value="company">
-                                    Company Name
-                                </option>
+                            <select wire:model="customer_id" name="preferred_name" id="preferred_name" class="form-control" wire:model="preferred">
+                                <option value="">Select Customer</option>
+                                @foreach ( $customers as $customer )
+                                    <option value="{{ $customer->id }}">
+                                        {{ $customer->customer_name }}
+                                        @if ( $customer->customer_name && $customer->company_name )/@endif
+                                        {{$customer->company_name}}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
-                </div>
-            </div>
+
+                @endif
+
+
+
+
             <!-- Card Header -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-l-blue">Car Information</h6>
@@ -79,37 +86,60 @@
             <!-- Card Body -->
             <div class="card-body">
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_make">Vehicle Make <small
-                                class="text-danger">(required)</small></label>
+
+                    <label class="col-md-2 col-form-label" for="vehicle_make">Vehicle Make</label>
                     <div class="col-md-4">
                         <select class="form-control value-change" field-parent="vehicle_make" wire:model="make">
+                            <option value="">Please select make</option>
                             @foreach ( $manufacturers as $manufacturer )
                                 <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" required name="vehicle_make" id="vehicle_make" class="form-control" autocomplete="off" placeholder="e.g. Ford" value="{{$manufacturers[$make-1]['name']}}" />
+
+
+                        <input type="text"
+                               name="vehicle_make"
+                               id="vehicle_make"
+                               class="form-control"
+                               autocomplete="off"
+                               placeholder="e.g. Ford"
+                               @unless ( is_null( $make ) )
+                               value="{{$manufacturers[$make]['name']}}"
+                               @endunless
+                                wire:model.lazy="newmake"
+                        />
+
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected" type="button" id="make-remove">
-                            Remove Option
+                        <button class="btn btn-secondary remove-selected"
+                                type="button"
+                                id="make-remove"
+                                wire:click.prevent="$set('make' , null)"
+                        >
+                            <i class="fa fa-times"></i>
                         </button>
                     </div>
+
                 </div>
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_model">Vehicle Model <small
                                 class="text-danger">(required)</small></label>
                     <div class="col-md-4">
-                        <select class="form-control value-change" field-parent="vehicle_model" wire:model="model">
-                            <option value="">Please select make</option>
-                            @foreach(json_decode($manufacturers[$make-1]['models']) as $model)
-                                <option value="{{$model}}">{{$model}}</option>
-                            @endforeach
+                        <select class="form-control value-change" @unless ( !is_null( $make ) ) disabled @endunless field-parent="vehicle_model" wire:model="model">
+
+                            @unless ( is_null( $make ) )
+                                <option value="">Please select model</option>
+                                @foreach(json_decode($manufacturers[$make]['models']) as $model)
+                                    <option value="{{$model}}">{{$model}}</option>
+                                @endforeach
+
+                            @endunless
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <input wire:model="model" type="text" required name="vehicle_model" id="vehicle_model" class="form-control" placeholder="e.g. Fiesta"/>
+                        <input wire:model.lazy="model" type="text" required name="vehicle_model" id="vehicle_model" class="form-control" placeholder="e.g. Fiesta"/>
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-secondary remove-selected" type="button" id="model-remove">
@@ -297,12 +327,22 @@
                         </button>
                     </label>
                     <div class="col-md-6">
-                        <select wire:model="broker" class="form-control" name="broker" id="broker">
-                            <option value="">Please Select</option>
-                            @foreach ($brokers as $broker)
-                                <option value="{{ $broker->id }}">{{ $broker->company_name }}</option>
-                            @endforeach
-                        </select>
+
+                        <div class="input-group mb-3">
+                            @error('broker')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-warning text-white" for="inputGroupSelect01"><i class="fa fa-exclamation-triangle"></i></label>
+                            </div>
+                            @enderror
+                            <select wire:model="broker" class="custom-select" id="inputGroupSelect01">
+                                <option selected>Choose...</option>
+                                @foreach ($brokers as $broker)
+                                    <option value="{{ $broker->id }}">{{ $broker->company_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
                     </div>
                 </div>
 
@@ -867,38 +907,18 @@
         </div>
         {{--</div>--}}
     </form>
+
+    @if($errors->count())
+        <div class="alert alert-danger">
+            <p>There were some errors that need to be fixed!</p>
+            <ul>
+                {!! implode($errors->all('<li>:message</li>')) !!}
+            </ul>
+        </div>
+    @endif
 </div>
 
-<style>
-    .orderCustomerTab:hover {
-        cursor: pointer;
-    }
-</style>
-
 @push('custom-scripts')
-
-    <script>
-        $(function () {
-
-            console.log('order form loaded');
-
-            $('#orderCreateNewCustomer').hide();
-
-            $('.orderCustomerTab').on('click', function(){
-               let target = $(this).attr('data-tab');
-
-               console.log( target );
-
-               if(!$(this).children('.nav-link').hasClass('active') ) {
-                   $('.nav-link.active').removeClass('active');
-                   $('.order-tab-group').hide();
-                   $('#' + target).show();
-               }
-                $(this).children('.nav-link').addClass('active');
-            });
-        });
-
-    </script>
 
 
 @endpush
