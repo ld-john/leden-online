@@ -15,7 +15,7 @@ class EngineController extends Controller
      */
     public function index()
     {
-        //
+        return response()->view('dashboard.meta.engine.index');
     }
 
     /**

@@ -15,7 +15,7 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        return response()->view('dashboard.meta.type.index');
     }
 
     /**

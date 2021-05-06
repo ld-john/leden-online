@@ -1,5 +1,5 @@
 @extends('layouts.main', [
-    'title' => 'Body',
+    'title' => 'Manage Colour Options',
     'activePage' => 'order-bank'
     ])
 
@@ -11,7 +11,7 @@
         <div class="row justify-content-center">
 
             <div class="col-lg-12">
-                <h1 class="h3 mb-4 text-gray-800">Body</h1>
+                <h1 class="h3 mb-4 text-gray-800">Manage Colour Options</h1>
 
                 @include('partials.successMsg')
 

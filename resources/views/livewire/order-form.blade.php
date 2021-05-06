@@ -13,7 +13,20 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                <div class="form-group row">
+
+                <!-- Group the Customer Creation -->
+
+                <ul class="nav nav-tabs border-0 mb-2" id="orderCustomerTabs">
+                    <li class="nav-item orderCustomerTab" data-tab="orderUseExistingCustomer">
+                        <p class="nav-link active">Use existing customer</p>
+                    </li>
+                    <li class="nav-item orderCustomerTab" data-tab="orderCreateNewCustomer">
+                        <p class="nav-link" >Create new customer</p>
+                    </li>
+                </ul>
+
+                <div class="form-group row order-tab-group" id="orderUseExistingCustomer" data-tab="orderUseExistingCustomer">
+
                     <label for="customer" class="col-md-2 col-form-label">Select Existing Customer</label>
                     <div class="col-md-6">
                         <select wire:model="customer_id" name="preferred_name" id="preferred_name" class="form-control" wire:model="preferred">
@@ -28,31 +41,34 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="customer_name">Customer Name</label>
-                    <div class="col-md-6">
-                        <input wire:model="name" type="text" name="customer_name" id="customer_name" class="form-control" placeholder="e.g. Ted Moseby" />
-                    </div>
-                </div>
 
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="company_name">Company Name</label>
-                    <div class="col-md-6">
-                        <input type="text" name="company_name" id="company_name" class="form-control" placeholder="e.g. Mosbius Designs" wire:model="company"/>
+                <div id="orderCreateNewCustomer" class="order-tab-group" data-tab="orderCreateNewCustomer">
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="customer_name">Customer Name</label>
+                        <div class="col-md-6">
+                            <input wire:model="name" type="text" name="customer_name" id="customer_name" class="form-control" placeholder="e.g. Ted Moseby" />
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <Label class="col-md-2 col-form-label" for="preferred_name">Preferred name to show</label>
-                    <div class="col-md-6">
-                        <select name="preferred_name" id="preferred_name" class="form-control" wire:model="preferred">
-                            <option value="customer">
-                                Customer Name
-                            </option>
-                            <option value="company">
-                                Company Name
-                            </option>
-                        </select>
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label" for="company_name">Company Name</label>
+                        <div class="col-md-6">
+                            <input type="text" name="company_name" id="company_name" class="form-control" placeholder="e.g. Mosbius Designs" wire:model="company"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <Label class="col-md-2 col-form-label" for="preferred_name">Preferred name to show</label>
+                        <div class="col-md-6">
+                            <select name="preferred_name" id="preferred_name" class="form-control" wire:model="preferred">
+                                <option value="customer">
+                                    Customer Name
+                                </option>
+                                <option value="company">
+                                    Company Name
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -852,3 +868,37 @@
         {{--</div>--}}
     </form>
 </div>
+
+<style>
+    .orderCustomerTab:hover {
+        cursor: pointer;
+    }
+</style>
+
+@push('custom-scripts')
+
+    <script>
+        $(function () {
+
+            console.log('order form loaded');
+
+            $('#orderCreateNewCustomer').hide();
+
+            $('.orderCustomerTab').on('click', function(){
+               let target = $(this).attr('data-tab');
+
+               console.log( target );
+
+               if(!$(this).children('.nav-link').hasClass('active') ) {
+                   $('.nav-link.active').removeClass('active');
+                   $('.order-tab-group').hide();
+                   $('#' + target).show();
+               }
+                $(this).children('.nav-link').addClass('active');
+            });
+        });
+
+    </script>
+
+
+@endpush

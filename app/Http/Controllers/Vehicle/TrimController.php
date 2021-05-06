@@ -15,7 +15,7 @@ class TrimController extends Controller
      */
     public function index()
     {
-        //
+        return response()->view('dashboard.meta.trim.index');
     }
 
     /**

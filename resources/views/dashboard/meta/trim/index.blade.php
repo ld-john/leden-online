@@ -1,5 +1,5 @@
 @extends('layouts.main', [
-    'title' => 'Manage Body Options',
+    'title' => 'Manage Trim Options',
     'activePage' => 'order-bank'
     ])
 
@@ -11,11 +11,11 @@
         <div class="row justify-content-center">
 
             <div class="col-lg-12">
-                <h1 class="h3 mb-4 text-gray-800">Manage Body Options</h1>
+                <h1 class="h3 mb-4 text-gray-800">Manage Trim Options</h1>
 
                 @include('partials.successMsg')
 
-                <livewire:meta-editor :metatype="'Body'" />
+                <livewire:meta-editor :metatype="'Trim'" />
 
             </div>
 

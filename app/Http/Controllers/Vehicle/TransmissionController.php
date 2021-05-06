@@ -15,7 +15,7 @@ class TransmissionController extends Controller
      */
     public function index()
     {
-        //
+        return response()->view('dashboard.meta.transmission.index');
     }
 
     /**
