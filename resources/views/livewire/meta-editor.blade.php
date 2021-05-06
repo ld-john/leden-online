@@ -18,6 +18,7 @@
                             class="btn btn-primary"
                             type="button"
                             type="submit"
+                            wire:click.prevent="new()"
                     >
                         <i class="fa fa-plus"></i> Add
                     </button>
