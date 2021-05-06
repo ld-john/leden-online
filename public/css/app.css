@@ -11000,6 +11000,10 @@ select option:disabled {
   color: #333;
 }
 
+.login-cont img {
+  width: 100%;
+}
+
 .login-cont form {
   background: #fff;
   box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.4);
