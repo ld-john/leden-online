@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Helper;
-use App\Notifications\notifications;
 use App\OrderLegacy;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use DataTables;
-use Illuminate\Support\Facades\Response;
-use Mail;
-use Auth;
-use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -27,14 +23,14 @@ class DashboardController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index(Request $request)
     {
 
-        if (Helper::roleCheck(Auth::user()->id)->role == 'admin') {
+        if (Auth::user()->role == 'admin') {
             return $this->adminDashboard();
-        } elseif (Helper::roleCheck(Auth::user()->id)->role == 'dealer') {
+        } elseif (Auth::user()->role == 'dealer') {
             return view('dashboard-dealer', [
                 'in_stock' => $this->GetOrdersById(1),
                 'orders_placed' => $this->GetOrdersById(2, 'dealer'),
