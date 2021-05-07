@@ -164,8 +164,8 @@ class OrderForm extends Component
 		$vehicle->colour = $this->colour;
 		$vehicle->body = $this->body;
 		$vehicle->trim = $this->trim;
-		$vehicle->dealer_fit_options = json_encode($this->dealer_fit_options);
-		$vehicle->factory_fit_options = json_encode($this->factory_fit_options);
+		$vehicle->dealer_fit_options = $this->dealer_fit_options;
+		$vehicle->factory_fit_options = $this->factory_fit_options;
 		$vehicle->chassis_prefix = $this->chassis_prefix;
 		$vehicle->type = $this->type;
 		$vehicle->metallic_paint = $this->metallic_paint;

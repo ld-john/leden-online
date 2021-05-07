@@ -74,11 +74,9 @@
                     {
                         text: 'Delete Selected',
                         action: function ( e, dt, node, config ) {
-                            var count = table.rows( { selected: true } ).count();
-
+                            let count = table.rows({selected: true}).count();
                             if(count) {
-                                var ids = $.map(table.rows({ selected: true }).data(), function (item) {
-                                    //console.log(item);
+                                let ids = $.map(table.rows({selected: true}).data(), function (item) {
                                     return item['id']
                                 });
 
@@ -87,9 +85,11 @@
                                 ).done(function( data ) {
                                     table.ajax.reload();
                                 });
-                                //console.log(ids)
                             }
                         }
+                    },
+                    {
+                        text: 'Add New',
                     }
                 ],
                 processing: true,
@@ -98,15 +98,15 @@
                 columns: [
                     {"data": null, defaultContent: "", className: 'select-checkbox', orderable: false,},
                     {data: 'id', name: 'id'},
-                    {data: 'vehicle_make', name: 'vehicle_make'},
-                    {data: 'vehicle_model', name: 'vehicle_model'},
-                    {data: 'vehicle_derivative', name: 'vehicle_derivative'},
-                    {data: 'vehicle_reg', name: 'vehicle_reg'},
-                    {data: 'vehicle_engine', name: 'vehicle_engine'},
-                    {data: 'vehicle_doors', name: 'vehicle_doors'},
-                    {data: 'vehicle_colour', name: 'vehicle_colour'},
+                    {data: 'make', name: 'make'},
+                    {data: 'model', name: 'model'},
+                    {data: 'derivative', name: 'derivative'},
+                    {data: 'reg', name: 'reg'},
+                    {data: 'engine', name: 'engine'},
+                    {data: 'doors', name: 'doors'},
+                    {data: 'colour', name: 'colour'},
                     {data: 'options', name: 'options'},
-                    {data: 'vehicle_type', name: 'vehicle_type'},
+                    {data: 'type', name: 'type'},
                     {data: 'action', name: 'action', orderable: false},
                 ],
                 order: [
