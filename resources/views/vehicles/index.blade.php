@@ -1,6 +1,6 @@
 @extends('layouts.main', [
-    'title' => 'Leden Stock',
-    'activePage' => 'pipeline'
+    'title' => $title,
+    'activePage' => $active_page
     ])
 
 @section('content')
@@ -11,7 +11,7 @@
         <div class="row justify-content-center">
 
             <div class="col-lg-12">
-                <h1 class="h3 mb-4 text-gray-800">Leden Stock</h1>
+                <h1 class="h3 mb-4 text-gray-800">{{$title}}</h1>
                 @include('partials.successMsg')
 
                 <div class="card shadow mb-4">
@@ -94,7 +94,7 @@
                 ],
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('pipeline') }}",
+                ajax: "{{ route($route) }}",
                 columns: [
                     {"data": null, defaultContent: "", className: 'select-checkbox', orderable: false,},
                     {data: 'id', name: 'id'},

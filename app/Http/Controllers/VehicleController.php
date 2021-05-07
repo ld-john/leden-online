@@ -163,6 +163,49 @@ class VehicleController extends Controller
         dd ( 'boop Let the bodies hit the floor' );
     }
 
+    public function showFordPipeline(Request $request)
+    {
+	    if ($request->ajax()) {
+		    $data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')->where('show_in_ford_pipeline', true)->take(200);
+
+		    if (Auth::user()->role === 'dealer') {
+			    $data->where('hide_from_dealer', false);
+		    }
+		    if (Auth::user()->role === 'broker') {
+			    $data->where('hide_from_broker', false);
+		    }
+
+		    $data->get();
+
+		    return Datatables::of($data)
+			    ->addColumn('action', function ($row) {
+				    if (Auth::user()->role != 'admin') {
+					    $btn = '<a href="/vehicle/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
+				    } else {
+					    $btn = '<a href="/vehicle/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
+					    $btn .= '<a href="/vehicle/edit/' . $row->id . '" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>';
+				    }
+
+				    return '<div class="btn-toolbar"><div class="btn-group">' . $btn . '</div></div>';
+			    })
+			    ->addColumn('options', function ($row) {
+				    $count = 0;
+				    if ( isset ( $row->dealer_fit_options ) ) {
+					    $count += $row->dealer_fit_options->count();
+				    }
+				    if ( isset ( $row->factory_fit_options ) ) {
+					    $count += $row->factory_fit_options->count();
+				    }
+
+				    return $count;
+			    })
+			    ->rawColumns(['action'])
+			    ->make(true);
+	    }
+
+	    return view('vehicles.index', ['route' => 'pipeline.ford', 'title' => 'Ford Pipeline', 'active_page'=> 'ford-pipeline']);
+    }
+
 	public function showLedenStock(Request $request)
 	{
 		if ($request->ajax()) {
@@ -203,7 +246,7 @@ class VehicleController extends Controller
 				->make(true);
 		}
 
-		return view('vehicles.ledenstock.index');
+		return view('vehicles.index', ['route' => 'pipeline', 'title' => 'Leden Stock', 'active_page'=> 'pipeline']);
 	}
 
 	public function deleteSelected()

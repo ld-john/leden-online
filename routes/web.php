@@ -27,7 +27,7 @@ Route::post('/create-exclude', 'OrdersController@executeAddExcludeField')->name(
 Route::get('/completed-orders', 'OrdersController@showCompletedOrders')->name('completed_orders');
 Route::get('/pipeline', 'VehicleController@showLedenStock')->name('pipeline');
 Route::post('/pipeline/delete-selected', 'VehicleController@deleteSelected')->name('pipeline_delete');
-Route::get('/ford-pipeline', 'OrdersController@showFordPipeline')->name('pipeline.ford');
+Route::get('/ford-pipeline', 'VehicleController@showFordPipeline')->name('pipeline.ford');
 Route::get('/order-bank', 'OrdersController@showOrderBank')->name('order_bank');
 Route::get('/manage-deliveries', 'OrdersController@showManageDeliveries')->name('manage_deliveries');
 Route::get('/orders/view/{order}', 'OrderController@show')->name('order.show');
