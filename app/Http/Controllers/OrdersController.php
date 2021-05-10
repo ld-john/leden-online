@@ -405,67 +405,7 @@ class OrdersController extends Controller
     }
 
     /* Create orders page */
-
-    public function showFordPipeline(Request $request)
-    {
-        if ($request->ajax()) {
-
-            $data = OrderLegacy::select('id', 'vehicle_make', 'vehicle_model', 'vehicle_derivative', 'vehicle_reg',
-                'vehicle_type',
-                'vehicle_doors', 'vehicle_engine', 'vehicle_colour')
-                ->where('show_in_ford_pipeline', true)
-                ->where('customer_name', null)
-                ->where('company_name', null);
-
-            if (Helper::roleCheck(Auth::user()->id)->role == 'dealer') {
-                $data->where('hide_from_dealer', false);
-            }
-            if (Helper::roleCheck(Auth::user()->id)->role == 'broker') {
-                $data->where('hide_from_broker', false);
-            }
-
-            $data->get();
-
-            return Datatables::of($data)
-                ->addColumn('action', function ($row) {
-                    if (Helper::roleCheck(Auth::user()->id)->role != 'admin') {
-                        $btn = '<a href="/orders/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
-                    } else {
-                        $btn = '<a href="/orders/edit/' . $row->id . '" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>';
-
-                        $btn .= '<a href="/orders/delete/ford/' . $row->id . '" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</a>';
-                    }
-
-                    return '<div class="btn-toolbar"><div class="btn-group">' . $btn . '</div></div>';
-                })
-                ->addColumn('options', function ($row) {
-                    return '-';
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
-        return view('ford-pipeline');
-    }
-
-    public function executeDeleteSelected()
-    {
-        $ids = request()->input('ids');
-
-        if ($ids) {
-            foreach ($ids as $id) {
-                $order = OrderLegacy::find($id);
-
-                if ($order) {
-                    $order->delete();
-                }
-            }
-        }
-
-        return '';
-    }
-
-    public function showOrderBank(Request $request)
+	public function showOrderBank(Request $request)
     {
         if ($request->ajax()) {
             $data = OrderLegacy::select('id', 'vehicle_model', 'vehicle_derivative', 'order_ref', 'vehicle_reg', 'due_date',
@@ -475,8 +415,6 @@ class OrdersController extends Controller
                     $query->where('customer_name', '!=', null)
                         ->orWhere('company_name', '!=', null);
                 });
-            //->orwhere('customer_name', '!=', null)
-            //->orWhere('company_name', '!=', null);
 
             if (Helper::roleCheck(Auth::user()->id)->role == 'dealer') {
                 $data->where('dealership', Auth::user()->company_id);
@@ -530,7 +468,7 @@ class OrdersController extends Controller
                 ->make(true);
         }
 
-        return view('order-bank');
+        return view('order.index');
     }
 
     public function showManageDeliveries(Request $request)

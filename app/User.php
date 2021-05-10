@@ -30,9 +30,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'firstname', 'lastname', 'email', 'phone', 'password', 'role', 'is_deleted', 'company_id',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -55,5 +53,10 @@ class User extends Authenticatable
     public function abilities(): string
     {
         return $this->role;
+    }
+
+    public function company()
+    {
+    	return $this->hasOne(Company::class, 'id', 'company_id');
     }
 }

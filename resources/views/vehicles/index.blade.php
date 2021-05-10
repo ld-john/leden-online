@@ -1,6 +1,6 @@
 @extends('layouts.main', [
-    'title' => 'Leden Stock',
-    'activePage' => 'pipeline'
+    'title' => $title,
+    'activePage' => $active_page
     ])
 
 @section('content')
@@ -11,7 +11,7 @@
         <div class="row justify-content-center">
 
             <div class="col-lg-12">
-                <h1 class="h3 mb-4 text-gray-800">Leden Stock</h1>
+                <h1 class="h3 mb-4 text-gray-800">{{$title}}</h1>
                 @include('partials.successMsg')
 
                 <div class="card shadow mb-4">
@@ -74,11 +74,9 @@
                     {
                         text: 'Delete Selected',
                         action: function ( e, dt, node, config ) {
-                            var count = table.rows( { selected: true } ).count();
-
+                            let count = table.rows({selected: true}).count();
                             if(count) {
-                                var ids = $.map(table.rows({ selected: true }).data(), function (item) {
-                                    //console.log(item);
+                                let ids = $.map(table.rows({selected: true}).data(), function (item) {
                                     return item['id']
                                 });
 
@@ -87,26 +85,28 @@
                                 ).done(function( data ) {
                                     table.ajax.reload();
                                 });
-                                //console.log(ids)
                             }
                         }
+                    },
+                    {
+                        text: 'Add New',
                     }
                 ],
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('pipeline') }}",
+                ajax: "{{ route($route) }}",
                 columns: [
                     {"data": null, defaultContent: "", className: 'select-checkbox', orderable: false,},
                     {data: 'id', name: 'id'},
-                    {data: 'vehicle_make', name: 'vehicle_make'},
-                    {data: 'vehicle_model', name: 'vehicle_model'},
-                    {data: 'vehicle_derivative', name: 'vehicle_derivative'},
-                    {data: 'vehicle_reg', name: 'vehicle_reg'},
-                    {data: 'vehicle_engine', name: 'vehicle_engine'},
-                    {data: 'vehicle_doors', name: 'vehicle_doors'},
-                    {data: 'vehicle_colour', name: 'vehicle_colour'},
+                    {data: 'manufacturer.name', name: 'manufacturer.name'},
+                    {data: 'model', name: 'model'},
+                    {data: 'derivative', name: 'derivative'},
+                    {data: 'reg', name: 'reg'},
+                    {data: 'engine', name: 'engine'},
+                    {data: 'doors', name: 'doors'},
+                    {data: 'colour', name: 'colour'},
                     {data: 'options', name: 'options'},
-                    {data: 'vehicle_type', name: 'vehicle_type'},
+                    {data: 'type', name: 'type'},
                     {data: 'action', name: 'action', orderable: false},
                 ],
                 order: [

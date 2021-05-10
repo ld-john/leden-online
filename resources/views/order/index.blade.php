@@ -1,6 +1,6 @@
 @extends('layouts.main', [
-    'title' => 'Order Bank',
-    'activePage' => 'order-bank'
+    'title' => $title,
+    'activePage' => $active_page
     ])
 
 @section('content')
@@ -11,7 +11,7 @@
         <div class="row justify-content-center">
 
             <div class="col-lg-12">
-                <h1 class="h3 mb-4 text-gray-800">Order Bank</h1>
+                <h1 class="h3 mb-4 text-gray-800">{{$title}}</h1>
                 @if (!empty(session('successMsg')))
                     <div class="row">
                         <div class="col-md-12">
@@ -70,21 +70,27 @@
             var table = $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('order_bank') }}",
+                ajax: "{{ route($route) }}",
                 columns: [
                     {data: 'id', name: 'id'},
-                    {data: 'vehicle_model', name: 'vehicle_model'},
-                    {data: 'vehicle_derivative', name: 'vehicle_derivative'},
+                    {data: 'vehicle.model', name: 'vehicle.model', orderable: false},
+                    {data: 'vehicle.derivative', name: 'vehicle.derivative', orderable: false},
                     {data: 'order_ref', name: 'order_ref'},
-                    {data: 'vehicle_reg', name: 'vehicle_reg'},
-                    {data: 'vehicle_due_date', name: 'vehicle_due_date'},
-                    {data: 'customer', name: 'customer'},
-                    {data: 'broker_order_ref', name: 'broker_order_ref'},
-                    {data: 'broker_name', name: 'broker'},
-                    {data: 'dealer_name', name: 'dealership'},
+                    {data: 'vehicle.reg', name: 'vehicle.reg', orderable: false},
+                    {data: 'due_date', name: 'due_date'},
+                    {data: function(row){
+                        if('customer.preferred_name' === 'company') {
+                            return row.customer.company_name
+                        } else {
+                            return row.customer.customer_name
+                        }
+                        }, name: 'customer_id'},
+                    {data: 'broker_ref', name: 'broker_ref'},
+                    {data: 'broker.company_name', name: 'broker.company_name', orderable: false},
+                    {data: 'dealer.company_name', name: 'dealer.company_name', orderable: false},
                     {data: 'action', name: 'action', orderable: false},
-                    {data: 'customer_name', name: 'customer_name', visible: false},
-                    {data: 'company_name', name: 'company_name', visible: false},
+                    {data: 'customer.customer_name', name: 'customer.customer_name', visible: false},
+                    {data: 'customer.company_name', name: 'customer.company_name', visible: false},
                 ]
             });
         });

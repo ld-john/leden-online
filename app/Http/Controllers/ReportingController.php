@@ -81,7 +81,7 @@ class ReportingController extends Controller
     }
 
     public static function getRecordsByMonth() {
-        $vehicles = DB::table('order')
+        $vehicles = DB::table('orderlegacy')
             ->select(DB::raw('MONTHNAME(created_at) as month, COUNT(id) as orders'))
             ->where('vehicle_status', '!=', 1)
             ->where("created_at",">", Carbon::now()->subMonths(6))
@@ -93,7 +93,7 @@ class ReportingController extends Controller
     }
 
     public static function getRecordsByWeek() {
-        $vehicles = DB::table('order')
+        $vehicles = DB::table('orderlegacy')
             ->select(DB::raw('WEEK(created_at) as week, YEAR(created_at) as year, COUNT(id) as orders'))
             ->where('vehicle_status', '!=', 1)
             ->where("created_at",">", Carbon::now()->subMonths(6))
@@ -105,7 +105,7 @@ class ReportingController extends Controller
     }
 
     public static function getRecordsByQuarter() {
-        $vehicles = DB::table('order')
+        $vehicles = DB::table('orderlegacy')
             ->select(DB::raw('QUARTER(created_at) as quarter, YEAR(created_at) as year, COUNT(id) as orders'))
             ->where('vehicle_status', '!=', 1)
             ->where("created_at",">", Carbon::now()->subMonths(6))
