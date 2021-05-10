@@ -10969,10 +10969,6 @@ a.text-dark:focus {
   color: #fff !important;
 }
 
-.edit {
-  margin-right: 20px;
-}
-
 select option:disabled {
   background: #eee;
 }
@@ -10981,6 +10977,10 @@ select option:disabled {
   background: #fff;
   color: #1f3458;
   border: 0;
+}
+
+.btn {
+  margin-right: 1.1em;
 }
 
 /* Login Screen */
@@ -10998,6 +10998,10 @@ select option:disabled {
 .login-cont h1 {
   font-size: 35px;
   color: #333;
+}
+
+.login-cont img {
+  width: 100%;
 }
 
 .login-cont form {
@@ -11057,5 +11061,11 @@ select option:disabled {
 .container-lg,
 .container-xl {
   padding-top: 100px;
+}
+
+.footer-contents {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
 }
 

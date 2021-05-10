@@ -2,9 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
+use App\OrderLegacy;
+
 use App\Vehicle;
+
+use App\VehicleMeta\Body;
+use App\VehicleMeta\Colour;
+use App\VehicleMeta\Derivative;
+use App\VehicleMeta\Engine;
+use App\VehicleMeta\Fuel;
+use App\VehicleMeta\Transmission;
+use App\VehicleMeta\Trim;
+use App\VehicleMeta\Type;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class VehicleController extends Controller
 {
@@ -47,7 +60,7 @@ class VehicleController extends Controller
      */
     public function show(Vehicle $vehicle)
     {
-        //
+    	return (view('vehicles.show', ['vehicle' => $vehicle]));
     }
 
     /**
@@ -87,7 +100,7 @@ class VehicleController extends Controller
     public function buildNewVehicle()
     {
 
-        $orders = Order::withTrashed()->get();
+        $orders = OrderLegacy::withTrashed()->get();
 
         foreach ( $orders as $order ) {
 
@@ -127,4 +140,126 @@ class VehicleController extends Controller
         dd( 'Done' );
 
     }
+
+    public function getVehicleMeta()
+    {
+        $vehicles = Vehicle::all();
+
+        $colours = $vehicles->pluck('body')->unique();
+
+        foreach ( $colours as $colour ) {
+            if ( !empty ( $colour ) ) {
+
+                $output = ucwords( strtolower( $colour ) );
+
+                $color = new Body();
+
+                $color->name = $output;
+
+                $color->save();
+            }
+        }
+
+        dd ( 'boop Let the bodies hit the floor' );
+    }
+
+    public function showFordPipeline(Request $request)
+    {
+	    if ($request->ajax()) {
+		    $data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
+			    ->with('manufacturer')
+			    ->where('show_in_ford_pipeline', true);
+		    if (Auth::user()->role === 'dealer') {
+			    $data->where('hide_from_dealer', false);
+		    }
+		    if (Auth::user()->role === 'broker') {
+			    $data->where('hide_from_broker', false);
+		    }
+		    $data->get();
+		    return Datatables::of($data)
+			    ->addColumn('action', function ($row) {
+				    if (Auth::user()->role != 'admin') {
+					    $btn = '<a href="/vehicle/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
+				    } else {
+					    $btn = '<a href="/vehicle/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
+					    $btn .= '<a href="/vehicle/edit/' . $row->id . '" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>';
+				    }
+
+				    return '<div class="btn-toolbar"><div class="btn-group">' . $btn . '</div></div>';
+			    })
+			    ->addColumn('options', function ($row) {
+				    $count = 0;
+				    if ( isset ( $row->dealer_fit_options ) ) {
+					    $count += $row->dealer_fit_options->count();
+				    }
+				    if ( isset ( $row->factory_fit_options ) ) {
+					    $count += $row->factory_fit_options->count();
+				    }
+
+				    return $count;
+			    })
+			    ->rawColumns(['action'])
+			    ->make(true);
+	    }
+
+	    return view('vehicles.index', ['route' => 'pipeline.ford', 'title' => 'Ford Pipeline', 'active_page'=> 'ford-pipeline']);
+    }
+
+	public function showLedenStock(Request $request)
+	{
+		if ($request->ajax()) {
+			$data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
+				->with('manufacturer')
+				->where('show_in_ford_pipeline', false);
+
+			if (Auth::user()->role === 'dealer') {
+				$data->where('hide_from_dealer', false);
+			}
+			if (Auth::user()->role === 'broker') {
+				$data->where('hide_from_broker', false);
+			}
+
+			$data->get();
+
+			return Datatables::of($data)
+				->addColumn('action', function ($row) {
+					if (Auth::user()->role != 'admin') {
+						$btn = '<a href="/vehicle/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
+					} else {
+						$btn = '<a href="/vehicle/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
+						$btn .= '<a href="/vehicle/edit/' . $row->id . '" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>';
+					}
+
+					return '<div class="btn-toolbar"><div class="btn-group">' . $btn . '</div></div>';
+				})
+				->addColumn('options', function ($row) {
+					$count = 0;
+					if ( isset ( $row->dealer_fit_options ) ) {
+						$count += count( json_decode( $row->dealer_fit_options ) );
+					} else {
+					    $count += 0;
+                    }
+					if ( isset ( $row->factory_fit_options ) ) {
+						$count += count( json_decode( $row->factory_fit_options ));
+					} else {
+                        $count += 0;
+                    }
+
+					return $count;
+				})
+				->rawColumns(['action'])
+				->make(true);
+		}
+
+		return view('vehicles.index', ['route' => 'pipeline', 'title' => 'Leden Stock', 'active_page'=> 'pipeline']);
+	}
+
+	public function deleteSelected()
+	{
+		$ids = request()->input('ids');
+
+		Vehicle::destroy($ids);
+	}
+
+
 }

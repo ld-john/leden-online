@@ -12,19 +12,7 @@
 
     <div class="col-lg-12">
         <h1 class="h3 mb-4 text-gray-800">User Management</h1>
-        @if (!empty(session('successMsg')))
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>{{ session('successMsg') }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        @endif
-
+        @include('partials.successMsg')
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -48,12 +36,13 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
+                                <th>ID</th>
+                                <th>First name</th>
+                                <th>Last name</th>
                                 <th>Email</th>
                                 <th>Company</th>
                                 <th>Role</th>
-                                <th width="15%">Action</th>
+                                <th width="18%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,10 +72,11 @@ $(function () {
         serverSide: true,
         ajax: "{{ route('user_manager') }}",
         columns: [
+            {data: 'id', name: 'id'},
             {data: 'firstname', name: 'firstname'},
             {data: 'lastname', name: 'lastname'},
             {data: 'email', name: 'email'},
-            {data: 'company', name: 'company'},
+            {data: 'company.company_name', name: 'company.company_name'},
             {data: 'role', name: 'role'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]

@@ -1,0 +1,319 @@
+<?php
+
+namespace App\Http\Livewire;
+
+use App\Company;
+use App\Customer;
+use App\FitOption;
+use App\Invoice;
+use App\Manufacturer;
+use App\Order;
+use App\OrderUpload;
+use App\Vehicle;
+use App\VehicleMeta\Body;
+use App\VehicleMeta\Colour;
+use App\VehicleMeta\Derivative;
+use App\VehicleMeta\Engine;
+use App\VehicleMeta\Fuel;
+use App\VehicleMeta\Transmission;
+use App\VehicleMeta\Trim;
+use App\VehicleMeta\Type;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Livewire\Component;
+use Livewire\WithFileUploads;
+
+class OrderForm extends Component
+{
+	use WithFileUploads;
+
+    public $newCustomer = true;
+	public $customer_id;
+	public $name;
+	public $company;
+	public $preferred = "customer";
+	public $make;
+    public $newmake;
+	public $model;
+	public $type;
+	public $registration;
+	public $derivative;
+	public $engine;
+	public $transmission;
+	public $fuel_type;
+	public $colour;
+	public $trim;
+	public $broker;
+	public $broker_ref; // Order
+	public $order_ref;
+	public $chassis_prefix;
+	public $chassis;
+	public $status;
+	public $due_date; // Order
+	public $delivery_date; // Order
+	public $model_year;
+	public $registered_date;
+	public $ford_pipeline = "0";
+	public $factory_fit_options; // Vehicle -> JSON of IDs to fit_options
+	public $factory_fit_name_manual_add; // View use only
+	public $factory_fit_price_manual_add;
+	public $dealer_fit_options; // Vehicle
+	public $dealer_fit_name_manual_add;
+	public $dealer_fit_price_manual_add;
+	public $dealership;
+	public $registration_company; // Order
+	public $invoice_company; // Order
+	public $list_price;
+	public $metallic_paint;
+	public $dealer_discount;
+	public $manufacturer_discount;
+	public $manufacturer_delivery_cost;
+	public $first_reg_fee;
+	public $rfl_cost;
+	public $onward_delivery;
+	public $invoice_funder_for;
+	public $show_discount = "0"; // Vehicle
+	public $show_offer = "0"; // Vehicle
+	public $hide_from_broker = "0";
+	public $hide_from_dealer = "0";
+	public $invoice_finance;
+	public $invoice_finance_number;
+	public $finance_commission_paid;
+	public $invoice_value_to_broker;
+	public $invoice_broker_number;
+	public $invoice_broker_paid;
+	public $commission_broker;
+	public $commission_broker_number;
+	public $commission_broker_paid;
+	public $customer_phone;
+	public $delivery_address_1;
+	public $delivery_address_2;
+	public $delivery_town;
+	public $delivery_city;
+	public $delivery_county;
+	public $delivery_postcode;
+	public $comments;
+	public $attachments = [];
+	public $fields = 1;
+	public $successMsg;
+	protected $rules = [
+		'make' => 'required_without:newmake',
+		'model' => 'required',
+		'type' => 'required',
+		'derivative' => 'required',
+		'engine' => 'required',
+		'transmission' => 'required',
+		'fuel_type' => 'required',
+		'colour' => 'required',
+		'trim' => 'required',
+		'status' => 'required',
+		'attachments.*' => 'max:1024',
+        'broker' => 'required',
+	];
+
+	protected $messages = [
+        'make.required_without' => 'No <strong>Make</strong> selected',
+        'model.required' => 'No <strong>Model</strong> selected',
+        'type.required' => 'No <strong>Vehicle Type</strong> selected',
+        'derivative.required' => 'No <strong>Vehicle Derivative</strong> selected',
+        'engine.required' => 'No <strong>Engine</strong> selected',
+        'transmission.required' => 'No <strong>Transmission</strong> selected',
+        'fuel_type.required' => 'No <strong>Fuel Type</strong> selected',
+        'colour.required' => 'No <strong>Colour</strong> selected',
+        'trim.required' => 'No <strong>Vehicle Trim</strong> selected',
+        'status.required' => 'No <strong>Order Status</strong> selected',
+        'attachments.*.max' => 'An <strong>Attachment</strong> is too big! (Max 1Mb)',
+        'broker.required' => 'No <strong>Broker</strong> selected',
+    ];
+
+	public function mount()
+    {
+        $newCustomer = $this->newCustomer;
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
+	public function newFactoryFit() {
+		$factory_fit_option = new FitOption();
+		$factory_fit_option->option_name = $this->factory_fit_name_manual_add;
+		$factory_fit_option->option_price = $this->factory_fit_price_manual_add;
+		$factory_fit_option->option_type = 'factory';
+		$factory_fit_option->save();
+
+		$this->factory_fit_options[] = strval( $factory_fit_option->id );
+
+	}
+
+	public function newDealerFit() {
+		$dealer_fit_option = new FitOption();
+		$dealer_fit_option->option_name = $this->dealer_fit_name_manual_add;
+		$dealer_fit_option->option_price = $this->dealer_fit_price_manual_add;
+		$dealer_fit_option->option_type = 'dealer';
+		$dealer_fit_option->save();
+
+		$this->dealer_fit_options[] = strval( $dealer_fit_option->id );
+	}
+
+	public function handleAddField()
+	{
+		$this->fields++;
+	}
+
+	public function removeAttachment($key)
+	{
+		unset( $this->attachments[$key] );
+	}
+
+	public function orderFormSubmit()
+	{
+		$this->validate();
+
+		if ( isset($this->newmake) ) {
+
+		    $slug = Str::slug($this->newmake);
+
+            $manufacturer = Manufacturer::firstOrCreate(
+                ['slug' => $slug],
+                [
+                    'name' => ucwords($this->newmake),
+                    'models' => json_encode( $this->model )
+                ]
+            );
+
+            $this->make = $manufacturer->id;
+
+        }
+
+		if ( !isset ( $this->chassis ) || $this->chassis === '' ) {
+			$vehicle = new Vehicle();
+		} else {
+			$vehicle = Vehicle::firstOrCreate([
+				'chassis' => $this->chassis,
+			]);
+		}
+
+		$vehicle->vehicle_status = $this->status;
+		$vehicle->reg = $this->registration;
+		$vehicle->model_year = $this->model_year;
+		$vehicle->make = $this->make;
+		$vehicle->model = $this->model;
+		$vehicle->derivative = $this->derivative;
+		$vehicle->engine = $this->engine;
+		$vehicle->transmission = $this->transmission;
+		$vehicle->fuel_type = $this->fuel_type;
+		$vehicle->colour = $this->colour;
+		$vehicle->trim = $this->trim;
+		$vehicle->dealer_fit_options = $this->dealer_fit_options;
+		$vehicle->factory_fit_options = $this->factory_fit_options;
+		$vehicle->chassis_prefix = $this->chassis_prefix;
+		$vehicle->type = $this->type;
+		$vehicle->metallic_paint = $this->metallic_paint;
+		$vehicle->list_price = $this->list_price;
+		$vehicle->first_reg_fee = $this->first_reg_fee;
+		$vehicle->rfl_cost = $this->rfl_cost;
+		$vehicle->onward_delivery = $this->onward_delivery;
+		$vehicle->vehicle_registered_on = $this->registered_date;
+		$vehicle->hide_from_broker = $this->hide_from_broker;
+		$vehicle->hide_from_broker = $this->hide_from_dealer;
+		$vehicle->show_in_ford_pipeline = $this->ford_pipeline;
+		$vehicle->save();
+
+		if (!isset($this->customer_id) || $this->customer_id === '') {
+			$customer = new Customer();
+			$customer->customer_name = $this->name;
+			$customer->company_name = $this->company;
+			$customer->preferred_name = $this->preferred;
+			$customer->address_1 = $this->delivery_address_1;
+			$customer->address_2 = $this->delivery_address_2;
+			$customer->town = $this->delivery_town;
+			$customer->city = $this->delivery_city;
+			$customer->county = $this->delivery_county;
+			$customer->postcode = $this->delivery_postcode;
+			$customer->phone_number = $this->customer_phone;
+
+			$customer-> save();
+
+			$customer = $customer->id;
+		} else {
+			$customer = $this->customer_id;
+		}
+
+		$invoice = new Invoice();
+		$invoice->finance_commission_invoice_number = $this->invoice_finance_number;
+		$invoice->broker_invoice_number = $this->invoice_broker_number;
+		$invoice->broker_commission_invoice_number = $this->commission_broker_number;
+		$invoice->dealer_discount = $this->dealer_discount;
+		$invoice->manufacturer_discount = $this->manufacturer_discount;
+		$invoice->manufacturer_delivery_cost = $this->manufacturer_delivery_cost;
+		$invoice->onward_delivery = $this->onward_delivery;
+		$invoice->invoice_funder_for = $this->invoice_funder_for;
+		$invoice->invoice_value = $this->invoice_finance;
+		$invoice->invoice_value_to_broker = $this->invoice_value_to_broker;
+		$invoice->commission_to_broker = $this->commission_broker;
+		$invoice->commission_to_finance_company = $this->invoice_finance;
+		$invoice->finance_commission_pay_date = $this->finance_commission_paid;
+		$invoice->broker_commission_pay_date = $this->commission_broker_paid;
+		$invoice->broker_pay_date = $this->invoice_broker_paid;
+		$invoice->save();
+
+
+		$order = new Order();
+		$order->vehicle_id = $vehicle->id;
+		$order->customer_id = $customer;
+		$order->broker_id = $this->broker;
+		$order->dealer_id = $this->dealership;
+		$order->comments = $this->comments;
+		$order->order_ref = $this->order_ref;
+		$order->broker_ref = $this->broker_ref;
+		$order->due_date = $this->due_date;
+		$order->delivery_date = $this->delivery_date;
+		$order->registration_company_id = $this->registration_company;
+		$order->invoice_company_id = $this->invoice_company;
+		$order->invoice_id = $invoice->id;
+		$order-> save();
+
+		foreach ($this->attachments as $attachment) {
+			$file = new OrderUpload();
+			$file->file_name = $attachment->store('attachments');
+			$file->uploaded_by = auth()->id();
+			$file->order_id = $order->id;
+			$file->file_type = $attachment->getClientOriginalExtension();
+			$file->save();
+		}
+
+
+		$this->successMsg = "Order Created";
+
+
+	}
+
+    public function render()
+    {
+	    $companies = Company::latest()->get();
+	    $fitoptions = FitOption::latest()->get();
+
+	    $options = [
+	    	'customers'         => Customer::all(),
+		    'manufacturers'     => Manufacturer::all()->keyBy('id'),
+		    'types'             => Type::all(),
+		    'derivatives'       => Derivative::all(),
+	        'engines'           => Engine::all(),
+	        'transmissions'     => Transmission::all(),
+	        'fuel_types'        => Fuel::all(),
+		    'colours'           => Colour::all(),
+		    'trims'             => Trim::all(),
+
+		    'brokers'                => $companies->where('company_type', 'broker'),
+		    'dealers'                => $companies->where('company_type', 'dealer'),
+		    'registration_companies' => $companies->where('company_type', 'registration'),
+		    'invoice_companies'      => $companies->where('company_type', 'invoice'),
+
+		    'factory_options'   => $fitoptions->where('option_type', 'factory'),
+		    'dealer_options'    => $fitoptions->where('option_type', 'dealer')
+	    ];
+        return view('livewire.order-form', $options );
+    }
+}

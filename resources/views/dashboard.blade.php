@@ -268,13 +268,13 @@ var vehicle_stock = document.getElementById('vehicle_stock_chart');
 var vehicle_stock_chart = new Chart(vehicle_stock, {
   type: 'bar',
   data: {
-    labels: [@foreach ($vehicles_registered as $month) "{{ $month->month }}", @endforeach],
+    labels: [@foreach ($vehicles_registered as $month) "{{ $month->month_label }}", @endforeach],
     datasets: [{
       label: "Vehicles",
       backgroundColor: "#3d708f",
       hoverBackgroundColor: "#004c6d",
       borderColor: "#3d708f",
-      data: [@foreach ($vehicles_registered as $order) {{ $order->orders }}, @endforeach],
+      data: [@foreach ($vehicles_registered as $order) {{ $order->data }}, @endforeach],
     }],
   },
   options: {

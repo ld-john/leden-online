@@ -5,7 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md-5">
             <div class="login-cont">
-                <h1 class="text-center"><strong>Leden Online</strong><br>Admin System</h1>
+                <img src="{{ asset('images/leden-group-ltd.png') }}"  alt="Leden Logo"/>
+                <h1 class="text-center">Admin System</h1>
 
                 <form method="POST" action="{{ route('login') }}">
 
@@ -41,7 +42,7 @@
                         <div class="col-md-6 text-right">
                             <button type="submit" class="btn btn-primary">
                                 {{ __('Login') }}
-                            </button>                                
+                            </button>
                         </div>
                     </div>
 

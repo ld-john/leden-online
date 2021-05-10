@@ -47,18 +47,18 @@
   }
 }
 
-.edit {
-  margin-right: 20px;
-}
-
 select option:disabled {
   background: #eee;
 }
 
 .btn-tooltip {
   background: #fff;
-  color: #1f3458;
+  color: $leden-dark-blue;
   border: 0;
+}
+
+.btn {
+  margin-right: 1.1em;
 }
 
 /* Login Screen */
@@ -73,6 +73,9 @@ select option:disabled {
   h1 {
     font-size: 35px;
     color: #333;
+  }
+  img {
+    width: 100%;
   }
   form {
     background: #fff;
