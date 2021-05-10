@@ -42,7 +42,6 @@ class OrderForm extends Component
 	public $transmission;
 	public $fuel_type;
 	public $colour;
-	public $body;
 	public $trim;
 	public $broker;
 	public $broker_ref; // Order
@@ -106,12 +105,26 @@ class OrderForm extends Component
 		'transmission' => 'required',
 		'fuel_type' => 'required',
 		'colour' => 'required',
-		'body' => 'required',
 		'trim' => 'required',
 		'status' => 'required',
 		'attachments.*' => 'max:1024',
         'broker' => 'required',
 	];
+
+	protected $messages = [
+        'make.required_without' => 'No <strong>Make</strong> selected',
+        'model.required' => 'No <strong>Model</strong> selected',
+        'type.required' => 'No <strong>Vehicle Type</strong> selected',
+        'derivative.required' => 'No <strong>Vehicle Derivative</strong> selected',
+        'engine.required' => 'No <strong>Engine</strong> selected',
+        'transmission.required' => 'No <strong>Transmission</strong> selected',
+        'fuel_type.required' => 'No <strong>Fuel Type</strong> selected',
+        'colour.required' => 'No <strong>Colour</strong> selected',
+        'trim.required' => 'No <strong>Vehicle Trim</strong> selected',
+        'status.required' => 'No <strong>Order Status</strong> selected',
+        'attachments.*.max' => 'An <strong>Attachment</strong> is too big! (Max 1Mb)',
+        'broker.required' => 'No <strong>Broker</strong> selected',
+    ];
 
 	public function mount()
     {
@@ -192,7 +205,6 @@ class OrderForm extends Component
 		$vehicle->transmission = $this->transmission;
 		$vehicle->fuel_type = $this->fuel_type;
 		$vehicle->colour = $this->colour;
-		$vehicle->body = $this->body;
 		$vehicle->trim = $this->trim;
 		$vehicle->dealer_fit_options = json_encode($this->dealer_fit_options);
 		$vehicle->factory_fit_options = json_encode($this->factory_fit_options);
@@ -292,7 +304,6 @@ class OrderForm extends Component
 	        'transmissions'     => Transmission::all(),
 	        'fuel_types'        => Fuel::all(),
 		    'colours'           => Colour::all(),
-		    'bodies'            => Body::all(),
 		    'trims'             => Trim::all(),
 
 		    'brokers'                => $companies->where('company_type', 'broker'),

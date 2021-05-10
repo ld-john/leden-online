@@ -77,24 +77,32 @@
                 @endif
 
 
+            <!-- Vehicle Information -->
 
-
-            <!-- Card Header -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-l-blue">Car Information</h6>
             </div>
-            <!-- Card Body -->
+
             <div class="card-body">
+                {{-- Make (Required) --}}
                 <div class="form-group row">
 
-                    <label class="col-md-2 col-form-label" for="vehicle_make">Vehicle Make</label>
+                    <label class="col-md-2 col-form-label" for="vehicle_make"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Make</label>
                     <div class="col-md-4">
-                        <select class="form-control value-change" field-parent="vehicle_make" wire:model="make">
-                            <option value="">Please select make</option>
-                            @foreach ( $manufacturers as $manufacturer )
-                                <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="input-group mb-3">
+                            @error('make')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectMake"><i class="fa fa-exclamation-triangle"></i></label>
+                            </div>
+                            @enderror
+                            <select wire:model="make" class="custom-select" id="inputGroupSelectMake">
+                                <option selected>Choose...</option>
+                                @foreach ( $manufacturers as $manufacturer )
+                                    <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                     </div>
                     <div class="col-md-4">
 
@@ -123,197 +131,305 @@
                     </div>
 
                 </div>
+                {{-- Model (Required) --}}
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_model">Vehicle Model <small
-                                class="text-danger">(required)</small></label>
+                    <label class="col-md-2 col-form-label" for="vehicle_model"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Vehicle Model</label>
                     <div class="col-md-4">
-                        <select class="form-control value-change" @unless ( !is_null( $make ) ) disabled @endunless field-parent="vehicle_model" wire:model="model">
+                        <div class="input-group mb-3">
+                            @error('model')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
+                            </div>
+                            @enderror
+                            <select class="form-control value-change" @unless ( !is_null( $make ) ) disabled @endunless field-parent="vehicle_model" wire:model="model">
 
-                            @unless ( is_null( $make ) )
-                                <option value="">Please select model</option>
-                                @foreach(json_decode($manufacturers[$make]['models']) as $model)
-                                    <option value="{{$model}}">{{$model}}</option>
-                                @endforeach
+                                @unless ( is_null( $make ) )
 
-                            @endunless
-                        </select>
+                                    <option value="" selected>Choose...</option>
+                                    @foreach(json_decode($manufacturers[$make]['models']) as $model)
+                                        <option value="{{$model}}">{{$model}}</option>
+                                    @endforeach
+
+                                @endunless
+                            </select>
+                        </div>
                     </div>
                     <div class="col-md-4">
-                        <input wire:model.lazy="model" type="text" required name="vehicle_model" id="vehicle_model" class="form-control" placeholder="e.g. Fiesta"/>
+
+                        <div class="input-group mb-3">
+                            @error('model')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupModelText"><i class="fa fa-exclamation-triangle"></i></label>
+                            </div>
+                            @enderror
+                            <input wire:model.lazy="model"
+                                   type="text"
+                                   name="vehicle_model"
+                                   id="inputGroupModelText"
+                                   class="form-control"
+                                   placeholder="e.g. Fiesta"
+
+                            />
+                        </div>
+
                     </div>
+
+
+
+
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected" type="button" id="model-remove">
-                            Remove Option
+                        <button class="btn btn-secondary remove-selected"
+                                type="button"
+                                id="make-remove"
+                                wire:click.prevent="$set('model' , null)"
+                        >
+                            <i class="fa fa-times"></i>
                         </button>
                     </div>
                 </div>
-
+                {{-- Type (Required) --}}
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_type">Vehicle Type <small
-                                class="text-danger">(required)</small></label>
+                    <label class="col-md-2 col-form-label" for="vehicle_type"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Vehicle Type</label>
                     <div class="col-md-6">
-                        <select wire:model="type" class="form-control value-change" name="vehicle_type" id="vehicle_type">
-                            <option value="">Please Select</option>
-                            @foreach($types as $type)
-                                <option value="{{$type->name}}">{{$type->name}}</option>
-                            @endforeach
-                        </select>
+                        <div class="input-group mb-3">
+                            @error('type')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectType"><i class="fa fa-exclamation-triangle"></i></label>
+                            </div>
+                            @enderror
+                            <select wire:model="type" class="custom-select" id="inputGroupSelectType">
+                                <option selected>Choose...</option>
+                                @foreach ($types as $type)
+                                    <option value="{{$type->name}}">{{$type->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
+                {{-- Reg Number --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_reg">Registration Number</label>
                     <div class="col-md-6">
                         <input wire:model="registration" type="text" name="vehicle_reg" id="vehicle_reg" class="form-control" placeholder="e.g. WM63 NKZ"/>
                     </div>
                 </div>
+                {{-- Derivative (Required) --}}
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_derivative">Derivative <small
-                                class="text-danger">(required)</small></label>
+                    <label class="col-md-2 col-form-label" for="vehicle_derivative"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Derivative</label>
                     <div class="col-md-4">
-                        <select wire:model="derivative" class="form-control value-change" field-parent="vehicle_derivative">
-                            <option value="">Please Select</option>
-                            @foreach ($derivatives as $vehicle_derivative)
-                                <option value="{{ $vehicle_derivative->name }}">{{ $vehicle_derivative->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="input-group mb-3">
+                            @error('derivative')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectDerivatives"><i class="fa fa-exclamation-triangle"></i></label>
+                            </div>
+                            @enderror
+                            <select wire:model="derivative" class="custom-select" id="inputGroupSelectDerivatives">
+                                <option selected>Choose...</option>
+                                @foreach ($derivatives as $vehicle_derivative)
+                                    <option value="{{ $vehicle_derivative->name }}">{{ $vehicle_derivative->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                     </div>
                     <div class="col-md-4">
-                        <input wire:model="derivative" type="text" required name="vehicle_derivative" id="vehicle_derivative" class="form-control" autocomplete="off" placeholder="e.g. ST-Line X PHEV"/>
+                        <input wire:model="derivative" type="text" name="vehicle_derivative" id="vehicle_derivative" class="form-control" autocomplete="off" placeholder="e.g. ST-Line X PHEV"/>
                     </div>
+
+
+
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected" type="button" id="derivative-remove">Remove Option
+                        <button class="btn btn-secondary remove-selected"
+                                type="button"
+                                id="derivative-remove"
+                                wire:click.prevent="$set('derivative' , null)"
+                        >
+                            <i class="fa fa-times"></i>
                         </button>
                     </div>
                 </div>
-
+                {{-- Engine (Required) --}}
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_engine">Engine <small
-                                class="text-danger">(required)</small></label>
+                    <label class="col-md-2 col-form-label" for="vehicle_engine"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Engine</label>
                     <div class="col-md-4">
-                        <select wire:model="engine" class="form-control value-change" field-parent="vehicle_engine">
-                            <option value="">Please Select</option>
-                            @foreach ($engines as $vehicle_engine)
-                                <option value="{{ $vehicle_engine->name }}">{{ $vehicle_engine->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="input-group mb-3">
+                            @error('engine')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectEngine"><i class="fa fa-exclamation-triangle"></i></label>
+                            </div>
+                            @enderror
+                            <select wire:model="engine" class="custom-select" id="inputGroupSelectEngine">
+                                <option selected>Choose...</option>
+                                @foreach ($engines as $vehicle_engine)
+                                    <option value="{{ $vehicle_engine->name }}">{{ $vehicle_engine->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="col-md-4">
-                        <input wire:model="engine" type="text" required name="vehicle_engine" id="vehicle_engine"
+                        <input wire:model="engine" type="text" name="vehicle_engine" id="vehicle_engine"
                                class="form-control" autocomplete="off" placeholder="e.g. 1.6 Litre"/>
                     </div>
 
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected" type="button" id="engine-remove">
-                            Remove Option
+                        <button class="btn btn-secondary remove-selected"
+                                type="button"
+                                id="make-remove"
+                                wire:click.prevent="$set('engine' , null)"
+                        >
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                {{-- Transmission (Required) --}}
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="vehicle_trans"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Transmission</label>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            @error('transmission')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectTransmission"><i class="fa fa-exclamation-triangle"></i></label>
+                            </div>
+                            @enderror
+                            <select wire:model="engine" class="custom-select" id="inputGroupSelectTransmission">
+                                <option selected>Choose...</option>
+                                @foreach ($transmissions as $vehicle_trans)
+                                    <option value="{{ $vehicle_trans->name }}">{{ $vehicle_trans->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input wire:model="transmission"
+                               type="text"
+                               name="vehicle_trans"
+                               id="vehicle_trans"
+                               class="form-control"
+                               autocomplete="off"
+                               placeholder="e.g. Manual"/>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-secondary remove-selected"
+                                type="button"
+                                id="make-remove"
+                                wire:click.prevent="$set('transmission' , null)"
+                        >
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                {{-- Fuel Type --}}
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="vehicle_trans"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Fuel Type</label>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            @error('fuel_type')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
+                            </div>
+                            @enderror
+                            <select wire:model="fuel_type" class="custom-select" id="inputGroupSelectFuel">
+                                <option selected>Choose...</option>
+                                @foreach ($fuel_types as $vehicle_fuel_type)
+                                    <option value="{{ $vehicle_fuel_type->name }}">{{ $vehicle_fuel_type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input wire:model="fuel_type"
+                               type="text"
+                               name="vehicle_fuel"
+                               id="vehicle_fuel"
+                               class="form-control"
+                               autocomplete="off"
+                               placeholder="e.g. Petrol"/>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-secondary remove-selected"
+                                type="button"
+                                id="fuel-remove"
+                                wire:click.prevent="$set('fuel_type' , null)"
+                        >
+                            <i class="fa fa-times"></i>
                         </button>
                     </div>
                 </div>
 
+
+                {{-- Colour --}}
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_trans">Transmission <small
-                                class="text-danger">(required)</small></label>
+                    <label class="col-md-2 col-form-label" for="vehicle_colour"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Colour</label>
                     <div class="col-md-4">
-                        <select wire:model="transmission" class="form-control value-change" field-parent="vehicle_trans">
-                            <option value="">Please Select</option>
-                            @foreach ($transmissions as $vehicle_trans)
-                                <option value="{{ $vehicle_trans->name }}">{{ $vehicle_trans->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="input-group mb-3">
+                            @error('colour')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
+                            </div>
+                            @enderror
+                            <select wire:model="colour" class="custom-select" id="inputGroupSelectColour">
+                                <option value="">Please Select</option>
+                                @foreach ($colours as $vehicle_colour)
+                                    <option value="{{ $vehicle_colour->name }}">{{ $vehicle_colour->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="col-md-4">
-                        <input wire:model="transmission" type="text" required name="vehicle_trans" id="vehicle_trans"
-                               class="form-control" autocomplete="off" placeholder="e.g. Manual"/>
+                        <input wire:model="fuel_type"
+                               type="text"
+                               name="vehicle_colour"
+                               id="vehicle_colour"
+                               class="form-control"
+                               autocomplete="off"
+                               
+                               placeholder="e.g. Metropolis White"/>
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected" type="button" id="trans-remove">
-                            Remove Option
+                        <button class="btn btn-secondary remove-selected"
+                                type="button"
+                                id="colour-remove"
+                                wire:click.prevent="$set('colour' , null)"
+                        >
+                            <i class="fa fa-times"></i>
                         </button>
                     </div>
                 </div>
 
+                {{-- Trim --}}
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_fuel_type">Fuel Type <small
-                                class="text-danger">(required)</small></label>
+                    <label class="col-md-2 col-form-label" for="vehicle_trim"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Trim</label>
                     <div class="col-md-4">
-                        <select wire:model="fuel_type" class="form-control value-change" field-parent="vehicle_fuel_type">
-                            <option value="">Please Select</option>
-                            @foreach ($fuel_types as $vehicle_fuel_type)
-                                <option value="{{ $vehicle_fuel_type->name }}">{{ $vehicle_fuel_type->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="input-group mb-3">
+                            @error('fuel_type')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
+                            </div>
+                            @enderror
+                            <select wire:model="colour" class="custom-select" id="inputGroupSelectColour">
+                                <option value="">Please Select</option>
+                                @foreach ($trims as $vehicle_trim)
+                                    <option value="{{ $vehicle_trim->name }}">{{ $vehicle_trim->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="col-md-4">
-                        <input wire:model="fuel_type" type="text" required name="vehicle_fuel_type" id="vehicle_fuel_type"
-                               class="form-control" autocomplete="off" placeholder="e.g. Petrol"/>
+                        <input wire:model="trim"
+                               type="text"
+                               name="vehicle_trim"
+                               id="vehicle_trim"
+                               class="form-control"
+                               autocomplete="off"
+                               placeholder="e.g. Petrol"/>
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected" type="button" id="fuel-remove">
-                            Remove Option
-                        </button>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_colour">Colour <small
-                                class="text-danger">(required)</small></label>
-                    <div class="col-md-4">
-                        <select wire:model="colour" class="form-control value-change" field-parent="vehicle_colour">
-                            <option value="">Please Select</option>
-                            @foreach ($colours as $vehicle_colour)
-                                <option value="{{ $vehicle_colour->name }}">{{ $vehicle_colour->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <input wire:model="colour" type="text" required name="vehicle_colour" id="vehicle_colour"
-                               class="form-control" autocomplete="off" placeholder="e.g. Pearl White"/>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected" type="button" id="colour-remove">
-                            Remove Option
-                        </button>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_body">Body <small
-                                class="text-danger">(required)</small></label>
-                    <div class="col-md-4">
-                        <select wire:model="body" class="form-control value-change" field-parent="vehicle_body">
-                            <option value="">Please Select</option>
-                            @foreach ($bodies as $vehicle_body)
-                                <option value="{{ $vehicle_body->name }}">{{ $vehicle_body->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <input wire:model="body" type="text" required name="vehicle_body" id="vehicle_body"
-                               class="form-control" autocomplete="off" placeholder="e.g. 5 door"/>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected" type="button" id="body-remove">
-                            Remove Option
-                        </button>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_trim">Trim <small
-                                class="text-danger">(required)</small></label>
-                    <div class="col-md-4">
-                        <select wire:model="trim" class="form-control value-change" field-parent="vehicle_trim">
-                            <option value="">Please Select</option>
-                            @foreach ($trims as $vehicle_trim)
-                                <option value="{{ $vehicle_trim->name }}">{{ $vehicle_trim->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <input wire:model="trim" type="text" required name="vehicle_trim" id="vehicle_trim" class="form-control" autocomplete="off" placeholder="e.g. Standard"/>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected" type="button" id="colour-remove">
-                            Remove Option
+                        <button class="btn btn-secondary remove-selected"
+                                type="button"
+                                id="colour-remove"
+                                wire:click.prevent="$set('trim' , null)"
+                        >
+                            <i class="fa fa-times"></i>
                         </button>
                     </div>
                 </div>
@@ -331,10 +447,10 @@
                         <div class="input-group mb-3">
                             @error('broker')
                             <div class="input-group-prepend">
-                                <label class="input-group-text bg-warning text-white" for="inputGroupSelect01"><i class="fa fa-exclamation-triangle"></i></label>
+                                <label class="input-group-text bg-warning text-white" for="inputGroupSelectBroker"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select wire:model="broker" class="custom-select" id="inputGroupSelect01">
+                            <select wire:model="broker" class="custom-select" id="inputGroupSelectBroker">
                                 <option selected>Choose...</option>
                                 @foreach ($brokers as $broker)
                                     <option value="{{ $broker->id }}">{{ $broker->company_name }}</option>
@@ -382,7 +498,7 @@
                     <label class="col-md-2 col-form-label" for="vehicle_status">Vehicle Status <small
                                 class="text-danger">(required)</small></label>
                     <div class="col-md-6">
-                        <select wire:model="status" class="form-control" required name="vehicle_status" id="vehicle_status">
+                        <select wire:model="status" class="form-control" name="vehicle_status" id="vehicle_status">
                             <option value="">Please Select Status</option>
                             <option value="1">
                                 In Stock
@@ -900,7 +1016,18 @@
                 @endforeach
                 </ul>
             </div>
-            <!-- Card Footer -->
+
+            @if($errors->count())
+                <div class="alert alert-danger alert-dismissible fade show m-5">
+                    <h4 class="alert-heading"><i class="fa fa-exclamation-triangle"></i> There are some issues.</h4>
+                    <hr>
+                    <ul>
+                        {!! implode($errors->all('<li>:message</li>')) !!}
+                    </ul>
+                </div>
+            @endif
+
+
             <div class="card-footer text-right">
                 <button class="btn btn-primary" type="submit">Save Order</button>
             </div>
@@ -908,14 +1035,7 @@
         {{--</div>--}}
     </form>
 
-    @if($errors->count())
-        <div class="alert alert-danger">
-            <p>There were some errors that need to be fixed!</p>
-            <ul>
-                {!! implode($errors->all('<li>:message</li>')) !!}
-            </ul>
-        </div>
-    @endif
+
 </div>
 
 @push('custom-scripts')
