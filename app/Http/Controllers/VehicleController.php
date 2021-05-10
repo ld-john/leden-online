@@ -166,17 +166,16 @@ class VehicleController extends Controller
     public function showFordPipeline(Request $request)
     {
 	    if ($request->ajax()) {
-		    $data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')->where('show_in_ford_pipeline', true)->take(200);
-
+		    $data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
+			    ->with('manufacturer')
+			    ->where('show_in_ford_pipeline', true);
 		    if (Auth::user()->role === 'dealer') {
 			    $data->where('hide_from_dealer', false);
 		    }
 		    if (Auth::user()->role === 'broker') {
 			    $data->where('hide_from_broker', false);
 		    }
-
 		    $data->get();
-
 		    return Datatables::of($data)
 			    ->addColumn('action', function ($row) {
 				    if (Auth::user()->role != 'admin') {
@@ -209,7 +208,9 @@ class VehicleController extends Controller
 	public function showLedenStock(Request $request)
 	{
 		if ($request->ajax()) {
-			$data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')->where('show_in_ford_pipeline', false)->take(200);
+			$data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
+				->with('manufacturer')
+				->where('show_in_ford_pipeline', false);
 
 			if (Auth::user()->role === 'dealer') {
 				$data->where('hide_from_dealer', false);

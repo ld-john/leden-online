@@ -1,6 +1,6 @@
 @extends('layouts.main', [
-    'title' => 'Order Bank',
-    'activePage' => 'order-bank'
+    'title' => 'Manage Deliveries',
+    'activePage' => 'deliveries'
     ])
 
 @section('content')
@@ -11,19 +11,7 @@
         <div class="row justify-content-center">
 
             <div class="col-lg-12">
-                <h1 class="h3 mb-4 text-gray-800">Order Bank</h1>
-                @if (!empty(session('successMsg')))
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <strong>{{ session('successMsg') }}</strong>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                @endif
+                <h1 class="h3 mb-4 text-gray-800">Manage Deliveries</h1>
 
                 <div class="card shadow mb-4">
                     <!-- Card Body -->
@@ -34,10 +22,10 @@
                                 <tr>
                                     <th>Leden ID</th>
                                     <th>Model</th>
-                                    <th>Derivative</th>
+                                    <th>Status of Delivery</th>
                                     <th>Order Number</th>
                                     <th>Registration</th>
-                                    <th>Due Date</th>
+                                    <th>Delivery Date</th>
                                     <th>Customer</th>
                                     <th>Broker Order Ref</th>
                                     <th>Broker</th>
@@ -70,21 +58,36 @@
             var table = $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('order_bank') }}",
+                ajax: "{{ route('manage_deliveries') }}",
                 columns: [
                     {data: 'id', name: 'id'},
-                    {data: 'vehicle_model', name: 'vehicle_model'},
-                    {data: 'vehicle_derivative', name: 'vehicle_derivative'},
+                    {data: 'vehicle.model', name: 'vehicle.model'},
+                    {data: function (row) {
+                            switch (row.vehicle.vehicle_status) {
+                                case 3:
+                                    return 'Ready for delivery';
+                                case 4:
+                                    return 'Factory Order';
+                                case 6:
+                                    return 'Delivery Booked';
+                            }
+                        }, name: 'vehicle.vehicle_status', orderable: false},
                     {data: 'order_ref', name: 'order_ref'},
-                    {data: 'vehicle_reg', name: 'vehicle_reg'},
-                    {data: 'vehicle_due_date', name: 'vehicle_due_date'},
-                    {data: 'customer', name: 'customer'},
-                    {data: 'broker_order_ref', name: 'broker_order_ref'},
-                    {data: 'broker_name', name: 'broker'},
-                    {data: 'dealer_name', name: 'dealership'},
+                    {data: 'vehicle.reg', name: 'vehicle.reg'},
+                    {data: 'delivery_date', name: 'delivery_date'},
+                    {data: function(row){
+                            if('customer.preferred_name' === 'company') {
+                                return row.customer.company_name
+                            } else {
+                                return row.customer.customer_name
+                            }
+                        }, name: 'customer_id', orderable: false},
+                    {data: 'broker_ref', name: 'broker_ref'},
+                    {data: 'broker.company_name', name: 'broker.company_name', orderable: false},
+                    {data: 'dealer.company_name', name: 'dealer.company_name', orderable: false},
                     {data: 'action', name: 'action', orderable: false},
-                    {data: 'customer_name', name: 'customer_name', visible: false},
-                    {data: 'company_name', name: 'company_name', visible: false},
+                    {data: 'customer.customer_name', name: 'customer.customer_name', visible: false},
+                    {data: 'customer.company_name', name: 'customer.company_name', visible: false},
                 ]
             });
         });

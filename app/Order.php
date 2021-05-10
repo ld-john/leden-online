@@ -62,6 +62,10 @@ class Order extends Model
 	}
 
 	public function factoryOptionsSubTotal(){
+    	if (!isset($this->vehicle->factory_fit_options))
+	    {
+	    	return 0;
+	    }
 		return $this->vehicle->getFitOptions('factory')->sum('option_price');
 	}
 
@@ -74,6 +78,10 @@ class Order extends Model
 	}
 
 	public function dealerOptionsTotal(){
+		if (!isset($this->vehicle->dealer_fit_options))
+		{
+			return 0;
+		}
 		return $this->vehicle->getFitOptions('dealer')->sum('option_price');
 	}
 

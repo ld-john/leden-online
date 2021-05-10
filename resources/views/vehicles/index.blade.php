@@ -98,7 +98,7 @@
                 columns: [
                     {"data": null, defaultContent: "", className: 'select-checkbox', orderable: false,},
                     {data: 'id', name: 'id'},
-                    {data: 'make', name: 'make'},
+                    {data: 'manufacturer.name', name: 'manufacturer.name'},
                     {data: 'model', name: 'model'},
                     {data: 'derivative', name: 'derivative'},
                     {data: 'reg', name: 'reg'},

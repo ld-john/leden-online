@@ -415,8 +415,6 @@ class OrdersController extends Controller
                     $query->where('customer_name', '!=', null)
                         ->orWhere('company_name', '!=', null);
                 });
-            //->orwhere('customer_name', '!=', null)
-            //->orWhere('company_name', '!=', null);
 
             if (Helper::roleCheck(Auth::user()->id)->role == 'dealer') {
                 $data->where('dealership', Auth::user()->company_id);
@@ -470,7 +468,7 @@ class OrdersController extends Controller
                 ->make(true);
         }
 
-        return view('order-bank');
+        return view('order.index');
     }
 
     public function showManageDeliveries(Request $request)

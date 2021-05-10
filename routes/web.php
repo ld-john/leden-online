@@ -24,12 +24,13 @@ Route::get('/notifications/delete', 'DashboardController@executeDeleteNotificati
 /* OrdersController routes */
 Route::get('/create-order', 'OrdersController@create')->name('create_order');
 Route::post('/create-exclude', 'OrdersController@executeAddExcludeField')->name('exclude_field');
-Route::get('/completed-orders', 'OrdersController@showCompletedOrders')->name('completed_orders');
+Route::get('/order-bank', 'OrderController@showOrderBank')->name('order_bank');
+Route::get('/completed-orders', 'OrderController@completedOrders')->name('completed_orders');
 Route::get('/pipeline', 'VehicleController@showLedenStock')->name('pipeline');
 Route::post('/pipeline/delete-selected', 'VehicleController@deleteSelected')->name('pipeline_delete');
 Route::get('/ford-pipeline', 'VehicleController@showFordPipeline')->name('pipeline.ford');
-Route::get('/order-bank', 'OrdersController@showOrderBank')->name('order_bank');
-Route::get('/manage-deliveries', 'OrdersController@showManageDeliveries')->name('manage_deliveries');
+
+Route::get('/manage-deliveries', 'OrderController@showManageDeliveries')->name('manage_deliveries');
 Route::get('/orders/view/{order}', 'OrderController@show')->name('order.show');
 Route::get('/vehicle/view/{vehicle}', 'VehicleController@show')->name('vehicle.show');
 Route::get('/orders/edit/{order}', 'OrdersController@showEditOrder')->name('order.edit');
@@ -62,18 +63,19 @@ Route::post('/messages/{message_group_id}', 'MessagesController@executeReplyMess
 /* ProfileController routes */
 Route::get('/profile', 'ProfileController@showProfile')->name('profile');
 Route::post('/profile', 'ProfileController@executeUpdateProfile')->name('profile.update');
-Route::get('/user-management', 'ProfileController@showUserManager')->name('user_manager');
+Route::get('/user-management', 'ProfileController@showUserManager')->name('user_manager')->middleware('can:admin');
 Route::get('/user-management/add', 'ProfileController@showAddUser')->name('user.add');
 Route::post('/user-management/add', 'ProfileController@executeAddUser')->name('user.create');
-Route::get('/user-management/edit/{user_id}', 'ProfileController@showEditUser')->name('user.edit');
-Route::post('/user-management/edit/{user_id}', 'ProfileController@executeEditUser')->name('user.update');
-Route::get('/user-management/disable/{user_id}', 'ProfileController@toggleDisabled')->name('toggle.user.disabled');
+Route::get('/user-management/edit/{user}', 'ProfileController@showEditUser')->name('user.edit')->middleware('can:admin');
+Route::post('/user-management/edit/{user}', 'ProfileController@storeEditUser')->name('user.update');
+Route::get('/user-management/disable/{user}', 'ProfileController@toggleDisabled')->name('toggle.user.disabled')->middleware('can:admin');
+Route::get('/user-management/delete/{user}', 'ProfileController@delete')->name('user.delete')->middleware('can:admin');
 
-Route::get('/companies', 'ProfileController@showCompanies')->name('company_manager');
-Route::get('/companies/add', 'ProfileController@showAddCompany')->name('company.add');
-Route::post('/companies/add', 'ProfileController@executeAddCompany')->name('company.create');
-Route::get('/companies/edit/{company_id}', 'ProfileController@showEditCompany')->name('company.edit');
-Route::post('/companies/edit/{company_id}', 'ProfileController@executeEditCompany')->name('company.update');
+Route::get('/companies', 'CompanyController@index')->name('company_manager')->middleware('can:admin');
+Route::get('/companies/add', 'CompanyController@create')->name('company.add')->middleware('can:admin');
+Route::post('/companies/add', 'CompanyController@store')->name('company.create');
+Route::get('/companies/edit/{company}', 'CompanyController@edit')->name('company.edit')->middleware('can:admin');
+Route::post('/companies/edit/{company}', 'CompanyController@update')->name('company.update');
 
 
 /* Vehicle Meta CRUD Routes
