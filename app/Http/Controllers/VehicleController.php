@@ -235,11 +235,15 @@ class VehicleController extends Controller
 				->addColumn('options', function ($row) {
 					$count = 0;
 					if ( isset ( $row->dealer_fit_options ) ) {
-						$count += $row->dealer_fit_options->count();
-					}
+						$count += count( json_decode( $row->dealer_fit_options ) );
+					} else {
+					    $count += 0;
+                    }
 					if ( isset ( $row->factory_fit_options ) ) {
-						$count += $row->factory_fit_options->count();
-					}
+						$count += count( json_decode( $row->factory_fit_options ));
+					} else {
+                        $count += 0;
+                    }
 
 					return $count;
 				})

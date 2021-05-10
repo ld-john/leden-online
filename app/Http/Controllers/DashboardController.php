@@ -14,116 +14,135 @@ use Yajra\DataTables\DataTables;
 
 class DashboardController extends Controller
 {
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct() {
-		$this->middleware('auth');
-	}
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
-	/**
-	 * Show the application dashboard.
-	 *
-	 * @return Renderable
-	 */
-	public function index(Request $request)
-	{
-		if (Auth::user()->role == 'admin') {
-			return $this->adminDashboard();
-		} elseif (Auth::user()->role == 'dealer') {
-			return view('dashboard-dealer', [
-				'in_stock' => $this->GetVehicleByStatus(1),
-				'orders_placed' => $this->GetVehicleByStatus(2, 'dealer'),
-				'ready_for_delivery' => $this->GetVehicleByStatus(3, 'dealer'),
-				'completed_orders' => $this->GetVehicleByStatus(7, 'dealer'),
-				'notifications' => Auth::user()->notifications->take(6),
-			]);
-		} else {
-			if ($request->ajax()) {
+    /**
+     * Show the application dashboard.
+     *
+     * @return Renderable
+     */
+    public function index(Request $request)
+    {
+        if (Auth::user()->role == 'admin') {
+            return $this->adminDashboard();
+        } elseif (Auth::user()->role == 'dealer') {
+            return view('dashboard-dealer', [
+                'in_stock' => $this->GetVehicleByStatus(1),
+                'orders_placed' => $this->GetOrdersByVehicleStatus(2),
+                'ready_for_delivery' => $this->GetOrdersByVehicleStatus(3),
+                'completed_orders' => $this->GetOrdersByVehicleStatus(7),
+                'notifications' => Auth::user()->notifications->take(6),
+            ]);
+        } else {
+            if ($request->ajax()) {
 
-				$data = Vehicle::select('id', 'make', 'model', 'reg', 'type')
-					->where('vehicle_status', 1)
-					->with('manufacturer')
-					->get();
-				return Datatables::of($data)
-					->addColumn('action', function($row){
-						$btn = '<a href="/orders/view/' . $row->id . '" class="btn btn-warning"><i class="far fa-eye"></i> View</a>';
+                $data = Vehicle::select('id', 'make', 'model', 'reg', 'type')
+                    ->where('vehicle_status', 1)
+                    ->with('manufacturer')
+                    ->where('show_offer', true)
+                    ->get();
+                return Datatables::of($data)
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="/orders/view/' . $row->id . '" class="btn btn-warning"><i class="far fa-eye"></i> View</a>';
 
-						return $btn;
-					})
-					->rawColumns(['action'])
-					->make(true);
-			}
-
-
-
-			return view('dashboard-broker', [
-				'in_stock' => $this->GetVehicleByStatus(1),
-				'orders_placed' => $this->GetVehicleByStatus(2),
-				'ready_for_delivery' => $this->GetVehicleByStatus(3),
-				'completed_orders' => $this->GetVehicleByStatus(7),
-				'notifications' => Auth::user()->notifications->take(6),
-			]);
-		}
-	}
-
-	protected function adminDashboard(){
-		$vehicles_registered = Vehicle::select(DB::raw('MONTHNAME(vehicle_registered_on) as month, COUNT(id) as orders'))
-			->where('vehicle_status', 1)
-			->where('vehicle_registered_on','>', Carbon::now()->subMonths(6))
-			->get();
-
-		/* $vehicles_registered = DB::table('orderLegacy')
-			->select(DB::raw('MONTHNAME(vehicle_registered_on) as month, COUNT(id) as orders'))
-			->where('vehicle_status', 1)
-			->where("vehicle_registered_on",">", Carbon::now()->subMonths(6))
-			->groupByRaw("DATE_FORMAT(vehicle_registered_on, '%Y-%m')")
-			->get(); */
-		$values = [];
-		$max = 0;
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
 
 
-		foreach ($vehicles_registered as $order) {
-			$values = [];
-			array_push($values, $order->orders);
-		}
+            return view('dashboard-broker', [
+                'in_stock' => $this->GetVehicleByStatus(1),
+                'orders_placed' => $this->GetOrdersByVehicleStatus(2),
+                'ready_for_delivery' => $this->GetOrdersByVehicleStatus(3),
+                'completed_orders' => $this->GetOrdersByVehicleStatus(7),
+                'notifications' => Auth::user()->notifications->take(6),
+            ]);
+        }
+    }
 
-		if($values){
-			$max = (ceil(max($values) / 10) * 10) + 10;
-		}
-
-
-		return view('dashboard', [
-			'in_stock' => $this->GetVehicleByStatus(1),
-			'orders_placed' => $this->GetVehicleByStatus(2),
-			'ready_for_delivery' => $this->GetVehicleByStatus(3),
-			'factory_order' => $this->GetVehicleByStatus(4),
-			'delivered' => $this->GetVehicleByStatus(6),
-			'completed_orders' => $this->GetVehicleByStatus(7),
-			'europe_vhc' => $this->GetVehicleByStatus(10),
-			'uk_vhc' => $this->GetVehicleByStatus(11),
-			'vehicles_registered' => $vehicles_registered,
-			'max' => $max,
-			'notifications' => Auth::user()->notifications->take(6),
-		]);
-	}
-
-	public static function GetVehicleByStatus($vehicle_status, $role = null) {
+    protected function adminDashboard()
+    {
 
 
-		$vehicles = Vehicle::where('vehicle_status', $vehicle_status);
+        $vehicles_registered = Vehicle::select(
+            DB::raw('count(id) as `data`'),
+            DB::raw("DATE_FORMAT(vehicle_registered_on, '%M') month_label"),
+            DB::raw('YEAR(vehicle_registered_on) year, MONTH(vehicle_registered_on) month'))
+            ->groupby('year', 'month')
+            ->where('vehicle_status', 1)
+            ->where('vehicle_registered_on', '>', Carbon::now()->subMonths(6))
+            ->get();
 
-		if ($vehicle_status != 1 && $role == 'dealer') {
-			$vehicles->where('dealership', Auth::user()->company_id);
-		}
-		if ($vehicle_status != 1 && $role == 'broker') {
-			$vehicles->where('broker', Auth::user()->company_id);
-		}
+        foreach ($vehicles_registered as $vehicle) {
+            $max_count[] = $vehicle->data;
+        }
 
-		return $vehicles->count();
-	}
+
+        if (isset ($max_count)) {
+            $max = max($max_count) + 10;
+        } else {
+            $max = 5;
+        }
+
+
+        return view('dashboard', [
+            'in_stock' => $this->GetVehicleByStatus(1),
+            'orders_placed' => $this->GetVehicleByStatus(2),
+            'ready_for_delivery' => $this->GetVehicleByStatus(3),
+            'factory_order' => $this->GetVehicleByStatus(4),
+            'delivered' => $this->GetVehicleByStatus(6),
+            'completed_orders' => $this->GetVehicleByStatus(7),
+            'europe_vhc' => $this->GetVehicleByStatus(10),
+            'uk_vhc' => $this->GetVehicleByStatus(11),
+            'vehicles_registered' => $vehicles_registered,
+            'max' => $max,
+            'notifications' => Auth::user()->notifications->take(6),
+        ]);
+    }
+
+    public static function GetVehicleByStatus($vehicle_status, $role = null)
+    {
+
+
+        $vehicles = Vehicle::where('vehicle_status', $vehicle_status);
+
+        if ($vehicle_status != 1 && $role == 'dealer') {
+            $vehicles->where('dealership', Auth::user()->company_id);
+        }
+        if ($vehicle_status != 1 && $role == 'broker') {
+            $vehicles->where('broker', Auth::user()->company_id);
+        }
+
+        return $vehicles->count();
+    }
+
+    public static function GetOrdersByVehicleStatus($status)
+    {
+        if ( Auth::user()->role != 'admin') {
+
+            $searchField = Auth::user()->role . '_id';
+
+            $orders = Order::whereHas('vehicle', function ($q) use ($status) {
+                $q->where('vehicle_status', $status);
+            })->where($searchField, Auth::user()->company_id);
+
+            return $orders->count();
+
+        } else {
+            return false;
+        }
+
+    }
 
 	/* Show all notifications page */
 	public function showNotifications() {

@@ -13,6 +13,12 @@ class Vehicle extends Model
 
     protected $guarded = [];
 
+    protected $attributes = [
+        'factory_fit_options' => [],
+        'dealer_fit_options' => [],
+    ];
+
+
     /**
      * @var mixed|string
      */
