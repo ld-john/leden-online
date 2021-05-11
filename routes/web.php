@@ -35,10 +35,8 @@ Route::get('/manage-deliveries', 'OrderController@showManageDeliveries')->name('
 Route::get('/orders/view/{order}', 'OrderController@show')->name('order.show');
 Route::get('/vehicle/view/{vehicle}', 'VehicleController@show')->name('vehicle.show');
 Route::get('/vehicle/edit/{vehicle}', 'VehicleController@edit')->name('edit_vehicle');
-Route::get('/orders/edit/{order}', 'OrdersController@showEditOrder')->name('order.edit');
-Route::post('/orders/edit/{order}', 'OrdersController@executeEditOrder')->name('order.update');
-Route::get('/orders/reserve/{order}', 'OrdersController@showReserveOrder')->name('order.reserve');
-Route::post('/orders/reserve/{order}', 'OrdersController@executeReserveOrder')->name('order.reserve.add');
+Route::get('/orders/edit/{order}', 'OrderController@edit')->name('order.edit');
+Route::get('/orders/reserve/{vehicle}', 'OrderController@showReserveOrder')->name('order.reserve');
 Route::get('/orders/accept-date/{order}', 'OrderController@dateAccept')->name('order.date.accept');
 Route::get('/orders/change-date/{order}', 'OrderController@showDateChange')->name('order.date.change');
 Route::post('/orders/change-date/{order}', 'OrderController@storeDateChange')->name('order.date.update');

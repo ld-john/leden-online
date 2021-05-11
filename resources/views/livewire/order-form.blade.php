@@ -21,21 +21,20 @@
 
                 <!-- Group the Customer Creation -->
 
-
                 @if($newCustomer)
 
                     <div id="orderCreateNewCustomer" class="order-tab-group" data-tab="orderCreateNewCustomer">
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" for="customer_name">Customer Name</label>
                             <div class="col-md-6">
-                                <input wire:model="name" type="text" name="customer_name" id="customer_name" class="form-control" placeholder="e.g. Ted Moseby" />
+                                <input wire:model.lazy="name" type="text" name="customer_name" id="customer_name" class="form-control" placeholder="e.g. Ted Moseby" />
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" for="company_name">Company Name</label>
                             <div class="col-md-6">
-                                <input type="text" name="company_name" id="company_name" class="form-control" placeholder="e.g. Mosbius Designs" wire:model="company"/>
+                                <input type="text" name="company_name" id="company_name" class="form-control" placeholder="e.g. Mosbius Designs" wire:model.lazy="company"/>
                             </div>
                         </div>
 
@@ -291,7 +290,7 @@
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectTransmission"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select wire:model="engine" class="custom-select" id="inputGroupSelectTransmission">
+                            <select wire:model="transmission" class="custom-select" id="inputGroupSelectTransmission">
                                 <option selected>Choose...</option>
                                 @foreach ($transmissions as $vehicle_trans)
                                     <option value="{{ $vehicle_trans->name }}">{{ $vehicle_trans->name }}</option>
@@ -376,13 +375,13 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <input wire:model="fuel_type"
+                        <input wire:model="colour"
                                type="text"
                                name="vehicle_colour"
                                id="vehicle_colour"
                                class="form-control"
                                autocomplete="off"
-                               
+
                                placeholder="e.g. Metropolis White"/>
                     </div>
                     <div class="col-md-2">
@@ -401,12 +400,12 @@
                     <label class="col-md-2 col-form-label" for="vehicle_trim"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Trim</label>
                     <div class="col-md-4">
                         <div class="input-group mb-3">
-                            @error('fuel_type')
+                            @error('trim')
                             <div class="input-group-prepend">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select wire:model="colour" class="custom-select" id="inputGroupSelectColour">
+                            <select wire:model="trim" class="custom-select" id="inputGroupSelectColour">
                                 <option value="">Please Select</option>
                                 @foreach ($trims as $vehicle_trim)
                                     <option value="{{ $vehicle_trim->name }}">{{ $vehicle_trim->name }}</option>

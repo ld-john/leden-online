@@ -171,9 +171,12 @@ class VehicleForm extends Component
 
 		}
 
-		if ( !isset ( $this->chassis ) || $this->chassis === '' ) {
+		if ( $this->vehicle) {
+			$vehicle = $this->vehicle;
+		} elseif ( !isset ( $this->chassis ) || $this->chassis === '' ) {
 			$vehicle = new Vehicle();
 		} else {
+
 			$vehicle = Vehicle::firstOrCreate([
 				'chassis' => $this->chassis,
 			]);
@@ -207,7 +210,13 @@ class VehicleForm extends Component
 		$vehicle->show_in_ford_pipeline = $this->ford_pipeline;
 		$vehicle->save();
 
-		$this->successMsg = "Vehicle Created";
+		if ($this->vehicle) {
+			$this->successMsg = "Vehicle Edited";
+		} else {
+			$this->successMsg = "Vehicle Created";
+		}
+
+
 
 
 	}

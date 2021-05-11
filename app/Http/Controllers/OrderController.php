@@ -61,7 +61,7 @@ class OrderController extends Controller
 	 */
 	public function edit(Order $order)
 	{
-		//
+		return view('order.edit', ['order' => $order]);
 	}
 
 	/**
@@ -85,6 +85,12 @@ class OrderController extends Controller
 	public function destroy(Order $order)
 	{
 		//
+	}
+
+	public function showReserveOrder(Vehicle $vehicle)
+	{
+		$order = Order::where('vehicle_id', '=', $vehicle->id)->first();
+		return view('order.reserve', ['vehicle' => $vehicle, 'order' => $order]);
 	}
 
 	public function showOrderBank(Request $request)
