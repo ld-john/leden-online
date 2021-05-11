@@ -141,27 +141,6 @@ class VehicleController extends Controller
 
     }
 
-    public function getVehicleMeta()
-    {
-        $vehicles = Vehicle::all();
-
-        $colours = $vehicles->pluck('body')->unique();
-
-        foreach ( $colours as $colour ) {
-            if ( !empty ( $colour ) ) {
-
-                $output = ucwords( strtolower( $colour ) );
-
-                $color = new Body();
-
-                $color->name = $output;
-
-                $color->save();
-            }
-        }
-
-        dd ( 'boop Let the bodies hit the floor' );
-    }
 
     public function showFordPipeline(Request $request)
     {
@@ -188,15 +167,17 @@ class VehicleController extends Controller
 				    return '<div class="btn-toolbar"><div class="btn-group">' . $btn . '</div></div>';
 			    })
 			    ->addColumn('options', function ($row) {
-				    $count = 0;
-				    if ( isset ( $row->dealer_fit_options ) ) {
-					    $count += $row->dealer_fit_options->count();
-				    }
-				    if ( isset ( $row->factory_fit_options ) ) {
-					    $count += $row->factory_fit_options->count();
-				    }
-
-				    return $count;
+                    $count = 0;
+                    if ( isset ( $row->dealer_fit_options ) ) {
+                        $count += count( json_decode( $row->dealer_fit_options ) );
+                    } else {
+                        $count += 0;
+                    }
+                    if ( isset ( $row->factory_fit_options ) ) {
+                        $count += count( json_decode( $row->factory_fit_options ));
+                    } else {
+                        $count += 0;
+                    }
 			    })
 			    ->rawColumns(['action'])
 			    ->make(true);

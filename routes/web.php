@@ -32,6 +32,7 @@ Route::get('/ford-pipeline', 'VehicleController@showFordPipeline')->name('pipeli
 
 Route::get('/manage-deliveries', 'OrderController@showManageDeliveries')->name('manage_deliveries');
 Route::get('/orders/view/{order}', 'OrderController@show')->name('order.show');
+Route::get('/orders/duplicate/{order}', 'OrderController@duplicate')->name('order.duplicate');
 Route::get('/vehicle/view/{vehicle}', 'VehicleController@show')->name('vehicle.show');
 Route::get('/orders/edit/{order}', 'OrdersController@showEditOrder')->name('order.edit');
 Route::post('/orders/edit/{order}', 'OrdersController@executeEditOrder')->name('order.update');
@@ -82,8 +83,6 @@ Route::post('/companies/edit/{company}', 'CompanyController@update')->name('comp
  * Added 04.05.2021 - By Link
 */
 
-// Vehicle\Body
-Route::get('/manage/vehiclemeta/body', 'Vehicle\BodyController@index')->name('meta.body.index');
 // Vehicle\Colour
 Route::get('/manage/vehiclemeta/colour', 'Vehicle\ColourController@index')->name('meta.colour.index');
 // Vehicle\Derivative
