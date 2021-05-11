@@ -33,6 +33,11 @@ class Vehicle extends Model
     	return $this->hasOne(Manufacturer::class, 'id', 'make');
     }
 
+    public function dealer()
+    {
+    	return $this->belongsTo(Company::class, 'dealer_id', 'id');
+    }
+
     public function getFitOptions( $type = 'factory' )
     {
     	if ( $type == 'factory') {

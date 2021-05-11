@@ -285,6 +285,12 @@
                                 <div class="col-md-4">
                                     <p class="font-weight-bold">{{ $order->customer->phone_number }}</p>
                                 </div>
+                                <div class="col-md-2">
+                                    <p>Broker Order Ref</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="font-weight-bold">{{ $order->broker_ref }}</p>
+                                </div>
                             </div>
                         </div>
                 @endif
@@ -294,15 +300,13 @@
                         @if (Auth::user()->role != 'broker')
                             <a href="{{ route('order.pdf', $order->id) }}" class="btn btn-secondary"
                                download>Download Order PDF</a>
-                            <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning">Edit Order</a>
-                        @elseif (Auth::user()->role == 'broker')
-                            @if ($order->vehicle->vehicle_status == 1)
-                                <a href="{{ route('order.reserve', $order->id) }}" class="btn btn-primary">Reserve Vehicle</a>
-                            @elseif (is_null($order->customer_name) && is_null($order->company_name))
-                                <a href="{{ route('order.reserve', $order->id) }}" class="btn btn-warning">Edit Reservation Details</a>
+                            @if($order->vehicle->vehicle_status !== 7)
+                                <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning">Edit Order</a>
+                            @endif
+                            @if($order->vehicle->vehicle_status === 7 && Auth::user()->role == 'admin')
+                                <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning">Edit Order</a>
                             @endif
                         @endif
-
                         @if ($order->vehicle->vehicle_status == 3)
                             @if (Auth::user()->role == 'admin' && $order->admin_accepted == 0)
                                 @if($order->delivery_date)

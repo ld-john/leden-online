@@ -35,7 +35,7 @@ class DashboardController extends Controller
             return $this->adminDashboard();
         } elseif (Auth::user()->role == 'dealer') {
             return view('dashboard-dealer', [
-                'in_stock' => $this->GetVehicleByStatus(1),
+                'in_stock' => $this->GetVehicleByStatus(1, 'dealer'),
                 'orders_placed' => $this->GetOrdersByVehicleStatus(2),
                 'ready_for_delivery' => $this->GetOrdersByVehicleStatus(3),
                 'completed_orders' => $this->GetOrdersByVehicleStatus(7),
@@ -116,8 +116,8 @@ class DashboardController extends Controller
 
         $vehicles = Vehicle::where('vehicle_status', $vehicle_status);
 
-        if ($vehicle_status != 1 && $role == 'dealer') {
-            $vehicles->where('dealership', Auth::user()->company_id);
+        if ($role == 'dealer') {
+            $vehicles->where('dealer_id', Auth::user()->company_id);
         }
         if ($vehicle_status != 1 && $role == 'broker') {
             $vehicles->where('broker', Auth::user()->company_id);
@@ -136,11 +136,14 @@ class DashboardController extends Controller
                 $q->where('vehicle_status', $status);
             })->where($searchField, Auth::user()->company_id);
 
-            return $orders->count();
-
         } else {
-            return false;
+
+	        $orders = Order::whereHas('vehicle', function ($q) use ($status) {
+		        $q->where('vehicle_status', $status);
+	        });
+
         }
+	    return $orders->count();
 
     }
 

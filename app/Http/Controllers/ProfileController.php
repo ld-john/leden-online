@@ -28,7 +28,7 @@ class ProfileController extends Controller
 	{
 		$company = Company::where('id', Auth()->user()->company_id)->firstOrFail();
 
-		return view('profile', [
+		return view('users.profile', [
 			'company' => $company,
 		]);
 	}
@@ -44,7 +44,7 @@ class ProfileController extends Controller
 			$user->phone = $request->get('phone');
 			$user->save();
 
-			return view('profile')->with('successMsg', 'Your profile has been updated!');
+			return view('users.profile')->with('successMsg', 'Your profile has been updated!');
 
 		} else {
 
