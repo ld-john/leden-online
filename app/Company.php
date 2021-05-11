@@ -12,4 +12,9 @@ class Company extends Model
     use SoftDeletes;
 
     protected $guarded = [];
+
+    public function vehicles()
+    {
+    	return $this->hasMany(Vehicle::class, 'dealer_id', 'id');
+    }
 }

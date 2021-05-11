@@ -4,16 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Add Vehicle Create and Edit form">
-      <change afterPath="$PROJECT_DIR$/resources/views/order/reserve.blade.php" afterDir="false" />
+    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Edit and Reserve Order Forms created">
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_05_11_114217_add_dealer_id_to_vehicles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Vehicle.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/profile.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/report-track.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/report-track.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +37,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="testing" />
+        <entry key="$PROJECT_DIR$" value="vehicle_form" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -175,6 +178,9 @@
       <path value="$PROJECT_DIR$/vendor/livewire/livewire" />
     </include_path>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="2" />
+  </component>
   <component name="ProjectId" id="1qn4ABPMmp6Khd2K0qaazjvQ6Rw" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -198,8 +204,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\wamp64\www\leden-online\resources\views\companies" />
       <recent name="D:\wamp64\www\leden-online\resources\views\users" />
+      <recent name="D:\wamp64\www\leden-online\resources\views\companies" />
       <recent name="D:\wamp64\www\leden-online\resources\views\vehicles" />
       <recent name="C:\wamp64\www\leden\storage\app\public" />
     </key>
@@ -229,7 +235,7 @@
       <workItem from="1620288330218" duration="23620000" />
       <workItem from="1620374322316" duration="20414000" />
       <workItem from="1620634062909" duration="21465000" />
-      <workItem from="1620720280334" duration="10250000" />
+      <workItem from="1620720280334" duration="19915000" />
     </task>
     <task id="LOCAL-00001" summary="Setting up basic gating">
       <created>1620290625172</created>
@@ -273,7 +279,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620723329224</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Edit and Reserve Order Forms created">
+      <created>1620731718228</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1620731718228</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -308,6 +321,7 @@
     <MESSAGE value="Delivery Date Change and Accept for orders" />
     <MESSAGE value="Ford Pipeline display" />
     <MESSAGE value="Add Vehicle Create and Edit form" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Vehicle Create and Edit form" />
+    <MESSAGE value="Edit and Reserve Order Forms created" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edit and Reserve Order Forms created" />
   </component>
 </project>

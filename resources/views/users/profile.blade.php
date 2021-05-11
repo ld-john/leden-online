@@ -1,6 +1,6 @@
 @extends('layouts.main', [
-    'title' => 'Profile',
-    'activePage' => 'profile'
+    'title' => 'users.profile',
+    'activePage' => 'users.profile'
     ])
 
 @section('content')

@@ -144,6 +144,12 @@
                                 <div class="col-md-4">
                                     <p class="font-weight-bold">{{ $vehicle->model_year }}</p>
                                 </div>
+                                <div class="col-md-2">
+                                    <p>Dealer</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="font-weight-bold">{{ $vehicle->dealer->company_name }}</p>
+                                </div>
                             </div>
                         @endif
                     </div>

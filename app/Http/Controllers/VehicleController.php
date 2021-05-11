@@ -210,7 +210,8 @@ class VehicleController extends Controller
 		if ($request->ajax()) {
 			$data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
 				->with('manufacturer')
-				->where('show_in_ford_pipeline', false);
+				->where('show_in_ford_pipeline', false)
+				->where('vehicle_status', 1);
 
 			if (Auth::user()->role === 'dealer') {
 				$data->where('hide_from_dealer', false);

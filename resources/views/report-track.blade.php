@@ -72,7 +72,7 @@
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-l-blue">Quarterly <small>(Created - Last full year)</small></h6>
+                        <h6 class="m-0 font-weight-bold text-l-blue">Quarterly <small>(Created - Last 4 Quarters)</small></h6>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
@@ -102,7 +102,6 @@
             type: 'doughnut',
             data: {
                 labels: [
-                    /*"In Stock - {{ $in_stock }}",*/
                     "Orders Place - {{ $orders_placed }}",
                     "Ready For Delivery - {{ $ready_for_delivery }}",
                     "Factory Order - {{ $factory_order }}",
@@ -121,7 +120,7 @@
                         "#7faac6",
                         "#94bed9",
                     ],
-                    data: [{{--{{ $in_stock }},--}} {{ $orders_placed }}, {{ $ready_for_delivery }}, {{ $factory_order }}, {{ $delivered }}, {{ $completed_orders }}, {{ $europe_vhc }}, {{ $uk_vhc }}]
+                    data: [{{ $orders_placed }}, {{ $ready_for_delivery }}, {{ $factory_order }}, {{ $delivered }}, {{ $completed_orders }}, {{ $europe_vhc }}, {{ $uk_vhc }}]
                 }]
             },
             options: {
@@ -153,13 +152,13 @@
         var month_sales_chart = new Chart(month_sales, {
             type: 'bar',
             data: {
-                labels: [@foreach ($monthly_sales as $mon_month) "{{ $mon_month->month }}", @endforeach],
+                labels: [@foreach ($monthly_sales as $mon_month) "{{ $mon_month->month_label }}", @endforeach],
                 datasets: [{
                     label: "Vehicles",
                     backgroundColor: "#0b61be",
                     hoverBackgroundColor: "#02356b",
                     borderColor: "#0b61be",
-                    data: [@foreach ($monthly_sales as $mon_order) {{ $mon_order->orders }}, @endforeach],
+                    data: [@foreach ($monthly_sales as $mon_order) {{ $mon_order->data }}, @endforeach],
                 }],
             },
             options: {
@@ -229,13 +228,13 @@
         var weekly_sales_chart = new Chart(weekly_sales, {
             type: 'bar',
             data: {
-                labels: [@foreach ($weekly_sales as $week) "W{{ $week->week }} {{ $week->year }}", @endforeach],
+                labels: [@foreach ($weekly_sales as $week) "{{$week->label}}", @endforeach],
                 datasets: [{
                     label: "Vehicles",
                     backgroundColor: "#00b43d",
                     hoverBackgroundColor: "#007a29",
                     borderColor: "#00b43d",
-                    data: [@foreach ($weekly_sales as $week_order) {{ $week_order->orders }}, @endforeach],
+                    data: [@foreach ($weekly_sales as $week_order) {{ $week_order->data }}, @endforeach],
                 }],
             },
             options: {
@@ -311,7 +310,7 @@
                     backgroundColor: "#691883",
                     hoverBackgroundColor: "#4a095e",
                     borderColor: "#691883",
-                    data: [@foreach ($quarterly_sales as $quarter_order) {{ $quarter_order->orders }}, @endforeach],
+                    data: [@foreach ($quarterly_sales as $quarter_order) {{ $quarter_order->data }}, @endforeach],
                 }],
             },
             options: {
