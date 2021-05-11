@@ -88,9 +88,6 @@
                             }
                         }
                     },
-                    {
-                        text: 'Add New',
-                    }
                 ],
                 processing: true,
                 serverSide: true,

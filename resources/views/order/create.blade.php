@@ -1,19 +1,17 @@
 @extends('layouts.main', [
-    'title' => 'Edit Order',
-    'activePage' => 'edit_order'
+    'title' => $title,
+    'activePage' => $activePage
     ])
 
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">
-
         <!-- Content Row -->
         <div class="row justify-content-center">
-
             <!-- Doughnut Chart -->
             <div class="col-lg-10">
-                <h1 class="h3 mb-4 text-gray-800">Edit Order - #{{ $order->id }}</h1>
-                @livewire('order-form', ['order' => $order])
+                <h1 class="h3 mb-4 text-gray-800">Create Order</h1>
+                @livewire('order-form')
             </div>
 
         </div>

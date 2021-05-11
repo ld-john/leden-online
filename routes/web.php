@@ -24,6 +24,7 @@ Route::get('/notifications/delete', 'DashboardController@executeDeleteNotificati
 /* OrdersController routes */
 Route::get('/create-order', 'OrdersController@create')->name('create_order');
 Route::post('/create-exclude', 'OrdersController@executeAddExcludeField')->name('exclude_field');
+Route::get('/create-vehicle', 'VehicleController@create')->name('create_vehicle');
 Route::get('/order-bank', 'OrderController@showOrderBank')->name('order_bank');
 Route::get('/completed-orders', 'OrderController@completedOrders')->name('completed_orders');
 Route::get('/pipeline', 'VehicleController@showLedenStock')->name('pipeline');
@@ -34,10 +35,9 @@ Route::get('/manage-deliveries', 'OrderController@showManageDeliveries')->name('
 Route::get('/orders/view/{order}', 'OrderController@show')->name('order.show');
 Route::get('/orders/duplicate/{order}', 'OrderController@duplicate')->name('order.duplicate');
 Route::get('/vehicle/view/{vehicle}', 'VehicleController@show')->name('vehicle.show');
-Route::get('/orders/edit/{order}', 'OrdersController@showEditOrder')->name('order.edit');
-Route::post('/orders/edit/{order}', 'OrdersController@executeEditOrder')->name('order.update');
-Route::get('/orders/reserve/{order}', 'OrdersController@showReserveOrder')->name('order.reserve');
-Route::post('/orders/reserve/{order}', 'OrdersController@executeReserveOrder')->name('order.reserve.add');
+Route::get('/vehicle/edit/{vehicle}', 'VehicleController@edit')->name('edit_vehicle');
+Route::get('/orders/edit/{order}', 'OrderController@edit')->name('order.edit');
+Route::get('/orders/reserve/{vehicle}', 'OrderController@showReserveOrder')->name('order.reserve');
 Route::get('/orders/accept-date/{order}', 'OrderController@dateAccept')->name('order.date.accept');
 Route::get('/orders/change-date/{order}', 'OrderController@showDateChange')->name('order.date.change');
 Route::post('/orders/change-date/{order}', 'OrderController@storeDateChange')->name('order.date.update');

@@ -38,7 +38,7 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        //
+	    return view('vehicles.create');
     }
 
     /**
@@ -49,7 +49,7 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    	//
     }
 
     /**
@@ -71,7 +71,7 @@ class VehicleController extends Controller
      */
     public function edit(Vehicle $vehicle)
     {
-        //
+        return view('vehicles.edit', ['vehicle' => $vehicle]);
     }
 
     /**
