@@ -354,8 +354,6 @@
                         </button>
                     </div>
                 </div>
-
-
                 {{-- Colour --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_colour"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Colour</label>
@@ -402,10 +400,10 @@
                         <div class="input-group mb-3">
                             @error('trim')
                             <div class="input-group-prepend">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select wire:model="trim" class="custom-select" id="inputGroupSelectColour">
+                            <select wire:model="trim" class="custom-select" id="inputGroupSelectTrim">
                                 <option value="">Please Select</option>
                                 @foreach ($trims as $vehicle_trim)
                                     <option value="{{ $vehicle_trim->name }}">{{ $vehicle_trim->name }}</option>
@@ -434,7 +432,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="broker">Broker
+                    <label class="col-md-2 col-form-label" for="broker"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Broker
                         <button type="button" class="btn-tooltip" data-toggle="tooltip"
                                 data-placement="right"
                                 title="If left blank, a notification will be sent to all Brokers when this order is added. If a Broker is selected, then a notification will only be sent to those users associated to that Broker.">
@@ -446,7 +444,7 @@
                         <div class="input-group mb-3">
                             @error('broker')
                             <div class="input-group-prepend">
-                                <label class="input-group-text bg-warning text-white" for="inputGroupSelectBroker"><i class="fa fa-exclamation-triangle"></i></label>
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectBroker"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
                             <select wire:model="broker" class="custom-select" id="inputGroupSelectBroker">
@@ -456,8 +454,6 @@
                                 @endforeach
                             </select>
                         </div>
-
-
                     </div>
                 </div>
 
@@ -494,10 +490,15 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_status">Vehicle Status <small
-                                class="text-danger">(required)</small></label>
+                    <label class="col-md-2 col-form-label" for="vehicle_status"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Vehicle Status</label>
                     <div class="col-md-6">
-                        <select wire:model="status" class="form-control" name="vehicle_status" id="vehicle_status">
+                        <div class="input-group">
+                        @error('status')
+                        <div class="input-group-prepend">
+                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectStatus"><i class="fa fa-exclamation-triangle"></i></label>
+                        </div>
+                        @enderror
+                        <select wire:model="status" class="custom-select" name="vehicle_status" id="inputGroupSelectStatus">
                             <option value="">Please Select Status</option>
                             <option value="1">
                                 In Stock
@@ -524,6 +525,7 @@
                                 UK VHC
                             </option>
                         </select>
+                        </div>
                     </div>
                 </div>
 
