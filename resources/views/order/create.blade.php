@@ -10,48 +10,8 @@
         <div class="row justify-content-center">
             <!-- Doughnut Chart -->
             <div class="col-lg-10">
-                    <h1 class="h3 mb-4 text-gray-800">Create Order</h1>
-                  @if (!empty(session('successMsg')))
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <strong>{{ session('successMsg') }}</strong>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if (!empty($errorMsg))
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>{{ $errorMsg }}</strong>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($errors->all())
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger" role="alert">
-                                @foreach($errors->all() as $message)
-                                    @if($message)
-                                        {!! $message !!}<br/>
-                                    @endif
-
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                @endif
-
+                <h1 class="h3 mb-4 text-gray-800">Create Order</h1>
                 @livewire('order-form')
-
             </div>
 
         </div>

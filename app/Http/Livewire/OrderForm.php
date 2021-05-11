@@ -27,6 +27,9 @@ class OrderForm extends Component
 {
 	use WithFileUploads;
 
+	public $vehicle;
+	public $order;
+
     public $newCustomer = true;
 	public $customer_id;
 	public $name;
@@ -129,6 +132,102 @@ class OrderForm extends Component
 	public function mount()
     {
         $newCustomer = $this->newCustomer;
+
+        if (isset ($this->vehicle))
+	    {
+		    $this->make = $this->vehicle->make;
+		    $this->model = $this->vehicle->model;
+		    $this->type = $this->vehicle->type;
+		    $this->registration = $this->vehicle->reg;
+		    $this->derivative = $this->vehicle->derivative;
+		    $this->engine = $this->vehicle->engine;
+		    $this->transmission = $this->vehicle->transmission;
+		    $this->fuel_type = $this->vehicle->fuel_type;
+		    $this->colour = $this->vehicle->colour;
+		    $this->trim = $this->vehicle->trim;
+		    $this->chassis_prefix = $this->vehicle->chassis_prefix;
+		    $this->chassis = $this->vehicle->chassis;
+		    $this->status = $this->vehicle->vehicle_status;
+		    $this->model_year = $this->vehicle->model_year;
+		    $this->registered_date = $this->vehicle->vehicle_registered_on;
+		    $this->ford_pipeline = $this->vehicle->show_in_ford_pipeline;
+		    $this->factory_fit_options = $this->vehicle->factory_fit_options;
+		    $this->dealer_fit_options = $this->vehicle->dealer_fit_options;
+		    $this->list_price = $this->vehicle->list_price;
+		    $this->metallic_paint = $this->vehicle->metallic_paint;
+		    $this->first_reg_fee = $this->vehicle->first_reg_fee;
+		    $this->rfl_cost = $this->vehicle->rfl_cost;
+		    $this->onward_delivery = $this->vehicle->onward_delivery;
+		    $this->show_discount = $this->vehicle->show_discount;
+		    $this->show_offer = $this->vehicle->show_offer;
+		    $this->hide_from_broker = $this->vehicle->hide_from_broker;
+		    $this->hide_from_dealer = $this->vehicle->hide_from_dealer;
+	    }
+
+        if (isset($this->order)) {
+        	$this->name = $this->order->customer->customer_name;
+        	$this->company = $this->order->customer->company_name;
+        	$this->preferred = $this->order->customer->preferred_name;
+        	$this->customer_phone = $this->order->customer->phone_number;
+        	$this->delivery_address_1 = $this->order->customer->address_1;
+        	$this->delivery_address_2 = $this->order->customer->address_2;
+        	$this->delivery_town = $this->order->customer->town;
+        	$this->delivery_city = $this->order->customer->city;
+        	$this->delivery_county = $this->order->customer->county;
+        	$this->delivery_postcode = $this->order->customer->postcode;
+
+			$this->invoice_finance = $this->order->invoice->commission_to_finance_company;
+			$this->invoice_finance_number = $this->order->invoice->finance_commission_invoice_number;
+			$this->finance_commission_paid = $this->order->invoice->finance_commission_pay_date;
+			$this->invoice_value_to_broker = $this->order->invoice->invoice_value_to_broker;
+			$this->invoice_broker_number = $this->order->invoice->broker_invoice_number;
+			$this->invoice_broker_paid = $this->order->invoice->broker_pay_date;
+			$this->commission_broker = $this->order->invoice->commission_to_broker;
+			$this->commission_broker_number = $this->order->invoice->broker_commission_invoice_number;
+			$this->commission_broker_paid = $this->order->invoice->broker_commission_pay_date;
+			$this->dealer_discount = $this->order->invoice->dealer_discount;
+			$this->manufacturer_discount = $this->order->invoice->manufacturer_discount;
+			$this->invoice_funder_for = $this->order->invoice->invoice_funder_for;
+			$this->manufacturer_delivery_cost = $this->order->invoice->manufacturer_delivery_cost;
+
+        	$this->order_ref = $this->order->order_ref;
+        	$this->broker_ref = $this->order->broker_ref;
+        	$this->comments = $this->order->comments;
+        	$this->registration_company = $this->order->registration_company_id;
+        	$this->invoice_company = $this->order->invoice_company_id;
+        	$this->dealership = $this->order->dealer_id;
+        	$this->broker = $this->order->broker_id;
+        	$this->due_date = $this->order->due_date;
+        	$this->delivery_date = $this->order->delivery_date;
+        	$this->make = $this->order->vehicle->make;
+	        $this->model = $this->order->vehicle->model;
+	        $this->type = $this->order->vehicle->type;
+	        $this->registration = $this->order->vehicle->reg;
+	        $this->derivative = $this->order->vehicle->derivative;
+	        $this->engine = $this->order->vehicle->engine;
+	        $this->transmission = $this->order->vehicle->transmission;
+	        $this->fuel_type = $this->order->vehicle->fuel_type;
+	        $this->colour = $this->order->vehicle->colour;
+	        $this->trim = $this->order->vehicle->trim;
+	        $this->chassis_prefix = $this->order->vehicle->chassis_prefix;
+	        $this->chassis = $this->order->vehicle->chassis;
+	        $this->status = $this->order->vehicle->vehicle_status;
+	        $this->model_year = $this->order->vehicle->model_year;
+	        $this->registered_date = $this->order->vehicle->vehicle_registered_on;
+	        $this->ford_pipeline = $this->order->vehicle->show_in_ford_pipeline;
+	        $this->factory_fit_options = $this->order->vehicle->factory_fit_options;
+	        $this->dealer_fit_options = $this->order->vehicle->dealer_fit_options;
+	        $this->list_price = $this->order->vehicle->list_price;
+	        $this->metallic_paint = $this->order->vehicle->metallic_paint;
+	        $this->first_reg_fee = $this->order->vehicle->first_reg_fee;
+	        $this->rfl_cost = $this->order->vehicle->rfl_cost;
+	        $this->onward_delivery = $this->order->vehicle->onward_delivery;
+	        $this->show_discount = $this->order->vehicle->show_discount;
+	        $this->show_offer = $this->order->vehicle->show_offer;
+	        $this->hide_from_broker = $this->order->vehicle->hide_from_broker;
+	        $this->hide_from_dealer = $this->order->vehicle->hide_from_dealer;
+        }
+
     }
 
     public function updated($propertyName)
@@ -171,58 +270,177 @@ class OrderForm extends Component
 	{
 		$this->validate();
 
-		if ( isset($this->newmake) ) {
+		if ( !isset( $this->order )) {
 
-		    $slug = Str::slug($this->newmake);
+			if (isset($this->newmake)) {
 
-            $manufacturer = Manufacturer::firstOrCreate(
-                ['slug' => $slug],
-                [
-                    'name' => ucwords($this->newmake),
-                    'models' => json_encode( $this->model )
-                ]
-            );
+				$slug = Str::slug($this->newmake);
 
-            $this->make = $manufacturer->id;
+				$manufacturer = Manufacturer::firstOrCreate(
+					['slug' => $slug],
+					[
+						'name' => ucwords($this->newmake),
+						'models' => json_encode($this->model)
+					]
+				);
 
-        }
+				$this->make = $manufacturer->id;
 
-		if ( !isset ( $this->chassis ) || $this->chassis === '' ) {
-			$vehicle = new Vehicle();
+			}
+
+			if ( isset($this->vehicle) ) {
+				$vehicle = $this->vehicle;
+			} elseif (!isset ($this->chassis) || $this->chassis === '') {
+				$vehicle = new Vehicle();
+			} else {
+				$vehicle = Vehicle::firstOrCreate([
+					'chassis' => $this->chassis,
+				]);
+			}
+
+			$vehicle->vehicle_status = $this->status;
+			$vehicle->reg = $this->registration;
+			$vehicle->model_year = $this->model_year;
+			$vehicle->make = $this->make;
+			$vehicle->model = $this->model;
+			$vehicle->derivative = $this->derivative;
+			$vehicle->engine = $this->engine;
+			$vehicle->transmission = $this->transmission;
+			$vehicle->fuel_type = $this->fuel_type;
+			$vehicle->colour = $this->colour;
+			$vehicle->trim = $this->trim;
+			$vehicle->dealer_fit_options = $this->dealer_fit_options;
+			$vehicle->factory_fit_options = $this->factory_fit_options;
+			$vehicle->chassis_prefix = $this->chassis_prefix;
+			$vehicle->type = $this->type;
+			$vehicle->metallic_paint = $this->metallic_paint;
+			$vehicle->list_price = $this->list_price;
+			$vehicle->first_reg_fee = $this->first_reg_fee;
+			$vehicle->rfl_cost = $this->rfl_cost;
+			$vehicle->onward_delivery = $this->onward_delivery;
+			$vehicle->vehicle_registered_on = $this->registered_date;
+			$vehicle->hide_from_broker = $this->hide_from_broker;
+			$vehicle->hide_from_broker = $this->hide_from_dealer;
+			$vehicle->show_in_ford_pipeline = $this->ford_pipeline;
+			$vehicle->save();
+
+			if (!isset($this->customer_id) || $this->customer_id === '') {
+				$customer = new Customer();
+				$customer->customer_name = $this->name;
+				$customer->company_name = $this->company;
+				$customer->preferred_name = $this->preferred;
+				$customer->address_1 = $this->delivery_address_1;
+				$customer->address_2 = $this->delivery_address_2;
+				$customer->town = $this->delivery_town;
+				$customer->city = $this->delivery_city;
+				$customer->county = $this->delivery_county;
+				$customer->postcode = $this->delivery_postcode;
+				$customer->phone_number = $this->customer_phone;
+
+				$customer->save();
+
+				$customer = $customer->id;
+			} else {
+				$customer = $this->customer_id;
+			}
+
+			$invoice = new Invoice();
+			$invoice->finance_commission_invoice_number = $this->invoice_finance_number;
+			$invoice->broker_invoice_number = $this->invoice_broker_number;
+			$invoice->broker_commission_invoice_number = $this->commission_broker_number;
+			$invoice->dealer_discount = $this->dealer_discount;
+			$invoice->manufacturer_discount = $this->manufacturer_discount;
+			$invoice->manufacturer_delivery_cost = $this->manufacturer_delivery_cost;
+			$invoice->onward_delivery = $this->onward_delivery;
+			$invoice->invoice_funder_for = $this->invoice_funder_for;
+			$invoice->invoice_value = $this->invoice_finance;
+			$invoice->invoice_value_to_broker = $this->invoice_value_to_broker;
+			$invoice->commission_to_broker = $this->commission_broker;
+			$invoice->commission_to_finance_company = $this->invoice_finance;
+			$invoice->finance_commission_pay_date = $this->finance_commission_paid;
+			$invoice->broker_commission_pay_date = $this->commission_broker_paid;
+			$invoice->broker_pay_date = $this->invoice_broker_paid;
+			$invoice->save();
+
+
+			$order = new Order();
+			$order->vehicle_id = $vehicle->id;
+			$order->customer_id = $customer;
+			$order->broker_id = $this->broker;
+			$order->dealer_id = $this->dealership;
+			$order->comments = $this->comments;
+			$order->order_ref = $this->order_ref;
+			$order->broker_ref = $this->broker_ref;
+			$order->due_date = $this->due_date;
+			$order->delivery_date = $this->delivery_date;
+			$order->registration_company_id = $this->registration_company;
+			$order->invoice_company_id = $this->invoice_company;
+			$order->invoice_id = $invoice->id;
+			$order->save();
+
+			foreach ($this->attachments as $attachment) {
+				$file = new OrderUpload();
+				$file->file_name = $attachment->store('attachments');
+				$file->uploaded_by = auth()->id();
+				$file->order_id = $order->id;
+				$file->file_type = $attachment->getClientOriginalExtension();
+				$file->save();
+			}
+
+
+			$this->successMsg = "Order Created";
 		} else {
-			$vehicle = Vehicle::firstOrCreate([
-				'chassis' => $this->chassis,
-			]);
-		}
+			//Update Vehicle
+			$vehicle = $this->order->vehicle;
 
-		$vehicle->vehicle_status = $this->status;
-		$vehicle->reg = $this->registration;
-		$vehicle->model_year = $this->model_year;
-		$vehicle->make = $this->make;
-		$vehicle->model = $this->model;
-		$vehicle->derivative = $this->derivative;
-		$vehicle->engine = $this->engine;
-		$vehicle->transmission = $this->transmission;
-		$vehicle->fuel_type = $this->fuel_type;
-		$vehicle->colour = $this->colour;
-		$vehicle->trim = $this->trim;
-		$vehicle->dealer_fit_options = $this->dealer_fit_options;
-		$vehicle->factory_fit_options = $this->factory_fit_options;
-		$vehicle->chassis_prefix = $this->chassis_prefix;
-		$vehicle->type = $this->type;
-		$vehicle->metallic_paint = $this->metallic_paint;
-		$vehicle->list_price = $this->list_price;
-		$vehicle->first_reg_fee = $this->first_reg_fee;
-		$vehicle->rfl_cost = $this->rfl_cost;
-		$vehicle->onward_delivery = $this->onward_delivery;
-		$vehicle->vehicle_registered_on = $this->registered_date;
-		$vehicle->hide_from_broker = $this->hide_from_broker;
-		$vehicle->hide_from_broker = $this->hide_from_dealer;
-		$vehicle->show_in_ford_pipeline = $this->ford_pipeline;
-		$vehicle->save();
+			$vehicle->vehicle_status = $this->status;
+			$vehicle->reg = $this->registration;
+			$vehicle->model_year = $this->model_year;
+			$vehicle->make = $this->make;
+			$vehicle->model = $this->model;
+			$vehicle->derivative = $this->derivative;
+			$vehicle->engine = $this->engine;
+			$vehicle->transmission = $this->transmission;
+			$vehicle->fuel_type = $this->fuel_type;
+			$vehicle->colour = $this->colour;
+			$vehicle->trim = $this->trim;
+			$vehicle->dealer_fit_options = $this->dealer_fit_options;
+			$vehicle->factory_fit_options = $this->factory_fit_options;
+			$vehicle->chassis = $this->chassis;
+			$vehicle->chassis_prefix = $this->chassis_prefix;
+			$vehicle->type = $this->type;
+			$vehicle->metallic_paint = $this->metallic_paint;
+			$vehicle->list_price = $this->list_price;
+			$vehicle->first_reg_fee = $this->first_reg_fee;
+			$vehicle->rfl_cost = $this->rfl_cost;
+			$vehicle->onward_delivery = $this->onward_delivery;
+			$vehicle->vehicle_registered_on = $this->registered_date;
+			$vehicle->hide_from_broker = $this->hide_from_broker;
+			$vehicle->hide_from_broker = $this->hide_from_dealer;
+			$vehicle->show_in_ford_pipeline = $this->ford_pipeline;
+			$vehicle->save();
 
-		if (!isset($this->customer_id) || $this->customer_id === '') {
-			$customer = new Customer();
+			//Update Invoice
+			$invoice = $this->order->invoice;
+			$invoice->finance_commission_invoice_number = $this->invoice_finance_number;
+			$invoice->broker_invoice_number = $this->invoice_broker_number;
+			$invoice->broker_commission_invoice_number = $this->commission_broker_number;
+			$invoice->dealer_discount = $this->dealer_discount;
+			$invoice->manufacturer_discount = $this->manufacturer_discount;
+			$invoice->manufacturer_delivery_cost = $this->manufacturer_delivery_cost;
+			$invoice->onward_delivery = $this->onward_delivery;
+			$invoice->invoice_funder_for = $this->invoice_funder_for;
+			$invoice->invoice_value = $this->invoice_finance;
+			$invoice->invoice_value_to_broker = $this->invoice_value_to_broker;
+			$invoice->commission_to_broker = $this->commission_broker;
+			$invoice->commission_to_finance_company = $this->invoice_finance;
+			$invoice->finance_commission_pay_date = $this->finance_commission_paid;
+			$invoice->broker_commission_pay_date = $this->commission_broker_paid;
+			$invoice->broker_pay_date = $this->invoice_broker_paid;
+			$invoice->save();
+
+			//Update Customer
+			$customer = $this->order->customer;
 			$customer->customer_name = $this->name;
 			$customer->company_name = $this->company;
 			$customer->preferred_name = $this->preferred;
@@ -234,60 +452,35 @@ class OrderForm extends Component
 			$customer->postcode = $this->delivery_postcode;
 			$customer->phone_number = $this->customer_phone;
 
-			$customer-> save();
+			$customer->save();
 
-			$customer = $customer->id;
-		} else {
-			$customer = $this->customer_id;
+			//Update Order
+			$order = $this->order;
+			$order->vehicle_id = $vehicle->id;
+			$order->customer_id = $customer->id;
+			$order->broker_id = $this->broker;
+			$order->dealer_id = $this->dealership;
+			$order->comments = $this->comments;
+			$order->order_ref = $this->order_ref;
+			$order->broker_ref = $this->broker_ref;
+			$order->due_date = $this->due_date;
+			$order->delivery_date = $this->delivery_date;
+			$order->registration_company_id = $this->registration_company;
+			$order->invoice_company_id = $this->invoice_company;
+			$order->invoice_id = $invoice->id;
+			$order->save();
+
+			foreach ($this->attachments as $attachment) {
+				$file = new OrderUpload();
+				$file->file_name = $attachment->store('attachments');
+				$file->uploaded_by = auth()->id();
+				$file->order_id = $order->id;
+				$file->file_type = $attachment->getClientOriginalExtension();
+				$file->save();
+			}
+
+			$this->successMsg = "Order Updated";
 		}
-
-		$invoice = new Invoice();
-		$invoice->finance_commission_invoice_number = $this->invoice_finance_number;
-		$invoice->broker_invoice_number = $this->invoice_broker_number;
-		$invoice->broker_commission_invoice_number = $this->commission_broker_number;
-		$invoice->dealer_discount = $this->dealer_discount;
-		$invoice->manufacturer_discount = $this->manufacturer_discount;
-		$invoice->manufacturer_delivery_cost = $this->manufacturer_delivery_cost;
-		$invoice->onward_delivery = $this->onward_delivery;
-		$invoice->invoice_funder_for = $this->invoice_funder_for;
-		$invoice->invoice_value = $this->invoice_finance;
-		$invoice->invoice_value_to_broker = $this->invoice_value_to_broker;
-		$invoice->commission_to_broker = $this->commission_broker;
-		$invoice->commission_to_finance_company = $this->invoice_finance;
-		$invoice->finance_commission_pay_date = $this->finance_commission_paid;
-		$invoice->broker_commission_pay_date = $this->commission_broker_paid;
-		$invoice->broker_pay_date = $this->invoice_broker_paid;
-		$invoice->save();
-
-
-		$order = new Order();
-		$order->vehicle_id = $vehicle->id;
-		$order->customer_id = $customer;
-		$order->broker_id = $this->broker;
-		$order->dealer_id = $this->dealership;
-		$order->comments = $this->comments;
-		$order->order_ref = $this->order_ref;
-		$order->broker_ref = $this->broker_ref;
-		$order->due_date = $this->due_date;
-		$order->delivery_date = $this->delivery_date;
-		$order->registration_company_id = $this->registration_company;
-		$order->invoice_company_id = $this->invoice_company;
-		$order->invoice_id = $invoice->id;
-		$order-> save();
-
-		foreach ($this->attachments as $attachment) {
-			$file = new OrderUpload();
-			$file->file_name = $attachment->store('attachments');
-			$file->uploaded_by = auth()->id();
-			$file->order_id = $order->id;
-			$file->file_type = $attachment->getClientOriginalExtension();
-			$file->save();
-		}
-
-
-		$this->successMsg = "Order Created";
-
-
 	}
 
     public function render()
