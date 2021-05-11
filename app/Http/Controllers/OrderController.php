@@ -87,6 +87,10 @@ class OrderController extends Controller
 		//
 	}
 
+	public function duplicate( Request $request, Order $order ){
+        //
+    }
+
 	public function showOrderBank(Request $request)
 	{
 		if ($request->ajax()) {
@@ -116,7 +120,11 @@ class OrderController extends Controller
 			$data->get();
 			return Datatables::of($data)
 				->addColumn('action', function ($row) {
-					$btn = '<a href="/orders/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
+					$btn = '<a href="/orders/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye fa-fw"></i></a>';
+
+                    if (Auth::user()->role == 'admin') {
+                        $btn .= '<a href="/orders/duplicate/' . $row->id . '" class="btn btn-sm btn-primary ml-2"><i class="far fa-copy fa-fw"></i></a>';
+                    }
 					return $btn;
 				})
 				->rawColumns(['vehicle_due_date', 'customer', 'broker_name', 'dealer_name', 'action'])
