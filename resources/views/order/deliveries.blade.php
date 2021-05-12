@@ -34,6 +34,37 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach( $data as $row )
+                                    <tr>
+                                        <td>{{ $row->id ?? '' }}</td>
+                                        <td>{{ $row->vehicle->model ?? ''}}</td>
+                                        <td>
+                                            @switch ($row->vehicle->vehicle_status)
+                                                @case(3)
+                                                Ready for delivery
+                                                @break
+                                                @case(4)
+                                                Factory Order
+                                                @break
+                                                @case(6)
+                                                Delivery Booked
+                                            @endswitch
+                                        </td>
+                                        <td>{{ $row->order_ref ?? ''}}</td>
+                                        <td>{{ $row->vehicle->reg ?? ''}}</td>
+                                        <td>{{ \Carbon\Carbon::parse($row->delivery_date ?? '')->format( 'd/m/Y' )}}</td>
+                                        <td>@if ( $row->customer->preffered_name == 'customer')
+                                                {{ $row->customer->customer_name ?? ''}}
+                                            @else
+                                                {{ $row->customer->customer_name ?? ''}}
+                                            @endif
+                                        </td>
+                                        <td>{{ $row->broker_ref ?? ''}}</td>
+                                        <td>{{ $row->broker->company_name ?? ''}}</td>
+                                        <td>{{ $row->dealer->company_name ?? ''}}</td>
+                                        <td><a href="/orders/view/{{$row->id}}" class="btn btn-primary"><i class="far fa-eye"></i> View</a></td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -50,46 +81,34 @@
 @endsection
 
 @push('custom-scripts')
-    <script src="{{ asset('js/jquery/jquery.dataTables.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.8/js/dataTables.fixedHeader.min.js"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+
 
     <script>
         $(function () {
+
+            $('#dataTable thead tr').clone(true).appendTo( '#dataTable thead' );
+            $('#dataTable thead tr:eq(1) th').each( function (i) {
+                var title = $(this).text();
+                $(this).html( '<input type="text" class="colSearch" data-colName="'+title+'" placeholder="Search '+title+'" />' );
+                $(this).parent().addClass('searchContainer');
+                $( 'input', this ).on( 'keyup change', function () {
+                    if ( table.column(i).search() !== this.value ) {
+                        table
+                            .column(i)
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+
             var table = $('#dataTable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('manage_deliveries') }}",
-                columns: [
-                    {data: 'id', name: 'id'},
-                    {data: 'vehicle.model', name: 'vehicle.model'},
-                    {data: function (row) {
-                            switch (row.vehicle.vehicle_status) {
-                                case 3:
-                                    return 'Ready for delivery';
-                                case 4:
-                                    return 'Factory Order';
-                                case 6:
-                                    return 'Delivery Booked';
-                            }
-                        }, name: 'vehicle.vehicle_status', orderable: false},
-                    {data: 'order_ref', name: 'order_ref'},
-                    {data: 'vehicle.reg', name: 'vehicle.reg'},
-                    {data: 'delivery_date', name: 'delivery_date'},
-                    {data: function(row){
-                            if('customer.preferred_name' === 'company') {
-                                return row.customer.company_name
-                            } else {
-                                return row.customer.customer_name
-                            }
-                        }, name: 'customer_id', orderable: false},
-                    {data: 'broker_ref', name: 'broker_ref'},
-                    {data: 'broker.company_name', name: 'broker.company_name', orderable: false},
-                    {data: 'dealer.company_name', name: 'dealer.company_name', orderable: false},
-                    {data: 'action', name: 'action', orderable: false},
-                    {data: 'customer.customer_name', name: 'customer.customer_name', visible: false},
-                    {data: 'customer.company_name', name: 'customer.company_name', visible: false},
-                ]
+                orderCellsTop: true,
+                fixedHeader: true
             });
         });
+
     </script>
 @endpush

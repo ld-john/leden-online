@@ -11069,3 +11069,20 @@ select option:disabled {
   padding: 10px 0;
 }
 
+.colSearch {
+  width: 100% !important;
+  padding: 5px;
+  font-size: 12px;
+}
+
+.colSearch[data-colName="Leden ID"],
+.colSearch[data-colName=Action],
+.colSearch[data-colName=noTitle] {
+  display: none;
+}
+
+.searchContainer th {
+  padding: 2px;
+  background-color: #cdcdcd !important;
+}
+

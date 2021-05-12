@@ -144,96 +144,37 @@ class VehicleController extends Controller
 
     public function showFordPipeline(Request $request)
     {
-	    if ($request->ajax()) {
-		    $data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
-			    ->with('manufacturer')
-			    ->where('show_in_ford_pipeline', true);
-		    if (Auth::user()->role === 'dealer') {
-			    $data->where('hide_from_dealer', false);
-		    }
-		    if (Auth::user()->role === 'broker') {
-			    $data->where('hide_from_broker', false);
-		    }
-		    $data->get();
-		    return Datatables::of($data)
-			    ->addColumn('action', function ($row) {
-				    if (Auth::user()->role != 'admin') {
-					    $btn = '<a href="/vehicle/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
-				    } else {
-					    $btn = '<a href="/vehicle/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
-					    $btn .= '<a href="/vehicle/edit/' . $row->id . '" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>';
-				    }
 
-				    return '<div class="btn-toolbar"><div class="btn-group">' . $btn . '</div></div>';
-			    })
-			    ->addColumn('options', function ($row) {
-                    $count = 0;
-                    if ( isset ( $row->dealer_fit_options ) ) {
-                        $count += count( json_decode( $row->dealer_fit_options ) );
-                    } else {
-                        $count += 0;
-                    }
-                    if ( isset ( $row->factory_fit_options ) ) {
-                        $count += count( json_decode( $row->factory_fit_options ));
-                    } else {
-                        $count += 0;
-                    }
-			    })
-			    ->rawColumns(['action'])
-			    ->make(true);
+	    $data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
+		    ->with('manufacturer:id,name')
+		    ->where('show_in_ford_pipeline', true)->get();
+
+	    if (Auth::user()->role == 'dealer') {
+		    $data = $data->where('hide_from_dealer', false );
 	    }
 
-	    return view('vehicles.index', ['route' => 'pipeline.ford', 'title' => 'Ford Pipeline', 'active_page'=> 'ford-pipeline']);
+	    if (Auth::user()->role == 'broker') {
+		    $data = $data->where('hide_from_broker', false );
+	    }
+
+	    return view('vehicles.index', ['data' => $data, 'title' => 'Ford Pipeline', 'active_page'=> 'ford-pipeline']);
     }
 
 	public function showLedenStock(Request $request)
 	{
-		if ($request->ajax()) {
-			$data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
-				->with('manufacturer')
-				->where('show_in_ford_pipeline', false)
-				->where('vehicle_status', 1);
+		$data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
+			->with('manufacturer:id,name')
+			->where('show_in_ford_pipeline', false)->get();
 
-			if (Auth::user()->role === 'dealer') {
-				$data->where('hide_from_dealer', false);
-			}
-			if (Auth::user()->role === 'broker') {
-				$data->where('hide_from_broker', false);
-			}
-
-			$data->get();
-
-			return Datatables::of($data)
-				->addColumn('action', function ($row) {
-					if (Auth::user()->role != 'admin') {
-						$btn = '<a href="/vehicle/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
-					} else {
-						$btn = '<a href="/vehicle/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
-						$btn .= '<a href="/vehicle/edit/' . $row->id . '" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>';
-					}
-
-					return '<div class="btn-toolbar"><div class="btn-group">' . $btn . '</div></div>';
-				})
-				->addColumn('options', function ($row) {
-					$count = 0;
-					if ( isset ( $row->dealer_fit_options ) ) {
-						$count += count( json_decode( $row->dealer_fit_options ) );
-					} else {
-					    $count += 0;
-                    }
-					if ( isset ( $row->factory_fit_options ) ) {
-						$count += count( json_decode( $row->factory_fit_options ));
-					} else {
-                        $count += 0;
-                    }
-
-					return $count;
-				})
-				->rawColumns(['action'])
-				->make(true);
+		if (Auth::user()->role == 'dealer') {
+			$data = $data->where('hide_from_dealer', false );
 		}
 
-		return view('vehicles.index', ['route' => 'pipeline', 'title' => 'Leden Stock', 'active_page'=> 'pipeline']);
+		if (Auth::user()->role == 'broker') {
+			$data = $data->where('hide_from_broker', false );
+		}
+
+		return view('vehicles.index', ['data'=> $data, 'title' => 'Leden Stock', 'active_page'=> 'pipeline']);
 	}
 
 	public function deleteSelected()

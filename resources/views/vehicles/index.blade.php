@@ -30,12 +30,48 @@
                                     <th>Engine</th>
                                     <th>Doors</th>
                                     <th>Colour</th>
-                                    <th>How many options</th>
+                                    <th width="100px">Options</th>
                                     <th>Type</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach( $data as $row )
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ $row->id ?? '' }}</td>
+                                        <td>{{ $row->manufacturer->name ?? '' }}</td>
+                                        <td>{{ $row->model ?? '' }}</td>
+                                        <td>{{ $row->derivative ?? '' }}</td>
+                                        <td>{{ $row->reg ?? '' }}</td>
+                                        <td>{{ $row->engine ?? '' }}</td>
+                                        <td>{{ $row->doors ?? '' }}</td>
+                                        <td>{{ $row->colour ?? '' }}</td>
+                                        <td>
+                                            @php
+                                                $count = 0;
+                                                    if ( isset ( $row->dealer_fit_options ) ) {
+                                                        $count += count( json_decode( $row->dealer_fit_options ) );
+                                                    } else {
+                                                        $count += 0;
+                                                    }
+                                                    if ( isset ( $row->factory_fit_options ) ) {
+                                                        $count += count( json_decode( $row->factory_fit_options ));
+                                                    } else {
+                                                        $count += 0;
+                                                    }
+                                            @endphp
+                                            {{$count}}
+                                        </td>
+                                        <td>{{ $row->type ?? '' }}</td>
+                                        <td>
+                                            <a href="/orders/view/{{$row->id}}" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>
+                                            @can('admin')
+                                                <a href="/vehicle/edit/{{$row->id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -49,67 +85,61 @@
     </div>
     <!-- /.container-fluid -->
 
+    <style>
+
+        table.dataTable tbody>tr.selected,table.dataTable tbody>tr>.selected{background-color:#b0bed9}table.dataTable.stripe tbody>tr.odd.selected,table.dataTable.stripe tbody>tr.odd>.selected,table.dataTable.display tbody>tr.odd.selected,table.dataTable.display tbody>tr.odd>.selected{background-color:#acbad4}table.dataTable.hover tbody>tr.selected:hover,table.dataTable.hover tbody>tr>.selected:hover,table.dataTable.display tbody>tr.selected:hover,table.dataTable.display tbody>tr>.selected:hover{background-color:#aab7d1}table.dataTable.order-column tbody>tr.selected>.sorting_1,table.dataTable.order-column tbody>tr.selected>.sorting_2,table.dataTable.order-column tbody>tr.selected>.sorting_3,table.dataTable.order-column tbody>tr>.selected,table.dataTable.display tbody>tr.selected>.sorting_1,table.dataTable.display tbody>tr.selected>.sorting_2,table.dataTable.display tbody>tr.selected>.sorting_3,table.dataTable.display tbody>tr>.selected{background-color:#acbad5}table.dataTable.display tbody>tr.odd.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_1{background-color:#a6b4cd}table.dataTable.display tbody>tr.odd.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_2{background-color:#a8b5cf}table.dataTable.display tbody>tr.odd.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_3{background-color:#a9b7d1}table.dataTable.display tbody>tr.even.selected>.sorting_1,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_1{background-color:#acbad5}table.dataTable.display tbody>tr.even.selected>.sorting_2,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_2{background-color:#aebcd6}table.dataTable.display tbody>tr.even.selected>.sorting_3,table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_3{background-color:#afbdd8}table.dataTable.display tbody>tr.odd>.selected,table.dataTable.order-column.stripe tbody>tr.odd>.selected{background-color:#a6b4cd}table.dataTable.display tbody>tr.even>.selected,table.dataTable.order-column.stripe tbody>tr.even>.selected{background-color:#acbad5}table.dataTable.display tbody>tr.selected:hover>.sorting_1,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_1{background-color:#a2aec7}table.dataTable.display tbody>tr.selected:hover>.sorting_2,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_2{background-color:#a3b0c9}table.dataTable.display tbody>tr.selected:hover>.sorting_3,table.dataTable.order-column.hover tbody>tr.selected:hover>.sorting_3{background-color:#a5b2cb}table.dataTable.display tbody>tr:hover>.selected,table.dataTable.display tbody>tr>.selected:hover,table.dataTable.order-column.hover tbody>tr:hover>.selected,table.dataTable.order-column.hover tbody>tr>.selected:hover{background-color:#a2aec7}table.dataTable tbody td.select-checkbox,table.dataTable tbody th.select-checkbox{position:relative}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody td.select-checkbox:after,table.dataTable tbody th.select-checkbox:before,table.dataTable tbody th.select-checkbox:after{display:block;position:absolute;top:1.2em;left:50%;width:12px;height:12px;box-sizing:border-box}table.dataTable tbody td.select-checkbox:before,table.dataTable tbody th.select-checkbox:before{content:" ";margin-top:-6px;margin-left:-6px;border:1px solid black;border-radius:3px}table.dataTable tr.selected td.select-checkbox:after,table.dataTable tr.selected th.select-checkbox:after{content:"✓";font-size:20px;margin-top:-19px;margin-left:-6px;text-align:center;text-shadow:1px 1px #b0bed9,-1px -1px #b0bed9,1px -1px #b0bed9,-1px 1px #b0bed9}table.dataTable.compact tbody td.select-checkbox:before,table.dataTable.compact tbody th.select-checkbox:before{margin-top:-12px}table.dataTable.compact tr.selected td.select-checkbox:after,table.dataTable.compact tr.selected th.select-checkbox:after{margin-top:-16px}div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:.5em}@media screen and (max-width: 640px){div.dataTables_wrapper span.select-info,div.dataTables_wrapper span.select-item{margin-left:0;display:block}}
+
+        []
+
+    </style>
+
 @endsection
 
 @push('custom-scripts')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/b-1.6.3/sl-1.3.1/datatables.min.css"/>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.8/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/b-1.6.3/sl-1.3.1/datatables.min.js"></script>
+
+
     <script>
         $(function () {
+
+            $('#dataTable thead tr').clone(true).appendTo( '#dataTable thead' );
+            $('#dataTable thead tr:eq(1) th').each( function (i) {
+                var title = $(this).text();
+
+                if ( title === '') {
+                    title = 'noTitle';
+                }
+                $(this).html( '<input type="text" class="colSearch" data-colName="'+title+'" placeholder="&#x1f50d; '+title+'" />' );
+                $(this).parent().addClass('searchContainer');
+                $( 'input', this ).on( 'keyup change', function () {
+                    if ( table.column(i).search() !== this.value ) {
+                        table
+                            .column(i)
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+
             var table = $('#dataTable').DataTable({
-                select: {
-                    style:    'os',
-                    selector: 'td:first-child'
-                },
+                orderCellsTop: true,
+                fixedHeader: true,
                 columnDefs: [ {
                     orderable: false,
                     className: 'select-checkbox',
                     targets:   0
                 } ],
-                dom: 'Bfrtip',
-                buttons: [
-                    'selectAll',
-                    'selectNone',
-                    {
-                        text: 'Delete Selected',
-                        action: function ( e, dt, node, config ) {
-                            let count = table.rows({selected: true}).count();
-                            if(count) {
-                                let ids = $.map(table.rows({selected: true}).data(), function (item) {
-                                    return item['id']
-                                });
-
-                                $.post('{{ route('pipeline_delete') }}', {"_token": "{{ csrf_token() }}",ids: ids}
-
-                                ).done(function( data ) {
-                                    table.ajax.reload();
-                                });
-                            }
-                        }
-                    },
-                ],
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route($route) }}",
-                columns: [
-                    {"data": null, defaultContent: "", className: 'select-checkbox', orderable: false,},
-                    {data: 'id', name: 'id', orderable: false},
-                    {data: 'manufacturer.name', name: 'manufacturer.name'},
-                    {data: 'model', name: 'model'},
-                    {data: 'derivative', name: 'derivative'},
-                    {data: 'reg', name: 'reg'},
-                    {data: 'engine', name: 'engine'},
-                    {data: 'doors', name: 'doors'},
-                    {data: 'colour', name: 'colour'},
-                    {data: 'options', name: 'options'},
-                    {data: 'type', name: 'type'},
-                    {data: 'action', name: 'action', orderable: false},
-                ],
-                order: [
-                    [1, 'asc']
-                ]
-            });
+                select: {
+                    style:    'os',
+                    selector: 'td:first-child'
+                },
+                order: [[ 1, 'asc' ]]
+            } );
         });
+
     </script>
 @endpush

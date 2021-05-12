@@ -110,17 +110,6 @@ class OrderController extends Controller
 
 	public function showOrderBank(Request $request)
 	{
-	    $args = [];
-
-        if (Auth::user()->role == 'dealer') {
-            $args = [ 'dealer_id', Auth::user()->company_id ];
-        } elseif (Auth::user()->role == 'broker') {
-            $args = [ 'broker_id', Auth::user()->company_id ];
-        } else {
-
-        }
-
-
         $data = Order::latest()
             ->whereHas('vehicle', function($q){
                $q->whereIn('vehicle_status', [1,2,4,10,11]);
@@ -155,89 +144,71 @@ class OrderController extends Controller
 
 	public function completedOrders(Request $request)
 	{
-		if ($request->ajax()) {
-
-			$data = Order::whereHas('vehicle', function($q){
+		$data = Order::latest()
+			->whereHas('vehicle', function($q){
 				$q->whereIn('vehicle_status', [7]);
-			});
-			$data->select(
+			})
+			->select(
 				'id',
 				'vehicle_id',
+				'broker_id',
+				'dealer_id',
+				'customer_id',
 				'order_ref',
 				'due_date',
-				'customer_id',
 				'broker_ref',
-				'broker_id',
-				'dealer_id'
 			)
-				->with([
-					'vehicle',
-					'customer',
-					'broker',
-					'dealer']);
-			if (Auth::user()->role == 'dealer') {
-				$data->where('dealer_id', Auth::user()->company_id);
-			} elseif (Auth::user()->role == 'broker') {
-				$data->where('broker_id', Auth::user()->company_id);
-			}
-			$data->get();
+			->with([
+				'vehicle:id,model,derivative,reg',
+				'customer:id,customer_name,company_name,preferred_name',
+				'broker:id,company_name',
+				'dealer:id,company_name'
+			])->get();
 
-			return Datatables::of($data)
-				->addColumn('action', function ($row) {
-					$btn = '<a href="/orders/view/' . $row->id . '" class="btn btn-primary"><i class="far fa-eye"></i> View</a>';
-
-					return $btn;
-				})
-				->make(true);
+		if (Auth::user()->role == 'dealer') {
+			$data = $data->where('dealer_id', Auth::user()->company_id );
 		}
 
-		return view('order.index', ['title' => 'Completed Orders', 'active_page' => 'completed-orders', 'route' => 'completed_orders']);
+		if (Auth::user()->role == 'broker') {
+			$data = $data->where('broker_id', Auth::user()->company_id );
+		}
+
+		return view('order.index', ['data' => $data, 'title' => 'Completed Orders', 'active_page' => 'completed-orders', 'route' => 'completed_orders']);
 	}
 
 	public function showManageDeliveries(Request $request)
 	{
-		if ($request->ajax()) {
 
-			$data = Order::whereHas('vehicle', function($q){
+		$data = Order::latest()
+			->whereHas('vehicle', function($q){
 				$q->whereIn('vehicle_status', [3,4,6]);
-			});
+			})
+			->select(
+				'id',
+				'vehicle_id',
+				'broker_id',
+				'dealer_id',
+				'customer_id',
+				'order_ref',
+				'due_date',
+				'broker_ref',
+			)
+			->with([
+				'vehicle:id,vehicle_status,model,derivative,reg',
+				'customer:id,customer_name,company_name,preferred_name',
+				'broker:id,company_name',
+				'dealer:id,company_name'
+			])->get();
 
-			$data->select('id', 'vehicle_id', 'order_ref','delivery_date','customer_id', 'broker_ref', 'broker_id', 'dealer_id')->with([
-				'vehicle',
-				'customer',
-				'broker',
-				'dealer']);
-
-			if (Auth::user()->role == 'dealer') {
-				$data->where('dealer_id', Auth::user()->company_id);
-			} elseif (Auth::user()->role == 'broker') {
-				$data->where('broker_id', Auth::user()->company_id);
-			}
-
-			$data->get();
-
-			return Datatables::of($data)
-				->editColumn('vehicle_status', function ($row) {
-
-					switch ($row->vehicle_status) {
-						case 3:
-							return 'Ready for delivery';
-						case 4:
-							return 'Factory Order';
-						case 6:
-							return 'Delivery Booked';
-					}
-				})
-				->addColumn('action', function ($row) {
-					$btn = '<a href="/orders/view/' . $row->id . '" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>';
-
-					return $btn;
-				})
-				->rawColumns(['vehicle_due_date', 'customer', 'broker_name', 'dealer_name', 'action'])
-				->make(true);
+		if (Auth::user()->role == 'dealer') {
+			$data = $data->where('dealer_id', Auth::user()->company_id );
 		}
 
-		return view('order.deliveries');
+		if (Auth::user()->role == 'broker') {
+			$data = $data->where('broker_id', Auth::user()->company_id );
+		}
+
+		return view('order.deliveries', ['data' => $data]);
 	}
 
 

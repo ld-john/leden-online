@@ -4,8 +4,6 @@
   gap: 16px;
 }
 
-
-
 .container-fluid {
   padding-top: 100px;
 }
@@ -14,4 +12,18 @@
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
+}
+
+.colSearch {
+  width: 100%!important;
+  padding: 5px;
+  font-size: 12px;
+  &[data-colName="Leden ID"], &[data-colName="Action"], &[data-colName="noTitle"] {
+    display: none;
+  }
+}
+
+.searchContainer th {
+  padding:2px;
+  background-color: #cdcdcd!important;
 }

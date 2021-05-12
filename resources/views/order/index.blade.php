@@ -65,7 +65,7 @@
                                         <td>{{ $row->broker_ref ?? ''}}</td>
                                         <td>{{ $row->broker->company_name ?? ''}}</td>
                                         <td>{{ $row->dealer->company_name ?? ''}}</td>
-                                        <td></td>
+                                        <td><a href="/orders/view/{{$row->id}}" class="btn btn-primary"><i class="far fa-eye"></i> View</a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -101,25 +101,6 @@
             </div>
         </div>
     </div>
-
-    <style>
-
-        .colSearch {
-            max-width: 150px;
-            padding: 5px;
-            font-size: 12px;
-        }
-
-        .searchContainer th {
-            padding:2px;
-            background-color: #cdcdcd!important;
-        }
-
-        .colSearch[data-colName="Leden ID"], .colSearch[data-colName="Action"]{
-            display: none;
-        }
-
-    </style>
 
 @endsection
 
