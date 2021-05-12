@@ -6,6 +6,17 @@
                 {{$successMsg}}
             </div>
         @endif
+
+        @if($errors->count())
+            <div class="alert alert-danger alert-dismissible fade show m-5">
+                <h4 class="alert-heading"><i class="fa fa-exclamation-triangle"></i> There are some issues.</h4>
+                <hr>
+                <ul>
+                    {!! implode($errors->all('<li>:message</li>')) !!}
+                </ul>
+            </div>
+        @endif
+
         <div class="card shadow mb-4">
             <!-- Card Header -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -87,7 +98,12 @@
                 <div class="form-group row">
 
                     <label class="col-md-2 col-form-label" for="vehicle_make"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Make</label>
-                    <div class="col-md-4">
+
+                    <div class="col-md-6">
+
+                    @if ( $makeInput )
+
+
                         <div class="input-group mb-3">
                             @error('make')
                             <div class="input-group-prepend">
@@ -102,9 +118,7 @@
                             </select>
                         </div>
 
-                    </div>
-                    <div class="col-md-4">
-
+                    @else
 
                         <input type="text"
                                name="vehicle_make"
@@ -118,29 +132,43 @@
                                 wire:model.lazy="newmake"
                         />
 
+                    @endIf
+
                     </div>
+
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected"
+                        <button class="btn btn-secondary switch-inputs"
                                 type="button"
                                 id="make-remove"
-                                wire:click.prevent="$set('make' , null)"
+                                wire:click.prevent="$set('makeInput' , {{!$makeInput}})"
                         >
-                            <i class="fa fa-times"></i>
+                            @if ( $makeInput )
+                            <i class="fa fa-terminal"></i>
+                            @else
+                            <i class="fa fa-list-alt"></i>
+                            @endif
                         </button>
                     </div>
 
                 </div>
+
+
                 {{-- Model (Required) --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_model"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Vehicle Model</label>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
+
+                        @if ( $modelInput )
+
                         <div class="input-group mb-3">
+
+
                             @error('model')
                             <div class="input-group-prepend">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select class="form-control value-change" @unless ( !is_null( $make ) ) disabled @endunless field-parent="vehicle_model" wire:model="model">
+                            <select class="form-control value-change" @unless ( !is_null( $make ) ) disabled @endunless field-parent="vehicle_model" wire:model="model" id="inputGroupSelectModel">
 
                                 @unless ( is_null( $make ) )
 
@@ -152,8 +180,8 @@
                                 @endunless
                             </select>
                         </div>
-                    </div>
-                    <div class="col-md-4">
+
+                        @else
 
                         <div class="input-group mb-3">
                             @error('model')
@@ -171,18 +199,21 @@
                             />
                         </div>
 
+                        @endif
+
                     </div>
-
-
-
 
                     <div class="col-md-2">
                         <button class="btn btn-secondary remove-selected"
                                 type="button"
                                 id="make-remove"
-                                wire:click.prevent="$set('model' , null)"
+                                wire:click.prevent="$set('modelInput' , {{!$modelInput}})"
                         >
-                            <i class="fa fa-times"></i>
+                            @if ( $modelInput )
+                                <i class="fa fa-terminal"></i>
+                            @else
+                                <i class="fa fa-list-alt"></i>
+                            @endif
                         </button>
                     </div>
                 </div>
@@ -612,7 +643,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 offset-2">
-                        <select wire:model.lazy="factory_fit_options" multiple>
+                        <select wire:model.lazy="factory_fit_options" class="choices-multiple-remove-button" multiple>
                             @foreach ($factory_options as $factory_option)
 
                                 <option data-cost="{{ $factory_option->option_price }}" value="{{ $factory_option->id }}" >{{ $factory_option->option_name }} -
@@ -1018,19 +1049,11 @@
                 </ul>
             </div>
 
-            @if($errors->count())
-                <div class="alert alert-danger alert-dismissible fade show m-5">
-                    <h4 class="alert-heading"><i class="fa fa-exclamation-triangle"></i> There are some issues.</h4>
-                    <hr>
-                    <ul>
-                        {!! implode($errors->all('<li>:message</li>')) !!}
-                    </ul>
-                </div>
-            @endif
+
 
 
             <div class="card-footer text-right">
-                <button class="btn btn-primary" type="submit">Save Order</button>
+                <button class="btn btn-primary" id="goButton" type="submit">Save Order</button>
             </div>
         </div>
         {{--</div>--}}
@@ -1039,7 +1062,20 @@
 
 </div>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css">
+
+
 @push('custom-scripts')
 
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+
+<script>
+    $( function (){
+        $('#goButton').click(function(event){
+            window.scrollTo(0,0);
+        });
+
+    })
+</script>
 
 @endpush

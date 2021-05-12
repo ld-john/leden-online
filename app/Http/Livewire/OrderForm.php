@@ -27,6 +27,8 @@ class OrderForm extends Component
 {
 	use WithFileUploads;
 
+	public $makeInput = true, $modelInput = true, $typeInput = true, $derivativeInput = true, $engineInput = true, $transmissionInput = true, $fuelInput = true, $colourInput = true, $trimInput = true;
+
 	public $vehicle;
 	public $order;
 
@@ -230,10 +232,20 @@ class OrderForm extends Component
 
     }
 
+
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
     }
+
+    public function updatednewMake($value)
+    {
+        if ($value != '') {
+            $this->make = null;
+            $this->modelInput = false;
+        }
+    }
+
 
 	public function newFactoryFit() {
 		$factory_fit_option = new FitOption();
