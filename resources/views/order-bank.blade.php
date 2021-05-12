@@ -59,6 +59,8 @@
     </div>
     <!-- /.container-fluid -->
 
+
+
 @endsection
 
 @push('custom-scripts')
@@ -78,10 +80,10 @@
                     {data: 'order_ref', name: 'order_ref'},
                     {data: 'vehicle_reg', name: 'vehicle_reg'},
                     {data: 'vehicle_due_date', name: 'vehicle_due_date'},
-                    {data: 'customer', name: 'customer'},
+                    {data: 'customer', name: 'customer.name'},
                     {data: 'broker_order_ref', name: 'broker_order_ref'},
-                    {data: 'broker_name', name: 'broker'},
-                    {data: 'dealer_name', name: 'dealership'},
+                    {data: 'broker_name', name: 'broker.name'},
+                    {data: 'dealer_name', name: 'dealership.name'},
                     {data: 'action', name: 'action', orderable: false},
                     {data: 'customer_name', name: 'customer_name', visible: false},
                     {data: 'company_name', name: 'company_name', visible: false},

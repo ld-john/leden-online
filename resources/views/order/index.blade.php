@@ -5,6 +5,8 @@
 
 @section('content')
     <!-- Begin Page Content -->
+
+
     <div class="container-fluid force-min-height">
 
         <!-- Content Row -->
@@ -46,6 +48,26 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach( $data as $row )
+                                    <tr>
+                                        <td>{{ $row->id ?? '' }}</td>
+                                        <td>{{ $row->vehicle->model ?? ''}}</td>
+                                        <td>{{ $row->vehicle->derivative ?? ''}}</td>
+                                        <td>{{ $row->order_ref ?? ''}}</td>
+                                        <td>{{ $row->vehicle->reg ?? ''}}</td>
+                                        <td>{{ \Carbon\Carbon::parse($row->due_date ?? '')->format( 'd/m/Y' )}}</td>
+                                        <td>@if ( $row->customer->preffered_name == 'customer')
+                                            {{ $row->customer->customer_name ?? ''}}
+                                            @else
+                                            {{ $row->customer->customer_name ?? ''}}
+                                            @endif
+                                        </td>
+                                        <td>{{ $row->broker_ref ?? ''}}</td>
+                                        <td>{{ $row->broker->company_name ?? ''}}</td>
+                                        <td>{{ $row->dealer->company_name ?? ''}}</td>
+                                        <td></td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -59,40 +81,77 @@
     </div>
     <!-- /.container-fluid -->
 
+    <!-- Modal -->
+    <div class="modal fade" id="duplicateOrder" tabindex="-1" role="dialog" aria-labelledby="duplicateOrder" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Duplicate Order <span id="ModalOrderNumber"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+
+        .colSearch {
+            max-width: 150px;
+            padding: 5px;
+            font-size: 12px;
+        }
+
+        .searchContainer th {
+            padding:2px;
+            background-color: #cdcdcd!important;
+        }
+
+        .colSearch[data-colName="Leden ID"], .colSearch[data-colName="Action"]{
+            display: none;
+        }
+
+    </style>
+
 @endsection
 
 @push('custom-scripts')
-    <script src="{{ asset('js/jquery/jquery.dataTables.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.8/js/dataTables.fixedHeader.min.js"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+
 
     <script>
         $(function () {
+
+            $('#dataTable thead tr').clone(true).appendTo( '#dataTable thead' );
+            $('#dataTable thead tr:eq(1) th').each( function (i) {
+                var title = $(this).text();
+                $(this).html( '<input type="text" class="colSearch" data-colName="'+title+'" placeholder="Search '+title+'" />' );
+                $(this).parent().addClass('searchContainer');
+                $( 'input', this ).on( 'keyup change', function () {
+                    if ( table.column(i).search() !== this.value ) {
+                        table
+                            .column(i)
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+
             var table = $('#dataTable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route($route) }}",
-                columns: [
-                    {data: 'id', name: 'id'},
-                    {data: 'vehicle.model', name: 'vehicle.model', orderable: false},
-                    {data: 'vehicle.derivative', name: 'vehicle.derivative', orderable: false},
-                    {data: 'order_ref', name: 'order_ref'},
-                    {data: 'vehicle.reg', name: 'vehicle.reg', orderable: false},
-                    {data: 'due_date', name: 'due_date'},
-                    {data: function(row){
-                        if('customer.preferred_name' === 'company') {
-                            return row.customer.company_name
-                        } else {
-                            return row.customer.customer_name
-                        }
-                        }, name: 'customer_id'},
-                    {data: 'broker_ref', name: 'broker_ref'},
-                    {data: 'broker.company_name', name: 'broker.company_name', orderable: false},
-                    {data: 'dealer.company_name', name: 'dealer.company_name', orderable: false},
-                    {data: 'action', name: 'action', orderable: false},
-                    {data: 'customer.customer_name', name: 'customer.customer_name', visible: false},
-                    {data: 'customer.company_name', name: 'customer.company_name', visible: false},
-                ]
+                orderCellsTop: true,
+                fixedHeader: true
             });
         });
+
     </script>
 @endpush

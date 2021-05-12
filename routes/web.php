@@ -104,6 +104,8 @@ Route::get('/manage/vehiclemeta/type', 'Vehicle\TypeController@index')->name('me
  *
  */
 
+Route::get('/link/test/4', 'OrderController@dataTest')->name('test4');
+
 Route::get('/link/test/', 'VehicleController@getVehicleMeta')->name('test');
 Route::get('/link/test2/', 'CustomerController@buildNewCustomer')->name('test2');
 Route::get('/link/test3/', 'ManufacturerController@buildManufacturerTable')->name('test3');
