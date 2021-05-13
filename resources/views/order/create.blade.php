@@ -1,6 +1,6 @@
 @extends('layouts.main', [
-    'title' => $title,
-    'activePage' => $activePage
+    'title' => 'Create Order',
+    'activePage' => 'create-order'
     ])
 
 @section('content')

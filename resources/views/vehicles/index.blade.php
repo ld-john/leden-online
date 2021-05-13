@@ -112,7 +112,6 @@
 
             var table = $('#dataTable').DataTable({
                 orderCellsTop: true,
-                fixedHeader: true,
                 columnDefs: [ {
                     orderable: false,
                     className: 'select-checkbox',

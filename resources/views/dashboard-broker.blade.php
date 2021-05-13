@@ -132,7 +132,7 @@
                     <div class="card-body">
                         @if (count($notifications) > 0)
                             @foreach ($notifications as $notification)
-                                <a href="#" class="notification">
+                                <a href="{{ route('order.show', $notification->data['order_id']) }}" class="notification">
                                     <div class="row">
                                         <div class="col-md-1">
                                             <div class="icon-circle blue-background">

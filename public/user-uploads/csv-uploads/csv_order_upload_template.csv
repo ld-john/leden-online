@@ -1,1 +1,1 @@
-vehicle_make,vehicle_model,vehicle_type,vehicle_reg,vehicle_derivative,vehicle_engine,vehicle_trans,vehicle_fuel_type,vehicle_doors,vehicle_colour,vehicle_body,vehicle_trim,chassis_prefix,chassis,model_year,list_price,metallic_paint,dealer_discount,manufacturer_discount,total_discount,manufacturer_delivery_cost,first_reg_fee,rfl_cost,onward_delivery,holding_code
+make,model,type,registration,derivative,engine,transmission,fuel_type,doors,colour,trim,chassis_prefix,chassis,model_year,list_price,metallic_paint,first_reg_fee,rfl_cost,onward_delivery,dealer_id

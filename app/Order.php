@@ -31,6 +31,16 @@ class Order extends Model
     	return $this->hasOne(Company::class, 'id', 'broker_id');
     }
 
+    public function invoice_company()
+    {
+    	return $this->hasOne(Company::class, 'id', 'invoice_company_id');
+    }
+
+    public function registration_company()
+    {
+    	return $this->hasOne(Company::class, 'id', 'registration_company_id');
+    }
+
     public function dealer()
     {
     	return $this->hasOne(Company::class, 'id', 'dealer_id');
@@ -59,6 +69,15 @@ class Order extends Model
 	public function totalDiscount()
 	{
 		return $this->invoice->dealer_discount + $this->invoice->manufacturer_discount;
+	}
+
+	public function factoryOptions()
+	{
+		return $this->vehicle->getFitOptions('factory');
+	}
+	public function dealerOptions()
+	{
+		return $this->vehicle->getFitOptions('dealer');
 	}
 
 	public function factoryOptionsSubTotal(){

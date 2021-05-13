@@ -1118,14 +1118,6 @@ class OrdersController extends Controller
     public function executePDF(OrderLegacy $order)
     {
 
-        /*dump($order->totalDiscount());
-        dump($order->factoryOptionsSubTotal());
-        dump($order->factoryOptionsDiscount());
-        dump($order->factoryOptionsTotal());
-        dump($order->dealerOptionsTotal());
-
-        exit();*/
-
         // Get Fit options lists
         $factory_fit_options = $order->factoryOptions()->get();
         $dealer_fit_options = $order->dealerOptions()->get();
