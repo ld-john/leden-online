@@ -25,11 +25,14 @@ use Livewire\WithFileUploads;
 
 class VehicleForm extends Component
 {
+	public $makeInput = true, $modelInput = true, $derivativeInput = true, $engineInput = true, $transmissionInput = true, $fuelInput = true, $colourInput = true, $trimInput = true;
+
 	public $vehicle;
 
 	public $make;
 	public $newmake;
 	public $model;
+	public $dealership;
 	public $type;
 	public $registration;
 	public $derivative;
@@ -192,6 +195,7 @@ class VehicleForm extends Component
 		$vehicle->transmission = $this->transmission;
 		$vehicle->fuel_type = $this->fuel_type;
 		$vehicle->colour = $this->colour;
+		$vehicle->dealer_id = $this->dealership;
 		$vehicle->trim = $this->trim;
 		$vehicle->dealer_fit_options = $this->dealer_fit_options;
 		$vehicle->factory_fit_options = $this->factory_fit_options;
@@ -226,6 +230,7 @@ class VehicleForm extends Component
 		$fitoptions = FitOption::latest()->get();
 
 		$options = [
+			'dealers'           => Company::where('company_type', 'dealer')->get(),
 			'manufacturers'     => Manufacturer::all()->keyBy('id'),
 			'types'             => Type::all(),
 			'derivatives'       => Derivative::all(),

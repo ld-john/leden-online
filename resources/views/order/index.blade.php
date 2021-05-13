@@ -65,7 +65,9 @@
                                         <td>{{ $row->broker_ref ?? ''}}</td>
                                         <td>{{ $row->broker->company_name ?? ''}}</td>
                                         <td>{{ $row->dealer->company_name ?? ''}}</td>
-                                        <td><a href="/orders/view/{{$row->id}}" class="btn btn-primary"><i class="far fa-eye"></i> View</a></td>
+                                        <td>
+                                            <a href="/orders/view/{{$row->id}}" class="btn btn-primary"><i class="far fa-eye"></i> View</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

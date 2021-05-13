@@ -36,16 +36,35 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Leden ID</th>
                                 <th>First name</th>
                                 <th>Last name</th>
                                 <th>Email</th>
                                 <th>Company</th>
                                 <th>Role</th>
-                                <th width="18%">Action</th>
+                                <th width="12%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                        @foreach( $data as $row )
+                            <tr>
+                                <td>{{ $row->id ?? '' }}</td>
+                                <td>{{ $row->firstname ?? '' }}</td>
+                                <td>{{ $row->lastname ?? '' }}</td>
+                                <td>{{ $row->email ?? '' }}</td>
+                                <td>{{ $row->company->company_name ?? '' }}</td>
+                                <td>{{ ucfirst($row->role) ?? '' }}</td>
+                                <td class="btn-flex">
+                                    @if($row->is_deleted === null)
+                                        <a href="/user-management/edit/{{$row->id}}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                        <a href="/user-management/disable/{{$row->id}}" class="btn btn-danger"><i class="fas fa-times"></i> Disable</a>
+                                    @else
+                                        <a href="/user-management/disable/{{$row->id}}" class="btn btn-success"><i class="fas fa-check"></i> Enable</a>
+                                        <a href="/user-management/delete/{{$row->id}}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -66,21 +85,27 @@
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 
 <script>
-$(function () {
-    var table = $('#dataTable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('user_manager') }}",
-        columns: [
-            {data: 'id', name: 'id'},
-            {data: 'firstname', name: 'firstname'},
-            {data: 'lastname', name: 'lastname'},
-            {data: 'email', name: 'email'},
-            {data: 'company.company_name', name: 'company.company_name'},
-            {data: 'role', name: 'role'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ]
+    $(function () {
+
+        $('#dataTable thead tr').clone(true).appendTo( '#dataTable thead' );
+        $('#dataTable thead tr:eq(1) th').each( function (i) {
+            var title = $(this).text();
+            $(this).html( '<input type="text" class="colSearch" data-colName="'+title+'" placeholder="Search '+title+'" />' );
+            $(this).parent().addClass('searchContainer');
+            $( 'input', this ).on( 'keyup change', function () {
+                if ( table.column(i).search() !== this.value ) {
+                    table
+                        .column(i)
+                        .search( this.value )
+                        .draw();
+                }
+            } );
+        } );
+
+        var table = $('#dataTable').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true
+        });
     });
-});
 </script>
 @endpush

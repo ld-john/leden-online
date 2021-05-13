@@ -27,3 +27,11 @@
   padding:2px;
   background-color: #cdcdcd!important;
 }
+
+.btn-flex {
+  display: flex;
+  a{
+    flex-shrink: 0;
+    width: 50%;
+  }
+}

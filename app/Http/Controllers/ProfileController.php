@@ -69,6 +69,11 @@ class ProfileController extends Controller
 
 	public function showUserManager(Request $request)
 	{
+		$data = User::where('users.id', '!=', Auth::user()->id)
+			->select('id', 'firstname', 'lastname', 'email', 'company_id', 'role', 'is_deleted')
+			->with('company:id,company_name')
+			->get();
+
 		if ($request->ajax()) {
 			$data = User::where('users.id', '!=', Auth::user()->id)
 				->select('id', 'firstname', 'lastname', 'email', 'company_id', 'role', 'is_deleted')
@@ -93,7 +98,7 @@ class ProfileController extends Controller
 				->make(true);
 		}
 
-		return view('users.index');
+		return view('users.index', ['data' => $data]);
 	}
 
 	public function showAddUser()

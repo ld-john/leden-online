@@ -12,19 +12,7 @@
 
     <div class="col-lg-12">
         <h1 class="h3 mb-4 text-gray-800">Company Management</h1>
-        @if (!empty(session('successMsg')))
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>{{ session('successMsg') }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        @endif
-
+        @include('partials.successMsg')
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -56,6 +44,15 @@
                             </tr>
                         </thead>
                         <tbody>
+                        @foreach( $data as $row )
+                            <tr>
+                                <td>{{ $row->company_name ?? '' }}</td>
+                                <td>{{ $row->company_email ?? '' }}</td>
+                                <td>{{ $row->company_phone ?? '' }}</td>
+                                <td>{{ ucfirst($row->company_type) ?? '' }}</td>
+                                <td><a href="/companies/edit/{{$row->id}}" class="edit btn btn-warning"><i class="fas fa-edit"></i>Edit</a></td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -72,23 +69,31 @@
 @endsection
 
 @push('custom-scripts')
-<script src="{{ asset('js/jquery/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/jquery/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 
-<script>
-$(function () {
-    var table = $('#dataTable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('company_manager') }}",
-        columns: [
-            {data: 'company_name', name: 'company_name'},
-            {data: 'company_email', name: 'company_email'},
-            {data: 'company_phone', name: 'company_phone'},
-            {data: 'company_type', name: 'company_type'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ]
-    });
-});
-</script>
+    <script>
+        $(function () {
+
+            $('#dataTable thead tr').clone(true).appendTo( '#dataTable thead' );
+            $('#dataTable thead tr:eq(1) th').each( function (i) {
+                var title = $(this).text();
+                $(this).html( '<input type="text" class="colSearch" data-colName="'+title+'" placeholder="Search '+title+'" />' );
+                $(this).parent().addClass('searchContainer');
+                $( 'input', this ).on( 'keyup change', function () {
+                    if ( table.column(i).search() !== this.value ) {
+                        table
+                            .column(i)
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+
+            var table = $('#dataTable').DataTable({
+                orderCellsTop: true,
+                fixedHeader: true
+            });
+        });
+    </script>
 @endpush

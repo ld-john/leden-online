@@ -64,7 +64,7 @@
                                             {{$count}}
                                         </td>
                                         <td>{{ $row->type ?? '' }}</td>
-                                        <td>
+                                        <td class="btn-flex">
                                             <a href="/orders/view/{{$row->id}}" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>
                                             @can('admin')
                                                 <a href="/vehicle/edit/{{$row->id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>

@@ -27,7 +27,7 @@ class OrderForm extends Component
 {
 	use WithFileUploads;
 
-	public $makeInput = true, $modelInput = true, $typeInput = true, $derivativeInput = true, $engineInput = true, $transmissionInput = true, $fuelInput = true, $colourInput = true, $trimInput = true;
+	public $makeInput = true, $modelInput = true, $derivativeInput = true, $engineInput = true, $transmissionInput = true, $fuelInput = true, $colourInput = true, $trimInput = true;
 
 	public $vehicle;
 	public $order;
@@ -129,6 +129,10 @@ class OrderForm extends Component
         'status.required' => 'No <strong>Order Status</strong> selected',
         'attachments.*.max' => 'An <strong>Attachment</strong> is too big! (Max 1Mb)',
         'broker.required' => 'No <strong>Broker</strong> selected',
+		'factory_fit_name_manual_add.required' => '<strong>Factory Fit Option</strong> requires a <strong>Name</strong> selected',
+		'dealer_fit_name_manual_add.required' => '<strong>Dealer Fit Option</strong> requires a <strong>Name</strong> selected',
+		'factory_fit_price_manual_add.required' => '<strong>Factory Fit Option</strong> requires a <strong>Price</strong> selected',
+		'dealer_fit_price_manual_add.required' => '<strong>Dealer Fit Option</strong> requires a <strong>Price</strong> selected',
     ];
 
 	public function mount()
@@ -248,6 +252,12 @@ class OrderForm extends Component
 
 
 	public function newFactoryFit() {
+
+		$this->validate([
+			'factory_fit_name_manual_add' => 'required',
+			'factory_fit_price_manual_add' => 'required'
+		]);
+
 		$factory_fit_option = new FitOption();
 		$factory_fit_option->option_name = $this->factory_fit_name_manual_add;
 		$factory_fit_option->option_price = $this->factory_fit_price_manual_add;
@@ -259,6 +269,10 @@ class OrderForm extends Component
 	}
 
 	public function newDealerFit() {
+		$this->validate([
+			'dealer_fit_name_manual_add' => 'required',
+			'dealer_fit_price_manual_add' => 'required'
+		]);
 		$dealer_fit_option = new FitOption();
 		$dealer_fit_option->option_name = $this->dealer_fit_name_manual_add;
 		$dealer_fit_option->option_price = $this->dealer_fit_price_manual_add;

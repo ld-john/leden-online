@@ -17,6 +17,10 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
+
+    	$data = Company::where('id', '!=', 1)
+		    ->select('id', 'company_name', 'company_email', 'company_phone', 'company_type')
+		    ->get();
 	    if ($request->ajax()) {
 		    $data = Company::where('id', '!=', 1)
 			    ->select('id', 'company_name', 'company_email', 'company_phone', 'company_type')
@@ -32,7 +36,7 @@ class CompanyController extends Controller
 			    ->make(true);
 	    }
 
-	    return view('companies.index');
+	    return view('companies.index', ['data' => $data]);
     }
 
     /**

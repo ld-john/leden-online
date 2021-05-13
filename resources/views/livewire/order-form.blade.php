@@ -65,29 +65,29 @@
                     </div>
             </div>
 
-                @else
+            @else
 
-                    <div class="form-group row order-tab-group">
+                <div class="form-group row order-tab-group">
 
-                        <label for="customer" class="col-md-2 col-form-label">Select Existing Customer</label>
-                        <div class="col-md-6">
-                            <select wire:model="customer_id" name="preferred_name" id="preferred_name" class="form-control" wire:model="preferred">
-                                <option value="">Select Customer</option>
-                                @foreach ( $customers as $customer )
-                                    <option value="{{ $customer->id }}">
-                                        {{ $customer->customer_name }}
-                                        @if ( $customer->customer_name && $customer->company_name )/@endif
-                                        {{$customer->company_name}}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <label for="customer" class="col-md-2 col-form-label">Select Existing Customer</label>
+                    <div class="col-md-6">
+                        <select wire:model="customer_id" name="preferred_name" id="preferred_name" class="form-control" wire:model="preferred">
+                            <option value="">Select Customer</option>
+                            @foreach ( $customers as $customer )
+                                <option value="{{ $customer->id }}">
+                                    {{ $customer->customer_name }}
+                                    @if ( $customer->customer_name && $customer->company_name )/@endif
+                                    {{$customer->company_name}}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
+                </div>
 
-                @endif
+        @endif
 
 
-            <!-- Vehicle Information -->
+        <!-- Vehicle Information -->
 
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-l-blue">Car Information</h6>
@@ -101,51 +101,51 @@
 
                     <div class="col-md-6">
 
-                    @if ( $makeInput )
+                        @if ( $makeInput )
 
 
-                        <div class="input-group mb-3">
-                            @error('make')
-                            <div class="input-group-prepend">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectMake"><i class="fa fa-exclamation-triangle"></i></label>
+                            <div class="input-group mb-3">
+                                @error('make')
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectMake"><i class="fa fa-exclamation-triangle"></i></label>
+                                </div>
+                                @enderror
+                                <select wire:model="make" class="custom-select" id="inputGroupSelectMake">
+                                    <option selected>Choose...</option>
+                                    @foreach ( $manufacturers as $manufacturer )
+                                        <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            @enderror
-                            <select wire:model="make" class="custom-select" id="inputGroupSelectMake">
-                                <option selected>Choose...</option>
-                                @foreach ( $manufacturers as $manufacturer )
-                                    <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
 
-                    @else
+                        @else
 
-                        <input type="text"
-                               name="vehicle_make"
-                               id="vehicle_make"
-                               class="form-control"
-                               autocomplete="off"
-                               placeholder="e.g. Ford"
-                               @unless ( is_null( $make ) )
-                               value="{{$manufacturers[$make]['name']}}"
-                               @endunless
-                                wire:model.lazy="newmake"
-                        />
+                            <input type="text"
+                                   name="vehicle_make"
+                                   id="vehicle_make"
+                                   class="form-control mb-3"
+                                   autocomplete="off"
+                                   placeholder="e.g. Ford"
+                                   @unless ( is_null( $make ) )
+                                   value="{{$manufacturers[$make]['name']}}"
+                                   @endunless
+                                   wire:model.lazy="newmake"
+                            />
 
-                    @endIf
+                        @endIf
 
                     </div>
 
                     <div class="col-md-2">
                         <button class="btn btn-secondary switch-inputs"
                                 type="button"
-                                id="make-remove"
+                                id="make-switch"
                                 wire:click.prevent="$set('makeInput' , {{!$makeInput}})"
                         >
                             @if ( $makeInput )
-                            <i class="fa fa-terminal"></i>
+                                <i class="fa fa-terminal"></i>
                             @else
-                            <i class="fa fa-list-alt"></i>
+                                <i class="fa fa-list-alt"></i>
                             @endif
                         </button>
                     </div>
@@ -160,44 +160,38 @@
 
                         @if ( $modelInput )
 
-                        <div class="input-group mb-3">
+                            <div class="input-group mb-3">
 
 
-                            @error('model')
-                            <div class="input-group-prepend">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
+                                @error('model')
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
+                                </div>
+                                @enderror
+                                <select class="form-control value-change" @unless ( !is_null( $make ) ) disabled @endunless field-parent="vehicle_model" wire:model="model" id="inputGroupSelectModel">
+                                    @unless ( is_null( $make ) )
+                                        <option value="" selected>Choose...</option>
+                                        @foreach(json_decode($manufacturers[$make]['models']) as $model)
+                                            <option value="{{$model}}">{{$model}}</option>
+                                        @endforeach
+                                    @endunless
+                                </select>
                             </div>
-                            @enderror
-                            <select class="form-control value-change" @unless ( !is_null( $make ) ) disabled @endunless field-parent="vehicle_model" wire:model="model" id="inputGroupSelectModel">
-
-                                @unless ( is_null( $make ) )
-
-                                    <option value="" selected>Choose...</option>
-                                    @foreach(json_decode($manufacturers[$make]['models']) as $model)
-                                        <option value="{{$model}}">{{$model}}</option>
-                                    @endforeach
-
-                                @endunless
-                            </select>
-                        </div>
-
                         @else
-
-                        <div class="input-group mb-3">
-                            @error('model')
-                            <div class="input-group-prepend">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupModelText"><i class="fa fa-exclamation-triangle"></i></label>
+                            <div class="input-group mb-3">
+                                @error('model')
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text bg-danger text-white" for="inputGroupModelText"><i class="fa fa-exclamation-triangle"></i></label>
+                                </div>
+                                @enderror
+                                <input wire:model.lazy="model"
+                                       type="text"
+                                       name="vehicle_model"
+                                       id="inputGroupModelText"
+                                       class="form-control"
+                                       placeholder="e.g. Fiesta"
+                                />
                             </div>
-                            @enderror
-                            <input wire:model.lazy="model"
-                                   type="text"
-                                   name="vehicle_model"
-                                   id="inputGroupModelText"
-                                   class="form-control"
-                                   placeholder="e.g. Fiesta"
-
-                            />
-                        </div>
 
                         @endif
 
@@ -206,7 +200,7 @@
                     <div class="col-md-2">
                         <button class="btn btn-secondary remove-selected"
                                 type="button"
-                                id="make-remove"
+                                id="model-switch"
                                 wire:click.prevent="$set('modelInput' , {{!$modelInput}})"
                         >
                             @if ( $modelInput )
@@ -239,187 +233,219 @@
                 {{-- Reg Number --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_reg">Registration Number</label>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <input wire:model="registration" type="text" name="vehicle_reg" id="vehicle_reg" class="form-control" placeholder="e.g. WM63 NKZ"/>
                     </div>
                 </div>
                 {{-- Derivative (Required) --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_derivative"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Derivative</label>
-                    <div class="col-md-4">
-                        <div class="input-group mb-3">
-                            @error('derivative')
-                            <div class="input-group-prepend">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectDerivatives"><i class="fa fa-exclamation-triangle"></i></label>
+                    @if ( $derivativeInput )
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                @error('derivative')
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectDerivatives"><i class="fa fa-exclamation-triangle"></i></label>
+                                </div>
+                                @enderror
+
+                                <select wire:model="derivative" class="custom-select" id="inputGroupSelectDerivatives">
+                                    <option selected>Choose...</option>
+                                    @foreach ($derivatives as $vehicle_derivative)
+                                        <option value="{{ $vehicle_derivative->name }}">{{ $vehicle_derivative->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            @enderror
-                            <select wire:model="derivative" class="custom-select" id="inputGroupSelectDerivatives">
-                                <option selected>Choose...</option>
-                                @foreach ($derivatives as $vehicle_derivative)
-                                    <option value="{{ $vehicle_derivative->name }}">{{ $vehicle_derivative->name }}</option>
-                                @endforeach
-                            </select>
                         </div>
-
-                    </div>
-                    <div class="col-md-4">
-                        <input wire:model="derivative" type="text" name="vehicle_derivative" id="vehicle_derivative" class="form-control" autocomplete="off" placeholder="e.g. ST-Line X PHEV"/>
-                    </div>
-
-
-
+                    @else
+                        <div class="col-md-6 mb-3">
+                            <input wire:model="derivative" type="text" name="vehicle_derivative" id="vehicle_derivative" class="form-control" autocomplete="off" placeholder="e.g. ST-Line X PHEV"/>
+                        </div>
+                    @endif
                     <div class="col-md-2">
                         <button class="btn btn-secondary remove-selected"
                                 type="button"
-                                id="derivative-remove"
-                                wire:click.prevent="$set('derivative' , null)"
+                                id="derivative-switch"
+                                wire:click.prevent="$set('derivativeInput' , {{!$derivativeInput}})"
                         >
-                            <i class="fa fa-times"></i>
+                            @if ( $derivativeInput )
+                                <i class="fa fa-terminal"></i>
+                            @else
+                                <i class="fa fa-list-alt"></i>
+                            @endif
                         </button>
                     </div>
                 </div>
                 {{-- Engine (Required) --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_engine"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Engine</label>
-                    <div class="col-md-4">
-                        <div class="input-group mb-3">
-                            @error('engine')
-                            <div class="input-group-prepend">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectEngine"><i class="fa fa-exclamation-triangle"></i></label>
+                    @if ( $engineInput )
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                @error('engine')
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectEngine"><i class="fa fa-exclamation-triangle"></i></label>
+                                </div>
+                                @enderror
+                                <select wire:model="engine" class="custom-select" id="inputGroupSelectEngine">
+                                    <option selected>Choose...</option>
+                                    @foreach ($engines as $vehicle_engine)
+                                        <option value="{{ $vehicle_engine->name }}">{{ $vehicle_engine->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            @enderror
-                            <select wire:model="engine" class="custom-select" id="inputGroupSelectEngine">
-                                <option selected>Choose...</option>
-                                @foreach ($engines as $vehicle_engine)
-                                    <option value="{{ $vehicle_engine->name }}">{{ $vehicle_engine->name }}</option>
-                                @endforeach
-                            </select>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <input wire:model="engine" type="text" name="vehicle_engine" id="vehicle_engine"
-                               class="form-control" autocomplete="off" placeholder="e.g. 1.6 Litre"/>
-                    </div>
+                    @else
+                        <div class="col-md-6 mb-3">
+                            <input wire:model="engine" type="text" name="vehicle_engine" id="vehicle_engine"
+                                   class="form-control" autocomplete="off" placeholder="e.g. 1.6 Litre"/>
+                        </div>
+                    @endif
 
                     <div class="col-md-2">
                         <button class="btn btn-secondary remove-selected"
                                 type="button"
-                                id="make-remove"
-                                wire:click.prevent="$set('engine' , null)"
+                                id="engine-switch"
+                                wire:click.prevent="$set('engineInput' , {{!$engineInput}})"
                         >
-                            <i class="fa fa-times"></i>
+                            @if ( $engineInput )
+                                <i class="fa fa-terminal"></i>
+                            @else
+                                <i class="fa fa-list-alt"></i>
+                            @endif
                         </button>
                     </div>
                 </div>
                 {{-- Transmission (Required) --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_trans"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Transmission</label>
-                    <div class="col-md-4">
-                        <div class="input-group mb-3">
-                            @error('transmission')
-                            <div class="input-group-prepend">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectTransmission"><i class="fa fa-exclamation-triangle"></i></label>
+                    @if ( $transmissionInput )
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                @error('transmission')
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectTransmission"><i class="fa fa-exclamation-triangle"></i></label>
+                                </div>
+                                @enderror
+                                <select wire:model="transmission" class="custom-select" id="inputGroupSelectTransmission">
+                                    <option selected>Choose...</option>
+                                    @foreach ($transmissions as $vehicle_trans)
+                                        <option value="{{ $vehicle_trans->name }}">{{ $vehicle_trans->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            @enderror
-                            <select wire:model="transmission" class="custom-select" id="inputGroupSelectTransmission">
-                                <option selected>Choose...</option>
-                                @foreach ($transmissions as $vehicle_trans)
-                                    <option value="{{ $vehicle_trans->name }}">{{ $vehicle_trans->name }}</option>
-                                @endforeach
-                            </select>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <input wire:model="transmission"
-                               type="text"
-                               name="vehicle_trans"
-                               id="vehicle_trans"
-                               class="form-control"
-                               autocomplete="off"
-                               placeholder="e.g. Manual"/>
-                    </div>
+                    @else
+                        <div class="col-md-6 mb-3">
+                            <input wire:model="transmission"
+                                   type="text"
+                                   name="vehicle_trans"
+                                   id="vehicle_trans"
+                                   class="form-control"
+                                   autocomplete="off"
+                                   placeholder="e.g. Manual"/>
+                        </div>
+                    @endif
                     <div class="col-md-2">
                         <button class="btn btn-secondary remove-selected"
                                 type="button"
-                                id="make-remove"
-                                wire:click.prevent="$set('transmission' , null)"
+                                id="transmission-switch"
+                                wire:click.prevent="$set('transmissionInput' , {{!$transmissionInput}})"
                         >
-                            <i class="fa fa-times"></i>
+                            @if ( $transmissionInput )
+                                <i class="fa fa-terminal"></i>
+                            @else
+                                <i class="fa fa-list-alt"></i>
+                            @endif
                         </button>
                     </div>
                 </div>
                 {{-- Fuel Type --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_trans"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Fuel Type</label>
-                    <div class="col-md-4">
-                        <div class="input-group mb-3">
-                            @error('fuel_type')
-                            <div class="input-group-prepend">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
+                    @if ( $fuelInput )
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                @error('fuel_type')
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
+                                </div>
+                                @enderror
+                                <select wire:model="fuel_type" class="custom-select" id="inputGroupSelectFuel">
+                                    <option selected>Choose...</option>
+                                    @foreach ($fuel_types as $vehicle_fuel_type)
+                                        <option value="{{ $vehicle_fuel_type->name }}">{{ $vehicle_fuel_type->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            @enderror
-                            <select wire:model="fuel_type" class="custom-select" id="inputGroupSelectFuel">
-                                <option selected>Choose...</option>
-                                @foreach ($fuel_types as $vehicle_fuel_type)
-                                    <option value="{{ $vehicle_fuel_type->name }}">{{ $vehicle_fuel_type->name }}</option>
-                                @endforeach
-                            </select>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <input wire:model="fuel_type"
-                               type="text"
-                               name="vehicle_fuel"
-                               id="vehicle_fuel"
-                               class="form-control"
-                               autocomplete="off"
-                               placeholder="e.g. Petrol"/>
-                    </div>
+                    @else
+                        <div class="col-md-6 mb-3">
+                            <input wire:model="fuel_type"
+                                   type="text"
+                                   name="vehicle_fuel"
+                                   id="vehicle_fuel"
+                                   class="form-control"
+                                   autocomplete="off"
+                                   placeholder="e.g. Petrol"/>
+                        </div>
+                    @endif
                     <div class="col-md-2">
                         <button class="btn btn-secondary remove-selected"
                                 type="button"
-                                id="fuel-remove"
-                                wire:click.prevent="$set('fuel_type' , null)"
+                                id="fuel-switch"
+                                wire:click.prevent="$set('fuelInput' , {{!$fuelInput}})"
                         >
-                            <i class="fa fa-times"></i>
+                            @if ( $fuelInput )
+                                <i class="fa fa-terminal"></i>
+                            @else
+                                <i class="fa fa-list-alt"></i>
+                            @endif
                         </button>
                     </div>
                 </div>
                 {{-- Colour --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_colour"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Colour</label>
-                    <div class="col-md-4">
-                        <div class="input-group mb-3">
-                            @error('colour')
-                            <div class="input-group-prepend">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
+                    @if ( $colourInput )
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                @error('colour')
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
+                                </div>
+                                @enderror
+                                <select wire:model="colour" class="custom-select" id="inputGroupSelectColour">
+                                    <option value="">Please Select</option>
+                                    @foreach ($colours as $vehicle_colour)
+                                        <option value="{{ $vehicle_colour->name }}">{{ $vehicle_colour->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            @enderror
-                            <select wire:model="colour" class="custom-select" id="inputGroupSelectColour">
-                                <option value="">Please Select</option>
-                                @foreach ($colours as $vehicle_colour)
-                                    <option value="{{ $vehicle_colour->name }}">{{ $vehicle_colour->name }}</option>
-                                @endforeach
-                            </select>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <input wire:model="colour"
-                               type="text"
-                               name="vehicle_colour"
-                               id="vehicle_colour"
-                               class="form-control"
-                               autocomplete="off"
+                    @else
+                        <div class="col-md-6 mb-3">
+                            <input wire:model="colour"
+                                   type="text"
+                                   name="vehicle_colour"
+                                   id="vehicle_colour"
+                                   class="form-control"
+                                   autocomplete="off"
 
-                               placeholder="e.g. Metropolis White"/>
-                    </div>
+                                   placeholder="e.g. Metropolis White"/>
+                        </div>
+                    @endif
                     <div class="col-md-2">
                         <button class="btn btn-secondary remove-selected"
                                 type="button"
-                                id="colour-remove"
-                                wire:click.prevent="$set('colour' , null)"
+                                id="colour-switch"
+                                wire:click.prevent="$set('colourInput' , {{!$colourInput}})"
                         >
-                            <i class="fa fa-times"></i>
+                            @if ( $colourInput )
+                                <i class="fa fa-terminal"></i>
+                            @else
+                                <i class="fa fa-list-alt"></i>
+                            @endif
                         </button>
                     </div>
                 </div>
@@ -427,37 +453,44 @@
                 {{-- Trim --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_trim"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Trim</label>
-                    <div class="col-md-4">
-                        <div class="input-group mb-3">
-                            @error('trim')
-                            <div class="input-group-prepend">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
+                    @if ( $trimInput )
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                @error('trim')
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
+                                </div>
+                                @enderror
+                                <select wire:model="trim" class="custom-select" id="inputGroupSelectTrim">
+                                    <option value="">Please Select</option>
+                                    @foreach ($trims as $vehicle_trim)
+                                        <option value="{{ $vehicle_trim->name }}">{{ $vehicle_trim->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            @enderror
-                            <select wire:model="trim" class="custom-select" id="inputGroupSelectTrim">
-                                <option value="">Please Select</option>
-                                @foreach ($trims as $vehicle_trim)
-                                    <option value="{{ $vehicle_trim->name }}">{{ $vehicle_trim->name }}</option>
-                                @endforeach
-                            </select>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <input wire:model="trim"
-                               type="text"
-                               name="vehicle_trim"
-                               id="vehicle_trim"
-                               class="form-control"
-                               autocomplete="off"
-                               placeholder="e.g. Petrol"/>
-                    </div>
+                    @else
+                        <div class="col-md-6 mb-3">
+                            <input wire:model="trim"
+                                   type="text"
+                                   name="vehicle_trim"
+                                   id="vehicle_trim"
+                                   class="form-control"
+                                   autocomplete="off"
+                                   placeholder="e.g. Petrol"/>
+                        </div>
+                    @endif
                     <div class="col-md-2">
                         <button class="btn btn-secondary remove-selected"
                                 type="button"
-                                id="colour-remove"
-                                wire:click.prevent="$set('trim' , null)"
+                                id="trim-switch"
+                                wire:click.prevent="$set('trimInput' , {{!$trimInput}})"
                         >
-                            <i class="fa fa-times"></i>
+                            @if ( $trimInput )
+                                <i class="fa fa-terminal"></i>
+                            @else
+                                <i class="fa fa-list-alt"></i>
+                            @endif
                         </button>
                     </div>
                 </div>
@@ -524,38 +557,38 @@
                     <label class="col-md-2 col-form-label" for="vehicle_status"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Vehicle Status</label>
                     <div class="col-md-6">
                         <div class="input-group">
-                        @error('status')
-                        <div class="input-group-prepend">
-                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectStatus"><i class="fa fa-exclamation-triangle"></i></label>
-                        </div>
-                        @enderror
-                        <select wire:model="status" class="custom-select" name="vehicle_status" id="inputGroupSelectStatus">
-                            <option value="">Please Select Status</option>
-                            <option value="1">
-                                In Stock
-                            </option>
-                            <option value="2">
-                                Orders Placed
-                            </option>
-                            <option value="3">
-                                Ready for Delivery
-                            </option>
-                            <option value="4">
-                                Factory Order
-                            </option>
-                            <option value="6">
-                                Delivery Booked
-                            </option>
-                            <option value="7">
-                                Completed Orders
-                            </option>
-                            <option value="10">
-                                Europe VHC
-                            </option>
-                            <option value="11">
-                                UK VHC
-                            </option>
-                        </select>
+                            @error('status')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectStatus"><i class="fa fa-exclamation-triangle"></i></label>
+                            </div>
+                            @enderror
+                            <select wire:model="status" class="custom-select" name="vehicle_status" id="inputGroupSelectStatus">
+                                <option value="">Please Select Status</option>
+                                <option value="1">
+                                    In Stock
+                                </option>
+                                <option value="2">
+                                    Orders Placed
+                                </option>
+                                <option value="3">
+                                    Ready for Delivery
+                                </option>
+                                <option value="4">
+                                    Factory Order
+                                </option>
+                                <option value="6">
+                                    Delivery Booked
+                                </option>
+                                <option value="7">
+                                    Completed Orders
+                                </option>
+                                <option value="10">
+                                    Europe VHC
+                                </option>
+                                <option value="11">
+                                    UK VHC
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -626,14 +659,25 @@
             <div class="card-body">
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label">Factory Options</label>
-                    <div class="col-md-4 factory-row">
+                    <div class="col-md-5">
+                        <select wire:model.lazy="factory_fit_options" class="custom-select" multiple>
+                            @foreach ($factory_options as $factory_option)
+
+                                <option data-cost="{{ $factory_option->option_price }}" value="{{ $factory_option->id }}" >{{ $factory_option->option_name }} -
+                                    &pound;{{ $factory_option->option_price }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-5 factory-row">
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <input wire:model="factory_fit_name_manual_add" type="text" class="form-control" placeholder="e.g. LED Lights"/>
+                                @error('factory_fit_name_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <input wire:model="factory_fit_price_manual_add" type="number" step=".01" class="form-control"
                                        placeholder="e.g. 189.99"/>
+                                @error('factory_fit_price_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror
                             </div>
                         </div>
                         <div class="add-factory-con mt-4">
@@ -641,15 +685,6 @@
                                 Add New Option
                             </button>
                         </div>
-                    </div>
-                    <div class="col-md-4 offset-2">
-                        <select wire:model.lazy="factory_fit_options" class="choices-multiple-remove-button" multiple>
-                            @foreach ($factory_options as $factory_option)
-
-                                <option data-cost="{{ $factory_option->option_price }}" value="{{ $factory_option->id }}" >{{ $factory_option->option_name }} -
-                                    &pound;{{ $factory_option->option_price }}</option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
             </div>
@@ -661,14 +696,25 @@
             <div class="card-body">
                 <div class="form-group row mb-5">
                     <label class="col-md-2 col-form-label">Dealer Fit Options</label>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
+                        <select wire:model.lazy="dealer_fit_options" class="custom-select" multiple>
+                            @foreach ($dealer_options as $dealer_option)
+                                <option data-cost="{{ $dealer_option->option_price }}" value="{{ $dealer_option->id }}">
+                                    {{ $dealer_option->option_name }} - &pound;{{ $dealer_option->option_price }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-5">
                         <div class="row dealer-row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <input wire:model="dealer_fit_name_manual_add" type="text" class="form-control" placeholder="e.g. LED Lights"/>
+                                @error('dealer_fit_name_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <input wire:model="dealer_fit_price_manual_add" type="number" step=".01" class="form-control"
                                        placeholder="e.g. 20.99"/>
+                                @error('dealer_fit_price_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror
                             </div>
                         </div>
                         <div class="add-dealer-con mt-4">
@@ -677,17 +723,12 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-4 offset-2">
-                        <select wire:model.lazy="dealer_fit_options" multiple>
-                            @foreach ($dealer_options as $dealer_option)
-                                <option data-cost="{{ $dealer_option->option_price }}" value="{{ $dealer_option->id }}">
-                                    {{ $dealer_option->option_name }} - &pound;{{ $dealer_option->option_price }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
                 </div>
-
+            </div>
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-l-blue">Company Details</h6>
+            </div>
+            <div class="card-body">
                 <div class="form-group row">
                     <label for="dealership" class="col-md-2 col-form-label">Dealership</label>
                     <div class="col-md-6">
@@ -737,7 +778,7 @@
                     <label for="list_price" class="col-md-2 col-form-label">List Price (£)</label>
                     <div class="col-md-6">
                         <input wire:model="list_price" type="number" name="list_price" id="list_price" step=".01"
-                               class="form-control" autocomplete="off" placeholder="e.g. 10985.24"/>
+                               class="form-control" autocomplete="off" placeholder="e.g. 10985.24" onchange="invoiceValueChange()"/>
                     </div>
                 </div>
 
@@ -745,7 +786,7 @@
                     <label for="metallic_paint" class="col-md-2 col-form-label">Metallic Paint (£)</label>
                     <div class="col-md-6">
                         <input wire:model="metallic_paint" type="number" name="metallic_paint" id="metallic_paint" step=".01"
-                               class="form-control" autocomplete="off" placeholder="e.g. 389.55"/>
+                               class="form-control" autocomplete="off" placeholder="e.g. 389.55" onchange="invoiceValueChange()" />
                     </div>
                 </div>
 
@@ -753,7 +794,7 @@
                     <label for="dealer_discount" class="col-md-2 col-form-label">Dealer Discount (%)</label>
                     <div class="col-md-6">
                         <input wire:model="dealer_discount" type="number" name="dealer_discount" id="dealer_discount" step=".01"
-                               class="form-control discount" autocomplete="off" placeholder="e.g. 2.857" />
+                               class="form-control discount" autocomplete="off" placeholder="e.g. 2.857" onchange="invoiceValueChange()" />
                     </div>
                 </div>
 
@@ -763,14 +804,14 @@
                     <div class="col-md-6">
                         <input wire:model="manufacturer_discount" type="number" name="manufacturer_discount" id="manufacturer_discount"
                                step=".01" class="form-control discount" autocomplete="off"
-                               placeholder="e.g. 3.879"/>
+                               placeholder="e.g. 3.879" onchange="invoiceValueChange()"/>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="total_discount" class="col-md-2 col-form-label">Total Discount (%)</label>
                     <div class="col-md-6">
-                        <input wire:model="dealer_discount + manufacturer_discount" type="number" name="total_discount" id="total_discount" class="form-control"
+                        <input type="number" name="total_discount" id="total_discount" class="form-control"
                                placeholder="Dealer + Manufacturer"
                                disabled/>
                     </div>
@@ -782,7 +823,7 @@
                     <div class="col-md-6">
                         <input wire:model="manufacturer_delivery_cost" type="number" name="manufacturer_delivery_cost"
                                id="manufacturer_delivery_cost" step=".01" class="form-control invoice-total"
-                               autocomplete="off" placeholder="e.g. 88.59"/>
+                               autocomplete="off" placeholder="e.g. 88.59" onchange="invoiceValueChange()"/>
                     </div>
                 </div>
 
@@ -790,7 +831,7 @@
                     <label for="first_reg_fee" class="col-md-2 col-form-label">1st Reg Fee (£)</label>
                     <div class="col-md-6">
                         <input wire:model="first_reg_fee" type="number" name="first_reg_fee" id="first_reg_fee" step=".01"
-                               class="form-control" autocomplete="off" placeholder="e.g. 199.99" />
+                               class="form-control" autocomplete="off" placeholder="e.g. 199.99" onchange="invoiceValueChange()" />
                     </div>
                 </div>
 
@@ -798,7 +839,7 @@
                     <label for="rfl_cost" class="col-md-2 col-form-label">RFL (£)</label>
                     <div class="col-md-6">
                         <input wire:model="rfl_cost" type="number" name="rfl_cost" id="rfl_cost" step=".01" class="form-control"
-                               autocomplete="off" placeholder="e.g. 85.00"/>
+                               autocomplete="off" placeholder="e.g. 85.00" onchange="invoiceValueChange()"/>
                     </div>
                 </div>
 
@@ -806,7 +847,7 @@
                     <label for="onward_delivery" class="col-md-2 col-form-label">Onward Delivery (£)</label>
                     <div class="col-md-6">
                         <input wire:model="onward_delivery" type="number" name="onward_delivery" id="onward_delivery" step=".01"
-                               class="form-control invoice-total" autocomplete="off" placeholder="e.g. 85.00"/>
+                               class="form-control invoice-total" autocomplete="off" placeholder="e.g. 85.00" onchange="invoiceValueChange()"/>
                     </div>
                 </div>
 
@@ -814,12 +855,12 @@
                     <label for="invoice_funder_for" class="col-md-2 col-form-label">Invoice Funder For (£)</label>
                     <div class="col-md-6">
                         <input wire:model="invoice_funder_for" type="number" name="invoice_funder_for" id="invoice_funder_for" step=".01"
-                               class="form-control" autocomplete="off" placeholder="e.g. 85.00"/>
+                               class="form-control" autocomplete="off" placeholder="e.g. 85.00" onchange="invoiceValueChange()"/>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="invoice_value" class="col-md-2 col-form-label">Invoice Value (£)</label>
+                    <label for="invoice_value" class="col-md-2 col-form-label">Estimated Invoice Value (£)</label>
                     <div class="col-md-6">
                         <input type="text" name="invoice_value" id="invoice_value" class="form-control" disabled/>
                     </div>
@@ -1043,15 +1084,11 @@
                 <div wire:loading wire:target="attachments">Uploading...</div>
                 @error('attachments.*') <div class="alert alert-danger">{{ $message }}</div>@enderror
                 <ul>
-                @foreach($attachments as $key => $attachment)
-                    <li>{{$attachment->getClientOriginalName()}} <button wire:click.prevent="removeAttachment({{$key}})">Delete</button></li>
-                @endforeach
+                    @foreach($attachments as $key => $attachment)
+                        <li>{{$attachment->getClientOriginalName()}} <button wire:click.prevent="removeAttachment({{$key}})">Delete</button></li>
+                    @endforeach
                 </ul>
             </div>
-
-
-
-
             <div class="card-footer text-right">
                 <button class="btn btn-primary" id="goButton" type="submit">Save Order</button>
             </div>
@@ -1062,20 +1099,48 @@
 
 </div>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css">
 
 
 @push('custom-scripts')
+    <script>
+        $( function (){
+            $('#goButton').click(function(event){
+                window.scrollTo(0,0);
+            });
 
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+        })
+    </script>
 
-<script>
-    $( function (){
-        $('#goButton').click(function(event){
-            window.scrollTo(0,0);
-        });
+    <script>
+        let dealer_discount = document.querySelector('#dealer_discount')
+        let manufacturer_discount = document.querySelector('#manufacturer_discount')
+        let total_discount = document.querySelector('#total_discount')
+        let list_price = document.querySelector('#list_price')
+        let metallic_paint = document.querySelector('#metallic_paint')
+        let manufacturer_delivery_cost = document.querySelector('#manufacturer_delivery_cost')
+        let first_reg_fee = document.querySelector('#first_reg_fee')
+        let rfl_cost = document.querySelector('#rfl_cost')
+        let onward_delivery = document.querySelector('#onward_delivery')
+        let invoice_funder_for = document.querySelector('#invoice_funder_for')
+        let invoiceValue = document.querySelector('#invoice_value')
 
-    })
-</script>
+        function invoiceValueChange()
+        {
+            let discountSum = parseInt(dealer_discount.value) + parseInt(manufacturer_discount.value)
+            total_discount.value = discountSum
+
+            let InvoiceSum1 = parseInt(list_price.value)+parseInt(metallic_paint.value)
+            let InvoiceSum2 = ( parseInt( InvoiceSum1 ) / 100) * parseInt(discountSum)
+            let InvoiceSum3 = InvoiceSum1 - InvoiceSum2
+            let InvoiceSum4 = parseInt(manufacturer_delivery_cost.value) + parseInt(first_reg_fee.value) + parseInt(rfl_cost.value) + parseInt(onward_delivery.value)
+            let InvoiceSum5 = (InvoiceSum3 + InvoiceSum4) - parseInt(invoice_funder_for.value)
+            if (InvoiceSum5) {
+                invoiceValue.value = InvoiceSum5
+            }
+
+        }
+
+    </script>
 
 @endpush

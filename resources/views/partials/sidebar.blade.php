@@ -17,6 +17,13 @@
                 <span>Create Order</span>
             </a>
         </li>
+    @endcan    @can('admin')
+        <li class="nav-item @if ($activePage == 'create-vehicle') active @endif">
+            <a class="nav-link" href="{{ route('create_vehicle') }}">
+                <i class="fas fa-fw fa-plus"></i>
+                <span>Create Vehicle</span>
+            </a>
+        </li>
     @endcan
     <li class="nav-item @if ($activePage == 'order-bank') active @endif">
         <a class="nav-link" href="{{ route('order_bank') }}">
