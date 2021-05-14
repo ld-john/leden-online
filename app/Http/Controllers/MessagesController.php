@@ -66,7 +66,7 @@ class MessagesController extends Controller
 
         $all_users = $users->get();
 
-        $orders = DB::table('order')
+        $orders = DB::table('orderlegacy')
             ->select('id', 'vehicle_make', 'vehicle_model');
 
         if (Helper::roleCheck(Auth::user()->id)->role == 'dealer') {
