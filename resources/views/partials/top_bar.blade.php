@@ -5,10 +5,10 @@
         <i class="fa fa-bars"></i>
     </button>
     <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto align-items-center">
         <!-- Nav Item - Alerts -->
         <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-white" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
                 @if (Auth::user()->unreadNotifications()->count() > 9)
@@ -23,13 +23,13 @@
                     Notifications Center
                 </h6>
                 @foreach (Auth::user()->unreadNotifications->take(4) as $notification)
-                    <a class="dropdown-item d-flex align-items-center" href="{{ route('order.show', $notification->data['order_id']) }}">
+                    <a class="dropdown-item d-flex align-items-center text-white" href="{{ route('order.show', $notification->data['order_id']) }}">
                         <div class="mr-3">
                             <div class="icon-circle blue-background">
                                 @if ($notification->data['type'] == 'vehicle')
-                                    <i class="fas fa-car text-white"></i>
+                                    <i class="fas fa-car"></i>
                                 @else
-                                    <i class="fas fa-flag text-white"></i>
+                                    <i class="fas fa-flag"></i>
                                 @endif
                             </div>
                         </div>
@@ -44,7 +44,7 @@
         </li>
         <!-- Nav Item - Messages -->
         <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
                 @if (UserMessages::getAllUnreadMessages(Auth::user()->id)->count() > 9)
@@ -77,7 +77,7 @@
         <div class="topbar-divider d-none d-sm-block"></div>
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-white" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline small">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
                 <img class="img-profile rounded-circle" src="{{ asset('images/profile.png') }}">
             </a>

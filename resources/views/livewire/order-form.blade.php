@@ -747,8 +747,7 @@
                         <select wire:model="registration_company" name="registration_company" id="registration_company" class="form-control">
                             <option value="">Select Registration Company</option>
                             @foreach ($registration_companies as $company)
-                                <option value="{{ $company->id }}"
-                                        @if ($company->id == $order_details->registration_company) selected @endif>{{ $company->name }}</option>
+                                <option value="{{ $company->id }}">{{ $company->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -760,8 +759,7 @@
                         <select wire:model="invoice_company" name="invoice_company" id="invoice_company" class="form-control">
                             <option value="">Select Invoice Company</option>
                             @foreach ($invoice_companies as $company)
-                                <option value="{{ $company->id }}"
-                                        @if ($company->id == $order_details->invoice_company) selected @endif>{{ $company->name }}</option>
+                                <option value="{{ $company->id }}">{{ $company->name }}</option>
                             @endforeach
                         </select>
                     </div>
