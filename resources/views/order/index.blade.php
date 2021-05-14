@@ -67,6 +67,12 @@
                                         <td>{{ $row->dealer->company_name ?? ''}}</td>
                                         <td>
                                             <a href="/orders/view/{{$row->id}}" class="btn btn-primary"><i class="far fa-eye"></i> View</a>
+                                            @can('admin')
+                                            <a class="btn btn-primary"><i class="far fa-eye"></i> View</a>
+                                            <button type="button" class="btn btn-primary duplicate-order" data-orderNumber="{{ $row->id }}" data-toggle="modal" data-target="#duplicateOrder">
+                                                Foo
+                                            </button>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
@@ -94,11 +100,17 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <form action="/orders/duplicate/{{$row->id}}" id="execute-duplication">
+                        <input type="number" name="duplicateQty" max="10" id="duplicateQuantity">
+                        <button type="submit" class="btn btn-primary ">Go!</button>
+                    </form>
+
+
 
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -114,6 +126,22 @@
 
     <script>
         $(function () {
+
+            $('.duplicate-order').on('click' , function(){
+                let orderId = $(this).attr('data-orderNumber');
+                let baseURL = '{{env('APP_URL')}}';
+
+                $('#execute-duplication').attr('action', baseURL + '/orders/duplicate/' + orderId);
+            });
+
+            var orderQty = $('#duplicateQuantity');
+
+            $(orderQty).change( function (){
+                let target = $('.execute-duplication');
+
+                target.attr('href', target.attr('href') );
+
+            });
 
             $('#dataTable thead tr').clone(true).appendTo( '#dataTable thead' );
             $('#dataTable thead tr:eq(1) th').each( function (i) {

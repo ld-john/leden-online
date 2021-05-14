@@ -53,7 +53,6 @@ Route::middleware('auth')->group(function(){
 	/* ReportingController routes */
 	Route::get('/reporting', 'ReportingController@showReporting')->name('reporting');
 	Route::get('/reporting/download', 'ReportingController@executeReportDownload')->name('reporting_download');
-	Route::get('/custom-reports', 'ReportingController@showCustomReports')->name('custom_reports');
 
 	/* CSVUploadController routes */
 	Route::get('/csv-upload', 'CSVUploadController@showCsvUpload')->name('csv_upload');

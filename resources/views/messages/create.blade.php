@@ -1,6 +1,6 @@
 @extends('layouts.main', [
     'title' => 'New Message',
-    'activePage' => 'messages.index'
+    'activePage' => 'messages'
     ])
 
 @section('content')

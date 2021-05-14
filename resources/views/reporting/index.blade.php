@@ -82,12 +82,6 @@
                     </div>
                 </div>
             </div>
-
-        </div>
-        <div class="row">
-            <div class="col">
-                <a href="{{route('reporting_download')}}" class="btn btn-primary">Download Report</a>
-            </div>
         </div>
     </div>
     <!-- /.container-fluid -->
@@ -102,7 +96,7 @@
             type: 'doughnut',
             data: {
                 labels: [
-                    "Orders Place - {{ $orders_placed }}",
+                    "Orders Placed - {{ $orders_placed }}",
                     "Ready For Delivery - {{ $ready_for_delivery }}",
                     "Factory Order - {{ $factory_order }}",
                     "Delivery Booked - {{ $delivered }}",

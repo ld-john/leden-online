@@ -29,15 +29,7 @@
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-l-blue">All Messages</h6>
-                <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="notificationsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="notificationsDropdown" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(17px, 19px, 0px);">
-                        <div class="dropdown-header">Actions</div>
-                        <a class="dropdown-item" href="{{ route('message.new') }}">New Message</a>
-                    </div>
-                </div>
+                <a href="{{ route('message.new') }}" class="btn btn-primary">New Message</a>
             </div>
             <!-- Card Body -->
             <div class="card-body">
@@ -60,7 +52,7 @@
                                 <td>{{ $row->recipient ?? '' }}</td>
                                 <td>{{ \Carbon\Carbon::parse($row->last_message_sent)->format('l jS F Y \a\t g:ia')}}</td>
                                 <td>
-                                    <a href="/orders/view/{{$row->id}}" class="btn btn-primary"><i class="far fa-eye"></i> View</a>
+                                    <a href="{{route('message.view', [$row->message_group_id])}}" class="btn btn-primary"><i class="far fa-eye"></i> View</a>
                                 </td>
                             </tr>
                         @endforeach

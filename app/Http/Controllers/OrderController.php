@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Invoice;
 use App\Notifications\notifications;
 use App\Order;
 use App\OrderLegacy;
@@ -90,18 +91,36 @@ class OrderController extends Controller
 		//
 	}
 
-    /**
-     * Duplicate the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
+	/**
+	 * Duplicate the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \App\Order  $order
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
 
 	public function duplicate( Request $request, Order $order )
-    {
-        ddd( $request );
-    }
+	{
+		$vehicle = Vehicle::where('id', $order->vehicle_id)->first();
+		$invoice = Invoice::where('id', $order->invoice_id)->first();
+
+		for ($i = 1; $i <= $request->duplicateQty; $i++)
+		{
+			$newCar = $vehicle->replicate();
+			$newCar->chassis = null;
+			$newCar->reg = null;
+			$newCar->save();
+			$newInvoice = $invoice->replicate();
+			$newInvoice->save();
+			$newOrder = $order->replicate();
+			$newOrder->vehicle_id = $newCar->id;
+			$newOrder->invoice_id = $newInvoice->id;
+			$newOrder->order_ref = null;
+			$newOrder->broker_ref = null;
+			$newOrder->save();
+		}
+		return redirect()->route('order_bank')->with('successMsg', 'Order successfully duplicated');
+	}
 
 	public function showReserveOrder(Vehicle $vehicle)
 	{
@@ -113,34 +132,34 @@ class OrderController extends Controller
 
 	public function showOrderBank(Request $request)
 	{
-        $data = Order::latest()
-            ->whereHas('vehicle', function($q){
-               $q->whereIn('vehicle_status', [1,2,4,10,11]);
-            })
-            ->select(
-                'id',
-                'vehicle_id',
-                'broker_id',
-                'dealer_id',
-                'customer_id',
-                'order_ref',
-                'due_date',
-                'broker_ref',
-            )
-            ->with([
-                'vehicle:id,model,derivative,reg',
-                'customer:id,customer_name,company_name,preferred_name',
-                'broker:id,company_name',
-                'dealer:id,company_name'
-            ])->get();
+		$data = Order::latest()
+			->whereHas('vehicle', function($q){
+				$q->whereIn('vehicle_status', [1,2,4,10,11]);
+			})
+			->select(
+				'id',
+				'vehicle_id',
+				'broker_id',
+				'dealer_id',
+				'customer_id',
+				'order_ref',
+				'due_date',
+				'broker_ref',
+			)
+			->with([
+				'vehicle:id,model,derivative,reg',
+				'customer:id,customer_name,company_name,preferred_name',
+				'broker:id,company_name',
+				'dealer:id,company_name'
+			])->get();
 
-        if (Auth::user()->role == 'dealer') {
-            $data = $data->where('dealer_id', Auth::user()->company_id );
-        }
+		if (Auth::user()->role == 'dealer') {
+			$data = $data->where('dealer_id', Auth::user()->company_id );
+		}
 
-        if (Auth::user()->role == 'broker') {
-            $data = $data->where('broker_id', Auth::user()->company_id );
-        }
+		if (Auth::user()->role == 'broker') {
+			$data = $data->where('broker_id', Auth::user()->company_id );
+		}
 
 		return view('order.index', ['data' => $data, 'title' => 'Order Bank', 'active_page' => 'order-bank', 'route' => 'order_bank']);
 	}

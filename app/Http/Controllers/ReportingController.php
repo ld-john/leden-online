@@ -40,18 +40,13 @@ class ReportingController extends Controller
         	$quarterly_max[] = $vehicle->data;
         }
 
-
-
-
 	    $monthmax = ( isset ($month_max) ? max($month_max) + 1 : 5);
 
 	    $weekmax = ( isset ($weekly_max) ? max($weekly_max) + 1 : 5);
 
 	    $quartermax = ( isset ($quarterly_max) ? max($quarterly_max) + 1 : 5);
 
-
-
-        return view('report-track', [
+        return view('reporting.index', [
             'in_stock' => Dashboard::GetOrdersByVehicleStatus(1),
             'orders_placed' => Dashboard::GetOrdersByVehicleStatus(2),
             'ready_for_delivery' => Dashboard::GetOrdersByVehicleStatus(3),
@@ -67,10 +62,6 @@ class ReportingController extends Controller
             'quarterly_sales' => $quarterly_sales,
             'quarterly_max' => $quartermax,
         ]);
-    }
-
-    public function showCustomReports() {
-        return view('dashboard');
     }
 
     public static function getRecordsByMonth() {

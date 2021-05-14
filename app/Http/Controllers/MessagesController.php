@@ -55,16 +55,16 @@ class MessagesController extends Controller
             ->with('vehicle:id,make,model,chassis,reg','vehicle.manufacturer:id,name');
 
         if (Auth::user()->role == 'dealer') {
-            $orders->where('dealership', Auth::user()->company_id)
-	            ->orWhere('dealership', null);
+            $orders->where('dealer_id', Auth::user()->company_id)
+	            ->orWhere('dealer_id', null);
         } elseif (Auth::user()->role == 'broker') {
-        	$orders->where('broker', Auth::user()->company_id)
-		        ->orWhere('broker', null);
+        	$orders->where('broker_id', Auth::user()->company_id)
+		        ->orWhere('broker_id', null);
         }
 
         $all_orders = $orders->get();
 
-        return view('new-message', [
+        return view('messages.create', [
             'users' => $all_users,
             'orders' => $all_orders,
         ]);
@@ -127,7 +127,7 @@ class MessagesController extends Controller
             ->orderBy('created_at', 'asc')
             ->first();
 
-        return view('view-message', [
+        return view('messages.show', [
             'message_info' => $message_info,
             'messages' => $messages,
             'recipients' => $recipients,
@@ -150,7 +150,7 @@ class MessagesController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
 
-        return redirect()->route('messages')->with('successMsg', 'You\'ve successfully replied to the message');
+        return redirect()->route('messages')->with('successMsg', 'You\'ve replied to the message');
     }
 
     public static function getUnreadMessages($limit, $user_id) {

@@ -1,6 +1,6 @@
 @extends('layouts.main', [
     'title' => 'All Notifications',
-    'activePage' => 'notifications'
+    'activePage' => 'notifications.index'
     ])
 
 @section('content')
@@ -11,9 +11,9 @@
 <div class="row justify-content-center">
 
   <!-- Doughnut Chart -->
-  <div class="col-lg-6">
+  <div class="col-lg-10">
     <div class="row">
-        <div class="col-md-6"> 
+        <div class="col-md-10">
             <h1 class="h3 mb-4 text-gray-800">All Notifications</h1>
         </div>
         @if (count($all_notifications) > 0)
