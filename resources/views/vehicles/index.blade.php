@@ -26,12 +26,12 @@
                                     <th>Make</th>
                                     <th>Model</th>
                                     <th>Derivative</th>
-                                    <th>Registration</th>
                                     <th>Engine</th>
                                     <th>Doors</th>
                                     <th>Colour</th>
-                                    <th width="100px">Options</th>
                                     <th>Type</th>
+                                    <th>Chassis</th>
+                                    <th>Registration</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -43,27 +43,12 @@
                                         <td>{{ $row->manufacturer->name ?? '' }}</td>
                                         <td>{{ $row->model ?? '' }}</td>
                                         <td>{{ $row->derivative ?? '' }}</td>
-                                        <td>{{ $row->reg ?? '' }}</td>
                                         <td>{{ $row->engine ?? '' }}</td>
                                         <td>{{ $row->doors ?? '' }}</td>
                                         <td>{{ $row->colour ?? '' }}</td>
-                                        <td>
-                                            @php
-                                                $count = 0;
-                                                    if ( isset ( $row->dealer_fit_options ) ) {
-                                                        $count += count( json_decode( $row->dealer_fit_options ) );
-                                                    } else {
-                                                        $count += 0;
-                                                    }
-                                                    if ( isset ( $row->factory_fit_options ) ) {
-                                                        $count += count( json_decode( $row->factory_fit_options ));
-                                                    } else {
-                                                        $count += 0;
-                                                    }
-                                            @endphp
-                                            {{$count}}
-                                        </td>
                                         <td>{{ $row->type ?? '' }}</td>
+                                        <td>{{ $row->chassis ?? '' }}</td>
+                                        <td>{{ $row->reg ?? '' }}</td>
                                         <td class="btn-flex">
                                             <a href="/orders/view/{{$row->id}}" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>
                                             @can('admin')

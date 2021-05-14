@@ -4,20 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Flat Tables Fixed">
-      <change afterPath="$PROJECT_DIR$/resources/views/order/partials/additional.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/order/partials/customer.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/order/partials/dealerFit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/order/partials/delivery.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/order/partials/factoryFit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
+    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Flat Tables for Users and Order Form changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,7 +184,6 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Blade&#10;PHP" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../vehicles" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -254,7 +242,7 @@
       <workItem from="1620374322316" duration="20414000" />
       <workItem from="1620634062909" duration="21465000" />
       <workItem from="1620720280334" duration="21806000" />
-      <workItem from="1620981680226" duration="3289000" />
+      <workItem from="1620892602660" duration="1628000" />
     </task>
     <task id="LOCAL-00001" summary="Setting up basic gating">
       <created>1620290625172</created>
@@ -319,7 +307,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620817065944</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Flat Tables for Users and Order Form changes">
+      <created>1620892805188</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1620892805189</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -357,6 +352,7 @@
     <MESSAGE value="Edit and Reserve Order Forms created" />
     <MESSAGE value="Vehicles belong to dealers and Reporting Fixed" />
     <MESSAGE value="Flat Tables Fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Flat Tables Fixed" />
+    <MESSAGE value="Flat Tables for Users and Order Form changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Flat Tables for Users and Order Form changes" />
   </component>
 </project>
