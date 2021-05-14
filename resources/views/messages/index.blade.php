@@ -53,6 +53,17 @@
                             </tr>
                         </thead>
                         <tbody>
+                        @foreach( $data as $row )
+                            <tr>
+                                <td>{{ $row->subject ?? '' }}</td>
+                                <td>{{ $row->sender ?? '' }}</td>
+                                <td>{{ $row->recipient ?? '' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($row->last_message_sent)->format('l jS F Y \a\t g:ia')}}</td>
+                                <td>
+                                    <a href="/orders/view/{{$row->id}}" class="btn btn-primary"><i class="far fa-eye"></i> View</a>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -73,19 +84,11 @@
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 
 <script>
-$(function () {
-    var table = $('#dataTable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('messages') }}",
-        columns: [
-            {data: 'subject', name: 'subject', orderable: false},
-            {data: 'sender', name: 'sender', orderable: false},
-            {data: 'recipient', name: 'recipient', orderable: false},
-            {data: 'last_message', name: 'last_message', orderable: false},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ]
+    $(function () {
+
+        var table = $('#dataTable').DataTable({
+            orderCellsTop: true,
+        });
     });
-});
 </script>
 @endpush

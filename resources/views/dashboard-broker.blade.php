@@ -78,7 +78,7 @@
         <div class="row">
 
             <!-- Vehicle Offers -->
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -117,12 +117,12 @@
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-l-blue">Notications</h6>
+                        <h6 class="m-0 font-weight-bold text-l-blue">Notifications</h6>
                         <div class="dropdown no-arrow">
                             <a class="dropdown-toggle" href="#" role="button" id="notificationsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="notificationsDropdown" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(17px, 19px, 0px);">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="notificationsDropdown" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0; left: 0; transform: translate3d(17px, 19px, 0px);">
                                 <div class="dropdown-header">Actions</div>
                                 <a class="dropdown-item" href="{{ route('notifications') }}">View all notifications</a>
                             </div>
@@ -132,7 +132,7 @@
                     <div class="card-body">
                         @if (count($notifications) > 0)
                             @foreach ($notifications as $notification)
-                                <a href="#" class="notification">
+                                <a href="{{ route('order.show', $notification->data['order_id']) }}" class="notification">
                                     <div class="row">
                                         <div class="col-md-1">
                                             <div class="icon-circle blue-background">
@@ -211,7 +211,7 @@
 
     <script>
         $(function () {
-            var table = $('#dataTable').DataTable({
+            let table = $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('dashboard') }}",

@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Notifications\notifications;
 use App\Order;
 use App\OrderLegacy;
 use App\User;
 use App\Vehicle;
+use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\Facades\DataTables;
 
 class OrderController extends Controller
@@ -30,7 +33,7 @@ class OrderController extends Controller
 	 */
 	public function create()
 	{
-		//
+		return view('order.create');
 	}
 
 	/**
@@ -228,18 +231,40 @@ class OrderController extends Controller
 			]);
 		}
 
+		$dealers = User::where('role', 'dealer')->where('company_id', $order->dealer_id)->get();
+		$brokers = User::where('role', 'broker')->where('company_id', $order->dealer_id)->get();
+		$users = User::where('company_id', 1)
+			->orWhere('company_id', $order->dealer_id)
+			->orWhere('company_id', $order->broker_id)
+			->get();
+
 		if ($order->admin_accepted == 1 && $order->broker_accepted == 1 && $order->dealer_accepted == 0) {
 			// email to dealer to accept delivery time
 			$this->DateAcceptEmail($order->dealer_id, $order);
+
+			$message = 'A proposed delivery date for Order #'. $order->id . ' needs your attention';
+			$type = 'vehicle';
+
+			Notification::send($dealers, new notifications($message, $order->id, $type));
+
 		} elseif ($order->admin_accepted == 1 && $order->broker_accepted == 0 && $order->dealer_accepted == 1) {
 			// Email to Broker to accept delivery time
 			$this->DateAcceptEmail($order-broker_id, $order);
+
+			$this->DateAcceptEmail($order->dealer_id, $order);
+
+			$message = 'A proposed delivery date for Order #'. $order->id . ' needs your attention';
+			$type = 'vehicle';
+
+			Notification::send($brokers, new notifications($message, $order->id, $type));
+
 		} elseif ($order->admin_accepted == 1 && $order->broker_accepted == 1 && $order->dealer_accepted == 1) {
 			// Email to all parties to say delivery date is confirmed
-			$users = User::where('company_id', 1)
-				->orWhere('company_id', $order->dealer_id)
-				->orWhere('company_id', $order->broker_id)
-				->get();
+
+			$message = 'A proposed delivery date for Order #'. $order->id . ' has been accepted by all parties';
+			$type = 'vehicle';
+
+			Notification::send($users, new notifications($message, $order->id, $type));
 
 			foreach ($users as $user) {
 				$mail_data = [
@@ -277,7 +302,8 @@ class OrderController extends Controller
 			'delivery_date' => 'required'
 		]);
 
-		$old = $order;
+		$oldDealer = $order->dealer_accepted;
+		$oldBroker = $order->broker_accepted;
 
 		$order->delivery_date = Carbon::createFromFormat('d/m/Y', $request->delivery_date);;
 
@@ -296,28 +322,152 @@ class OrderController extends Controller
 		}
 		$order->save();
 
+		$admin = User::where('company_id', '1');
+		$dealers = User::where('role', 'dealer')->where('company_id', $order->dealer_id)->get();
+		$brokers = User::where('role', 'broker')->where('company_id', $order->dealer_id)->get();
+		$message = 'A new delivery date has been proposed for Order #'. $order->id;
+		$type = 'vehicle';
+
 		if ($order->admin_accepted == 0 && $order->broker_accepted == 1 && $order->dealer_accepted == 0) {
 			//email to admin to accept delivery time
 			$this->DateChangeEmail(1, $order);
-			if ($old->dealer_accepted == 1) {
+
+			Notification::send($admin, new notifications($message, $order->id, $type));
+
+			if ($oldDealer == 1) {
 				$this->DateChangeEmail($order->dealer_id, $order);
+				Notification::send($dealers, new notifications($message, $order->id, $type));
 			}
 
 		} elseif ($order->admin_accepted == 1 && $order->broker_accepted == 0 && $order->dealer_accepted == 0) {
-			if ($old->dealer_accepted == 1) {
+			if ($oldDealer == 1) {
 				$this->DateChangeEmail($order->dealer_id, $order);
+				Notification::send($dealers, new notifications($message, $order->id, $type));
 
-			} elseif ($old->broker_accepted == 1) {
+			} elseif ($oldBroker == 1) {
 				$this->DateChangeEmail($order->broker_id, $order);
+				Notification::send($brokers, new notifications($message, $order->id, $type));
 			}
 		} elseif ($order->admin_accepted == 0 && $order->broker_accepted == 0 && $order->dealer_accepted == 1) {
 			$this->DateChangeEmail(1, $order);
-			if ($old->broker_accepted == 1) {
+			Notification::send($admin, new notifications($message, $order->id, $type));
+			if ($oldBroker == 1) {
 				$this->DateChangeEmail($order->broker_id, $order);
+				Notification::send($dealers, new notifications($message, $order->id, $type));
 			}
 		}
 
 		return redirect()->route('order.show', $order->id)->with('successMsg', 'You have successfully change the proposed delivery date');
+
+	}
+
+	public function downloadPDF(Order $order)
+	{
+		// Get Fit options lists
+		$factory_fit_options = $order->factoryOptions();
+		$dealer_fit_options = $order->dealerOptions();
+
+		// Define variables
+		$subtotal = $order->invoiceSubTotal();
+		$vat = $order->invoiceVat();
+		$total = $order->invoiceValue();
+
+		$deliveryAddress = array_filter([
+			$order->customer->customer_name,
+			$order->customer->company_name,
+			$order->customer->address_1,
+			$order->customer->address_2,
+			$order->customer->town,
+			$order->customer->city,
+			$order->customer->county,
+			$order->customer->postcode,
+		]);
+
+		if($order->invoice_company){
+			$invoiceAddress  = array_filter([
+				$order->invoice_company->company_name,
+				$order->invoice_company->company_address1,
+				$order->invoice_company->company_address2,
+				$order->invoice_company->company_city,
+				$order->invoice_company->company_county,
+				$order->invoice_company->company_postcode,
+			]);
+		}else{
+			$invoiceAddress = [];
+		}
+
+		if($order->registration_company){
+			$registrationAddress  = array_filter([
+				$order->registration_company->company_name,
+				$order->registration_company->company_address1,
+				$order->registration_company->company_address2,
+				$order->registration_company->company_city,
+				$order->registration_company->company_county,
+				$order->registration_company->company_postcode,
+			]);
+		}else{
+			$registrationAddress = [];
+		}
+
+		$vehicleDetails = [
+			[
+				'Vehicle Make' => $order->vehicle->manufacturer->name,
+				'Vehicle Model' => $order->vehicle->model,
+				'Vehicle Type' => $order->vehicle->type,
+			],
+			[
+				'Vehicle Derivative' => $order->vehicle->derivative,
+				'Vehicle Engine' => $order->vehicle->engine,
+				'Vehicle Transmission' => $order->vehicle->transmission,
+			],
+			[
+				'Vehicle Fuel Type' => $order->vehicle->fuel_type,
+				'Vehicle Colour' => $order->vehicle->colour,
+				'Vehicle Doors' => $order->vehicle->doors,
+			],
+			[
+
+				'Vehicle Trim' => $order->vehicle->trim,
+				'Dealership' => $order->dealer->company_name,
+				'Broker' => $order->broker->company_name,
+			],
+			[
+
+				'Vehicle Chassis Prefix' => $order->vehicle->chassis_prefix,
+				'Vehicle Chassis' => $order->vehicle->chassis,
+				'Vehicle Reg' => $order->vehicle->reg,
+			],
+		];
+		$vehicleDetailsHtml = '';
+
+		foreach ($vehicleDetails as $section) {
+			$vehicleDetailsHtml .= '<tr>';
+
+			foreach ($section as $name => $item) {
+				$vehicleDetailsHtml .= '<td><strong>' . ($name ? $name . ':' : '') . ' </strong> ' . $item . '</td>';
+			}
+
+			$vehicleDetailsHtml .= '</tr>';
+		}
+
+		$data = [
+			'order' => $order,
+			'deliveryAddress' => $deliveryAddress,
+			'invoiceAddress' => $invoiceAddress,
+			'registrationAddress' => $registrationAddress,
+			'vehicleDetailsHtml' => $vehicleDetailsHtml,
+			'factory_fit_options' => $factory_fit_options,
+			'dealer_fit_options' => $dealer_fit_options,
+			'subtotal' => $subtotal,
+			'vat' => $vat,
+			'total' => $total
+		];
+
+		$pdf = app('dompdf.wrapper');
+
+		$pdf->loadView('pdf', $data);
+
+		return $pdf->download('leden-order.pdf');
 
 	}
 

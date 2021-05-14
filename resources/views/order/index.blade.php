@@ -132,7 +132,6 @@
 
             var table = $('#dataTable').DataTable({
                 orderCellsTop: true,
-                fixedHeader: true
             });
         });
 

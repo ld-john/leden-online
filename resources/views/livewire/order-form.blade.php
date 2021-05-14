@@ -154,17 +154,116 @@
                     <div class="card-body">
                         @include('order.partials.delivery')
                     </div>
+                    <div class="col-md-5">
+                        <div class="row dealer-row">
+                            <div class="col-md-6">
+                                <input wire:model="dealer_fit_name_manual_add" type="text" class="form-control" placeholder="e.g. LED Lights"/>
+                                @error('dealer_fit_name_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <input wire:model="dealer_fit_price_manual_add" type="number" step=".01" class="form-control"
+                                       placeholder="e.g. 20.99"/>
+                                @error('dealer_fit_price_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror
+                            </div>
+                        </div>
+                        <div class="add-dealer-con mt-4">
+                            <button wire:click="newDealerFit" class="btn btn-sm btn-secondary" id="add-dealer-option" type="button">
+                                Add New Option
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-l-blue">Company Details</h6>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label for="dealership" class="col-md-2 col-form-label">Dealership</label>
+                    <div class="col-md-6">
+                        <select wire:model="dealership" name="dealership" id="dealership" class="form-control">
+                            <option value="">Select Dealership</option>
+                            @foreach ($dealers as $dealer)
+                                <option value="{{ $dealer->id }}">{{ $dealer->company_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
 
-            {{-- Additional --}}
-            <div class="card">
-                <div class="card-header" id="headingAdditional">
-                    <h5 class="mb-0">
-                        <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseAdditional" aria-expanded="true" aria-controls="collapseAdditional">
-                            Additional Information
-                        </button>
-                    </h5>
+                <div class="form-group row">
+                    <label for="dealership" class="col-md-2 col-form-label">Registration Company</label>
+                    <div class="col-md-6">
+                        <select wire:model="registration_company" name="registration_company" id="registration_company" class="form-control">
+                            <option value="">Select Registration Company</option>
+                            @foreach ($registration_companies as $company)
+                                <option value="{{ $company->id }}"
+                                        @if ($company->id == $order_details->registration_company) selected @endif>{{ $company->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="invoice_company" class="col-md-2 col-form-label">Invoice Company</label>
+                    <div class="col-md-6">
+                        <select wire:model="invoice_company" name="invoice_company" id="invoice_company" class="form-control">
+                            <option value="">Select Invoice Company</option>
+                            @foreach ($invoice_companies as $company)
+                                <option value="{{ $company->id }}"
+                                        @if ($company->id == $order_details->invoice_company) selected @endif>{{ $company->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Card Header -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-l-blue">Cost Breakdown</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="form-group row">
+                    <label for="list_price" class="col-md-2 col-form-label">List Price (£)</label>
+                    <div class="col-md-6">
+                        <input wire:model="list_price" type="number" name="list_price" id="list_price" step=".01"
+                               class="form-control" autocomplete="off" placeholder="e.g. 10985.24" onchange="invoiceValueChange()"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="metallic_paint" class="col-md-2 col-form-label">Metallic Paint (£)</label>
+                    <div class="col-md-6">
+                        <input wire:model="metallic_paint" type="number" name="metallic_paint" id="metallic_paint" step=".01"
+                               class="form-control" autocomplete="off" placeholder="e.g. 389.55" onchange="invoiceValueChange()" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="dealer_discount" class="col-md-2 col-form-label">Dealer Discount (%)</label>
+                    <div class="col-md-6">
+                        <input wire:model="dealer_discount" type="number" name="dealer_discount" id="dealer_discount" step=".01"
+                               class="form-control discount" autocomplete="off" placeholder="e.g. 2.857" onchange="invoiceValueChange()" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="manufacturer_discount" class="col-md-2 col-form-label">Manufacturer Discount
+                        (%)</label>
+                    <div class="col-md-6">
+                        <input wire:model="manufacturer_discount" type="number" name="manufacturer_discount" id="manufacturer_discount"
+                               step=".01" class="form-control discount" autocomplete="off"
+                               placeholder="e.g. 3.879" onchange="invoiceValueChange()"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="total_discount" class="col-md-2 col-form-label">Total Discount (%)</label>
+                    <div class="col-md-6">
+                        <input type="number" name="total_discount" id="total_discount" class="form-control"
+                               placeholder="Dealer + Manufacturer"
+                               disabled/>
+                    </div>
                 </div>
 
                 <div id="collapseAdditional" class="collapse" aria-labelledby="headingAdditional" data-parent="#mainOrderForm">

@@ -111,6 +111,10 @@ select option:disabled {
   text-align: center;
 }
 
+table.dataTable {
+  position: relative;
+}
+
 .dataTable tr th {
   background: $leden-dark-blue;
   color: #fff;

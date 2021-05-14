@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Manufacturer;
+use App\Vehicle;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\notifications;
 use Illuminate\Http\UploadedFile;
@@ -20,14 +22,14 @@ class CSVUploadController extends Controller
      *
      * @return void
      */
-    public function __construct() {
+/*    public function __construct() {
         $this->middleware('auth');
-    }
+    }*/
 
     public function showCsvUpload() {
-        if (Helper::roleCheck(Auth::user()->id)->role != 'admin') {
+/*        if (Auth::user()->role != 'admin') {
             return view('unauthorised');
-        }
+        }*/
 
         return view('csv-upload');
     }
@@ -36,58 +38,67 @@ class CSVUploadController extends Controller
         $file = $request->file('file');
 
         $request->validate([
-            'file' => 'required|max:1024'
+        	'upload_type' => 'required',
+            'file' => 'required|max:1024',
+	        'show_in_ford_pipeline' => 'required'
         ]);
 
-        $order_upload = $this->csvToArray($file);
+        $vehicle_uploads = $this->csvToArray($file);
 
-        $brokers = User::where('role', 'broker')->get();
-
-        $all_orders = [];
 
         if ($request->input('upload_type') == 'create') {
 
-            foreach ($order_upload as $order_row) {
-                $order_row['created_at'] = Carbon::now();
-                $order_row['updated_at'] = Carbon::now();
+        	$i = 0;
+            foreach ($vehicle_uploads as $vehicle_upload) {
 
-                if ($request->input('show_in_ford_pipeline') == 1) {
-                    $order_row['show_in_ford_pipeline'] = true;
-                } else {
-                    $order_row['show_in_ford_pipeline'] = false;
-                }
-                
-                $order_id = DB::table('order')->insertGetId($order_row);
 
-                $message = 'A new ' . $order_row['vehicle_make'] . ' ' . $order_row['vehicle_model'] . ' has been added';
-                $type = 'vehicle';
 
-                Notification::send($brokers, new notifications($message, $order_id, $type));
+            	$upload_manufacturer = Manufacturer::where('name', $vehicle_upload['make'])->firstOrCreate();
 
-                $order = [
-                    'order_id' => $order_id,
-                    'vehicle_make' => $order_row['vehicle_make'],
-                    'vehicle_model' => $order_row['vehicle_model'],
-                ];
+				$values = [];
 
-                array_push($all_orders, $order);
+				$values[$i]['vehicle_status'] = 1;
+	            $values[$i]['reg'] = $vehicle_upload['registration'];
+	            $values[$i]['make'] = $upload_manufacturer->id;
+	            $values[$i]['model'] = $vehicle_upload['model'];
+	            $values[$i]['derivative'] = $vehicle_upload['derivative'];
+	            $values[$i]['engine'] = $vehicle_upload['engine'];
+	            $values[$i]['transmission'] = $vehicle_upload['transmission'];
+	            $values[$i]['fuel_type'] = $vehicle_upload['fuel_type'];
+	            $values[$i]['doors'] = $vehicle_upload['doors'];
+	            $values[$i]['colour'] = $vehicle_upload['colour'];
+	            $values[$i]['trim'] = $vehicle_upload['trim'];
+	            $values[$i]['chassis_prefix'] = $vehicle_upload['chassis_prefix'];
+	            $values[$i]['chassis'] = $vehicle_upload['chassis'];
+	            $values[$i]['model_year'] = $vehicle_upload['model_year'];
+	            $values[$i]['list_price'] = $vehicle_upload['list_price'];
+	            $values[$i]['metallic_paint'] = $vehicle_upload['metallic_paint'];
+	            $values[$i]['first_reg_fee'] = $vehicle_upload['first_reg_fee'];
+	            $values[$i]['rfl_cost'] = $vehicle_upload['rfl_cost'];
+	            $values[$i]['onward_delivery'] = $vehicle_upload['onward_delivery'];
+	            $values[$i]['dealer_id'] = $vehicle_upload['dealer_id'];
+	            $values[$i]['show_in_ford_pipeline'] = $request->show_in_ford_pipeline;
+
+	            Vehicle::insert($values[$i]);
+
+
+
             }
 
-            return view('csv-upload-complete', [
-                    'all_orders' => $all_orders,
-                ])->with('successMsg', 'Your orders have been added to the system. You can edit any extra information below.');
+            if ($request->show_in_ford_pipeline === '0') {
+            	return redirect()->route('pipeline')->with('successMsg', 'Your orders have been added to the system. You can edit any extra information below.');
+            } else {
+	            return redirect()->route('pipeline.ford')->with('successMsg', 'Your orders have been added to the system. You can edit any extra information below.');
+            }
         } else {
-
-            foreach ($order_upload as $delete_order) {
-                DB::table('order')
-                    ->where('chassis', $delete_order['chassis'])
-                    ->where('customer_name', null)
-                    ->where('company_name', null)
+            foreach ($vehicle_uploads as $delete_order) {
+                Vehicle::where('chassis', $delete_order['chassis'])
+	                ->where('vehicle_status', 1)
                     ->delete();
             }
 
-            return redirect()->route('pipeline')->with('successMsg', 'All orders that have not been booked have been successfully deleted');
-            
+            return redirect()->route('pipeline')->with('successMsg', 'All vehicles still in stock have been deleted');
+
         }
     }
 

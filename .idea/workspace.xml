@@ -4,9 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Flat Tables for Users and Order Form changes">
+    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="CSV Uploads and PDF Downloads">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/companies/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/companies/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/custom-reports.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard-broker.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard-broker.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard-dealer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard-dealer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/messages.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/messages/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/new-message.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/new-message.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/top_bar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/top_bar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/view-message.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/view-message.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +39,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="vehicle_form" />
+        <entry key="$PROJECT_DIR$" value="vehicle-belong-to-dealer" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -184,7 +196,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../vehicles" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/user-uploads/csv-uploads" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -193,12 +205,15 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\wamp64\www\leden-online\public\user-uploads\csv-uploads" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\wamp64\www\leden-online\resources\views\messages" />
       <recent name="D:\wamp64\www\leden-online\public\js" />
       <recent name="D:\wamp64\www\leden-online\resources\views\users" />
       <recent name="D:\wamp64\www\leden-online\resources\views\companies" />
       <recent name="D:\wamp64\www\leden-online\resources\views\vehicles" />
-      <recent name="C:\wamp64\www\leden\storage\app\public" />
     </key>
   </component>
   <component name="RunManager" selected="PHPUnit.phpunit.xml">
@@ -242,7 +257,8 @@
       <workItem from="1620374322316" duration="20414000" />
       <workItem from="1620634062909" duration="21465000" />
       <workItem from="1620720280334" duration="21806000" />
-      <workItem from="1620892602660" duration="1628000" />
+      <workItem from="1620892602660" duration="25442000" />
+      <workItem from="1620979491424" duration="4405000" />
     </task>
     <task id="LOCAL-00001" summary="Setting up basic gating">
       <created>1620290625172</created>
@@ -314,7 +330,21 @@
       <option name="project" value="LOCAL" />
       <updated>1620892805189</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Change to the Vehicles Table">
+      <created>1620895008772</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1620895008772</updated>
+    </task>
+    <task id="LOCAL-00012" summary="CSV Uploads and PDF Downloads">
+      <created>1620920426094</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1620920426094</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -353,6 +383,8 @@
     <MESSAGE value="Vehicles belong to dealers and Reporting Fixed" />
     <MESSAGE value="Flat Tables Fixed" />
     <MESSAGE value="Flat Tables for Users and Order Form changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Flat Tables for Users and Order Form changes" />
+    <MESSAGE value="Change to the Vehicles Table" />
+    <MESSAGE value="CSV Uploads and PDF Downloads" />
+    <option name="LAST_COMMIT_MESSAGE" value="CSV Uploads and PDF Downloads" />
   </component>
 </project>
