@@ -425,7 +425,7 @@ class OrderForm extends Component
                 $message = 'A new ' . $this->make . ' ' . $this->model . ' has been added and associated to your company';
                 $type = 'vehicle';
 
-                Notification::send($broker, new notifications($message, $order_id, $type));
+                Notification::send($broker, new notifications($message, $order->id, $type));
             }
 
 
