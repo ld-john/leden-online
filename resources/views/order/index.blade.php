@@ -88,7 +88,7 @@
 
     </div>
     <!-- /.container-fluid -->
-
+    @can('admin')
     <!-- Modal -->
     <div class="modal fade" id="duplicateOrder" tabindex="-1" role="dialog" aria-labelledby="duplicateOrder" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -115,6 +115,7 @@
             </div>
         </div>
     </div>
+    @endcan
 
 @endsection
 
