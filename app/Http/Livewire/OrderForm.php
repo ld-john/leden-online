@@ -7,8 +7,10 @@ use App\Customer;
 use App\FitOption;
 use App\Invoice;
 use App\Manufacturer;
+use App\Notifications\notifications;
 use App\Order;
 use App\OrderUpload;
+use App\User;
 use App\Vehicle;
 use App\VehicleMeta\Body;
 use App\VehicleMeta\Colour;
@@ -19,6 +21,7 @@ use App\VehicleMeta\Transmission;
 use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -412,6 +415,18 @@ class OrderForm extends Component
 				$file->file_type = $attachment->getClientOriginalExtension();
 				$file->save();
 			}
+
+
+            if ($this->broker) {
+
+                $broker = User::where('company_id', $this->broker)
+                    ->get();
+
+                $message = 'A new ' . $this->make . ' ' . $this->model . ' has been added and associated to your company';
+                $type = 'vehicle';
+
+                Notification::send($broker, new notifications($message, $order->id, $type));
+            }
 
 
 			$this->successMsg = "Order Created";
