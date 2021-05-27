@@ -115,7 +115,7 @@ class OrderController extends Controller
 			$newOrder = $order->replicate();
 			$newOrder->vehicle_id = $newCar->id;
 			$newOrder->invoice_id = $newInvoice->id;
-			$newOrder->order_ref = null;
+			$newOrder->order_ref = $order->order_ref . '-copy-'. $i;
 			$newOrder->broker_ref = null;
 			$newOrder->save();
 		}
