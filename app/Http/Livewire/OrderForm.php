@@ -32,6 +32,16 @@ class OrderForm extends Component
 
 	public $makeInput = true, $modelInput = true, $derivativeInput = true, $engineInput = true, $transmissionInput = true, $fuelInput = true, $colourInput = true, $trimInput = true;
 
+	public
+        $showCustomerInfo = true,
+        $showVehicleInfo = false,
+        $showFactoryFitOptions = false,
+        $showDealerFitOptions = false,
+        $showCompanyInfo = false,
+        $showCostBreakdown = false,
+        $showInvoicingInformation = false,
+        $showDeliveryInfomation = false,
+        $showAdditionalInfomation = false;
 	public $vehicle;
 	public $order;
 
