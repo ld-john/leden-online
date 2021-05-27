@@ -66,11 +66,11 @@
                                         <td>{{ $row->broker->company_name ?? ''}}</td>
                                         <td>{{ $row->dealer->company_name ?? ''}}</td>
                                         <td>
-                                            <a href="/orders/view/{{$row->id}}" class="btn btn-primary"><i class="far fa-eye"></i> View</a>
+                                            <a href="{{route('order.show', $row->id)}}" class="btn btn-primary"><i class="far fa-eye"></i> View</a>
                                             @can('admin')
-                                            <a class="btn btn-primary"><i class="far fa-eye"></i> View</a>
+                                            <a href="{{route('order.edit', $row->id)}}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
                                             <button type="button" class="btn btn-primary duplicate-order" data-orderNumber="{{ $row->id }}" data-toggle="modal" data-target="#duplicateOrder">
-                                                Foo
+                                                Duplicate
                                             </button>
                                             @endcan
                                         </td>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="/orders/duplicate/{{$row->id}}" id="execute-duplication">
-                        <input type="number" name="duplicateQty" max="10" id="duplicateQuantity">
+                        <input type="number" name="duplicateQty" min="0" max="10" id="duplicateQuantity">
                         <button type="submit" class="btn btn-primary ">Go!</button>
                     </form>
 

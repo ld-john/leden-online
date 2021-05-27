@@ -4,25 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Removed some files&#10;Messages work again&#10;CSS tweaks">
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/partials/boxes.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/partials/messages.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/partials/notifications.blade.php" afterDir="false" />
+    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Dashboards have been changed to partials&#10;clean up of views folder&#10;routing updates&#10;duplications working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard-broker.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/dashboard-broker.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard-dealer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/dashboard-dealer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/dashboard-admin.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/messages/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/messages/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/new-message.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/messages/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/notifications.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/notifications/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/report-track.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/reporting/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/view-message.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/messages/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,7 +248,10 @@
       <workItem from="1620634062909" duration="21465000" />
       <workItem from="1620720280334" duration="21806000" />
       <workItem from="1620892602660" duration="25442000" />
-      <workItem from="1620979491424" duration="18789000" />
+      <workItem from="1620979491424" duration="19129000" />
+      <workItem from="1621240631663" duration="597000" />
+      <workItem from="1622020966954" duration="1385000" />
+      <workItem from="1622044309373" duration="899000" />
     </task>
     <task id="LOCAL-00001" summary="Setting up basic gating">
       <created>1620290625172</created>
@@ -355,7 +344,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620986660760</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Dashboards have been changed to partials&#10;clean up of views folder&#10;routing updates&#10;duplications working">
+      <created>1621005145775</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1621005145775</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -397,6 +393,7 @@
     <MESSAGE value="Change to the Vehicles Table" />
     <MESSAGE value="CSV Uploads and PDF Downloads" />
     <MESSAGE value="Removed some files&#10;Messages work again&#10;CSS tweaks" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed some files&#10;Messages work again&#10;CSS tweaks" />
+    <MESSAGE value="Dashboards have been changed to partials&#10;clean up of views folder&#10;routing updates&#10;duplications working" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dashboards have been changed to partials&#10;clean up of views folder&#10;routing updates&#10;duplications working" />
   </component>
 </project>
