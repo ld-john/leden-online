@@ -168,7 +168,7 @@
                     </h5>
                 </div>
 
-                <div id="collapseAdditional" class="collapse @if( $showAdditionalInfomation ) show @endif" aria-labelledby="headingAdditional">
+                <div id="collapseAdditional" class="collapse @if( $showAdditionalInformation ) show @endif" aria-labelledby="headingAdditional">
                     <div class="card-body">
                         @include('order.partials.additional')
                     </div>
