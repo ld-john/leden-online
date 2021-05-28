@@ -144,7 +144,7 @@
             <div class="card mb-3">
                 <div class="card-header" id="headingInvoice">
                     <h5 class="mb-0">
-                        <button type="button" class="btn btn-link" wire:click="$set('showInvoicingInformation'" data-toggle="collapse" data-target="#collapseAdditional" aria-expanded="true" aria-controls="collapseAdditional">
+                        <button type="button" class="btn btn-link" wire:click="$set('showAdditionalInformation' , {{!$showAdditionalInformation}})" data-toggle="collapse" data-target="#collapseAdditional" aria-expanded="true" aria-controls="collapseAdditional">
                             Additional Information
                         </button>
                     </h5>
