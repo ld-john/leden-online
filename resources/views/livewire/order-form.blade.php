@@ -116,7 +116,7 @@
                     </h5>
                 </div>
 
-                <div id="collapseCost" class="collapse @if( $showCostBreakdown ) show @endif"" aria-labelledby="headingCost">
+                <div id="collapseCost" class="collapse @if( $showCostBreakdown ) show @endif" aria-labelledby="headingCost">
                     <div class="card-body">
                         @include('order.partials.cost')
                     </div>
@@ -141,8 +141,26 @@
             </div>
 
 
+            {{-- Delivery --}}
             <div class="card mb-3">
                 <div class="card-header" id="headingInvoice">
+                    <h5 class="mb-0">
+                        <button type="button" class="btn btn-link" wire:click="$set('showDeliveryInformation' , {{!$showDeliveryInformation}})" data-toggle="collapse" data-target="#collapseDelivery" aria-expanded="true" aria-controls="collapseDelivery">
+                            Delivery Information
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseDelivery" class="collapse @if( $showDeliveryInformation ) show @endif" aria-labelledby="headingInvoice">
+                    <div class="card-body">
+                        @include('order.partials.delivery')
+                    </div>
+                </div>
+            </div>
+
+            {{-- Additonal --}}
+            <div class="card mb-3">
+                <div class="card-header" id="headingDelivery">
                     <h5 class="mb-0">
                         <button type="button" class="btn btn-link" wire:click="$set('showAdditionalInformation' , {{!$showAdditionalInformation}})" data-toggle="collapse" data-target="#collapseAdditional" aria-expanded="true" aria-controls="collapseAdditional">
                             Additional Information

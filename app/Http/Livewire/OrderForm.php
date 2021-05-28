@@ -40,8 +40,8 @@ class OrderForm extends Component
         $showCompanyInfo = false,
         $showCostBreakdown = false,
         $showInvoicingInformation = false,
-        $showDeliveryInfomation = false,
-        $showAdditionalInfomation = false;
+        $showDeliveryInformation= false,
+        $showAdditionalInformation = false;
 	public $vehicle;
 	public $order;
 
