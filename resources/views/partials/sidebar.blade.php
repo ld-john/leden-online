@@ -1,3 +1,4 @@
+<div>
 <ul class="navbar-nav nav-background-white sidebar sidebar-light accordion navbar-fixed" id="accordionSidebar">
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
@@ -96,4 +97,25 @@
         </li>
     @endcan
 </ul>
+
+@can('admin')
+    <div class="meta-management">
+
+        <h4>Meta Management</h4>
+
+        <ul class="navbar-nav nav-background-white">
+            <li><a href="{{ route('meta.colour.index') }}">Colours </a></li>
+            <li><a href="{{ route('meta.derivative.index') }}">Derivatives </a></li>
+            <li><a href="{{ route('meta.engine.index') }}">Engines</a></li>
+            <li><a href="{{ route('meta.fuel.index') }}">Fuel Types</a></li>
+            <li><a href="{{ route('meta.transmission.index') }}">Transmissions</a></li>
+            <li><a href="{{ route('meta.trim.index') }}">Trims</a></li>
+            <li><a href="{{ route('meta.type.index') }}">Types</a></li>
+        </ul>
+
+    </div>
+
+@endcan
 <!-- End of Sidebar -->
+
+</div>

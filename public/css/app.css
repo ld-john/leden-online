@@ -11095,6 +11095,15 @@ table.dataTable {
   width: 50%;
 }
 
+.meta-management {
+  margin: 10px 30px 40px;
+}
+
+.meta-management h4 {
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .multi-select-container {
   display: inline-block;
   position: relative;

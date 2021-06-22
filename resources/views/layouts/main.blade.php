@@ -39,13 +39,14 @@
       <div id="content">
         @include('partials.top_bar')
         @yield('content')
-        @include('partials.footer')
-
+      </div>
     </div>
     <!-- End of Content Wrapper -->
 
   </div>
   <!-- End of Page Wrapper -->
+
+  @include('partials.footer')
 
   <!-- Bootstrap core JavaScript-->
   <script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
