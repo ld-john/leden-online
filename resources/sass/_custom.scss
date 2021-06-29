@@ -2,6 +2,11 @@
 /* General */
 .nav-background-white {
   background-color: #fff;
+  padding-top: 100px;
+}
+
+.sticky-footer {
+  grid-column: 1 / -1;
 }
 
 .blue-background {
@@ -9,7 +14,6 @@
 }
 
 .sidebar {
-  padding-top: 100px;
   li {
     &.active, &.active:hover, &.active:focus, &.active:active {
       background: $leden-dark-blue;

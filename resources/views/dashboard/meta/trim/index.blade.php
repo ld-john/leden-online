@@ -1,6 +1,6 @@
 @extends('layouts.main', [
     'title' => 'Manage Trim Options',
-    'activePage' => 'order-bank'
+    'activePage' => 'trim-manager'
     ])
 
 @section('content')

@@ -10907,14 +10907,15 @@ a.text-dark:focus {
 
 .nav-background-white {
   background-color: #fff;
+  padding-top: 100px;
+}
+
+.sticky-footer {
+  grid-column: 1/-1;
 }
 
 .blue-background {
   background: #1f3458;
-}
-
-.sidebar {
-  padding-top: 100px;
 }
 
 .sidebar li.active,
@@ -11086,6 +11087,10 @@ table.dataTable {
   background-color: #cdcdcd !important;
 }
 
+a.btn i {
+  display: block;
+}
+
 .btn-flex {
   display: flex;
 }
@@ -11096,12 +11101,13 @@ table.dataTable {
 }
 
 .meta-management {
-  margin: 10px 30px 40px;
+  margin: 10px 0 40px;
 }
 
 .meta-management h4 {
   font-size: 14px;
   font-weight: bold;
+  margin-left: 30px;
 }
 
 .multi-select-container {

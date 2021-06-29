@@ -59,7 +59,7 @@
             <div class="card mb-3">
                 <div class="card-header" id="headingFactoryFit">
                     <h5 class="mb-0">
-                        <button type="button" class="btn btn-link" wire:click="$set('showFactoryFitOption' , {{!$showFactoryFitOptions}})" data-toggle="collapse" data-target="#collapseFactoryFit" aria-expanded="true" aria-controls="collapseFactoryFit">
+                        <button type="button" class="btn btn-link" wire:click="$set('showFactoryFitOptions' , {{!$showFactoryFitOptions}})" data-toggle="collapse" data-target="#collapseFactoryFit" aria-expanded="true" aria-controls="collapseFactoryFit">
                             Factory Fit Options
                         </button>
                     </h5>

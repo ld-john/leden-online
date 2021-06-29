@@ -28,6 +28,10 @@
   background-color: #cdcdcd!important;
 }
 
+a.btn i {
+  display: block;
+}
+
 .btn-flex {
   display: flex;
   a{
@@ -37,11 +41,12 @@
 }
 
 .meta-management {
-  margin: 10px 30px 40px;
+  margin: 10px 0 40px;
 
   h4 {
     font-size: 14px;
     font-weight: bold;
+    margin-left: 30px;
   }
 
 

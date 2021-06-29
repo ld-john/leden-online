@@ -31,7 +31,7 @@
                     <!-- Card Body -->
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="dataTable">
                                 <thead>
                                 <tr>
                                     <th>Leden ID</th>
@@ -100,15 +100,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    @if(isset($row))
                     <form action="/orders/duplicate/{{$row->id}}" id="execute-duplication">
+                        <label for="duplicateQuantity">How Many?</label>
                         <input type="number" name="duplicateQty" min="0" max="10" id="duplicateQuantity">
                         <button type="submit" class="btn btn-primary ">Go!</button>
                     </form>
-
-
-
+                    @endif
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
@@ -128,6 +127,9 @@
     <script>
         $(function () {
 
+            let table = $('#dataTable').DataTable({
+                orderCellsTop: true,
+            });
             $('.duplicate-order').on('click' , function(){
                 let orderId = $(this).attr('data-orderNumber');
                 let baseURL = '{{env('APP_URL')}}';
@@ -135,7 +137,7 @@
                 $('#execute-duplication').attr('action', baseURL + '/orders/duplicate/' + orderId);
             });
 
-            var orderQty = $('#duplicateQuantity');
+            let orderQty = $('#duplicateQuantity');
 
             $(orderQty).change( function (){
                 let target = $('.execute-duplication');
@@ -146,7 +148,7 @@
 
             $('#dataTable thead tr').clone(true).appendTo( '#dataTable thead' );
             $('#dataTable thead tr:eq(1) th').each( function (i) {
-                var title = $(this).text();
+                let title = $(this).text();
                 $(this).html( '<input type="text" class="colSearch" data-colName="'+title+'" placeholder="Search '+title+'" />' );
                 $(this).parent().addClass('searchContainer');
                 $( 'input', this ).on( 'keyup change', function () {
@@ -159,9 +161,6 @@
                 } );
             } );
 
-            var table = $('#dataTable').DataTable({
-                orderCellsTop: true,
-            });
         });
 
     </script>
