@@ -68,10 +68,11 @@
             <select wire:model="broker" class="custom-select" id="inputGroupSelectBroker">
                 <option selected>Choose...</option>
 
-                @if ( brokers )
+                @if ( $brokers )
 
                     @foreach ($brokers as $broker)
                     <option value="{{ $broker->id }}">{{ $broker->company_name }}</option>
+
                 @endforeach
 
                 @endif
