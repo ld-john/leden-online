@@ -90,7 +90,7 @@
 </div>
 {{-- Order Ref --}}
 <div class="form-group row">
-    <label class="col-md-2 col-form-label" for="order_ref">Order Ref</label>
+    <label class="col-md-2 col-form-label" for="order_ref"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Order Ref</label>
     <div class="col-md-6">
         <input wire:model="order_ref" type="text" name="order_ref" id="order_ref" class="form-control"
                autocomplete="off" placeholder="e.g. K0047"/>

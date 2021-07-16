@@ -125,6 +125,7 @@ class OrderForm extends Component
 		'status' => 'required',
 		'attachments.*' => 'max:1024',
         'broker' => 'required',
+        'order_ref' => 'required',
 	];
 
 	protected $messages = [
@@ -140,6 +141,7 @@ class OrderForm extends Component
         'status.required' => 'No <strong>Order Status</strong> selected',
         'attachments.*.max' => 'An <strong>Attachment</strong> is too big! (Max 1Mb)',
         'broker.required' => 'No <strong>Broker</strong> selected',
+        'order_ref.required' => 'You must supply an <strong>Order Ref.</strong>',
 		'factory_fit_name_manual_add.required' => '<strong>Factory Fit Option</strong> requires a <strong>Name</strong> selected',
 		'dealer_fit_name_manual_add.required' => '<strong>Dealer Fit Option</strong> requires a <strong>Name</strong> selected',
 		'factory_fit_price_manual_add.required' => '<strong>Factory Fit Option</strong> requires a <strong>Price</strong> selected',
