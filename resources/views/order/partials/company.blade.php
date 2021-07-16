@@ -21,7 +21,7 @@
 
                 @foreach ($registration_companies as $company)
                     <option value="{{ $company->id }}"
-                            @if ( !empty( $order_details )  && $company->id == $order_details->registration_company) selected @endif>{{ $company->name }}</option>
+                            @if ( !empty( $order_details )  && $company->id == $order_details->registration_company ) selected @endif>{{ $company->name }}</option>
                 @endforeach
 
             @endif
@@ -40,7 +40,7 @@
 
                 @foreach ($invoice_companies as $company)
                     <option value="{{ $company->id }}"
-                            @if ($company->id == $order_details->invoice_company) selected @endif>{{ $company->name }}</option>
+                            @if ( !empty( $order_details ) && $company->id == $order_details->invoice_company ) selected @endif>{{ $company->name }}</option>
                 @endforeach
 
             @endif
