@@ -16,10 +16,16 @@
     <div class="col-md-6">
         <select wire:model="registration_company" name="registration_company" id="registration_company" class="form-control">
             <option value="">Select Registration Company</option>
-            @foreach ($registration_companies as $company)
-                <option value="{{ $company->id }}"
-                        @if ($company->id == $order_details->registration_company) selected @endif>{{ $company->name }}</option>
-            @endforeach
+
+            @if ( $registration_companies )
+
+                @foreach ($registration_companies as $company)
+                    <option value="{{ $company->id }}"
+                            @if ($company->id == $order_details->registration_company) selected @endif>{{ $company->name }}</option>
+                @endforeach
+
+            @endif
+
         </select>
     </div>
 </div>
@@ -29,10 +35,16 @@
     <div class="col-md-6">
         <select wire:model="invoice_company" name="invoice_company" id="invoice_company" class="form-control">
             <option value="">Select Invoice Company</option>
-            @foreach ($invoice_companies as $company)
-                <option value="{{ $company->id }}"
-                        @if ($company->id == $order_details->invoice_company) selected @endif>{{ $company->name }}</option>
-            @endforeach
+
+            @if ( $invoice_companies )
+
+                @foreach ($invoice_companies as $company)
+                    <option value="{{ $company->id }}"
+                            @if ($company->id == $order_details->invoice_company) selected @endif>{{ $company->name }}</option>
+                @endforeach
+
+            @endif
+
         </select>
     </div>
 </div>
@@ -55,9 +67,14 @@
             @enderror
             <select wire:model="broker" class="custom-select" id="inputGroupSelectBroker">
                 <option selected>Choose...</option>
-                @foreach ($brokers as $broker)
+
+                @if ( brokers )
+
+                    @foreach ($brokers as $broker)
                     <option value="{{ $broker->id }}">{{ $broker->company_name }}</option>
                 @endforeach
+
+                @endif
             </select>
         </div>
     </div>
