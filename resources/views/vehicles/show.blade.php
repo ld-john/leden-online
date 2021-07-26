@@ -51,13 +51,13 @@
                                 <p>Vehicle Make</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->manufacturer->name }}</p>
+                                <p class="font-weight-bold">{{ $vehicle->manufacturer->name ?? '--' }}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Vehicle Model</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->model }}</p>
+                                <p class="font-weight-bold">{{ $vehicle->model ?? '--'}}</p>
                             </div>
                         </div>
 
@@ -66,13 +66,13 @@
                                 <p>Vehicle Type</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->type }}</p>
+                                <p class="font-weight-bold">{{ $vehicle->type ?? '--'}}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Vehicle Derivative</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->derivative }}</p>
+                                <p class="font-weight-bold">{{ $vehicle->derivative ?? '--'}}</p>
                             </div>
                         </div>
 
@@ -81,13 +81,13 @@
                                 <p>Vehicle Engine</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->engine }}</p>
+                                <p class="font-weight-bold">{{ $vehicle->engine ?? '--'}}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Vehicle Transmission</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->transmission }}</p>
+                                <p class="font-weight-bold">{{ $vehicle->transmission ?? '--'}}</p>
                             </div>
                         </div>
 
@@ -96,13 +96,13 @@
                                 <p>Vehicle Reg</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->reg }}</p>
+                                <p class="font-weight-bold">{{ $vehicle->reg ?? '--'}}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Vehicle Colour</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->colour }}</p>
+                                <p class="font-weight-bold">{{ $vehicle->colour ?? '--'}}</p>
                             </div>
                         </div>
 
@@ -111,13 +111,13 @@
                                 <p>Vehicle Body</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->body }}</p>
+                                <p class="font-weight-bold">{{ $vehicle->body ?? '--'}}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Vehicle Trim</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->trim }}</p>
+                                <p class="font-weight-bold">{{ $vehicle->trim ?? '--'}}</p>
                             </div>
                         </div>
 
@@ -126,13 +126,13 @@
                                 <p>Chassis Prefix</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->chassis_prefix }}</p>
+                                <p class="font-weight-bold">{{ $vehicle->chassis_prefix ?? '--'}}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Chassis</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->chassis }}</p>
+                                <p class="font-weight-bold">{{ $vehicle->chassis ?? '--'}}</p>
                             </div>
                         </div>
 
@@ -142,13 +142,13 @@
                                     <p>Model Year</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $vehicle->model_year }}</p>
+                                    <p class="font-weight-bold">{{ $vehicle->model_year ?? '--'}}</p>
                                 </div>
                                 <div class="col-md-2">
                                     <p>Dealer</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $vehicle->dealer->company_name }}</p>
+                                    <p class="font-weight-bold">{{ $vehicle->dealer->company_name ?? '--'}}</p>
                                 </div>
                             </div>
                         @endif

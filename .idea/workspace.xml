@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Update Invoice Partial to show name correctly">
+    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="all the null coalescing operators (correctly) to order page.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -376,7 +376,28 @@
       <option name="project" value="LOCAL" />
       <updated>1627309489867</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="null coalescing operator on removed vehicle make and models on order page.">
+      <created>1627309767717</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1627309767717</updated>
+    </task>
+    <task id="LOCAL-00019" summary="null coalescing operator on removed vehicle make and models on order page (correctly)">
+      <created>1627309947751</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1627309947751</updated>
+    </task>
+    <task id="LOCAL-00020" summary="all the null coalescing operators (correctly) to order page.">
+      <created>1627310091601</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1627310091601</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -433,6 +454,9 @@
     <MESSAGE value="Dashboards have been changed to partials&#10;clean up of views folder&#10;routing updates&#10;duplications working" />
     <MESSAGE value="Update Company Partial to show name correctly" />
     <MESSAGE value="Update Invoice Partial to show name correctly" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Invoice Partial to show name correctly" />
+    <MESSAGE value="null coalescing operator on removed vehicle make and models on order page." />
+    <MESSAGE value="null coalescing operator on removed vehicle make and models on order page (correctly)" />
+    <MESSAGE value="all the null coalescing operators (correctly) to order page." />
+    <option name="LAST_COMMIT_MESSAGE" value="all the null coalescing operators (correctly) to order page." />
   </component>
 </project>
