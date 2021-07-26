@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Swap Reg for Engine on Broker dashboard">
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Fix error in order controller">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/_link.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_link.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -431,7 +434,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627311658600</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Fix error in order controller">
+      <created>1627312007257</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1627312007257</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -496,6 +506,7 @@
     <MESSAGE value="Make the sanity check null" />
     <MESSAGE value="add sanity check to Models" />
     <MESSAGE value="Swap Reg for Engine on Broker dashboard" />
-    <option name="LAST_COMMIT_MESSAGE" value="Swap Reg for Engine on Broker dashboard" />
+    <MESSAGE value="Fix error in order controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix error in order controller" />
   </component>
 </project>
