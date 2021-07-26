@@ -212,6 +212,7 @@ class OrderController extends Controller
 				'dealer_id',
 				'customer_id',
 				'order_ref',
+				'delivery_date',
 				'due_date',
 				'broker_ref',
 			)
