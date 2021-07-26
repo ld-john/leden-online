@@ -47,13 +47,13 @@
                                 <p>Vehicle Make</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->manufacturer->name }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->manufacturer->name or 'Deleted' }}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Vehicle Model</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->model }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->model or 'Deleted' }}</p>
                             </div>
                         </div>
 

@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Dashboards have been changed to partials&#10;clean up of views folder&#10;routing updates&#10;duplications working">
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" afterDir="false" />
+    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Update Invoice Partial to show name correctly">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -361,7 +362,21 @@
       <option name="project" value="LOCAL" />
       <updated>1622102643602</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Update Company Partial to show name correctly">
+      <created>1627309321774</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1627309321774</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Update Invoice Partial to show name correctly">
+      <created>1627309489867</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1627309489867</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -416,6 +431,8 @@
     <MESSAGE value="CSV Uploads and PDF Downloads" />
     <MESSAGE value="Removed some files&#10;Messages work again&#10;CSS tweaks" />
     <MESSAGE value="Dashboards have been changed to partials&#10;clean up of views folder&#10;routing updates&#10;duplications working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dashboards have been changed to partials&#10;clean up of views folder&#10;routing updates&#10;duplications working" />
+    <MESSAGE value="Update Company Partial to show name correctly" />
+    <MESSAGE value="Update Invoice Partial to show name correctly" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Invoice Partial to show name correctly" />
   </component>
 </project>
