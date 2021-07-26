@@ -268,7 +268,7 @@ class OrderController extends Controller
 
 		} elseif ($order->admin_accepted == 1 && $order->broker_accepted == 0 && $order->dealer_accepted == 1) {
 			// Email to Broker to accept delivery time
-			$this->DateAcceptEmail($order-broker_id, $order);
+			$this->DateAcceptEmail($order->broker_id, $order);
 
 			$this->DateAcceptEmail($order->dealer_id, $order);
 
