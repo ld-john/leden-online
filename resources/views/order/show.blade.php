@@ -150,7 +150,7 @@
                             </div>
                             <div class="col-md-4">
                                 <p class="font-weight-bold">
-                                    @if($order->delivery_date)
+                                    @if( isset ($order->delivery_date) && ( $order->delivery_date != '0000-00-00 00:00:00') )
                                         {{ date('d/m/Y', strtotime($order->delivery_date)) }}
                                     @else
                                         TBC
