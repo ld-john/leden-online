@@ -31,7 +31,7 @@
                                     <th>Leden ID</th>
                                     <th>Make</th>
                                     <th>Model</th>
-                                    <th>Registration</th>
+                                    <th>Engine</th>
                                     <th>Type</th>
                                     <th>Action</th>
                                 </tr>
@@ -42,7 +42,7 @@
                                         <td>{{ $row->id ?? '' }}</td>
                                         <td>{{ $row->manufacturer->name ?? '' }}</td>
                                         <td>{{ $row->model ?? '' }}</td>
-                                        <td>{{ $row->reg ?? '' }}</td>
+                                        <td>{{ $row->engine ?? '' }}</td>
                                         <td>{{ $row->type ?? '' }}</td>
                                         <td>
                                             <a href="{{route('vehicle.show', [$row->id])}}" class="btn btn-primary"><i class="far fa-eye"></i> View</a>

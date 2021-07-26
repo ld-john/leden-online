@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="null coalescing operators (correctly) to view vehicle page.">
+    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="add sanity check to Models">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/dashboard-broker.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/dashboard-broker.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -404,7 +404,28 @@
       <option name="project" value="LOCAL" />
       <updated>1627310438728</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Sanity Check on missing make model on view vehicle page">
+      <created>1627310970141</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1627310970141</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Make the sanity check null">
+      <created>1627311136113</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1627311136113</updated>
+    </task>
+    <task id="LOCAL-00024" summary="add sanity check to Models">
+      <created>1627311242559</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1627311242559</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -465,6 +486,9 @@
     <MESSAGE value="null coalescing operator on removed vehicle make and models on order page (correctly)" />
     <MESSAGE value="all the null coalescing operators (correctly) to order page." />
     <MESSAGE value="null coalescing operators (correctly) to view vehicle page." />
-    <option name="LAST_COMMIT_MESSAGE" value="null coalescing operators (correctly) to view vehicle page." />
+    <MESSAGE value="Sanity Check on missing make model on view vehicle page" />
+    <MESSAGE value="Make the sanity check null" />
+    <MESSAGE value="add sanity check to Models" />
+    <option name="LAST_COMMIT_MESSAGE" value="add sanity check to Models" />
   </component>
 </project>
