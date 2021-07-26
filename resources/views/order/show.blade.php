@@ -47,13 +47,13 @@
                                 <p>Vehicle Make</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->manufacturer->name ?? 'Deleted' }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->manufacturer->name ?? '--' }}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Vehicle Model</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->model ?? 'Deleted' }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->model ?? '--' }}</p>
                             </div>
                         </div>
 
@@ -62,13 +62,13 @@
                                 <p>Vehicle Type</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->type }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->type ?? '--'}}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Vehicle Derivative</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->derivative }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->derivative ?? '--'}}</p>
                             </div>
                         </div>
 
@@ -77,13 +77,13 @@
                                 <p>Vehicle Engine</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->engine }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->engine ?? '--'}}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Vehicle Transmission</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->transmission }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->transmission ?? '--'}}</p>
                             </div>
                         </div>
 
@@ -92,13 +92,13 @@
                                 <p>Vehicle Reg</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->reg }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->reg ?? '--'}}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Vehicle Colour</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->colour }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->colour ?? '--'}}</p>
                             </div>
                         </div>
 
@@ -107,13 +107,13 @@
                                 <p>Vehicle Body</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->body }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->body ?? '--'}}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Vehicle Trim</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->trim }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->trim ?? '--'}}</p>
                             </div>
                         </div>
 
@@ -122,13 +122,13 @@
                                 <p>Chassis Prefix</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->chassis_prefix }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->chassis_prefix ?? '--'}}</p>
                             </div>
                             <div class="col-md-2">
                                 <p>Chassis</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->chassis }}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->chassis ?? '--'}}</p>
                             </div>
                         </div>
 
@@ -138,7 +138,7 @@
                                     <p>Model Year</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->vehicle->model_year }}</p>
+                                    <p class="font-weight-bold">{{ $order->vehicle->model_year ?? '--'}}</p>
                                 </div>
                             @endif
                             <div class="col-md-2">
@@ -255,13 +255,13 @@
                                     <p>Customer Name</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->customer->customer_name }}</p>
+                                    <p class="font-weight-bold">{{ $order->customer->customer_name ?? '--'}}</p>
                                 </div>
                                 <div class="col-md-2">
                                     <p>Company Name</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->customer->company_name }}</p>
+                                    <p class="font-weight-bold">{{ $order->customer->company_name ?? '--'}}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -269,13 +269,13 @@
                                     <p>Dealership</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->dealer->company_name }}</p>
+                                    <p class="font-weight-bold">{{ $order->dealer->company_name ?? '--'}}</p>
                                 </div>
                                 <div class="col-md-2">
                                     <p>Broker</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->broker->company_name }}</p>
+                                    <p class="font-weight-bold">{{ $order->broker->company_name ?? '--'}}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -283,13 +283,13 @@
                                     <p>Customer Phone Number</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->customer->phone_number }}</p>
+                                    <p class="font-weight-bold">{{ $order->customer->phone_number ?? '--'}}</p>
                                 </div>
                                 <div class="col-md-2">
                                     <p>Broker Order Ref</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->broker_ref }}</p>
+                                    <p class="font-weight-bold">{{ $order->broker_ref ?? '--'}}</p>
                                 </div>
                             </div>
                         </div>
