@@ -52,7 +52,13 @@
                                         </td>
                                         <td>{{ $row->order_ref ?? ''}}</td>
                                         <td>{{ $row->vehicle->reg ?? ''}}</td>
-                                        <td>{{ \Carbon\Carbon::parse($row->delivery_date ?? '')->format( 'd/m/Y' )}}</td>
+                                        <td>
+                                            @if( isset ($row->delivery_date) && ( $row->delivery_date != '0000-00-00 00:00:00') )
+                                            {{ \Carbon\Carbon::parse($row->delivery_date)->format( 'd/m/Y' )}}
+                                            @else
+                                            TBD
+                                            @endif
+                                        </td>
                                         <td>@if ( $row->customer->preffered_name == 'customer')
                                                 {{ $row->customer->customer_name ?? ''}}
                                             @else

@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Tweak button on tables styling">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/view-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/view-order.blade.php" afterDir="false" />
+    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Check for malformed timestamps">
+      <change beforePath="$PROJECT_DIR$/resources/views/order/deliveries.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/deliveries.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -447,7 +445,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627313331818</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Check for malformed timestamps">
+      <created>1627313844308</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1627313844308</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -489,7 +494,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Setting up basic gating" />
     <MESSAGE value="CSS Tweaks" />
     <MESSAGE value="Delivery Date Change and Accept for orders" />
     <MESSAGE value="Ford Pipeline display" />
@@ -514,6 +518,7 @@
     <MESSAGE value="Swap Reg for Engine on Broker dashboard" />
     <MESSAGE value="Fix error in order controller" />
     <MESSAGE value="Tweak button on tables styling" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tweak button on tables styling" />
+    <MESSAGE value="Check for malformed timestamps" />
+    <option name="LAST_COMMIT_MESSAGE" value="Check for malformed timestamps" />
   </component>
 </project>
