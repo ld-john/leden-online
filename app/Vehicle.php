@@ -48,7 +48,8 @@ class Vehicle extends Model
 	            //
 	    }
 
-    	if ( isset ( $fitType) ) {
+
+    	if ( isset ( $fitType) && $fitType !== '' ) {
 		    $fitOptions = FitOption::select('option_name', 'option_price')->where('option_type', $type)->whereIn('id', json_decode($fitType))->get();
 	    } else {
     		return [];

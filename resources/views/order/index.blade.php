@@ -66,10 +66,10 @@
                                         <td>{{ $row->broker->company_name ?? ''}}</td>
                                         <td>{{ $row->dealer->company_name ?? ''}}</td>
                                         <td>
-                                            <a href="{{route('order.show', $row->id)}}" class="btn btn-primary"><i class="far fa-eye"></i> View</a>
+                                            <a href="{{route('order.show', $row->id)}}" class="btn is-full btn-primary"><i class="far fa-eye"></i> View</a>
                                             @can('admin')
-                                            <a href="{{route('order.edit', $row->id)}}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
-                                            <button type="button" class="btn btn-primary duplicate-order" data-orderNumber="{{ $row->id }}" data-toggle="modal" data-target="#duplicateOrder">
+                                            <a href="{{route('order.edit', $row->id)}}" class="btn is-full btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                            <button type="button" class="btn is-full btn-primary duplicate-order" data-orderNumber="{{ $row->id }}" data-toggle="modal" data-target="#duplicateOrder">
                                                 Duplicate
                                             </button>
                                             @endcan

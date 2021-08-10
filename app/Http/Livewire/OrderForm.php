@@ -348,8 +348,8 @@ class OrderForm extends Component
 			$vehicle->fuel_type = $this->fuel_type;
 			$vehicle->colour = $this->colour;
 			$vehicle->trim = $this->trim;
-			$vehicle->dealer_fit_options = $this->dealer_fit_options;
-			$vehicle->factory_fit_options = $this->factory_fit_options;
+			$vehicle->dealer_fit_options = isset($this->dealer_fit_options) ? json_encode($this->dealer_fit_options) : null;
+			$vehicle->factory_fit_options = isset($this->factory_fit_options) ? json_encode($this->factory_fit_options) : null;
 			$vehicle->chassis_prefix = $this->chassis_prefix;
 			$vehicle->type = $this->type;
 			$vehicle->metallic_paint = $this->metallic_paint;
@@ -361,6 +361,7 @@ class OrderForm extends Component
 			$vehicle->hide_from_broker = $this->hide_from_broker;
 			$vehicle->hide_from_broker = $this->hide_from_dealer;
 			$vehicle->show_in_ford_pipeline = $this->ford_pipeline;
+
 			$vehicle->save();
 
 			if (!isset($this->customer_id) || $this->customer_id === '') {
