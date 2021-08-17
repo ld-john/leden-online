@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Check for malformed timestamps - Manage Deliveries">
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Manage deliveries to actually GET delivery dates...">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order-form.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -255,6 +256,7 @@
       <workItem from="1625842004796" duration="621000" />
       <workItem from="1626188186585" duration="14000" />
       <workItem from="1626423067080" duration="3263000" />
+      <workItem from="1629189790801" duration="690000" />
     </task>
     <task id="LOCAL-00001" summary="Setting up basic gating">
       <created>1620290625172</created>
@@ -459,7 +461,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627314147944</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Manage deliveries to actually GET delivery dates...">
+      <created>1627314539147</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1627314539148</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -501,7 +510,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Delivery Date Change and Accept for orders" />
     <MESSAGE value="Ford Pipeline display" />
     <MESSAGE value="Add Vehicle Create and Edit form" />
     <MESSAGE value="Edit and Reserve Order Forms created" />
@@ -526,6 +534,7 @@
     <MESSAGE value="Tweak button on tables styling" />
     <MESSAGE value="Check for malformed timestamps" />
     <MESSAGE value="Check for malformed timestamps - Manage Deliveries" />
-    <option name="LAST_COMMIT_MESSAGE" value="Check for malformed timestamps - Manage Deliveries" />
+    <MESSAGE value="Manage deliveries to actually GET delivery dates..." />
+    <option name="LAST_COMMIT_MESSAGE" value="Manage deliveries to actually GET delivery dates..." />
   </component>
 </project>

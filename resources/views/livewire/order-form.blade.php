@@ -213,14 +213,18 @@
 
         function invoiceValueChange()
         {
-            let discountSum = parseInt(dealer_discount.value) + parseInt(manufacturer_discount.value)
+            let discountSum = parseFloat(dealer_discount.value) + parseFloat(manufacturer_discount.value)
             total_discount.value = discountSum
 
             let InvoiceSum1 = parseInt(list_price.value)+parseInt(metallic_paint.value)
             let InvoiceSum2 = ( parseInt( InvoiceSum1 ) / 100) * parseInt(discountSum)
             let InvoiceSum3 = InvoiceSum1 - InvoiceSum2
-            let InvoiceSum4 = parseInt(manufacturer_delivery_cost.value) + parseInt(first_reg_fee.value) + parseInt(rfl_cost.value) + parseInt(onward_delivery.value)
-            let InvoiceSum5 = (InvoiceSum3 + InvoiceSum4) - parseInt(invoice_funder_for.value)
+            let InvoiceSum4 =
+                parseInt(manufacturer_delivery_cost.value) +
+                parseInt(first_reg_fee.value) +
+                parseInt(rfl_cost.value) +
+                parseInt(onward_delivery.value)
+            let InvoiceSum5 = (InvoiceSum3 + InvoiceSum4);
             if (InvoiceSum5) {
                 invoiceValue.value = InvoiceSum5
             }
