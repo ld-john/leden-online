@@ -30,8 +30,10 @@
 
 a.btn {
   display: block;
-  width: 100%;
   margin-bottom: 2px;
+  &.is-full {
+    width: 100%;
+  }
 }
 
 .btn-flex {
