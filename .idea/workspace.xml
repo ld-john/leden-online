@@ -6,14 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Numbers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Vehicle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/_link.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_link.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/deliveries.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/deliveries.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/reserve.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/reserve.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="JG_Tweaks" />
+        <entry key="$PROJECT_DIR$" value="live" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -264,6 +258,7 @@
       <workItem from="1626188186585" duration="14000" />
       <workItem from="1626423067080" duration="3263000" />
       <workItem from="1628589106249" duration="5329000" />
+      <workItem from="1631527345357" duration="2321000" />
     </task>
     <task id="LOCAL-00001" summary="Setting up basic gating">
       <created>1620290625172</created>
@@ -495,7 +490,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="staging" />
+                        <option value="origin/live" />
                       </list>
                     </value>
                   </entry>
@@ -510,7 +505,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Delivery Date Change and Accept for orders" />
     <MESSAGE value="Ford Pipeline display" />
     <MESSAGE value="Add Vehicle Create and Edit form" />
     <MESSAGE value="Edit and Reserve Order Forms created" />
@@ -535,6 +529,7 @@
     <MESSAGE value="Tweak button on tables styling" />
     <MESSAGE value="Check for malformed timestamps" />
     <MESSAGE value="Check for malformed timestamps - Manage Deliveries" />
-    <option name="LAST_COMMIT_MESSAGE" value="Check for malformed timestamps - Manage Deliveries" />
+    <MESSAGE value="Numbers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Numbers" />
   </component>
 </project>
