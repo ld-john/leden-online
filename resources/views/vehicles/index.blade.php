@@ -50,10 +50,10 @@
                                         <td>{{ $row->chassis ?? '' }}</td>
                                         <td>{{ $row->reg ?? '' }}</td>
                                         <td>
-                                            <a href="{{route('vehicle.show', $row->id)}}" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View Vehicle</a>
+                                            <a href="{{route('vehicle.show', $row->id)}}" class="btn btn-sm btn-primary"><i class="far fa-eye"></i><br> View Vehicle</a>
                                             @can('admin')
-                                                <a href="{{route('edit_vehicle', $row->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit Vehicle</a>
-                                                <a href="{{route('order.reserve', $row->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-plus-square"></i> Create Order</a>
+                                                <a href="{{route('edit_vehicle', $row->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i><br> Edit Vehicle</a>
+                                                <a href="{{route('order.reserve', $row->id)}}" class="btn btn-sm"><i class="fas fa-plus-square"></i><br> Create Order</a>
                                             @endcan
                                         </td>
                                     </tr>
