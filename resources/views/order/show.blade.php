@@ -299,10 +299,7 @@
                         <a href="{{ route('pipeline') }}" class="btn btn-secondary">Back</a>
                         @if (Auth::user()->role != 'broker')
                             <a href="{{ route('order.pdf', $order->id) }}" class="btn btn-secondary">Download Order PDF</a>
-                            @if($order->vehicle->vehicle_status !== 7)
-                                <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning">Edit Order</a>
-                            @endif
-                            @if($order->vehicle->vehicle_status === 7 && Auth::user()->role == 'admin')
+                            @if( Auth::user()->role == 'admin')
                                 <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning">Edit Order</a>
                             @endif
                         @endif
