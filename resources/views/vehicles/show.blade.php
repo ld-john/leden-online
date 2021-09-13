@@ -40,7 +40,9 @@
                             @if( isset( $vehicle->order->id ) )
                                 <span class="badge badge-success">Vehicle is on order - <a href="{{route('order.show', $vehicle->order->id)}}">View Order</a></span>
                             @else
+                                @can('admin')
                                 <span class="badge badge-success">Vehicle is available for order - <a href="{{route('create_order')}}">Reserve</a> </span>
+                                @endcan
                             @endif
                         </div>
                     </div>
