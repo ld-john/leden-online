@@ -41,7 +41,9 @@
                                 <span class="badge badge-success">Vehicle is on order - <a href="{{route('order.show', $vehicle->order->id)}}">View Order</a></span>
                             @else
                                 @can('admin')
-                                <span class="badge badge-success">Vehicle is available for order - <a href="{{route('create_order')}}">Reserve</a> </span>
+                                    <span class="badge badge-success">Vehicle is available for order - <a href="{{route('create_order')}}">Reserve</a> </span>
+                                @else
+                                    <span class="badge badge-success">Vehicle is available for order - Contact Leden for details</span>
                                 @endcan
                             @endif
                         </div>
