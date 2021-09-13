@@ -49,7 +49,7 @@
                                         <td>{{ $row->type ?? '' }}</td>
                                         <td>{{ $row->chassis ?? '' }}</td>
                                         <td>{{ $row->reg ?? '' }}</td>
-                                        <td class="btn-flex">
+                                        <td>
                                             <a href="{{route('vehicle.show', $row->id)}}" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View Vehicle</a>
                                             @can('admin')
                                                 <a href="{{route('edit_vehicle', $row->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit Vehicle</a>
