@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Manage deliveries to actually GET delivery dates...">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order-form.blade.php" afterDir="false" />
-    </list>
+    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Create Order from Vehicle" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -468,7 +465,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627314539148</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Create Order from Vehicle">
+      <created>1631532782625</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1631532782625</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -510,7 +514,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Ford Pipeline display" />
     <MESSAGE value="Add Vehicle Create and Edit form" />
     <MESSAGE value="Edit and Reserve Order Forms created" />
     <MESSAGE value="Vehicles belong to dealers and Reporting Fixed" />
@@ -535,6 +538,7 @@
     <MESSAGE value="Check for malformed timestamps" />
     <MESSAGE value="Check for malformed timestamps - Manage Deliveries" />
     <MESSAGE value="Manage deliveries to actually GET delivery dates..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Manage deliveries to actually GET delivery dates..." />
+    <MESSAGE value="Create Order from Vehicle" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create Order from Vehicle" />
   </component>
 </project>
