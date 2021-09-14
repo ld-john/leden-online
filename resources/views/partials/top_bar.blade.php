@@ -23,7 +23,7 @@
                     Notifications Center
                 </h6>
                 @foreach (Auth::user()->unreadNotifications->take(4) as $notification)
-                    <a class="dropdown-item d-flex align-items-center text-white" href="{{ route('order.show', $notification->data['order_id']) }}">
+                    <a class="dropdown-item d-flex align-items-center text-gray-500" href="{{ route('order.show', $notification->data['order_id']) }}">
                         <div class="mr-3">
                             <div class="icon-circle blue-background">
                                 @if ($notification->data['type'] == 'vehicle')
