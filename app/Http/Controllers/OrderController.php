@@ -286,22 +286,26 @@ class OrderController extends Controller
 
 			Notification::send($users, new notifications($message, $order->id, $type));
 
-			foreach ($users as $user) {
-				$mail_data = [
-					'name' => $user->firstname,
-					'content' => 'Order #' . $order->id . ' all parties have agreed to the proposed delivery date.',
-					'url' => ENV('APP_URL') . '/orders/view/' . $order->id,
-					'order_id' => $order->id,
-					'email' => $user->email,
-					'name' => $user->firstname . ' ' . $user->lastname,
-				];
+            if ( env( 'MAIL_ENABLE' ) ) {
 
-				Mail::send('mail', $mail_data, function ($message) use ($mail_data) {
-					$message->to($mail_data['email'], $mail_data['name'])
-						->subject('Order #' . $mail_data['order_id'] . ' \'s delivery date has been approved');
-					$message->from(ENV('MAIL_FROM_ADDRESS'), ENV('MAIL_FROM_NAME'));
-				});
-			}
+                foreach ($users as $user) {
+                    $mail_data = [
+                        'name' => $user->firstname,
+                        'content' => 'Order #' . $order->id . ' all parties have agreed to the proposed delivery date.',
+                        'url' => ENV('APP_URL') . '/orders/view/' . $order->id,
+                        'order_id' => $order->id,
+                        'email' => $user->email,
+                        'name' => $user->firstname . ' ' . $user->lastname,
+                    ];
+
+                    Mail::send('mail', $mail_data, function ($message) use ($mail_data) {
+                        $message->to($mail_data['email'], $mail_data['name'])
+                            ->subject('Order #' . $mail_data['order_id'] . ' \'s delivery date has been approved');
+                        $message->from(ENV('MAIL_FROM_ADDRESS'), ENV('MAIL_FROM_NAME'));
+                    });
+                }
+
+            }
 		}
 
 
@@ -495,42 +499,50 @@ class OrderController extends Controller
 	{
 		$users = User::where('company_id', $company_id)->get();
 
-		foreach ($users as $user) {
-			$mail_data = [
-				'content' => 'Order #' . $order->id . ' has had the proposed delivery date changed. Please view this order and accept the delivery date.',
-				'url' => ENV('APP_URL') . '/orders/view/' . $order->id,
-				'order_id' => $order->id,
-				'email' => $user->email,
-				'name' => $user->firstname . ' ' . $user->lastname,
-			];
+        if ( env( 'MAIL_ENABLE' ) ) {
 
-			Mail::send('mail', $mail_data, function ($message) use ($mail_data) {
-				$message->to($mail_data['email'], $mail_data['name'])
-					->subject('The proposed delivery date for Order #' . $mail_data['order_id'] . ' has been changed');
-				$message->from(ENV('MAIL_FROM_ADDRESS'), ENV('MAIL_FROM_NAME'));
-			});
-		}
+            foreach ($users as $user) {
+                $mail_data = [
+                    'content' => 'Order #' . $order->id . ' has had the proposed delivery date changed. Please view this order and accept the delivery date.',
+                    'url' => ENV('APP_URL') . '/orders/view/' . $order->id,
+                    'order_id' => $order->id,
+                    'email' => $user->email,
+                    'name' => $user->firstname . ' ' . $user->lastname,
+                ];
+
+                Mail::send('mail', $mail_data, function ($message) use ($mail_data) {
+                    $message->to($mail_data['email'], $mail_data['name'])
+                        ->subject('The proposed delivery date for Order #' . $mail_data['order_id'] . ' has been changed');
+                    $message->from(ENV('MAIL_FROM_ADDRESS'), ENV('MAIL_FROM_NAME'));
+                });
+            }
+
+        }
 	}
 
 	public function DateAcceptEmail($company_id, Order $order)
 	{
 		$users = User::where('company_id', $company_id)->get();
 
-		foreach ($users as $user) {
-			$mail_data = [
-				'content' => 'Order #' . $order->id . ' has been reserved and a delivery date has been added. Please view this order and accept the delivery date.',
-				'url' => ENV('APP_URL') . '/orders/view/' . $order->id,
-				'order_id' => $order->id,
-				'email' => $user->email,
-				'name' => $user->firstname . ' ' . $user->lastname,
-			];
+		if ( env( 'MAIL_ENABLE' ) ) {
 
-			Mail::send('mail', $mail_data, function ($message) use ($mail_data) {
-				$message->to($mail_data['email'], $mail_data['name'])
-					->subject('Order #' . $mail_data['order_id'] . ' has been reserved');
-				$message->from(ENV('MAIL_FROM_ADDRESS'), ENV('MAIL_FROM_NAME'));
-			});
-		}
+            foreach ($users as $user) {
+                $mail_data = [
+                    'content' => 'Order #' . $order->id . ' has been reserved and a delivery date has been added. Please view this order and accept the delivery date.',
+                    'url' => ENV('APP_URL') . '/orders/view/' . $order->id,
+                    'order_id' => $order->id,
+                    'email' => $user->email,
+                    'name' => $user->firstname . ' ' . $user->lastname,
+                ];
+
+                Mail::send('mail', $mail_data, function ($message) use ($mail_data) {
+                    $message->to($mail_data['email'], $mail_data['name'])
+                        ->subject('Order #' . $mail_data['order_id'] . ' has been reserved');
+                    $message->from(ENV('MAIL_FROM_ADDRESS'), ENV('MAIL_FROM_NAME'));
+                });
+            }
+
+        }
 	}
 
 }
