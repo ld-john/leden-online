@@ -558,8 +558,8 @@ class OrderForm extends Component
 			}
 
 
-            $this->delivery_date = $this->delivery_date->format( 'd/m/Y');
-            $this->due_date = $this->due_date->format( 'd/m/Y');
+            $this->delivery_date = ( $this->delivery_date ? $this->delivery_date->format( 'd/m/Y') : null );
+            $this->due_date = ( $this->due_date ? $this->due_date->format( 'd/m/Y') : null );
 
 			$this->successMsg = "Order Updated";
 		}
