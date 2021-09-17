@@ -190,14 +190,14 @@ class OrderForm extends Component
 
             if ( isset ( $this->order->due_date) ) {
                 $due = Carbon::parse ( $this->order->due_date );
-                $due->format( 'd/m/Y' );
+                $due->toDateString();
                 $this->due_date = $due;
 
             }
 
             if ( isset ( $this->order->delivery_date) ) {
                 $del = Carbon::parse ( $this->order->delivery_date );
-                $del->format( 'd/m/Y' );
+                $del->toDateString();
                 $this->delivery_date = $del;
 
             }
