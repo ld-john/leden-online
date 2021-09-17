@@ -198,7 +198,8 @@ class OrderForm extends Component
             if ( $this->order->delivery_date ) {
                 //$del = Carbon::parse ( $this->order->delivery_date );
                 //$del->toDateString();
-                $this->delivery_date = $this->order->delivery_date->toDateString();
+                $del = new DateTime( $this->order->delivery_date );
+                $this->delivery_date = $del->format( 'd/m/Y');
 
             } else {
                 $this->delivery_date = 'foo';
