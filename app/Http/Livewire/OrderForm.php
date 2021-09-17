@@ -200,6 +200,8 @@ class OrderForm extends Component
                 $del->toDateString();
                 $this->delivery_date = $del;
 
+            } else {
+                $this->delivery_date = 'foo';
             }
 
 
