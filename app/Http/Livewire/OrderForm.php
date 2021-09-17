@@ -188,14 +188,14 @@ class OrderForm extends Component
 
             // Handle Dates coming in so JS can play nice with them.
 
-            if ( isset ( $this->order->due_date) ) {
+            if ( $this->order->due_date ) {
                 $due = Carbon::parse ( $this->order->due_date );
                 $due->toDateString();
                 $this->due_date = $due;
 
             }
 
-            if ( isset ( $this->order->delivery_date) ) {
+            if ( $this->order->delivery_date ) {
                 $del = Carbon::parse ( $this->order->delivery_date );
                 $del->toDateString();
                 $this->delivery_date = $del;
