@@ -196,9 +196,9 @@ class OrderForm extends Component
             }
 
             if ( $this->order->delivery_date ) {
-                $del = Carbon::parse ( $this->order->delivery_date );
-                $del->toDateString();
-                $this->delivery_date = $del;
+                //$del = Carbon::parse ( $this->order->delivery_date );
+                //$del->toDateString();
+                $this->delivery_date = $this->order->delivery_date->toDateString();
 
             } else {
                 $this->delivery_date = 'foo';
