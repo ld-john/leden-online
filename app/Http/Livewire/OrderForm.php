@@ -309,6 +309,9 @@ class OrderForm extends Component
 	{
 		$this->validate();
 
+		$this->delivery_date = Carbon::Parse( $this->delivery_date );
+        $this->due_date = Carbon::Parse( $this->due_date );
+
 		if ( !isset( $this->order )) {
 
 			if (isset($this->newmake)) {
