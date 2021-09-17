@@ -557,8 +557,9 @@ class OrderForm extends Component
 				$file->save();
 			}
 
-            $this->delivery_date = DateTime::createFromFormat('d/m/Y', $this->delivery_date );
-            $this->due_date = DateTime::createFromFormat('d/m/Y', $this->due_date );
+
+            $this->delivery_date = $this->delivery_date->format( 'd/m/Y');
+            $this->due_date = $this->due_date->format( 'd/m/Y');
 
 			$this->successMsg = "Order Updated";
 		}
