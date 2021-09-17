@@ -465,6 +465,10 @@ class OrderForm extends Component
 
 			$this->successMsg = "Order Created";
 		} else {
+
+            $this->delivery_date = DateTime::createFromFormat('d/m/Y', $this->delivery_date );
+            $this->due_date = DateTime::createFromFormat('d/m/Y', $this->due_date );
+            
 			//Update Vehicle
 			$vehicle = $this->order->vehicle;
 
