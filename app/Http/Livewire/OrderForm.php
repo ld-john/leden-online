@@ -189,6 +189,12 @@ class OrderForm extends Component
 
             // Handle Dates coming in so JS can play nice with them.
 
+            if ( $this->order->due_date ) {
+
+                $del = new DateTime( $this->order->due_date);
+                $this->due_date = $del->format( 'd/m/Y');
+
+            }
 
             if ( $this->order->delivery_date ) {
 
