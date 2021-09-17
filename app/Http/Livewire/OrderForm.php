@@ -185,6 +185,24 @@ class OrderForm extends Component
 	    }
 
         if (isset($this->order)) {
+
+            // Handle Dates coming in so JS can play nice with them.
+
+            if ( isset ( $this->order->due_date) ) {
+                $due = Carbon::parse ( $this->order->due_date );
+                $due->format( 'd/m/Y' );
+                $this->due_date = $due;
+
+            }
+
+            if ( isset ( $this->order->delivery_date) ) {
+                $del = Carbon::parse ( $this->order->delivery_date );
+                $del->format( 'd/m/Y' );
+                $this->delivery_date = $del;
+
+            }
+
+
         	$this->name = $this->order->customer->customer_name;
         	$this->company = $this->order->customer->company_name;
         	$this->preferred = $this->order->customer->preferred_name;
@@ -217,8 +235,6 @@ class OrderForm extends Component
         	$this->invoice_company = $this->order->invoice_company_id;
         	$this->dealership = $this->order->dealer_id;
         	$this->broker = $this->order->broker_id;
-        	$this->due_date = $this->order->due_date;
-        	$this->delivery_date = $this->order->delivery_date;
         	$this->make = $this->order->vehicle->make;
 	        $this->model = $this->order->vehicle->model;
 	        $this->type = $this->order->vehicle->type;
