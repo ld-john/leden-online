@@ -98,10 +98,13 @@ class VehicleForm extends Component
 		if (isset ($this->vehicle))
 		{
 
-		    $this->make =  ( Manufacturer::where( 'id' , $this->make )->exists() ? $this->vehicle->make : null );
-            $this->model =  ( Manufacturer::where( 'id' , $this->make )->exists() ? $this->vehicle->model : null );
+		    //$this->make =  ( Manufacturer::where( 'id' , $this->make )->exists() ? $this->vehicle->make : null );
+            //$this->model =  ( Manufacturer::where( 'id' , $this->make )->exists() ? $this->vehicle->model : null );
 
-			$this->type = $this->vehicle->type;
+            $this->make = ( $this->vehicle->make ?: null );
+            $this->model = ( $this->vehicle->make ? $this->vehicle->model : null );
+
+            $this->type = $this->vehicle->type;
 			$this->registration = $this->vehicle->reg;
 			$this->derivative = $this->vehicle->derivative;
 			$this->engine = $this->vehicle->engine;
