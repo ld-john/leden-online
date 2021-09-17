@@ -330,8 +330,8 @@ class OrderForm extends Component
 	{
 		$this->validate();
 
-		$this->delivery_date = new DateTime( $this->delivery_date );
-        $this->due_date = new DateTime( $this->due_date );
+		$this->delivery_date = strtotime( $this->delivery_date );
+        $this->due_date = strtotime( $this->due_date );
 
 		if ( !isset( $this->order )) {
 
