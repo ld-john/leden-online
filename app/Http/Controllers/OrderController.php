@@ -203,7 +203,7 @@ class OrderController extends Controller
 
 		$data = Order::latest()
 			->whereHas('vehicle', function($q){
-				$q->whereIn('vehicle_status', [3,4,6]);
+				$q->whereIn('vehicle_status', [3,6]);
 			})
 			->select(
 				'id',
