@@ -50,12 +50,11 @@ class CompanyController extends Controller
 		    'company_type' => 'required',
 		    'company_city' => 'required',
 		    'company_email' => 'sometimes|email',
-		    'company_phone' => 'sometimes|numeric'
+		    'company_phone' => 'sometimes'
 	    ], [
 	    	'company_name.required' => '<strong>Name</strong> is a required field',
 	    	'company_address_1.required' => '<strong>Address</strong> is a required field',
 	    	'company_email.email' => 'Please enter a valid <strong>Email</strong>',
-	    	'company_phone.email' => '<strong>Phone</strong> needs to be a number',
 	    	'company_city.required' => '<strong>City</strong> is a required field',
 		    'company_type.required' => 'Please Select a <strong>Type</strong>'
 	    ]);
