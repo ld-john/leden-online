@@ -111,11 +111,8 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Vehicle Body</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->body ?? '--'}}</p>
+                            <div class="col-md-6">
+                                <!-- This space left intentionally blank --->
                             </div>
                             <div class="col-md-2">
                                 <p>Vehicle Trim</p>
