@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8aeb45c4-dd91-4939-a211-4a81af67d1c8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/view-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/view-order.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +186,7 @@
       <option name="presentableId" value="Default" />
       <updated>1631874543675</updated>
       <workItem from="1631874545283" duration="5464000" />
-      <workItem from="1633519681016" duration="1297000" />
+      <workItem from="1633519681016" duration="2289000" />
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
@@ -199,9 +199,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="Flags for email" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="646" y="236" width="651" height="568" key="find.popup" timestamp="1633520973864">
+    <state x="646" y="236" width="651" height="568" key="find.popup" timestamp="1633521748205">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="646" y="236" width="651" height="568" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1633520973864" />
+    <state x="646" y="236" width="651" height="568" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1633521748205" />
   </component>
 </project>

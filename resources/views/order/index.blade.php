@@ -55,7 +55,13 @@
                                         <td>{{ $row->vehicle->derivative ?? ''}}</td>
                                         <td>{{ $row->order_ref ?? ''}}</td>
                                         <td>{{ $row->vehicle->reg ?? ''}}</td>
-                                        <td>{{ \Carbon\Carbon::parse($row->due_date ?? '')->format( 'd/m/Y' )}}</td>
+
+                                        @if ( empty( $row->due_date) || $row->due_date == '0000-00-00 00:00:00')
+                                            <td></td>
+                                        @else
+                                            <td>{{ \Carbon\Carbon::parse($row->due_date ?? '')->format( 'd/m/Y' )}}</td>
+                                        @endif
+
                                         <td>@if ( $row->customer->preffered_name == 'customer')
                                             {{ $row->customer->customer_name ?? ''}}
                                             @else
