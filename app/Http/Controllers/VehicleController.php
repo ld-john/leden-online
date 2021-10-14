@@ -164,7 +164,8 @@ class VehicleController extends Controller
 	{
 		$data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
 			->with('manufacturer:id,name')
-			->where('show_in_ford_pipeline', false)->get();
+			->where('show_in_ford_pipeline', false)
+            ->whereIn('vehicle_status', [1])->get();
 
 		if (Auth::user()->role == 'dealer') {
 			$data = $data->where('hide_from_dealer', false );

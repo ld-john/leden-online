@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8aeb45c4-dd91-4939-a211-4a81af67d1c8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +186,8 @@
       <option name="presentableId" value="Default" />
       <updated>1631874543675</updated>
       <workItem from="1631874545283" duration="5464000" />
-      <workItem from="1633519681016" duration="2289000" />
+      <workItem from="1633519681016" duration="2977000" />
+      <workItem from="1634220081938" duration="252000" />
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
