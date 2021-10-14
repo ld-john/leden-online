@@ -125,7 +125,7 @@ class OrderForm extends Component
 		'colour' => 'required',
 		'trim' => 'required',
 		'status' => 'required',
-		'attachments.*' => 'max:1024',
+		'attachments.*' => 'max:4096',
         'broker' => 'required',
         'order_ref' => 'required',
 	];
