@@ -240,6 +240,9 @@
                             </div>
                         </div>
                 @endif
+
+
+
                 @if (Auth::user()->role == 'admin')
                     <!-- Card Header -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -291,6 +294,11 @@
                             </div>
                         </div>
                 @endif
+
+                <div>
+                    @livewire('comment-box', ['order_id' => $order->id])
+                </div>
+
                 <!-- Card Footer -->
                     <div class="card-footer text-right">
                         <a href="{{ route('pipeline') }}" class="btn btn-secondary">Back</a>

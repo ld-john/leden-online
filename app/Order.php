@@ -133,4 +133,8 @@ class Order extends Model
 		return $this->invoiceDifferenceIncVat() / 1.2;
 	}
 
+	public function comments() {
+        return $this->hasMany( Comments::class , 'order_id', 'id' );
+    }
+
 }

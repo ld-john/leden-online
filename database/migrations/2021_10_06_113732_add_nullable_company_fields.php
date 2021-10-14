@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSoftdeletesToCompanies extends Migration
+class AddNullableCompanyFields extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,11 @@ class AddSoftdeletesToCompanies extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->softDeletes();
+
+                $table->string('company_county')->nullable()->change();
+                $table->string('company_email')->nullable()->change();
+
+
         });
     }
 
@@ -26,7 +30,8 @@ class AddSoftdeletesToCompanies extends Migration
     public function down()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->dropSoftDeletes();
+            $table->string('company_county')->change();
+            $table->string('company_email')->change();
         });
     }
 }
