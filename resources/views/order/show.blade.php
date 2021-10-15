@@ -293,42 +293,46 @@
                                 </div>
                             </div>
                         </div>
-                @endif
+                    @endif
+                        <!-- Card Header -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-l-blue">Comments</h6>
+                        </div>
 
-                <div>
-                    @livewire('comment-box', ['order_id' => $order->id])
-                </div>
+                        <div class="card-body">
+                            @livewire('comment-box', ['order_id' => $order->id])
+                        </div>
 
-                <!-- Card Footer -->
-                    <div class="card-footer text-right">
-                        <a href="{{ route('pipeline') }}" class="btn btn-secondary">Back</a>
-                        @if (Auth::user()->role != 'broker')
-                            <a href="{{ route('order.pdf', $order->id) }}" class="btn btn-secondary">Download Order PDF</a>
-                            @if( Auth::user()->role == 'admin')
-                                <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning">Edit Order</a>
+                        <!-- Card Footer -->
+                        <div class="card-footer text-right">
+                            <a href="{{ route('pipeline') }}" class="btn btn-secondary">Back</a>
+                            @if (Auth::user()->role != 'broker')
+                                <a href="{{ route('order.pdf', $order->id) }}" class="btn btn-secondary">Download Order PDF</a>
+                                @if( Auth::user()->role == 'admin')
+                                    <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning">Edit Order</a>
+                                @endif
                             @endif
-                        @endif
-                        @if ($order->vehicle->vehicle_status == 3)
-                            @if (Auth::user()->role == 'admin' && $order->admin_accepted == 0)
-                                @if($order->delivery_date)
-                                    <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
+                            @if ($order->vehicle->vehicle_status == 3)
+                                @if (Auth::user()->role == 'admin' && $order->admin_accepted == 0)
+                                    @if($order->delivery_date)
+                                        <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
+                                    @endif
+                                    <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
+                                @elseif (Auth::user()->role == 'dealer' && $order->admin_accepted == 1 && $order->dealer_accepted == 0)
+                                    @if($order->delivery_date)
+                                        <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
+                                    @endif
+                                    <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
+                                @elseif (Auth::user()->role == 'broker' && $order->admin_accepted == 1 && $order->broker_accepted == 0)
+                                    @if($order->delivery_date)
+                                        <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
+                                    @endif
+                                    <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
                                 @endif
-                                <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
-                            @elseif (Auth::user()->role == 'dealer' && $order->admin_accepted == 1 && $order->dealer_accepted == 0)
-                                @if($order->delivery_date)
-                                    <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
-                                @endif
-                                <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
-                            @elseif (Auth::user()->role == 'broker' && $order->admin_accepted == 1 && $order->broker_accepted == 0)
-                                @if($order->delivery_date)
-                                    <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
-                                @endif
-                                <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
                             @endif
-                        @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 @endsection
