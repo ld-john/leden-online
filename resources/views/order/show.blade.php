@@ -294,14 +294,7 @@
                             </div>
                         </div>
                     @endif
-                        <!-- Card Header -->
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-l-blue">Comments</h6>
-                        </div>
 
-                        <div class="card-body">
-                            @livewire('comment-box', ['order_id' => $order->id])
-                        </div>
 
                         <!-- Card Footer -->
                         <div class="card-footer text-right">
@@ -330,6 +323,16 @@
                                     <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
                                 @endif
                             @endif
+                        </div>
+                </div>
+                    <div class="card shadow mt-4">
+                        <!-- Card Header -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-l-blue">Comments</h6>
+                        </div>
+
+                        <div class="card-body">
+                            @livewire('comment-box', ['order_id' => $order->id])
                         </div>
                     </div>
                 </div>

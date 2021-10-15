@@ -37,11 +37,22 @@ class CommentBox extends Component
 
         $this->content = '';
 
+        $this->emit('commentSaved');
+
+    }
+
+    public function deleteComment( $id )
+    {
+        $comment = Comment::find( $id );
+        $comment->delete();
+
+        $this->getComments();
+
     }
 
     public function getComments()
     {
-        $this->comments = Comment::where( 'order_id' , $this->order_id )->orderBy( 'created_at' , 'ASC')->get();
+        $this->comments = Comment::where( 'order_id' , $this->order_id )->orderBy( 'created_at' , 'DESC')->get();
     }
 
 
