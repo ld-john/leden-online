@@ -3,7 +3,7 @@
     <div class="w-full md:w-full px-3 mb-2 mt-2">
         <textarea
                 placeholder="Type Your Comment"
-                wire:model="content"
+                wire:model.lazy="content"
                 class="form-control mb-3"
         >
         </textarea>
@@ -21,7 +21,7 @@
                 <h6 class="card-subtitle mb-2 text-muted">{{ $comment->user->company->company_name }}</h6>
             </div>
             <div class="card-body">
-                <p class="card-text">{{ $comment->content }}</p>
+                <p class="card-text">{!!  $comment->content !!}</p>
             </div>
             <div class="card-footer text-muted">
                 {{ $comment->created_at->diffForHumans() }} ({{$comment->created_at->format('d/m/y')}})
@@ -30,3 +30,10 @@
     @endforeach
 
 </div>
+
+@push('custom-styles')
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+@endpush
+@push('custom-scripts')
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+@endpush

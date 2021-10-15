@@ -20,6 +20,7 @@
   <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet">
   <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
   <livewire:styles />
+  @stack('custom-styles')
 
   <!-- Scripts -->
   <script src="{{ asset('js/custom.js') }}" defer></script>
