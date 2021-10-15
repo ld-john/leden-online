@@ -1,9 +1,3 @@
-<div class="form-group row">
-    <label class="col-md-2 col-form-label" for="comments">Comments</label>
-    <div class="col-md-6">
-        <textarea wire:model="comments" name="comments" id="comments" class="form-control" rows="4"></textarea>
-    </div>
-</div>
 <div class="row">
     <label class="col-md-2 col-form-label" for="file">Upload Document(s)<br>
         <small>Allowed file types - JPEG, PNG, PDF, DOC & DOCX</small>
@@ -12,7 +6,7 @@
         @for($i = 0; $i < $fields; $i++)
             <input wire:model="attachments"
                    type="file"
-                   accept=".pdf, applicaion/pdf, image/png, .png, image/jpg, .jpg, image/jpeg, .jpeg, .doc, .docx, application/msword"
+                   accept=".pdf, application/pdf, image/png, .png, image/jpg, .jpg, image/jpeg, .jpeg, .doc, .docx, application/msword"
                    name="file"
                    id="file"/>
         @endfor
