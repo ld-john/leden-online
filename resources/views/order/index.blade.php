@@ -166,6 +166,25 @@
             let table = $('#dataTable').DataTable({
                 orderCellsTop: true,
             });
+
+            $('#dataTable thead tr').clone(true).appendTo( '#dataTable thead' );
+            $('#dataTable thead tr:eq(1) th').each( function (i) {
+                let title = $(this).text();
+                $(this).html( '<input type="text" class="colSearch" data-colName="'+title+'" placeholder="Search '+title+'" />' );
+                $(this).parent().addClass('searchContainer');
+                $( 'input', this ).on( 'keyup change', function () {
+                    if ( table.column(i).search() !== this.value ) {
+                        table
+                            .column(i)
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+
+        });
+
+        $(document).ready( function() {
             $('.duplicate-order').click( function(){
                 let orderId = $(this).attr('data-orderNumber');
                 let baseURL = '{{env('APP_URL')}}';
@@ -189,23 +208,7 @@
                 target.attr('href', target.attr('href') );
 
             });
-
-            $('#dataTable thead tr').clone(true).appendTo( '#dataTable thead' );
-            $('#dataTable thead tr:eq(1) th').each( function (i) {
-                let title = $(this).text();
-                $(this).html( '<input type="text" class="colSearch" data-colName="'+title+'" placeholder="Search '+title+'" />' );
-                $(this).parent().addClass('searchContainer');
-                $( 'input', this ).on( 'keyup change', function () {
-                    if ( table.column(i).search() !== this.value ) {
-                        table
-                            .column(i)
-                            .search( this.value )
-                            .draw();
-                    }
-                } );
-            } );
-
-        });
+        })
 
     </script>
 @endpush
