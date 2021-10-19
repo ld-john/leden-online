@@ -169,14 +169,14 @@
             $('.duplicate-order').click( function(){
                 let orderId = $(this).attr('data-orderNumber');
                 let baseURL = '{{env('APP_URL')}}';
-
+                console.log( orderId + ' Targeted for duplication');
                 $('#execute-duplication').attr('action', baseURL + '/orders/duplicate/' + orderId);
             });
 
             $('.delete-order').click( function(){
                 let orderId = $(this).attr('data-orderNumber');
                 let baseURL = '{{env('APP_URL')}}';
-
+                console.log( orderId + ' Targeted for deletion');
                 $('#execute-deletion').attr('action', baseURL + '/orders/delete/' + orderId);
                 $('#deletion_target').text(orderId);
             });

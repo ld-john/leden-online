@@ -186,7 +186,7 @@
       <workItem from="1633519681016" duration="2977000" />
       <workItem from="1634220081938" duration="4402000" />
       <workItem from="1634304436710" duration="16000" />
-      <workItem from="1634653685811" duration="5166000" />
+      <workItem from="1634653685811" duration="5304000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -209,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634658224907</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added Delete options for vehicles and orders. Orders offers a modal to confirm deletion.">
+      <created>1634658913138</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1634658913138</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
