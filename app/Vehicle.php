@@ -58,4 +58,9 @@ class Vehicle extends Model
     	return $fitOptions;
     }
 
+    public function niceName()
+    {
+        return $this->manufacturer->name . ' '.  $this->model . ' ' . $this->derivative;
+    }
+
 }

@@ -15,7 +15,10 @@ use App\VehicleMeta\Transmission;
 use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -90,11 +93,12 @@ class VehicleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
+     * @return Application|RedirectResponse|Redirector
      */
     public function destroy(Vehicle $vehicle)
     {
-        //
+        Vehicle::destroy($vehicle->id);
+        return redirect()->route('pipeline')->with('successMsg', 'Vehicle #' . $vehicle->id . ' deleted successfully - ' . $vehicle->niceName() );
     }
 
     public function buildNewVehicle()

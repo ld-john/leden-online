@@ -11076,7 +11076,7 @@ table.dataTable {
   font-size: 12px;
 }
 
-.colSearch[data-colName="Leden ID"],
+.colSearch[data-colName=ID],
 .colSearch[data-colName=Action],
 .colSearch[data-colName=noTitle] {
   display: none;
@@ -11087,12 +11087,12 @@ table.dataTable {
   background-color: #cdcdcd !important;
 }
 
-a.btn {
+.btn {
   display: block;
   margin-bottom: 2px;
 }
 
-a.btn.is-full {
+.btn.is-full {
   width: 100%;
 }
 

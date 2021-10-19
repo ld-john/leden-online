@@ -34,7 +34,7 @@
                             <table class="table table-bordered" id="dataTable">
                                 <thead>
                                 <tr>
-                                    <th>Leden ID</th>
+                                    <th>ID</th>
                                     <th>Model</th>
                                     <th>Derivative</th>
                                     <th>Order Number</th>
@@ -71,12 +71,15 @@
                                         <td>{{ $row->broker_ref ?? ''}}</td>
                                         <td>{{ $row->broker->company_name ?? ''}}</td>
                                         <td>{{ $row->dealer->company_name ?? ''}}</td>
-                                        <td>
+                                        <td width="100px">
                                             <a href="{{route('order.show', $row->id)}}" class="btn is-full btn-primary"><i class="far fa-eye"></i> View</a>
                                             @can('admin')
                                             <a href="{{route('order.edit', $row->id)}}" class="btn is-full btn-warning"><i class="fas fa-edit"></i> Edit</a>
                                             <button type="button" class="btn is-full btn-primary duplicate-order" data-orderNumber="{{ $row->id }}" data-toggle="modal" data-target="#duplicateOrder">
-                                                Duplicate
+                                                <i class="fas fa-copy"></i> Copy
+                                            </button>
+                                            <button type="button" class="btn is-full btn-danger delete-order" data-orderNumber="{{ $row->id }}" data-toggle="modal" data-target="#deleteOrder">
+                                                <i class="fas fa-trash"></i> Delete
                                             </button>
                                             @endcan
                                         </td>
@@ -95,7 +98,7 @@
     </div>
     <!-- /.container-fluid -->
     @can('admin')
-    <!-- Modal -->
+    <!-- Duplication Modal -->
     <div class="modal fade" id="duplicateOrder" tabindex="-1" role="dialog" aria-labelledby="duplicateOrder" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -121,6 +124,33 @@
         </div>
     </div>
     @endcan
+    @can('admin')
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteOrder" tabindex="-1" role="dialog" aria-labelledby="deleteOrder" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Delete Order <span id="ModalOrderNumber"></span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @if(isset($row))
+                            <form action="/orders/delete/{{$row->id}}" id="execute-deletion">
+                                <label>Are you sure you want to delete Order # <span id="deletion_target"></span></label>
+                                <br>
+                                <button type="submit" class="btn btn-danger ">Go!</button>
+                            </form>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
 
 @endsection
 
@@ -141,6 +171,14 @@
                 let baseURL = '{{env('APP_URL')}}';
 
                 $('#execute-duplication').attr('action', baseURL + '/orders/duplicate/' + orderId);
+            });
+
+            $('.delete-order').on('click' , function(){
+                let orderId = $(this).attr('data-orderNumber');
+                let baseURL = '{{env('APP_URL')}}';
+
+                $('#execute-deletion').attr('action', baseURL + '/orders/delete/' + orderId);
+                $('#deletion_target').text(orderId);
             });
 
             let orderQty = $('#duplicateQuantity');

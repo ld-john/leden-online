@@ -22,7 +22,7 @@
                                 <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Leden ID</th>
+                                    <th>ID</th>
                                     <th>Make</th>
                                     <th>Model</th>
                                     <th>Derivative</th>
@@ -49,11 +49,12 @@
                                         <td>{{ $row->type ?? '' }}</td>
                                         <td>{{ $row->chassis ?? '' }}</td>
                                         <td>{{ $row->reg ?? '' }}</td>
-                                        <td>
+                                        <td width="100px">
                                             <a href="{{route('vehicle.show', $row->id)}}" class="btn btn-sm btn-primary"><i class="far fa-eye"></i><br> View Vehicle</a>
                                             @can('admin')
                                                 <a href="{{route('edit_vehicle', $row->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i><br> Edit Vehicle</a>
                                                 <a href="{{route('order.reserve', $row->id)}}" class="btn btn-sm"><i class="fas fa-plus-square"></i><br> Create Order</a>
+                                                <a href="{{route('vehicle.delete', $row->id)}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i><br> Delete Vehicle</a>
                                             @endcan
                                         </td>
                                     </tr>

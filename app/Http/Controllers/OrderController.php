@@ -88,7 +88,8 @@ class OrderController extends Controller
 	 */
 	public function destroy(Order $order)
 	{
-		//
+		Order::destroy($order->id);
+        return redirect()->route('order_bank')->with('successMsg', 'Order #' . $order->id . ' deleted successfully - ' . $order->vehicle->niceName() );
 	}
 
 	/**
