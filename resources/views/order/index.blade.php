@@ -166,14 +166,14 @@
             let table = $('#dataTable').DataTable({
                 orderCellsTop: true,
             });
-            $('.duplicate-order').on('click' , function(){
+            $('.duplicate-order').click( function(){
                 let orderId = $(this).attr('data-orderNumber');
                 let baseURL = '{{env('APP_URL')}}';
 
                 $('#execute-duplication').attr('action', baseURL + '/orders/duplicate/' + orderId);
             });
 
-            $('.delete-order').on('click' , function(){
+            $('.delete-order').click( function(){
                 let orderId = $(this).attr('data-orderNumber');
                 let baseURL = '{{env('APP_URL')}}';
 
