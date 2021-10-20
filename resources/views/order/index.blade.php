@@ -78,7 +78,13 @@
                                             <button type="button" class="btn is-full btn-primary duplicate-order" data-orderNumber="{{ $row->id }}" data-toggle="modal" data-target="#duplicateOrder">
                                                 <i class="fas fa-copy"></i> Copy
                                             </button>
-                                            <button type="button" class="btn is-full btn-danger delete-order" data-orderNumber="{{ $row->id }}" data-toggle="modal" data-target="#deleteOrder">
+                                            <button
+                                                    type="button"
+                                                    class="btn is-full btn-danger delete-order"
+                                                    data-orderNumber="{{ $row->id }}"
+                                                    data-toggle="modal"
+                                                    data-target="#deleteOrder"
+                                                    onclick="deleteOrder({{$row->id}})">
                                                 <i class="fas fa-trash"></i> Delete
                                             </button>
                                             @endcan
@@ -184,20 +190,19 @@
 
         });
 
+        function deleteOrder( id ) {
+            let baseURL = '{{env('APP_URL')}}'
+            console.log( id + ' targeted for deletion')
+            document.querySelector('#execute-deletion').action = baseURL + '/orders/delete/' + id;
+            document.querySelector('#deletion_target').textContent = id;
+        }
+
         $(document).ready( function() {
             $('.duplicate-order').click( function(){
                 let orderId = $(this).attr('data-orderNumber');
                 let baseURL = '{{env('APP_URL')}}';
                 console.log( orderId + ' Targeted for duplication');
                 $('#execute-duplication').attr('action', baseURL + '/orders/duplicate/' + orderId);
-            });
-
-            $('.delete-order').click( function(){
-                let orderId = $(this).attr('data-orderNumber');
-                let baseURL = '{{env('APP_URL')}}';
-                console.log( orderId + ' Targeted for deletion');
-                $('#execute-deletion').attr('action', baseURL + '/orders/delete/' + orderId);
-                $('#deletion_target').text(orderId);
             });
 
             let orderQty = $('#duplicateQuantity');

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Debug - CR Move event listeners for clicks outside of scope.">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Debug - Soft Delete Orders added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +187,7 @@
       <workItem from="1634220081938" duration="4402000" />
       <workItem from="1634304436710" duration="16000" />
       <workItem from="1634653685811" duration="5857000" />
-      <workItem from="1634719942717" duration="288000" />
+      <workItem from="1634719942717" duration="1302000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -231,7 +231,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634659275349</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Debug - Soft Delete Orders added">
+      <created>1634720278580</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1634720278580</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -256,6 +263,7 @@
     <MESSAGE value="Added Delete options for vehicles and orders. Orders offers a modal to confirm deletion." />
     <MESSAGE value="Debug - Added Delete options for vehicles and orders. Orders offers a modal to confirm deletion." />
     <MESSAGE value="Debug - CR Move event listeners for clicks outside of scope." />
-    <option name="LAST_COMMIT_MESSAGE" value="Debug - CR Move event listeners for clicks outside of scope." />
+    <MESSAGE value="Debug - Soft Delete Orders added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Debug - Soft Delete Orders added" />
   </component>
 </project>
