@@ -117,7 +117,7 @@
                 <div class="modal-body">
                     @if(isset($row))
                     <form action="/orders/duplicate/{{$row->id}}" id="execute-duplication">
-                        <label for="duplicateQuantity">How Many?</label>
+                        <label for="duplicateQuantity">Duplicating Order #{{$row->id}} - How Many copies?</label>
                         <input type="number" name="duplicateQty" min="0" max="10" id="duplicateQuantity">
                         <button type="submit" class="btn btn-primary ">Go!</button>
                     </form>
