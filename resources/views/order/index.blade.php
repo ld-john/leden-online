@@ -75,7 +75,12 @@
                                             <a href="{{route('order.show', $row->id)}}" class="btn is-full btn-primary"><i class="far fa-eye"></i> View</a>
                                             @can('admin')
                                             <a href="{{route('order.edit', $row->id)}}" class="btn is-full btn-warning"><i class="fas fa-edit"></i> Edit</a>
-                                            <button type="button" class="btn is-full btn-primary duplicate-order" data-orderNumber="{{ $row->id }}" data-toggle="modal" data-target="#duplicateOrder">
+                                            <button type="button"
+                                                    class="btn is-full btn-primary duplicate-order"
+                                                    data-orderNumber="{{ $row->id }}"
+                                                    data-toggle="modal"
+                                                    data-target="#duplicateOrder"
+                                                    onclick="duplicateOrder({{$row->id}})">
                                                 <i class="fas fa-copy"></i> Copy
                                             </button>
                                             <button
@@ -117,7 +122,7 @@
                 <div class="modal-body">
                     @if(isset($row))
                     <form action="/orders/duplicate/{{$row->id}}" id="execute-duplication">
-                        <label for="duplicateQuantity">Duplicating Order #{{$row->id}} - How Many copies?</label>
+                        <label for="duplicateQuantity">Duplicating Order #<span id="duplication_target"></span> - How Many copies?</label>
                         <input type="number" name="duplicateQty" min="0" max="10" id="duplicateQuantity">
                         <button type="submit" class="btn btn-primary ">Go!</button>
                     </form>
@@ -195,6 +200,13 @@
             console.log( id + ' targeted for deletion')
             document.querySelector('#execute-deletion').action = baseURL + '/orders/delete/' + id;
             document.querySelector('#deletion_target').textContent = id;
+        }
+
+        function duplicateOrder ( id ) {
+            let baseURL = '{{env('APP_URL')}}'
+            console.log( id + ' targeted for duplication')
+            document.querySelector('#execute-duplication').action = baseURL + '/orders/duplicate' + id;
+            document.querySelector('#duplication_target').textContent = id;
         }
 
         $(document).ready( function() {

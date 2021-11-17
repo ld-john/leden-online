@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Debug - Soft Delete Orders added">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,10 +169,16 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -182,6 +191,7 @@
       <updated>1631625463593</updated>
     </task>
     <task active="true" id="Default" summary="Default task">
+      <changelist id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="" />
       <created>1631874543675</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -192,6 +202,8 @@
       <workItem from="1634304436710" duration="16000" />
       <workItem from="1634653685811" duration="5857000" />
       <workItem from="1634719942717" duration="1302000" />
+      <workItem from="1636623915787" duration="9000" />
+      <workItem from="1637159938581" duration="958000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -242,24 +254,30 @@
       <option name="project" value="LOCAL" />
       <updated>1634720278580</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Debug - Soft Delete Orders added">
+      <created>1636538458598</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1636538458598</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Flags for email" />
@@ -272,30 +290,34 @@
     <option name="LAST_COMMIT_MESSAGE" value="Debug - Soft Delete Orders added" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="506" y="0" key="CommitChangelistDialog2" timestamp="1636538396266">
+    <state x="506" y="0" key="CommitChangelistDialog2" timestamp="1636538457805">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="506" y="0" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636538396266" />
+    <state x="506" y="0" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636538457805" />
     <state x="696" y="418" key="ComposerInitDialogKey" timestamp="1636538245119">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="696" y="418" key="ComposerInitDialogKey/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636538245119" />
-    <state width="1865" height="243" key="GridCell.Tab.0.bottom" timestamp="1636538231047">
+    <state width="1865" height="243" key="GridCell.Tab.0.bottom" timestamp="1636620855378">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1865" height="243" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636538231047" />
-    <state width="1865" height="243" key="GridCell.Tab.0.center" timestamp="1636538231047">
+    <state width="1865" height="243" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636620855378" />
+    <state width="1865" height="243" key="GridCell.Tab.0.center" timestamp="1636620855378">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1865" height="243" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636538231047" />
-    <state width="1865" height="243" key="GridCell.Tab.0.left" timestamp="1636538231047">
+    <state width="1865" height="243" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636620855378" />
+    <state width="1865" height="243" key="GridCell.Tab.0.left" timestamp="1636620855378">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1865" height="243" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636538231047" />
-    <state width="1865" height="243" key="GridCell.Tab.0.right" timestamp="1636538231047">
+    <state width="1865" height="243" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636620855378" />
+    <state width="1865" height="243" key="GridCell.Tab.0.right" timestamp="1636620855378">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1865" height="243" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636538231047" />
+    <state width="1865" height="243" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636620855378" />
+    <state x="565" y="302" key="com.intellij.ide.util.TipDialog" timestamp="1636623918234">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="565" y="302" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636623918234" />
     <state x="739" y="417" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1636538405265">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

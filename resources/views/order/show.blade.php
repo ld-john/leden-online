@@ -110,7 +110,7 @@
                                 <p>Vehicle Trim</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->trim ?? '--'}}</p>
+                                <p class="font-weight-bold">{{ $order->vehicle->trim ?? '--'}}</p>
                             </div>
                         </div>
 
