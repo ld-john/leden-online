@@ -224,6 +224,23 @@
                                 </td>
                             </tr>
                         </table>
+                        <table cellspacing="0" cellpadding="0" border="0" width="100%" class="contents" style="margin-top: 10px">
+                            <tr>
+                                <th colspan="2">For Internal Use</th>
+                            </tr>
+                            <tr>
+                                <td>Done by:</td>
+                                <td>Sent: </td>
+                            </tr>
+                            <tr>
+                                <td>Checked by:</td>
+                                <td>Confirmed</td>
+                            </tr>
+                            <tr>
+                                <td>AOC:</td>
+                                <td>ACT:</td>
+                            </tr>
+                        </table>
                     </td>
                     <td></td>
                     <td width="40%" valign="top">

@@ -11,6 +11,7 @@ use App\User;
 use App\Vehicle;
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -434,33 +435,41 @@ class OrderController extends Controller
 			$registrationAddress = [];
 		}
 
+        $created = new DateTime($order->created_at);
+        $deliveryDate = new DateTime($order->delivery_date);
+
 		$vehicleDetails = [
+            [
+                'Manufacturer Order Ref' => $order->order_ref,
+                'Order Date' => $created->format('d/m/Y'),
+                'Delivery Date' => $deliveryDate->format('d/m/Y'),
+            ],
 			[
-				'Vehicle Make' => $order->vehicle->manufacturer->name,
-				'Vehicle Model' => $order->vehicle->model,
-				'Vehicle Type' => $order->vehicle->type,
+				'Vehicle Make' => $order->vehicle->manufacturer->name ?? "--",
+				'Vehicle Model' => $order->vehicle->model ?? "--",
+				'Vehicle Type' => $order->vehicle->type ?? "--",
 			],
 			[
-				'Vehicle Derivative' => $order->vehicle->derivative,
-				'Vehicle Engine' => $order->vehicle->engine,
-				'Vehicle Transmission' => $order->vehicle->transmission,
+				'Vehicle Derivative' => $order->vehicle->derivative ?? "--",
+				'Vehicle Engine' => $order->vehicle->engine ?? "--",
+				'Vehicle Transmission' => $order->vehicle->transmission ?? "--",
 			],
 			[
-				'Vehicle Fuel Type' => $order->vehicle->fuel_type,
-				'Vehicle Colour' => $order->vehicle->colour,
-				'Vehicle Doors' => $order->vehicle->doors,
+				'Vehicle Fuel Type' => $order->vehicle->fuel_type ?? "--",
+				'Vehicle Colour' => $order->vehicle->colour ?? "--",
+				'Vehicle Doors' => $order->vehicle->doors ?? "--",
 			],
 			[
 
-				'Vehicle Trim' => $order->vehicle->trim,
-				'Dealership' => $order->dealer->company_name,
-				'Broker' => $order->broker->company_name,
+				'Leden Order Ref' => $order->id,
+				'Broker' => $order->broker->company_name ?? "--",
+                'Broker Ref No.' => $order->broker_ref ?? ''
 			],
 			[
 
-				'Vehicle Chassis Prefix' => $order->vehicle->chassis_prefix,
-				'Vehicle Chassis' => $order->vehicle->chassis,
-				'Vehicle Reg' => $order->vehicle->reg,
+				'Vehicle Chassis Prefix' => $order->vehicle->chassis_prefix ?? "--",
+				'Vehicle Chassis' => $order->vehicle->chassis ?? "--",
+				'Vehicle Reg' => $order->vehicle->reg ?? "--",
 			],
 		];
 		$vehicleDetailsHtml = '';
@@ -492,7 +501,7 @@ class OrderController extends Controller
 
 		$pdf->loadView('pdf', $data);
 
-		return $pdf->download('leden-order.pdf');
+		return $pdf->stream('leden-order-' . $order->id . '.pdf');
 
 	}
 
