@@ -95,7 +95,7 @@ class DashboardController extends Controller
 
 
         if (isset ($max_count)) {
-            $max = max($max_count) + 10;
+            $max = max($max_count) + 5;
         } else {
             $max = 5;
         }

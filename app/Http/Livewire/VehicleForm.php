@@ -18,6 +18,7 @@ use App\VehicleMeta\Fuel;
 use App\VehicleMeta\Transmission;
 use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -104,6 +105,11 @@ class VehicleForm extends Component
             $this->make = ( $this->vehicle->make ?: null );
             $this->model = ( $this->vehicle->make ? $this->vehicle->model : null );
 
+            if ( $this->vehicle->vehicle_registered_on) {
+                $reg = new DateTime( $this->vehicle->vehicle_registered_on );
+                $this->registered_date = $reg->format( 'd/m/Y' );
+            }
+
             $this->type = $this->vehicle->type;
 			$this->registration = $this->vehicle->reg;
 			$this->derivative = $this->vehicle->derivative;
@@ -116,7 +122,6 @@ class VehicleForm extends Component
 			$this->chassis = $this->vehicle->chassis;
 			$this->status = $this->vehicle->vehicle_status;
 			$this->model_year = $this->vehicle->model_year;
-			$this->registered_date = $this->vehicle->vehicle_registered_on;
 			$this->ford_pipeline = $this->vehicle->show_in_ford_pipeline;
 			$this->factory_fit_options = $this->vehicle->factory_fit_options;
 			$this->dealer_fit_options = $this->vehicle->dealer_fit_options;
@@ -162,6 +167,8 @@ class VehicleForm extends Component
 	public function orderFormSubmit()
 	{
 		$this->validate();
+
+        $this->registered_date = DateTime::createFromFormat('d/m/Y', $this->registered_date);
 
 		if ( isset($this->newmake) ) {
 
@@ -224,6 +231,8 @@ class VehicleForm extends Component
 		} else {
 			$this->successMsg = "Vehicle Created";
 		}
+
+        $this->registered_date = ( $this->registered_date ? $this->registered_date->format( 'd/m/Y') : null );
 
 
 

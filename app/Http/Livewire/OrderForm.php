@@ -20,6 +20,7 @@ use App\VehicleMeta\Transmission;
 use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -156,6 +157,12 @@ class OrderForm extends Component
 
         if (isset ($this->vehicle))
 	    {
+
+            if ( $this->vehicle->vehicle_registered_on) {
+                $reg = new DateTime( $this->vehicle->vehicle_registered_on );
+                $this->registered_date = $reg->format( 'd/m/Y' );
+            }
+
 		    $this->make = $this->vehicle->make;
 		    $this->model = $this->vehicle->model;
 		    $this->type = $this->vehicle->type;
@@ -170,7 +177,6 @@ class OrderForm extends Component
 		    $this->chassis = $this->vehicle->chassis;
 		    $this->status = $this->vehicle->vehicle_status;
 		    $this->model_year = $this->vehicle->model_year;
-		    $this->registered_date = $this->vehicle->vehicle_registered_on;
 		    $this->ford_pipeline = $this->vehicle->show_in_ford_pipeline;
 		    $this->factory_fit_options = $this->vehicle->factory_fit_options;
 		    $this->dealer_fit_options = $this->vehicle->dealer_fit_options;
@@ -201,6 +207,11 @@ class OrderForm extends Component
                 $del = new DateTime( $this->order->delivery_date );
                 $this->delivery_date = $del->format( 'd/m/Y');
 
+            }
+
+            if ( $this->order->vehicle->vehicle_registered_on) {
+                $reg = new DateTime( $this->order->vehicle->vehicle_registered_on );
+                $this->registered_date = $reg->format( 'd/m/Y' );
             }
 
 
@@ -250,7 +261,6 @@ class OrderForm extends Component
 	        $this->chassis = $this->order->vehicle->chassis;
 	        $this->status = $this->order->vehicle->vehicle_status;
 	        $this->model_year = $this->order->vehicle->model_year;
-	        $this->registered_date = $this->order->vehicle->vehicle_registered_on;
 	        $this->ford_pipeline = $this->order->vehicle->show_in_ford_pipeline;
 	        $this->factory_fit_options = $this->order->vehicle->factory_fit_options;
 	        $this->dealer_fit_options = $this->order->vehicle->dealer_fit_options;
@@ -329,8 +339,7 @@ class OrderForm extends Component
 
         $this->delivery_date = DateTime::createFromFormat('d/m/Y', $this->delivery_date );
         $this->due_date = DateTime::createFromFormat('d/m/Y', $this->due_date );
-
-
+        $this->registered_date = DateTime::createFromFormat('d/m/Y', $this->registered_date);
 
 		if ( !isset( $this->order )) {
 
@@ -362,6 +371,7 @@ class OrderForm extends Component
 
 			$vehicle->vehicle_status = $this->status;
 			$vehicle->reg = $this->registration;
+            $vehicle->vehicle_registered_on = $this->registered_date;
 			$vehicle->model_year = $this->model_year;
 			$vehicle->make = $this->make;
 			$vehicle->model = $this->model;
@@ -380,7 +390,6 @@ class OrderForm extends Component
 			$vehicle->first_reg_fee = $this->first_reg_fee;
 			$vehicle->rfl_cost = $this->rfl_cost;
 			$vehicle->onward_delivery = $this->onward_delivery;
-			$vehicle->vehicle_registered_on = $this->registered_date;
 			$vehicle->hide_from_broker = $this->hide_from_broker;
 			$vehicle->hide_from_broker = $this->hide_from_dealer;
 			$vehicle->show_in_ford_pipeline = $this->ford_pipeline;
@@ -473,6 +482,7 @@ class OrderForm extends Component
 
 			$vehicle->vehicle_status = $this->status;
 			$vehicle->reg = $this->registration;
+            $vehicle->vehicle_registered_on = $this->registered_date;
 			$vehicle->model_year = $this->model_year;
 			$vehicle->make = $this->make;
 			$vehicle->model = $this->model;
@@ -492,7 +502,6 @@ class OrderForm extends Component
 			$vehicle->first_reg_fee = $this->first_reg_fee;
 			$vehicle->rfl_cost = $this->rfl_cost;
 			$vehicle->onward_delivery = $this->onward_delivery;
-			$vehicle->vehicle_registered_on = $this->registered_date;
 			$vehicle->hide_from_broker = $this->hide_from_broker;
 			$vehicle->hide_from_broker = $this->hide_from_dealer;
 			$vehicle->show_in_ford_pipeline = $this->ford_pipeline;
@@ -560,6 +569,7 @@ class OrderForm extends Component
 
             $this->delivery_date = ( $this->delivery_date ? $this->delivery_date->format( 'd/m/Y') : null );
             $this->due_date = ( $this->due_date ? $this->due_date->format( 'd/m/Y') : null );
+            $this->registered_date = ( $this->registered_date ? $this->registered_date->format( 'd/m/Y') : null );
 
 			$this->successMsg = "Order Updated";
 		}

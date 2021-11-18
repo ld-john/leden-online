@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +207,8 @@
       <workItem from="1634653685811" duration="5857000" />
       <workItem from="1634719942717" duration="1302000" />
       <workItem from="1636623915787" duration="9000" />
-      <workItem from="1637159938581" duration="958000" />
+      <workItem from="1637159938581" duration="1339000" />
+      <workItem from="1637226392022" duration="3615000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -261,7 +266,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636538458598</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Debug - Soft Delete Orders added">
+      <created>1637160959411</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1637160959411</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,39 +300,5 @@
     <MESSAGE value="Debug - CR Move event listeners for clicks outside of scope." />
     <MESSAGE value="Debug - Soft Delete Orders added" />
     <option name="LAST_COMMIT_MESSAGE" value="Debug - Soft Delete Orders added" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="506" y="0" key="CommitChangelistDialog2" timestamp="1636538457805">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="506" y="0" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636538457805" />
-    <state x="696" y="418" key="ComposerInitDialogKey" timestamp="1636538245119">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="696" y="418" key="ComposerInitDialogKey/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636538245119" />
-    <state width="1865" height="243" key="GridCell.Tab.0.bottom" timestamp="1636620855378">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1865" height="243" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636620855378" />
-    <state width="1865" height="243" key="GridCell.Tab.0.center" timestamp="1636620855378">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1865" height="243" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636620855378" />
-    <state width="1865" height="243" key="GridCell.Tab.0.left" timestamp="1636620855378">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1865" height="243" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636620855378" />
-    <state width="1865" height="243" key="GridCell.Tab.0.right" timestamp="1636620855378">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1865" height="243" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636620855378" />
-    <state x="565" y="302" key="com.intellij.ide.util.TipDialog" timestamp="1636623918234">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="565" y="302" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636623918234" />
-    <state x="739" y="417" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1636538405265">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="739" y="417" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636538405265" />
   </component>
 </project>
