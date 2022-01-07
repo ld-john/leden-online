@@ -85,7 +85,6 @@ class DashboardController extends Controller
             DB::raw("DATE_FORMAT(vehicle_registered_on, '%M') month_label"),
             DB::raw('YEAR(vehicle_registered_on) year, MONTH(vehicle_registered_on) month'))
             ->groupby('year', 'month')
-            ->where('vehicle_status', 1)
             ->where('vehicle_registered_on', '>', Carbon::now()->subMonths(6))
             ->get();
 
@@ -95,7 +94,7 @@ class DashboardController extends Controller
 
 
         if (isset ($max_count)) {
-            $max = max($max_count) + 5;
+            $max = max($max_count);
         } else {
             $max = 5;
         }

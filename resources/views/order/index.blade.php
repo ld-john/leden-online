@@ -205,7 +205,7 @@
         function duplicateOrder ( id ) {
             let baseURL = '{{env('APP_URL')}}'
             console.log( id + ' targeted for duplication')
-            document.querySelector('#execute-duplication').action = baseURL + '/orders/duplicate' + id;
+            document.querySelector('#execute-duplication').action = baseURL + '/orders/duplicate/' + id;
             document.querySelector('#duplication_target').textContent = id;
         }
 

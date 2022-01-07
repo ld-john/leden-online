@@ -364,7 +364,7 @@ class OrderForm extends Component
 			} elseif (!isset ($this->chassis) || $this->chassis === '') {
 				$vehicle = new Vehicle();
 			} else {
-				$vehicle = Vehicle::firstOrCreate([
+				$vehicle = Vehicle::firstOrNew([
 					'chassis' => $this->chassis,
 				]);
 			}

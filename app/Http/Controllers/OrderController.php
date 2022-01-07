@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Invoice;
+use App\Notifications\deliveryDateChanged;
 use App\Notifications\notifications;
 use App\Order;
 use App\OrderLegacy;
@@ -357,29 +358,46 @@ class OrderController extends Controller
 		if ($order->admin_accepted == 0 && $order->broker_accepted == 1 && $order->dealer_accepted == 0) {
 			//email to admin to accept delivery time
 			$this->DateChangeEmail(1, $order);
-
-			Notification::send($admin, new notifications($message, $order->id, $type));
+            foreach ($admin as $user) {
+                $user->notify(new deliveryDateChanged($order));
+            }
+//			Notification::send($admin, new notifications($message, $order->id, $type));
 
 			if ($oldDealer == 1) {
 				$this->DateChangeEmail($order->dealer_id, $order);
-				Notification::send($dealers, new notifications($message, $order->id, $type));
+                foreach ($dealers as $dealer) {
+                    $dealer->notify(new deliveryDateChanged($order));
+                }
+//				Notification::send($dealers, new notifications($message, $order->id, $type));
 			}
 
 		} elseif ($order->admin_accepted == 1 && $order->broker_accepted == 0 && $order->dealer_accepted == 0) {
 			if ($oldDealer == 1) {
 				$this->DateChangeEmail($order->dealer_id, $order);
-				Notification::send($dealers, new notifications($message, $order->id, $type));
+                foreach ($dealers as $dealer) {
+                    $dealer->notify(new deliveryDateChanged($order));
+                }
+//				Notification::send($dealers, new notifications($message, $order->id, $type));
 
 			} elseif ($oldBroker == 1) {
 				$this->DateChangeEmail($order->broker_id, $order);
-				Notification::send($brokers, new notifications($message, $order->id, $type));
+                foreach ($brokers as $broker) {
+                    $broker->notify(new deliveryDateChanged($order));
+                }
+//				Notification::send($brokers, new notifications($message, $order->id, $type));
 			}
 		} elseif ($order->admin_accepted == 0 && $order->broker_accepted == 0 && $order->dealer_accepted == 1) {
 			$this->DateChangeEmail(1, $order);
-			Notification::send($admin, new notifications($message, $order->id, $type));
+            foreach ($admin as $user) {
+                $user->notify(new deliveryDateChanged($order));
+            }
+//			Notification::send($admin, new notifications($message, $order->id, $type));
 			if ($oldBroker == 1) {
 				$this->DateChangeEmail($order->broker_id, $order);
-				Notification::send($dealers, new notifications($message, $order->id, $type));
+                foreach ($dealers as $dealer) {
+                    $dealer->notify(new deliveryDateChanged($order));
+                }
+//				Notification::send($dealers, new notifications($message, $order->id, $type));
 			}
 		}
 
@@ -435,14 +453,33 @@ class OrderController extends Controller
 			$registrationAddress = [];
 		}
 
+        if($order->dealer) {
+            $dealerAddress = array_filter([
+                $order->dealer->company_name,
+                $order->dealer->company_address1,
+                $order->dealer->company_address2,
+                $order->dealer->company_city,
+                $order->dealer->company_county,
+                $order->dealer->company_postcode,
+            ]);
+        } else {
+            $dealerAddress = [];
+        }
+
         $created = new DateTime($order->created_at);
         $deliveryDate = new DateTime($order->delivery_date);
+        if ( $order->broker_accepted && $order->dealeraccepted && $order->admin_accepted ) {
+            $dateConfirmed = $deliveryDate->format('d/m/Y');
+        } else {
+            $dateConfirmed = 'TBC';
+        }
+
 
 		$vehicleDetails = [
             [
                 'Manufacturer Order Ref' => $order->order_ref,
                 'Order Date' => $created->format('d/m/Y'),
-                'Delivery Date' => $deliveryDate->format('d/m/Y'),
+                'Delivery Date' => $dateConfirmed,
             ],
 			[
 				'Vehicle Make' => $order->vehicle->manufacturer->name ?? "--",
@@ -489,6 +526,7 @@ class OrderController extends Controller
 			'deliveryAddress' => $deliveryAddress,
 			'invoiceAddress' => $invoiceAddress,
 			'registrationAddress' => $registrationAddress,
+            'dealerAddress' => $dealerAddress,
 			'vehicleDetailsHtml' => $vehicleDetailsHtml,
 			'factory_fit_options' => $factory_fit_options,
 			'dealer_fit_options' => $dealer_fit_options,
@@ -501,7 +539,7 @@ class OrderController extends Controller
 
 		$pdf->loadView('pdf', $data);
 
-		return $pdf->stream('leden-order-' . $order->id . '.pdf');
+		return $pdf->download('leden-order-' . $order->id . '.pdf');
 
 	}
 

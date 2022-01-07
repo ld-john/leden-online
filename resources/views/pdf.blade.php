@@ -10,15 +10,14 @@
             color: #858796;
             font-size: 10px;
         }
-
         .contents tr th, .details tr th {
-            padding: 20px 20px 20px 20px;
+            padding: 5px 20px;
             background: #1f3458;
             color: #ffffff;
         }
 
         .contents tr td, .details tr td {
-            padding: 10px 20px 10px 20px;
+            padding: 5px 20px;
         }
 
         .contents tr td, .details tr td {
@@ -47,7 +46,7 @@
 <table cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
     <tr>
         <td>
-            <img src="https://www.ledenonline.co.uk/images/leden-group-ltd.png" width="350" height="auto" style="display: block;" />
+            <img src="{{asset('leden-group-ltd.png')}}" width="350" height="auto" style="display: block;" />
         </td>
     </tr>
     <tr>
@@ -66,9 +65,9 @@
                         <strong>Registration Details:</strong><br>
                         {!! implode('<br>', $registrationAddress) !!}
                     </td>
-                    <td style="text-align: right;" valign="top">
-                        <span style="font-size: 28px; font-weight: bold;">Order #{{$order->id}}</span><br>
-                        The Leden Group Limited<br> 3 Centrus<br> Mead Lane<br> Hertford<br> Hertfordshire<br> SG13 7GX
+                    <td valign="top">
+                        <strong>Dealer Address:</strong><br>
+                        {!! implode('<br>', $dealerAddress) !!}
                     </td>
                 </tr>
             </table>
@@ -328,7 +327,7 @@
         </td>
     </tr>
     <tr>
-        <td bgcolor="#1f3458" style="text-align: center; padding: 20px 20px 20px 20px; font-size: 14px; color: #ffffff;">
+        <td bgcolor="#1f3458" style="text-align: center; padding: 5px 20px; font-size: 14px; color: #ffffff;">
             Copyright &copy; 2020 The Leden Group Limited, All rights reserved.
         </td>
     </tr>
