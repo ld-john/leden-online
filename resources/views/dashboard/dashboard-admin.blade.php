@@ -18,48 +18,50 @@
 
             <!-- Doughnut Chart -->
             <div class="col-lg-6">
-                <div class="card shadow mb-4">
+                <div class="card shadow mb-4 h-300">
                     <!-- Card Header - Dropdown -->
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between h-75p">
                         <h6 class="m-0 font-weight-bold text-l-blue">Run Report</h6>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
-                        <div class="chart-area">
+                        <div class="chart-area pb-3">
                             <canvas id="runReport"></canvas>
                         </div>
+                        @if($factory_order)
+                            <a class="btn btn-primary btn-sm" href="{{route('factory_order.export')}}">Download Factory Orders</a>
+                        @endif
+                        @if($europe_vhc)
+                            <a class="btn btn-primary btn-sm" href="{{route('europe_vhc_export.export')}}">Download Europe VHC</a>
+                        @endif
+                        @if($uk_vhc)
+                            <a class="btn btn-primary btn-sm" href="{{route('uk_vhc_export.export')}}">Download UK VHC</a>
+                        @endif
+                        @if($in_stock)
+                            <a class="btn btn-primary btn-sm" href="{{route('in_stock_export.export')}}">Download In Stock Orders</a>
+                        @endif
+                        @if($ready_for_delivery)
+                            <a class="btn btn-primary btn-sm" href="{{route('readyfordeliveryexport.export')}}">Download Ready for Delivery</a>
+                        @endif
+                        @if($delivery_booked)
+                            <a class="btn btn-primary btn-sm" href="{{route('deliverybooked.export')}}">Download Delivery Booked</a>
+                        @endif
                     </div>
                 </div>
             </div>
 
-            <!-- Bar Chart -->
-            <div class="col-lg-6">
-                <div class="card shadow mb-4">
-                    <!-- Card Header - Dropdown -->
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-l-blue">Vehicles Registered <small>(Last 6 months)</small></h6>
-                    </div>
-                    <!-- Card Body -->
-                    <div class="card-body">
-                        <div class="chart-area">
-                            <canvas id="vehicle_stock_chart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <!-- Notifications -->
+            @include('dashboard.partials.notifications')
         </div>
 
         <!-- Content Row -->
 
         <div class="row">
 
-            <!-- Notifications -->
-            @include('dashboard.partials.notifications')
-
             <!-- Messages -->
-            @include('dashboard.partials.messages')
-
+            <div class="col-lg-12">
+                @include('dashboard.partials.messages')
+            </div>
         </div>
 
     </div>
@@ -75,13 +77,12 @@
             type: 'doughnut',
             data: {
                 labels: [
-                    "In Stock - {{ $in_stock }}",
-                    "Orders Placed - {{ $orders_placed }}",
-                    "Ready For Delivery - {{ $ready_for_delivery }}",
                     "Factory Order - {{ $factory_order }}",
-                    "Delivery Booked - {{ $delivered }}",
                     "Europe VHC - {{ $europe_vhc }}",
-                    "UK VHC - {{ $uk_vhc }}"
+                    "UK VHC - {{ $uk_vhc }}",
+                    "In Stock - {{ $in_stock }}",
+                    "Ready For Delivery - {{ $ready_for_delivery }}",
+                    "Delivery Booked - {{ $delivery_booked }}",
                 ],
                 datasets: [{
                     backgroundColor: [
@@ -93,7 +94,7 @@
                         "#7faac6",
                         "#94bed9",
                     ],
-                    data: [{{ $in_stock }}, {{ $orders_placed }}, {{ $ready_for_delivery }}, {{ $factory_order }}, {{ $delivered }}, {{ $europe_vhc }}, {{ $uk_vhc }}]
+                    data: [{{ $factory_order }}, {{ $in_stock }}, {{ $ready_for_delivery }},  {{ $delivery_booked }}, {{ $europe_vhc }}, {{ $uk_vhc }}]
                 }]
             },
             options: {
@@ -119,82 +120,6 @@
                 cutoutPercentage: 70,
                 responsive: true,
             },
-        });
-
-        let vehicle_stock = document.getElementById('vehicle_stock_chart');
-        let vehicle_stock_chart = new Chart(vehicle_stock, {
-            type: 'bar',
-            data: {
-                labels: [@foreach ($vehicles_registered as $month) "{{ $month->month_label }}", @endforeach],
-                datasets: [{
-                    label: "Vehicles",
-                    backgroundColor: "#3d708f",
-                    hoverBackgroundColor: "#004c6d",
-                    borderColor: "#3d708f",
-                    data: [@foreach ($vehicles_registered as $order) {{ $order->data }}, @endforeach],
-                }],
-            },
-            options: {
-                maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        left: 10,
-                        right: 25,
-                        top: 25,
-                        bottom: 0
-                    }
-                },
-                scales: {
-                    xAxes: [{
-                        time: {
-                            unit: 'month'
-                        },
-                        gridLines: {
-                            display: false,
-                            drawBorder: false
-                        },
-                        ticks: {
-                            maxTicksLimit: 6
-                        },
-                        maxBarThickness: 25,
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            max: {{ $max }},
-                        },
-                        gridLines: {
-                            color: "rgb(234, 236, 244)",
-                            zeroLineColor: "rgb(234, 236, 244)",
-                            drawBorder: false,
-                            borderDash: [2],
-                            zeroLineBorderDash: [2]
-                        }
-                    }],
-                },
-                legend: {
-                    display: false
-                },
-                tooltips: {
-                    titleMarginBottom: 10,
-                    titleFontColor: '#6e707e',
-                    titleFontSize: 14,
-                    backgroundColor: "rgb(255,255,255)",
-                    bodyFontColor: "#858796",
-                    borderColor: '#dddfeb',
-                    borderWidth: 1,
-                    xPadding: 15,
-                    yPadding: 15,
-                    displayColors: false,
-                    caretPadding: 10,
-                    callbacks: {
-                        label: function (tooltipItem, chart) {
-                            let datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                            return tooltipItem.yLabel + ' vehicles';
-                        }
-                    }
-                },
-            }
         });
     </script>
 @endpush

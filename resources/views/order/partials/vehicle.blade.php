@@ -113,6 +113,19 @@
         </button>
     </div>
 </div>
+{{-- Orbit Number (Unique ID) --}}
+<div class="form-group row">
+    <label for="orbit_number" class="col-md-2 col-form-label">Orbit Number</label>
+    <div class="col-md-6">
+        @error('orbit_number')
+        <div class="input-group-prepend">
+            <label for="inputGroupOrbitNumberText" class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
+        </div>
+        @enderror
+        <input wire:model="orbit_number" type="text" name="orbit_number" id="orbit_number" class="form-control"
+               autocomplete="off" placeholder="e.g. 66653275"/>
+    </div>
+</div>
 {{-- Type (Required) --}}
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="vehicle_type"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Vehicle Type</label>
@@ -423,18 +436,16 @@
             @enderror
             <select wire:model="status" class="custom-select" name="vehicle_status" id="inputGroupSelectStatus">
                 <option value="">Please Select Status</option>
+                <option value="4">
+                    Factory Order
+                </option>
                 <option value="1">
                     In Stock
-                </option>
-                <option value="2">
-                    Orders Placed
                 </option>
                 <option value="3">
                     Ready for Delivery
                 </option>
-                <option value="4">
-                    Factory Order
-                </option>
+
                 <option value="6">
                     Delivery Booked
                 </option>

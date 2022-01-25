@@ -54,6 +54,7 @@ class OrderForm extends Component
 	public $make;
     public $newmake;
 	public $model;
+    public $orbit_number;
 	public $type;
 	public $registration;
 	public $derivative;
@@ -165,6 +166,7 @@ class OrderForm extends Component
 
 		    $this->make = $this->vehicle->make;
 		    $this->model = $this->vehicle->model;
+            $this->orbit_number = $this->vehicle->orbit_number;
 		    $this->type = $this->vehicle->type;
 		    $this->registration = $this->vehicle->reg;
 		    $this->derivative = $this->vehicle->derivative;
@@ -249,6 +251,7 @@ class OrderForm extends Component
         	$this->broker = $this->order->broker_id;
         	$this->make = $this->order->vehicle->make;
 	        $this->model = $this->order->vehicle->model;
+            $this->orbit_number = $this->order->vehicle->orbit_number;
 	        $this->type = $this->order->vehicle->type;
 	        $this->registration = $this->order->vehicle->reg;
 	        $this->derivative = $this->order->vehicle->derivative;
@@ -361,12 +364,12 @@ class OrderForm extends Component
 
 			if ( isset($this->vehicle) ) {
 				$vehicle = $this->vehicle;
-			} elseif (!isset ($this->chassis) || $this->chassis === '') {
+			} elseif (!isset ($this->orbit_number) || $this->orbit_number === '') {
 				$vehicle = new Vehicle();
 			} else {
-				$vehicle = Vehicle::firstOrNew([
-					'chassis' => $this->chassis,
-				]);
+                $vehicle = Vehicle::firstOrNew(array(
+                    'orbit_number' => $this->orbit_number,
+                ));
 			}
 
 			$vehicle->vehicle_status = $this->status;
@@ -375,6 +378,7 @@ class OrderForm extends Component
 			$vehicle->model_year = $this->model_year;
 			$vehicle->make = $this->make;
 			$vehicle->model = $this->model;
+            $vehicle->chassis = $this->chassis;
 			$vehicle->derivative = $this->derivative;
 			$vehicle->engine = $this->engine;
 			$vehicle->transmission = $this->transmission;
@@ -389,9 +393,11 @@ class OrderForm extends Component
 			$vehicle->list_price = $this->list_price;
 			$vehicle->first_reg_fee = $this->first_reg_fee;
 			$vehicle->rfl_cost = $this->rfl_cost;
+            $vehicle->broker_id = $this->broker;
+            $vehicle->dealer_id = $this->dealership;
 			$vehicle->onward_delivery = $this->onward_delivery;
 			$vehicle->hide_from_broker = $this->hide_from_broker;
-			$vehicle->hide_from_broker = $this->hide_from_dealer;
+			$vehicle->hide_from_dealer = $this->hide_from_dealer;
 			$vehicle->show_in_ford_pipeline = $this->ford_pipeline;
 
 			$vehicle->save();
@@ -459,19 +465,6 @@ class OrderForm extends Component
 				$file->save();
 			}
 
-
-            if ($this->broker) {
-
-                $broker = User::where('company_id', $this->broker)
-                    ->get();
-
-                $message = 'A new ' . $this->make . ' ' . $this->model . ' has been added and associated to your company';
-                $type = 'vehicle';
-
-                Notification::send($broker, new notifications($message, $order->id, $type));
-            }
-
-
 			$this->successMsg = "Order Created";
 		} else {
 
@@ -482,6 +475,9 @@ class OrderForm extends Component
 
 			$vehicle->vehicle_status = $this->status;
 			$vehicle->reg = $this->registration;
+            $vehicle->orbit_number = $this->orbit_number;
+            $vehicle->broker_id = $this->broker;
+            $vehicle->dealer_id = $this->dealership;
             $vehicle->vehicle_registered_on = $this->registered_date;
 			$vehicle->model_year = $this->model_year;
 			$vehicle->make = $this->make;
@@ -503,7 +499,7 @@ class OrderForm extends Component
 			$vehicle->rfl_cost = $this->rfl_cost;
 			$vehicle->onward_delivery = $this->onward_delivery;
 			$vehicle->hide_from_broker = $this->hide_from_broker;
-			$vehicle->hide_from_broker = $this->hide_from_dealer;
+			$vehicle->hide_from_dealer = $this->hide_from_dealer;
 			$vehicle->show_in_ford_pipeline = $this->ford_pipeline;
 			$vehicle->save();
 

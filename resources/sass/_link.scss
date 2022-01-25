@@ -34,6 +34,9 @@
   &.is-full {
     width: 100%;
   }
+  &.btn-sm {
+    display: inline-block;
+  }
 }
 
 .btn-flex {
@@ -53,6 +56,13 @@
     margin-left: 30px;
   }
 
+}
 
+.h-75p {
+  height: 75px;
+}
 
+.h-300 {
+  height: 300px;
+  overflow-y: auto;
 }

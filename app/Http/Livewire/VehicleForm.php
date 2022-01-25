@@ -19,8 +19,10 @@ use App\VehicleMeta\Transmission;
 use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
 use DateTime;
+use Faker\Provider\es_VE\Internet;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -32,6 +34,7 @@ class VehicleForm extends Component
 
 	public $make;
 	public $newmake;
+    public $orbit_number;
 	public $model;
 	public $dealership;
 	public $type;
@@ -67,8 +70,9 @@ class VehicleForm extends Component
 	public $show_offer = "0"; // Vehicle
 	public $hide_from_broker = "0";
 	public $hide_from_dealer = "0";
+    public $broker;
 	public $successMsg = '';
-	protected $rules = [
+	protected $rules = array(
 		'make' => 'required_without:newmake',
 		'model' => 'required',
 		'type' => 'required',
@@ -79,7 +83,8 @@ class VehicleForm extends Component
 		'colour' => 'required',
 		'trim' => 'required',
 		'status' => 'required',
-	];
+        'registered_date' => 'nullable|date',
+    );
 
 	protected $messages = [
 		'make.required_without' => 'No <strong>Make</strong> selected',
@@ -93,8 +98,12 @@ class VehicleForm extends Component
 		'trim.required' => 'No <strong>Vehicle Trim</strong> selected',
 		'status.required' => 'No <strong>Order Status</strong> selected',
 	];
+    /**
+     * @var mixed
+     */
 
-	public function mount()
+
+    public function mount()
 	{
 		if (isset ($this->vehicle))
 		{
@@ -111,6 +120,9 @@ class VehicleForm extends Component
             }
 
             $this->type = $this->vehicle->type;
+            $this->orbit_number = $this->vehicle->orbit_number;
+            $this->broker = $this->vehicle->broker_id;
+            $this->dealership = $this->vehicle->dealer_id;
 			$this->registration = $this->vehicle->reg;
 			$this->derivative = $this->vehicle->derivative;
 			$this->engine = $this->vehicle->engine;
@@ -188,13 +200,12 @@ class VehicleForm extends Component
 
 		if ( $this->vehicle) {
 			$vehicle = $this->vehicle;
-		} elseif ( !isset ( $this->chassis ) || $this->chassis === '' ) {
+		} elseif ( !isset ( $this->orbit_number ) || $this->orbit_number === '' ) {
 			$vehicle = new Vehicle();
 		} else {
-
-			$vehicle = Vehicle::firstOrCreate([
-				'chassis' => $this->chassis,
-			]);
+            $vehicle = Vehicle::firstOrNew(array(
+                'orbit_number' => $this->orbit_number,
+            ));
 		}
 
 		$vehicle->vehicle_status = $this->status;
@@ -207,7 +218,9 @@ class VehicleForm extends Component
 		$vehicle->transmission = $this->transmission;
 		$vehicle->fuel_type = $this->fuel_type;
 		$vehicle->colour = $this->colour;
+        $vehicle->chassis = $this->chassis;
 		$vehicle->dealer_id = $this->dealership;
+        $vehicle->broker_id = $this->broker;
 		$vehicle->trim = $this->trim;
 		$vehicle->dealer_fit_options = $this->dealer_fit_options;
 		$vehicle->factory_fit_options = $this->factory_fit_options;
@@ -220,7 +233,7 @@ class VehicleForm extends Component
 		$vehicle->onward_delivery = $this->onward_delivery;
 		$vehicle->vehicle_registered_on = $this->registered_date;
 		$vehicle->hide_from_broker = $this->hide_from_broker;
-		$vehicle->hide_from_broker = $this->hide_from_dealer;
+		$vehicle->hide_from_dealer = $this->hide_from_dealer;
 		$vehicle->show_offer = $this->show_offer;
 		$vehicle->show_discount = $this->show_discount;
 		$vehicle->show_in_ford_pipeline = $this->ford_pipeline;

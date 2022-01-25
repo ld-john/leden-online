@@ -20,8 +20,9 @@
             @include('dashboard.partials.notifications')
 
             <!-- Messages -->
-            @include('dashboard.partials.messages')
-
+            <div class="col-lg-6">
+                @include('dashboard.partials.messages')
+            </div>
         </div>
 
     </div>

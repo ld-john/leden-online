@@ -2,32 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DeliveryBookedExport;
+use App\Exports\EuropeVHCExports;
+use App\Exports\InStockExports;
+use App\Exports\ReadyForDeliveryExports;
+use App\Exports\UKVHCExports;
 use App\OrderLegacy;
 
 use App\Vehicle;
 
-use App\VehicleMeta\Body;
-use App\VehicleMeta\Colour;
-use App\VehicleMeta\Derivative;
-use App\VehicleMeta\Engine;
-use App\VehicleMeta\Fuel;
-use App\VehicleMeta\Transmission;
-use App\VehicleMeta\Trim;
-use App\VehicleMeta\Type;
-
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
-use Yajra\DataTables\Facades\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Writer\Exception;
 
 class VehicleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index()
     {
@@ -37,7 +35,7 @@ class VehicleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -47,8 +45,8 @@ class VehicleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
     public function store(Request $request)
     {
@@ -58,8 +56,8 @@ class VehicleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
+     * @param Vehicle $vehicle
+     * @return Application|Factory|View
      */
     public function show(Vehicle $vehicle)
     {
@@ -69,8 +67,8 @@ class VehicleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
+     * @param Vehicle $vehicle
+     * @return Application|Factory|View
      */
     public function edit(Vehicle $vehicle)
     {
@@ -80,9 +78,9 @@ class VehicleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Vehicle $vehicle
+     * @return void
      */
     public function update(Request $request, Vehicle $vehicle)
     {
@@ -92,8 +90,8 @@ class VehicleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Vehicle  $vehicle
-     * @return Application|RedirectResponse|Redirector
+     * @param Vehicle $vehicle
+     * @return RedirectResponse
      */
     public function destroy(Vehicle $vehicle)
     {
@@ -169,7 +167,7 @@ class VehicleController extends Controller
 		$data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
 			->with('manufacturer:id,name')
 			->where('show_in_ford_pipeline', false)
-            ->whereIn('vehicle_status', [1])->get();
+            ->whereIn('vehicle_status', [0])->get();
 
 		if (Auth::user()->role == 'dealer') {
 			$data = $data->where('hide_from_dealer', false );
@@ -188,6 +186,37 @@ class VehicleController extends Controller
 
 		Vehicle::destroy($ids);
 	}
+
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
+     */
+    public function factory_order_export()
+    {
+        return Excel::download(new InStockExports, 'factoryOrders.xlsx');
+    }
+
+    public function europe_vhc_export()
+    {
+        return Excel::download(new EuropeVHCExports(), 'europeVHC.xlsx');
+    }
+    public function uk_vhc_export()
+    {
+        return Excel::download(new UKVHCExports(), 'UKVHC.xlsx');
+    }
+    public function in_stock_export()
+    {
+        return Excel::download(new InStockExports, 'inStock.xlsx');
+    }
+
+    public function ready_for_delivery_export()
+    {
+        return Excel::download(new ReadyForDeliveryExports(), 'ReadyForDelivery.xlsx');
+    }
+    public function delivery_booked_export()
+    {
+        return Excel::download(new DeliveryBookedExport(), 'DeliveryBooked.xlsx');
+    }
 
 
 }

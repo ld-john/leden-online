@@ -12,6 +12,9 @@
 */
 
 /* Auth routes */
+
+use App\Http\Controllers\VehicleController;
+
 Auth::routes();
 
 /* Dashboard Controller routes */
@@ -51,6 +54,13 @@ Route::middleware('auth')->group(function(){
 	Route::get('/ford-pipeline', 'VehicleController@showFordPipeline')->name('pipeline.ford');
 	Route::get('/vehicle/view/{vehicle}', 'VehicleController@show')->name('vehicle.show');
 	Route::get('/vehicle/edit/{vehicle}', 'VehicleController@edit')->name('edit_vehicle');
+    Route::get('/vehicle/foexport/', [VehicleController::class, 'factory_order_export'])->name('factory_order.export');
+    Route::get('/vehicle/eurovhcexport/', [VehicleController::class, 'europe_vhc_export'])->name('europe_vhc_export.export');
+    Route::get('/vehicle/ukvhcexport/', [VehicleController::class, 'uk_vhc_export'])->name('uk_vhc_export.export');
+    Route::get('/vehicle/instockexport/', [VehicleController::class, 'in_stock_export'])->name('in_stock_export.export');
+    Route::get('/vehicle/readyfordeliveryexport/', [VehicleController::class, 'ready_for_delivery_export'])->name('readyfordeliveryexport.export');
+    Route::get('/vehicle/deliverybooked/', [VehicleController::class, 'delivery_booked_export'])->name('deliverybooked.export');
+
 
 	/* ReportingController routes */
 	Route::get('/reporting', 'ReportingController@showReporting')->name('reporting');

@@ -66,7 +66,9 @@
             @include('dashboard.partials.notifications')
 
             <!-- Messages -->
+            <div class="col-lg-6">
             @include('dashboard.partials.messages')
+            </div>
 
         </div>
 

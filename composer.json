@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
+        "ext-json": "*",
         "barryvdh/laravel-dompdf": "^0.8.6",
         "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.0",
@@ -17,8 +18,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "livewire/livewire": "^2.4",
-        "yajra/laravel-datatables-oracle": "^9.10",
-        "ext-json": "*"
+        "maatwebsite/excel": "^3.1",
+        "yajra/laravel-datatables-oracle": "^9.10"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
