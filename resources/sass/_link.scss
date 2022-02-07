@@ -29,11 +29,7 @@
 }
 
 .btn {
-  display: block;
   margin-bottom: 2px;
-  &.is-full {
-    width: 100%;
-  }
   &.btn-sm {
     display: inline-block;
   }
@@ -63,6 +59,6 @@
 }
 
 .h-300 {
-  height: 300px;
+  height: 500px;
   overflow-y: auto;
 }

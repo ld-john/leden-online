@@ -233,9 +233,38 @@
                             <div class="row">
                                 <div class="col">
                                     @include('partials.view-order-cost-section', ['name' => 'Please invoice funder for', 'value' => $order->invoice->invoice_funder_for])
-                                    <h6 class="font-weight-bold">We will invoice you for the difference</h6>
-                                    @include('partials.view-order-cost-section', ['name' => 'inc VAT', 'value' => $order->invoiceDifferenceIncVat()])
-                                    @include('partials.view-order-cost-section', ['name' => 'exc VAT', 'value' => $order->invoiceDifferenceExVat()])
+                                    @if ($order->invoiceDifferenceExVat() > 0)
+                                        <h6 class="font-weight-bold">We will invoice you for the difference</h6>
+                                        @include('partials.view-order-cost-section', ['name' => 'inc VAT', 'value' => $order->invoiceDifferenceIncVat()])
+                                        @include('partials.view-order-cost-section', ['name' => 'exc VAT', 'value' => $order->invoiceDifferenceExVat()])
+                                    @else
+                                        <h6 class="font-weight-bold">Invoice from Dealer</h6>
+                                        @include('partials.view-order-cost-section', ['name' => 'Dealer Invoice Value', 'value' => ($order->invoice->invoice_value_from_dealer)])
+                                        @if(isset ($order->invoice->dealer_pay_date) && ( $order->invoice->dealer_pay_date != '0000-00-00 00:00:00'))
+                                            @include('partials.view-order-date-section', ['name' => 'Dealer Invoice Pay Date', 'value' => $order->invoice->dealer_pay_date])
+                                        @else
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p>Dealer Invoice Pay Date</p>
+                                                </div>
+                                                <div class="col-4 text-right">
+                                                    <p class="font-weight-bold">TBC</p>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if($order->invoice->dealer_invoice_number)
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p>Dealer Invoice Number</p>
+                                                </div>
+                                                <div class="col-4 text-right">
+                                                    <p class="font-weight-bold">
+                                                        {{$order->invoice->dealer_invoice_number}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -293,49 +322,49 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+                @endif
 
 
-                        <!-- Card Footer -->
-                        <div class="card-footer text-right">
-                            <a href="{{ route('pipeline') }}" class="btn btn-secondary">Back</a>
-                            @if (Auth::user()->role != 'broker')
-                                <a href="{{ route('order.pdf', $order->id) }}" class="btn btn-secondary">Download Order PDF</a>
-                                @if( Auth::user()->role == 'admin')
-                                    <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning">Edit Order</a>
-                                @endif
+                <!-- Card Footer -->
+                    <div class="card-footer text-right">
+                        <a href="{{ route('pipeline') }}" class="btn btn-secondary">Back</a>
+                        @if (Auth::user()->role != 'broker')
+                            <a href="{{ route('order.pdf', $order->id) }}" class="btn btn-secondary">Download Order PDF</a>
+                            @if( Auth::user()->role == 'admin')
+                                <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning">Edit Order</a>
                             @endif
-                            @if ($order->vehicle->vehicle_status == 3)
-                                @if (Auth::user()->role == 'admin' && $order->admin_accepted == 0)
-                                    @if($order->delivery_date)
-                                        <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
-                                    @endif
-                                    <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
-                                @elseif (Auth::user()->role == 'dealer' && $order->admin_accepted == 1 && $order->dealer_accepted == 0)
-                                    @if($order->delivery_date)
-                                        <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
-                                    @endif
-                                    <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
-                                @elseif (Auth::user()->role == 'broker' && $order->admin_accepted == 1 && $order->broker_accepted == 0)
-                                    @if($order->delivery_date)
-                                        <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
-                                    @endif
-                                    <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
+                        @endif
+                        @if ($order->vehicle->vehicle_status == 3)
+                            @if (Auth::user()->role == 'admin' && $order->admin_accepted == 0)
+                                @if($order->delivery_date)
+                                    <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
                                 @endif
+                                <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
+                            @elseif (Auth::user()->role == 'dealer' && $order->admin_accepted == 1 && $order->dealer_accepted == 0)
+                                @if($order->delivery_date)
+                                    <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
+                                @endif
+                                <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
+                            @elseif (Auth::user()->role == 'broker' && $order->admin_accepted == 1 && $order->broker_accepted == 0)
+                                @if($order->delivery_date)
+                                    <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
+                                @endif
+                                <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
                             @endif
-                        </div>
+                        @endif
+                    </div>
                 </div>
-                    <div class="card shadow mt-4">
-                        <!-- Card Header -->
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-l-blue">Comments</h6>
-                        </div>
+                <div class="card shadow mt-4">
+                    <!-- Card Header -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-l-blue">Comments</h6>
+                    </div>
 
-                        <div class="card-body">
-                            @livewire('comment-box', ['order_id' => $order->id])
-                        </div>
+                    <div class="card-body">
+                        @livewire('comment-box', ['order_id' => $order->id])
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 @endsection

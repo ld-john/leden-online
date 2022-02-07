@@ -200,6 +200,9 @@ class VehicleForm extends Component
 
 		if ( $this->vehicle) {
 			$vehicle = $this->vehicle;
+            if (isset($this->orbit_number )) {
+                $vehicle->orbit_number = $this->orbit_number;
+            }
 		} elseif ( !isset ( $this->orbit_number ) || $this->orbit_number === '' ) {
 			$vehicle = new Vehicle();
 		} else {
@@ -245,12 +248,21 @@ class VehicleForm extends Component
 			$this->successMsg = "Vehicle Created";
 		}
 
+        $this->markOrderComplete($vehicle, $vehicle->order());
+
         $this->registered_date = ( $this->registered_date ? $this->registered_date->format( 'd/m/Y') : null );
 
 
 
 
 	}
+
+    private function markOrderComplete($vehicle, $order)
+    {
+        if ($vehicle->vehicle_status === '7') {
+            $order->update(['completed_date' => now()]);
+        }
+    }
 
 	public function render()
 	{

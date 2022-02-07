@@ -56,11 +56,11 @@
                                 <td>{{ ucfirst($row->role) ?? '' }}</td>
                                 <td class="btn-flex">
                                     @if($row->is_deleted === null)
-                                        <a href="/user-management/edit/{{$row->id}}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
-                                        <a href="/user-management/disable/{{$row->id}}" class="btn btn-danger"><i class="fas fa-times"></i> Disable</a>
+                                        <a href="/user-management/edit/{{$row->id}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a>
+                                        <a href="/user-management/disable/{{$row->id}}" class="btn btn-danger" data-toggle="tooltip" title="Disable Profile"><i class="fas fa-times"></i></a>
                                     @else
-                                        <a href="/user-management/disable/{{$row->id}}" class="btn btn-success"><i class="fas fa-check"></i> Enable</a>
-                                        <a href="/user-management/delete/{{$row->id}}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                                        <a href="/user-management/disable/{{$row->id}}" class="btn btn-success" data-toggle="tooltip" title="Enable Profile"><i class="fas fa-check"></i></a>
+                                        <a href="/user-management/delete/{{$row->id}}" class="btn btn-danger" data-toggle="tooltip" title="Delete Profile"><i class="fas fa-trash"></i></a>
                                     @endif
                                 </td>
                             </tr>

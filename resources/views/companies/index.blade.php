@@ -50,7 +50,7 @@
                                 <td>{{ $row->company_email ?? '' }}</td>
                                 <td>{{ $row->company_phone ?? '' }}</td>
                                 <td>{{ ucfirst($row->company_type) ?? '' }}</td>
-                                <td><a href="/companies/edit/{{$row->id}}" class="edit btn btn-warning"><i class="fas fa-edit"></i>Edit</a></td>
+                                <td><a href="/companies/edit/{{$row->id}}" class="edit btn btn-warning" data-toggle="tooltip" title="Edit Company Profile"><i class="fas fa-edit"></i></a></td>
                             </tr>
                         @endforeach
                         </tbody>

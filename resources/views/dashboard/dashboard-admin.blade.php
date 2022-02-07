@@ -74,7 +74,7 @@
         // Pie Chart Example
         let ctx = document.getElementById("runReport");
         let runReport = new Chart(ctx, {
-            type: 'doughnut',
+            type: 'pie',
             data: {
                 labels: [
                     "Factory Order - {{ $factory_order }}",
@@ -94,31 +94,17 @@
                         "#7faac6",
                         "#94bed9",
                     ],
-                    data: [{{ $factory_order }}, {{ $in_stock }}, {{ $ready_for_delivery }},  {{ $delivery_booked }}, {{ $europe_vhc }}, {{ $uk_vhc }}]
+                    data: [{{ $factory_order }}, {{ $europe_vhc }}, {{ $uk_vhc }}, {{ $in_stock }}, {{ $ready_for_delivery }}, {{ $delivery_booked }} ]
                 }]
             },
             options: {
                 maintainAspectRatio: false,
-                tooltips: {
-                    backgroundColor: "rgb(255,255,255)",
-                    bodyFontColor: "#858796",
-                    borderColor: '#dddfeb',
-                    borderWidth: 1,
-                    xPadding: 15,
-                    yPadding: 15,
-                    displayColors: false,
-                    caretPadding: 10,
-                },
-                legend: {
-                    display: true,
-                    position: 'right',
-                    fullWidth: true,
-                    labels: {
-                        fontSize: 16,
-                    },
-                },
-                cutoutPercentage: 70,
-                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'right',
+                    }
+                }
             },
         });
     </script>

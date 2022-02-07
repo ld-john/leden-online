@@ -64,7 +64,9 @@ Route::middleware('auth')->group(function(){
 
 	/* ReportingController routes */
 	Route::get('/reporting', 'ReportingController@showReporting')->name('reporting');
-	Route::get('/reporting/download', 'ReportingController@executeReportDownload')->name('reporting_download');
+    Route::get('/reporting/monthly-{report}/{year}/{month}','ReportingController@monthlyDownload');
+    Route::get('/reporting/quarterly-{report}/{year}/{quarter}','ReportingController@quarterlyDownload');
+    Route::get('/reporting/weekly-{report}/{year}/{quarter}','ReportingController@weeklyDownload');
 
 	/* CSVUploadController routes */
 	Route::get('/csv-upload', 'CSVUploadController@showCsvUpload')->name('csv_upload');
@@ -125,6 +127,7 @@ Route::middleware('auth')->group(function(){
 	Route::get('/link/test/', 'VehicleController@getVehicleMeta')->name('test');
 	Route::get('/link/test2/', 'CustomerController@buildNewCustomer')->name('test2');
 	Route::get('/link/test3/', 'ManufacturerController@buildManufacturerTable')->name('test3');
+	Route::get('/link/completed-date/', 'VehicleController@completedDateCleanup')->name('test4');
 
 
 });

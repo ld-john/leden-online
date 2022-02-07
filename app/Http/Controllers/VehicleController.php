@@ -7,6 +7,7 @@ use App\Exports\EuropeVHCExports;
 use App\Exports\InStockExports;
 use App\Exports\ReadyForDeliveryExports;
 use App\Exports\UKVHCExports;
+use App\Order;
 use App\OrderLegacy;
 
 use App\Vehicle;
@@ -164,10 +165,10 @@ class VehicleController extends Controller
 
 	public function showLedenStock(Request $request)
 	{
-		$data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
+		$data = Vehicle::select('id', 'orbit_number', 'make', 'model', 'derivative', 'reg', 'engine', 'vehicle_status', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
 			->with('manufacturer:id,name')
-			->where('show_in_ford_pipeline', false)
-            ->whereIn('vehicle_status', [0])->get();
+            ->with('order:id,vehicle_id')
+			->where('show_in_ford_pipeline', false)->get();
 
 		if (Auth::user()->role == 'dealer') {
 			$data = $data->where('hide_from_dealer', false );
@@ -177,7 +178,14 @@ class VehicleController extends Controller
 			$data = $data->where('hide_from_broker', false );
 		}
 
-		return view('vehicles.index', ['data'=> $data, 'title' => 'Leden Stock', 'active_page'=> 'pipeline']);
+        $stock = [];
+        foreach ($data as $k => $vehicle) {
+            if (!isset($vehicle->order)){
+                $stock[$k] = $vehicle;
+            }
+        }
+
+		return view('vehicles.index', ['data'=> $stock, 'title' => 'Leden Stock', 'active_page'=> 'pipeline']);
 	}
 
 	public function deleteSelected()
@@ -216,6 +224,15 @@ class VehicleController extends Controller
     public function delivery_booked_export()
     {
         return Excel::download(new DeliveryBookedExport(), 'DeliveryBooked.xlsx');
+    }
+
+    public function completedDateCleanup()
+    {
+        $completedVehicles = Order::whereHas('vehicle', function ($q){
+            $q->whereIn('vehicle_status', [7]);
+        })->update(['completed_date' => now()]);
+
+        dd($completedVehicles);
     }
 
 

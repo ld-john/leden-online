@@ -34,7 +34,7 @@
                             <table class="table table-bordered" id="dataTable">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Leden Order #</th>
                                     <th>Model</th>
                                     <th>Derivative</th>
                                     <th>Order Number</th>
@@ -63,35 +63,39 @@
                                         @endif
 
                                         <td>@if ( $row->customer->preffered_name == 'customer')
-                                            {{ $row->customer->customer_name ?? ''}}
+                                                {{ $row->customer->customer_name ?? ''}}
                                             @else
-                                            {{ $row->customer->customer_name ?? ''}}
+                                                {{ $row->customer->customer_name ?? ''}}
                                             @endif
                                         </td>
                                         <td>{{ $row->broker_ref ?? ''}}</td>
                                         <td>{{ $row->broker->company_name ?? ''}}</td>
                                         <td>{{ $row->dealer->company_name ?? ''}}</td>
                                         <td width="100px">
-                                            <a href="{{route('order.show', $row->id)}}" class="btn is-full btn-primary"><i class="far fa-eye"></i> View</a>
+                                            <a href="{{route('order.show', $row->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Order"><i class="far fa-eye"></i></a>
                                             @can('admin')
-                                            <a href="{{route('order.edit', $row->id)}}" class="btn is-full btn-warning"><i class="fas fa-edit"></i> Edit</a>
-                                            <button type="button"
-                                                    class="btn is-full btn-primary duplicate-order"
-                                                    data-orderNumber="{{ $row->id }}"
-                                                    data-toggle="modal"
-                                                    data-target="#duplicateOrder"
-                                                    onclick="duplicateOrder({{$row->id}})">
-                                                <i class="fas fa-copy"></i> Copy
-                                            </button>
-                                            <button
-                                                    type="button"
-                                                    class="btn is-full btn-danger delete-order"
-                                                    data-orderNumber="{{ $row->id }}"
-                                                    data-toggle="modal"
-                                                    data-target="#deleteOrder"
-                                                    onclick="deleteOrder({{$row->id}})">
-                                                <i class="fas fa-trash"></i> Delete
-                                            </button>
+                                                <a href="{{route('order.edit', $row->id)}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Order"><i class="fas fa-edit"></i></a>
+                                                <a data-toggle="tooltip" title="Copy Order">
+                                                <button type="button"
+                                                        class="btn btn-primary duplicate-order"
+                                                        data-orderNumber="{{ $row->id }}"
+                                                        data-toggle="modal"
+                                                        data-target="#duplicateOrder"
+                                                        onclick="duplicateOrder({{$row->id}})">
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                                </a>
+                                                <a data-toggle="tooltip" title="Delete Order">
+                                                    <button
+                                                            type="button"
+                                                            class="btn btn-danger delete-order"
+                                                            data-orderNumber="{{ $row->id }}"
+                                                            data-toggle="modal"
+                                                            data-target="#deleteOrder"
+                                                            onclick="deleteOrder({{$row->id}})">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </a>
                                             @endcan
                                         </td>
                                     </tr>
@@ -109,31 +113,31 @@
     </div>
     <!-- /.container-fluid -->
     @can('admin')
-    <!-- Duplication Modal -->
-    <div class="modal fade" id="duplicateOrder" tabindex="-1" role="dialog" aria-labelledby="duplicateOrder" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Duplicate Order <span id="ModalOrderNumber"></span></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @if(isset($row))
-                    <form action="/orders/duplicate/{{$row->id}}" id="execute-duplication">
-                        <label for="duplicateQuantity">Duplicating Order #<span id="duplication_target"></span> - How Many copies?</label>
-                        <input type="number" name="duplicateQty" min="0" max="10" id="duplicateQuantity">
-                        <button type="submit" class="btn btn-primary ">Go!</button>
-                    </form>
-                    @endif
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- Duplication Modal -->
+        <div class="modal fade" id="duplicateOrder" tabindex="-1" role="dialog" aria-labelledby="duplicateOrder" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Duplicate Order <span id="ModalOrderNumber"></span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @if(isset($row))
+                            <form action="/orders/duplicate/{{$row->id}}" id="execute-duplication">
+                                <label for="duplicateQuantity">Duplicating Order #<span id="duplication_target"></span> - How Many copies?</label>
+                                <input type="number" name="duplicateQty" min="0" max="10" id="duplicateQuantity">
+                                <button type="submit" class="btn btn-primary ">Go!</button>
+                            </form>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endcan
     @can('admin')
         <!-- Delete Modal -->

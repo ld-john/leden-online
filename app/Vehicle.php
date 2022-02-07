@@ -25,7 +25,7 @@ class Vehicle extends Model
      * @var mixed|string
      */
 
-    public function order()
+    public function order(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
     	return $this->hasOne(Order::class, 'vehicle_id', 'id' );
     }

@@ -46,6 +46,31 @@
                class="form-control" autocomplete="off" placeholder="e.g. 30/03/2019" onchange="this.dispatchEvent(new InputEvent('input'))" />
     </div>
 </div>
+{{-- Invoice from Dealer override price --}}
+<div class="form-group row">
+    <label for="dealer_invoice_override" class="col-md-2 col-form-label">Override the Dealer from Invoice value (£)</label>
+    <div class="col-md-6">
+        <input wire:model="dealer_invoice_override" type="number" name="dealer_invoice_override" id="dealer_invoice_override" step=".01"
+               class="form-control" autocomplete="off" placeholder="e.g. 134.25"/>
+    </div>
+</div>
+
+{{-- Invoice from dealer reference --}}
+<div class="form-group row">
+    <label for="dealer_invoice_number" class="col-md-2 col-form-label">Invoice from Dealer Invoice Number</label>
+    <div class="col-md-6">
+        <input wire:model="dealer_invoice_number" type="text" name="dealer_invoice_number" id="dealer_invoice_number"
+               class="form-control" autocomplete="off" placeholder="e.g. BO568"/>
+    </div>
+</div>
+{{-- Invoice from dealer pay date --}}
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="dealer_pay_date">Invoice from Dealer Pay Date</label>
+    <div class="col-md-6">
+        <input wire:model="dealer_pay_date" type="text" name="dealer_pay_date" id="dealer_pay_date"
+               class="form-control" autocomplete="off" placeholder="e.g. 30/03/2019" onchange="this.dispatchEvent(new InputEvent('input'))"/>
+    </div>
+</div>
 {{-- Commission to broker cost --}}
 <div class="form-group row">
     <label for="commission_broker" class="col-md-2 col-form-label">Commission to Broker (£)</label>
@@ -70,3 +95,4 @@
                class="form-control" autocomplete="off" placeholder="e.g. 30/03/2019" onchange="this.dispatchEvent(new InputEvent('input'))"/>
     </div>
 </div>
+

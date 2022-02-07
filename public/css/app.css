@@ -10172,11 +10172,7 @@ table.dataTable {
 }
 
 .btn {
-  display: block;
   margin-bottom: 2px;
-}
-.btn.is-full {
-  width: 100%;
 }
 .btn.btn-sm, .btn-group-sm > .btn {
   display: inline-block;
@@ -10204,7 +10200,7 @@ table.dataTable {
 }
 
 .h-300 {
-  height: 300px;
+  height: 500px;
   overflow-y: auto;
 }
 

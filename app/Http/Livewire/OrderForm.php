@@ -19,6 +19,7 @@ use App\VehicleMeta\Fuel;
 use App\VehicleMeta\Transmission;
 use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
+use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Notification;
@@ -113,6 +114,9 @@ class OrderForm extends Component
 	public $delivery_county;
 	public $delivery_postcode;
 	public $comments;
+    public $dealer_invoice_number;
+    public $dealer_pay_date;
+    public $dealer_invoice_override;
 	public $attachments = [];
 	public $fields = 1;
 	public $successMsg;
@@ -152,7 +156,10 @@ class OrderForm extends Component
 		'dealer_fit_price_manual_add.required' => '<strong>Dealer Fit Option</strong> requires a <strong>Price</strong> selected',
     ];
 
-	public function mount()
+    /**
+     * @throws Exception
+     */
+    public function mount()
     {
         $newCustomer = $this->newCustomer;
 
@@ -216,6 +223,25 @@ class OrderForm extends Component
                 $this->registered_date = $reg->format( 'd/m/Y' );
             }
 
+            if ($this->order->invoice->dealer_pay_date) {
+                $dpd = new DateTime ($this->order->invoice->dealer_pay_date);
+                $this->dealer_pay_date = $dpd->format('d/m/Y');
+            }
+
+            if ($this->order->invoice->broker_pay_date) {
+                $dpd = new DateTime ($this->order->invoice->broker_pay_date);
+                $this->invoice_broker_paid = $dpd->format('d/m/Y');
+            }
+
+            if ($this->order->invoice->broker_commission_pay_date) {
+                $dpd = new DateTime ($this->order->invoice->broker_commission_pay_date);
+                $this->commission_broker_paid = $dpd->format('d/m/Y');
+            }
+
+            if ($this->order->invoice->finance_commission_pay_date) {
+                $dpd = new DateTime ($this->order->invoice->finance_commission_pay_date);
+                $this->finance_commission_paid = $dpd->format('d/m/Y');
+            }
 
         	$this->name = $this->order->customer->customer_name;
         	$this->company = $this->order->customer->company_name;
@@ -230,13 +256,10 @@ class OrderForm extends Component
 
 			$this->invoice_finance = $this->order->invoice->commission_to_finance_company;
 			$this->invoice_finance_number = $this->order->invoice->finance_commission_invoice_number;
-			$this->finance_commission_paid = $this->order->invoice->finance_commission_pay_date;
 			$this->invoice_value_to_broker = $this->order->invoice->invoice_value_to_broker;
 			$this->invoice_broker_number = $this->order->invoice->broker_invoice_number;
-			$this->invoice_broker_paid = $this->order->invoice->broker_pay_date;
 			$this->commission_broker = $this->order->invoice->commission_to_broker;
 			$this->commission_broker_number = $this->order->invoice->broker_commission_invoice_number;
-			$this->commission_broker_paid = $this->order->invoice->broker_commission_pay_date;
 			$this->dealer_discount = $this->order->invoice->dealer_discount;
 			$this->manufacturer_discount = $this->order->invoice->manufacturer_discount;
 			$this->invoice_funder_for = $this->order->invoice->invoice_funder_for;
@@ -343,6 +366,10 @@ class OrderForm extends Component
         $this->delivery_date = DateTime::createFromFormat('d/m/Y', $this->delivery_date );
         $this->due_date = DateTime::createFromFormat('d/m/Y', $this->due_date );
         $this->registered_date = DateTime::createFromFormat('d/m/Y', $this->registered_date);
+        $this->dealer_pay_date = DateTime::createFromFormat('d/m/Y', $this->dealer_pay_date);
+        $this->invoice_broker_paid = DateTime::createFromFormat('d/m/Y', $this->invoice_broker_paid);
+        $this->commission_broker_paid = DateTime::createFromFormat('d/m/Y', $this->commission_broker_paid);
+        $this->finance_commission_paid = DateTime::createFromFormat('d/m/Y', $this->finance_commission_paid);
 
 		if ( !isset( $this->order )) {
 
@@ -438,6 +465,8 @@ class OrderForm extends Component
 			$invoice->finance_commission_pay_date = $this->finance_commission_paid;
 			$invoice->broker_commission_pay_date = $this->commission_broker_paid;
 			$invoice->broker_pay_date = $this->invoice_broker_paid;
+            $invoice->dealer_pay_date = $this->dealer_pay_date;
+            $invoice->dealer_invoice_number = $this->dealer_invoice_number;
 			$invoice->save();
 
 
@@ -455,6 +484,8 @@ class OrderForm extends Component
 			$order->invoice_company_id = $this->invoice_company;
 			$order->invoice_id = $invoice->id;
 			$order->save();
+
+            $this->markOrderComplete($vehicle, $order);
 
 			foreach ($this->attachments as $attachment) {
 				$file = new OrderUpload();
@@ -520,6 +551,8 @@ class OrderForm extends Component
 			$invoice->finance_commission_pay_date = $this->finance_commission_paid;
 			$invoice->broker_commission_pay_date = $this->commission_broker_paid;
 			$invoice->broker_pay_date = $this->invoice_broker_paid;
+            $invoice->dealer_pay_date = $this->dealer_pay_date;
+            $invoice->dealer_invoice_number = $this->dealer_invoice_number;
 			$invoice->save();
 
 			//Update Customer
@@ -553,7 +586,22 @@ class OrderForm extends Component
 			$order->invoice_id = $invoice->id;
 			$order->save();
 
-			foreach ($this->attachments as $attachment) {
+            $this->markOrderComplete($vehicle, $order);
+
+            $invoice_value = $order->invoiceDifferenceExVat();
+
+            if($invoice_value < 0) {
+                if($this->dealer_invoice_override) {
+                    $invoice->invoice_value_from_dealer = $this->dealer_invoice_override;
+                } else {
+                    $invoice->invoice_value_from_dealer = $invoice_value * -1;
+                }
+            } else {
+                $invoice->invoice_value_from_dealer = null;
+            }
+            $invoice->save();
+
+            foreach ($this->attachments as $attachment) {
 				$file = new OrderUpload();
 				$file->file_name = $attachment->store('attachments');
 				$file->uploaded_by = auth()->id();
@@ -566,6 +614,10 @@ class OrderForm extends Component
             $this->delivery_date = ( $this->delivery_date ? $this->delivery_date->format( 'd/m/Y') : null );
             $this->due_date = ( $this->due_date ? $this->due_date->format( 'd/m/Y') : null );
             $this->registered_date = ( $this->registered_date ? $this->registered_date->format( 'd/m/Y') : null );
+            $this->dealer_pay_date = ($this->dealer_pay_date ? $this->dealer_pay_date->format('d/m/Y') : null);
+            $this->invoice_broker_paid = ($this->invoice_broker_paid ? $this->invoice_broker_paid->format('d/m/Y') : null);
+            $this->commission_broker_paid = ($this->commission_broker_paid ? $this->commission_broker_paid->format('d/m/Y') : null);
+            $this->finance_commission_paid = ($this->finance_commission_paid ? $this->finance_commission_paid->format('d/m/Y') : null);
 
 			$this->successMsg = "Order Updated";
 		}
@@ -596,5 +648,12 @@ class OrderForm extends Component
 		    'dealer_options'    => $fitoptions->where('option_type', 'dealer')
 	    ];
         return view('livewire.order-form', $options );
+    }
+
+    private function markOrderComplete($vehicle, $order)
+    {
+        if ($vehicle->vehicle_status === '7') {
+            $order->update(['completed_date' => now()]);
+        }
     }
 }

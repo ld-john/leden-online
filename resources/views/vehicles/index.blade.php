@@ -27,37 +27,66 @@
                                     <th>Model</th>
                                     <th>Derivative</th>
                                     <th>Engine</th>
-                                    <th>Doors</th>
                                     <th>Colour</th>
                                     <th>Type</th>
                                     <th>Chassis</th>
                                     <th>Registration</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach( $data as $row )
-                                    <tr>
-                                        <td></td>
-                                        <td>{{ $row->id ?? '' }}</td>
-                                        <td>{{ $row->manufacturer->name ?? '' }}</td>
-                                        <td>{{ $row->model ?? '' }}</td>
-                                        <td>{{ $row->derivative ?? '' }}</td>
-                                        <td>{{ $row->engine ?? '' }}</td>
-                                        <td>{{ $row->doors ?? '' }}</td>
-                                        <td>{{ $row->colour ?? '' }}</td>
-                                        <td>{{ $row->type ?? '' }}</td>
-                                        <td>{{ $row->chassis ?? '' }}</td>
-                                        <td>{{ $row->reg ?? '' }}</td>
-                                        <td width="100px">
-                                            <a href="{{route('vehicle.show', $row->id)}}" class="btn btn-sm btn-primary"><i class="far fa-eye"></i><br> View Vehicle</a>
-                                            @can('admin')
-                                                <a href="{{route('edit_vehicle', $row->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i><br> Edit Vehicle</a>
-                                                <a href="{{route('order.reserve', $row->id)}}" class="btn btn-sm"><i class="fas fa-plus-square"></i><br> Create Order</a>
-                                                <a href="{{route('vehicle.delete', $row->id)}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i><br> Delete Vehicle</a>
-                                            @endcan
-                                        </td>
-                                    </tr>
+                                    @if(! $row->order()->exists())
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <strong>{{ $row->id ?? '' }}</strong>
+                                                @if($row->orbit_number)
+                                                    <br>(Orbit Number: {{ $row->orbit_number }})
+                                                @endif
+                                            </td>
+                                            <td>{{ $row->manufacturer->name ?? '' }}</td>
+                                            <td>{{ $row->model ?? '' }}</td>
+                                            <td>{{ $row->derivative ?? '' }}</td>
+                                            <td>{{ $row->engine ?? '' }}</td>
+                                            <td>{{ $row->colour ?? '' }}</td>
+                                            <td>{{ $row->type ?? '' }}</td>
+                                            <td>{{ $row->chassis ?? '' }}</td>
+                                            <td>{{ $row->reg ?? '' }}</td>
+                                            <td>@switch($row->vehicle_status)
+                                                    @case(1)
+                                                    In Stock
+                                                    @break
+                                                    @case(3)
+                                                    Ready for Delivery
+                                                    @break
+                                                    @case(4)
+                                                    Factory Order
+                                                    @break
+                                                    @case(6)
+                                                    Delivery Booked
+                                                    @break
+                                                    @case(7)
+                                                    Completed Orders
+                                                    @break
+                                                    @case(10)
+                                                    Europe VHC
+                                                    @break
+                                                    @default
+                                                    UK VHC
+                                                @endswitch
+                                            </td>
+                                            <td width="100px">
+                                                <a href="{{route('vehicle.show', $row->id)}}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="View Vehicle Information"><i class="far fa-eye"></i></a>
+                                                @can('admin')
+                                                    <a href="{{route('edit_vehicle', $row->id)}}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit Vehicle Information"><i class="fas fa-edit"></i></a>
+                                                    <a href="{{route('order.reserve', $row->id)}}" class="btn btn-sm" data-toggle="tooltip" title="Create order with Vehicle"><i class="fas fa-plus-square"></i></a>
+                                                    <a href="{{route('vehicle.delete', $row->id)}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete Vehicle"><i class="fas fa-trash"></i></a>
+                                                @endcan
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>
