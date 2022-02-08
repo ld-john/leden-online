@@ -69,11 +69,11 @@
                                         <td>{{ $row->broker->company_name ?? ''}}</td>
                                         <td>{{ $row->dealer->company_name ?? ''}}</td>
                                         <td width="100px">
-                                            <a href="/orders/view/{{$row->id}}" class="btn is-full btn-primary"><i class="far fa-eye"></i> View</a>
+                                            <a href="/orders/view/{{$row->id}}" class="btn is-full btn-primary" data-toggle="tooltip" title="View Order"><i class="far fa-eye"></i></a>
                                             @can('admin')
-                                                <button type="button" class="btn is-full btn-danger delete-order" data-orderNumber="{{ $row->id }}" data-toggle="modal" data-target="#deleteOrder">
-                                                    <i class="fas fa-trash"></i> Delete
-                                                </button>
+                                                <a data-toggle="tooltip" title="Delete Order">
+                                                    <livewire:delete-order :order="$row->id" :vehicle="$row->vehicle" />
+                                                </a>
                                             @endcan
                                         </td>
                                     </tr>

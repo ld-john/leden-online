@@ -35,6 +35,11 @@
   }
 }
 
+.modal.show {
+  display: block;
+  padding-right: 17px;
+}
+
 .btn-flex {
   display: flex;
   a{

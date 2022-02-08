@@ -86,15 +86,7 @@
                                                 </button>
                                                 </a>
                                                 <a data-toggle="tooltip" title="Delete Order">
-                                                    <button
-                                                            type="button"
-                                                            class="btn btn-danger delete-order"
-                                                            data-orderNumber="{{ $row->id }}"
-                                                            data-toggle="modal"
-                                                            data-target="#deleteOrder"
-                                                            onclick="deleteOrder({{$row->id}})">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
+                                                    <livewire:delete-order :order="$row->id" :vehicle="$row->vehicle" />
                                                 </a>
                                             @endcan
                                         </td>

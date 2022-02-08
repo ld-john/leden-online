@@ -1,13 +1,20 @@
 {{-- Dealership --}}
 <div class="form-group row">
-    <label for="dealership" class="col-md-2 col-form-label">Dealership</label>
+    <label for="dealership" class="col-md-2 col-form-label"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Dealership</label>
     <div class="col-md-6">
-        <select wire:model="dealership" name="dealership" id="dealership" class="form-control">
+        <div class="input-group mb-3">
+        @error('dealership')
+        <div class="input-group-prepend">
+            <label class="input-group-text bg-danger text-white" for="inputGroupSelectDealership"><i class="fa fa-exclamation-triangle"></i></label>
+        </div>
+        @enderror
+        <select wire:model="dealership" name="dealership" id="inputGroupSelectDealership" class="form-control">
             <option value="">Select Dealership</option>
             @foreach ($dealers as $dealer)
                 <option value="{{ $dealer->id }}">{{ $dealer->company_name }}</option>
             @endforeach
         </select>
+        </div>
     </div>
 </div>
 {{-- Registration Company --}}
@@ -50,13 +57,7 @@
 </div>
 {{-- Broker --}}
 <div class="form-group row">
-    <label class="col-md-2 col-form-label" for="broker"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Broker
-        <button type="button" class="btn-tooltip" data-toggle="tooltip"
-                data-placement="right"
-                title="If left blank, a notification will be sent to all Brokers when this order is added. If a Broker is selected, then a notification will only be sent to those users associated to that Broker.">
-            <i class="fa fa-question-circle"></i>
-        </button>
-    </label>
+    <label class="col-md-2 col-form-label" for="broker"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Broker</label>
     <div class="col-md-6">
 
         <div class="input-group mb-3">

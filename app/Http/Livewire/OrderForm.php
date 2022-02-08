@@ -133,6 +133,7 @@ class OrderForm extends Component
 		'status' => 'required',
 		'attachments.*' => 'max:4096',
         'broker' => 'required',
+        'dealership' => 'required',
         'order_ref' => 'required',
 	];
 
@@ -148,6 +149,7 @@ class OrderForm extends Component
         'trim.required' => 'No <strong>Vehicle Trim</strong> selected',
         'status.required' => 'No <strong>Order Status</strong> selected',
         'attachments.*.max' => 'An <strong>Attachment</strong> is too big! (Max 1Mb)',
+        'dealership.required' => 'No <strong>Dealer</strong> selected',
         'broker.required' => 'No <strong>Broker</strong> selected',
         'order_ref.required' => 'You must supply an <strong>Order Ref.</strong>',
 		'factory_fit_name_manual_add.required' => '<strong>Factory Fit Option</strong> requires a <strong>Name</strong> selected',

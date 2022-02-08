@@ -78,11 +78,13 @@
                                                 @endswitch
                                             </td>
                                             <td width="100px">
-                                                <a href="{{route('vehicle.show', $row->id)}}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="View Vehicle Information"><i class="far fa-eye"></i></a>
+                                                <a href="{{route('vehicle.show', $row->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Vehicle Information"><i class="far fa-eye"></i></a>
                                                 @can('admin')
-                                                    <a href="{{route('edit_vehicle', $row->id)}}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit Vehicle Information"><i class="fas fa-edit"></i></a>
-                                                    <a href="{{route('order.reserve', $row->id)}}" class="btn btn-sm" data-toggle="tooltip" title="Create order with Vehicle"><i class="fas fa-plus-square"></i></a>
-                                                    <a href="{{route('vehicle.delete', $row->id)}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete Vehicle"><i class="fas fa-trash"></i></a>
+                                                    <a href="{{route('edit_vehicle', $row->id)}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Vehicle Information"><i class="fas fa-edit"></i></a>
+                                                    <a href="{{route('order.reserve', $row->id)}}" class="btn btn-primary" data-toggle="tooltip" title="Create order with Vehicle"><i class="fas fa-plus-square"></i></a>
+                                                    <a data-toggle="tooltip" title="Delete Vehicle">
+                                                        <livewire:delete-vehicle :vehicle="$row->id" />
+                                                    </a>
                                                 @endcan
                                             </td>
                                         </tr>

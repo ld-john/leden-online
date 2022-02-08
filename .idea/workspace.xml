@@ -5,35 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_01_27_131840_add_completed_date_to_orders.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_01_31_104957_add_dealer_invoice_details_to_orders.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/trumbowyg/trumbowyg.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/trumbowyg/ui/icons.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/trumbowyg/ui/trumbowyg.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/trumbowyg/ui/trumbowyg.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/exports/orders.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/partials/view-order-date-section.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/DeleteOrder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/DeleteVehicle.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/vendor/livewire/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/delete-order.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/delete-vehicle.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/leden.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/leden.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Vehicle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/Chart.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/Chart.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/_link.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_link.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/companies/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/companies/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/dashboard-admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/dashboard-admin.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/deliveries.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/deliveries.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/reporting/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/reporting/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/users/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +166,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
-      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
       <path value="$PROJECT_DIR$/vendor/ramsey/collection" />
       <path value="$PROJECT_DIR$/vendor/brick/math" />
@@ -199,6 +188,9 @@
       <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
       <path value="$PROJECT_DIR$/vendor/maennchen/zipstream-php" />
       <path value="$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/vendor/laravel/serializable-closure" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
     </include_path>
   </component>
   <component name="ProjectId" id="1yGOd01KlxTowHiLnyYqA6dZo6t" />
@@ -275,7 +267,8 @@
       <workItem from="1644232615975" duration="3342000" />
       <workItem from="1644235997290" duration="2430000" />
       <workItem from="1644242257054" duration="3920000" />
-      <workItem from="1644246519066" duration="216000" />
+      <workItem from="1644246519066" duration="7999000" />
+      <workItem from="1644314686185" duration="6626000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -361,7 +354,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643108804102</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Vehicle updates&#10;Tables now have tooltips instead of extended button text">
+      <created>1644246813874</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1644246813874</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -388,6 +388,7 @@
     <MESSAGE value="Debug - CR Move event listeners for clicks outside of scope." />
     <MESSAGE value="Debug - Soft Delete Orders added" />
     <MESSAGE value="Dashboard Updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dashboard Updates" />
+    <MESSAGE value="Vehicle updates&#10;Tables now have tooltips instead of extended button text" />
+    <option name="LAST_COMMIT_MESSAGE" value="Vehicle updates&#10;Tables now have tooltips instead of extended button text" />
   </component>
 </project>
