@@ -22,12 +22,12 @@
                 <h6 class="dropdown-header">
                     Notifications Center
                 </h6>
-                @foreach (Auth::user()->unreadNotifications->take(4) as $notification)
+                @forelse(Auth::user()->unreadNotifications->take(4) as $notification)
                     <a class="dropdown-item d-flex align-items-center text-gray-500" href="{{ route('order.show', $notification->data['order_id']) }}">
                         <div class="mr-3">
                             <div class="icon-circle blue-background">
                                 @if ($notification->data['type'] == 'vehicle')
-                                    <i class="fas fa-car"></i>
+                                    <i class="fa-solid fa-car text-white"></i>
                                 @else
                                     <i class="fas fa-flag"></i>
                                 @endif
@@ -35,10 +35,13 @@
                         </div>
                         <div>
                             <div class="small text-gray-500">{{ date('l jS F Y \a\t g:ia', strtotime($notification->created_at)) }}</div>
-                            <span class="@if ($notification->read_at == null) font-weight-bold @endif ">{{ $notification->data['message'] }}</span>
+                            <span class="font-weight-bold">{{ $notification->data['message'] }}</span>
                         </div>
                     </a>
-                @endforeach
+                @empty
+                    <p class="text-center text-gray-500 px-4">No Unread Notifications</p>
+                @endforelse
+                <a class="dropdown-item text-center small text-gray-500" href="{{ route('notifications.read') }}">Mark all as read</a>
                 <a class="dropdown-item text-center small text-gray-500" href="{{ route('notifications') }}">View All Notifications</a>
             </div>
         </li>

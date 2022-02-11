@@ -46,13 +46,13 @@ class Vehicle extends Model
     		$fitType = $this->factory_fit_options;
 	    } elseif ( $type == 'dealer') {
             $fitType = $this->dealer_fit_options;
-	    } else {
-	            //
 	    }
 
-
     	if ( isset ( $fitType) && $fitType !== '' ) {
-		    $fitOptions = FitOption::select('option_name', 'option_price')->where('option_type', $type)->whereIn('id', json_decode($fitType))->get();
+            if (gettype($fitType) === 'string') {
+                $fitType = json_decode($fitType);
+            }
+		    $fitOptions = FitOption::select('option_name', 'option_price')->where('option_type', $type)->whereIn('id', $fitType)->get();
 	    } else {
     		return [];
 	    }

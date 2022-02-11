@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Vehicle;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -130,7 +132,9 @@ class DashboardController extends Controller
 
 	/* Show all notifications page */
 	public function showNotifications() {
-		$all_notifications = Auth::user()->notifications()->get();
+        $user = Auth::user();
+
+		$all_notifications = $user->notifications()->paginate(15);
 
 		return view('notifications.index', [
 			'all_notifications' => $all_notifications
@@ -138,9 +142,30 @@ class DashboardController extends Controller
 	}
 
 	/* Delete all user notifications */
-	public function executeDeleteNotifications() {
+	public function executeDeleteNotifications(): RedirectResponse
+    {
 		Auth::user()->notifications()->delete();
 
 		return redirect()->back();
 	}
+
+    public function readAllNotifications(): RedirectResponse
+    {
+        $user = Auth::user();
+        $user->unreadNotifications->markAsRead();
+        return redirect()->back();
+    }
+
+    public function readNotifications(DatabaseNotification $notification): RedirectResponse
+    {
+        $notification->markAsRead();
+        return redirect()->back();
+    }
+    public function unreadNotifications(DatabaseNotification $notification): RedirectResponse
+    {
+        $notification->read_at = null;
+        $notification->save();
+
+        return redirect()->back();
+    }
 }

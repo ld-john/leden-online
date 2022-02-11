@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);
-@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css);
 @charset "UTF-8";
 /*!
  * Bootstrap v4.6.1 (https://getbootstrap.com/)
@@ -10207,6 +10207,15 @@ table.dataTable {
 .h-300 {
   height: 500px;
   overflow-y: auto;
+}
+
+.icon-circle {
+  height: 55px;
+  width: 55px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .multi-select-container {

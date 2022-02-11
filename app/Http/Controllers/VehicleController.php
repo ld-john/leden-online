@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DashboardExports;
 use App\Exports\DeliveryBookedExport;
 use App\Exports\EuropeVHCExports;
+use App\Exports\FactoryOrderExports;
 use App\Exports\InStockExports;
 use App\Exports\ReadyForDeliveryExports;
 use App\Exports\UKVHCExports;
@@ -12,6 +14,7 @@ use App\OrderLegacy;
 
 use App\Vehicle;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -20,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class VehicleController extends Controller
 {
@@ -199,31 +203,57 @@ class VehicleController extends Controller
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws Exception
      */
-    public function factory_order_export()
+    public function factory_order_export(): BinaryFileResponse
     {
-        return Excel::download(new InStockExports, 'factoryOrders.xlsx');
+        $vehicles = Vehicle::where('vehicle_status', 4)
+            ->with('manufacturer:id,name')
+            ->get();
+
+        $date = Carbon::now()->format('Y-m-d');
+
+        return Excel::download(new DashboardExports($vehicles), 'factory-orders-' . $date . '.xlsx');
     }
 
-    public function europe_vhc_export()
+    public function europe_vhc_export(): BinaryFileResponse
     {
-        return Excel::download(new EuropeVHCExports(), 'europeVHC.xlsx');
+        $vehicles = Vehicle::where('vehicle_status', 10)->with('manufacturer:id,name')->get();
+
+        $date = Carbon::now()->format('Y-m-d');
+
+        return Excel::download(new DashboardExports($vehicles), 'europe-vhc-orders-' . $date . '.xlsx');
     }
-    public function uk_vhc_export()
+    public function uk_vhc_export(): BinaryFileResponse
     {
-        return Excel::download(new UKVHCExports(), 'UKVHC.xlsx');
+        $vehicles = Vehicle::where('vehicle_status', 11)->with('manufacturer:id,name')->get();
+
+        $date = Carbon::now()->format('Y-m-d');
+
+        return Excel::download(new DashboardExports($vehicles), 'uk-vhc-orders-' . $date . '.xlsx');
     }
-    public function in_stock_export()
+    public function in_stock_export(): BinaryFileResponse
     {
-        return Excel::download(new InStockExports, 'inStock.xlsx');
+        $vehicles = Vehicle::where('vehicle_status', 1)->with('manufacturer:id,name')->get();
+
+        $date = Carbon::now()->format('Y-m-d');
+
+        return Excel::download(new DashboardExports($vehicles), 'in-stock-orders-' . $date . '.xlsx');
     }
 
-    public function ready_for_delivery_export()
+    public function ready_for_delivery_export(): BinaryFileResponse
     {
-        return Excel::download(new ReadyForDeliveryExports(), 'ReadyForDelivery.xlsx');
+        $vehicles = Vehicle::where('vehicle_status', 3)->with('manufacturer:id,name')->get();
+
+        $date = Carbon::now()->format('Y-m-d');
+
+        return Excel::download(new DashboardExports($vehicles), 'ready-for-delivery-orders-' . $date . '.xlsx');
     }
-    public function delivery_booked_export()
+    public function delivery_booked_export(): BinaryFileResponse
     {
-        return Excel::download(new DeliveryBookedExport(), 'DeliveryBooked.xlsx');
+        $vehicles = Vehicle::where('vehicle_status', 6)->with('manufacturer:id,name')->get();
+
+        $date = Carbon::now()->format('Y-m-d');
+
+        return Excel::download(new DashboardExports($vehicles), 'delivery-booked-orders-' . $date . '.xlsx');
     }
 
     public function completedDateCleanup()

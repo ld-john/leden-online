@@ -10,7 +10,7 @@
             @if (count($notifications) > 0)
                 @foreach ($notifications as $notification)
                     <a href="{{ route('order.show', $notification->data['order_id']) }}" class="notification">
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-md-1">
                                 <div class="icon-circle blue-background">
                                     @if ($notification->data['type'] == 'vehicle')

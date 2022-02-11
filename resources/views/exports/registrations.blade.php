@@ -8,6 +8,8 @@
         <th>Derivative</th>
         <th>Engine</th>
         <th>Colour</th>
+        <th>Chassis</th>
+        <th>Registration</th>
         <th>Broker</th>
     </tr>
     </thead>
@@ -41,6 +43,16 @@
             <td>
                 @if( $order->vehicle )
                     {{$order->vehicle->colour}}
+                @endif
+            </td>
+            <td>
+                @if( $order->vehicle )
+                    {{$order->vehicle->chassis}}
+                @endif
+            </td>
+            <td>
+                @if( $order->vehicle )
+                    {{$order->vehicle->reg}}
                 @endif
             </td>
             <td>

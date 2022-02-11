@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use App\Invoice;
 use App\Order;
 use App\Vehicle;
-use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 
 class DeleteOrder extends Component

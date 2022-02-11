@@ -28,6 +28,9 @@ Route::middleware('auth')->group(function(){
 
 	Route::get('/notifications', 'DashboardController@showNotifications')->name('notifications');
 	Route::get('/notifications/delete', 'DashboardController@executeDeleteNotifications')->name('notifications.delete');
+    Route::get('/notifications/readAll', 'DashboardController@readAllNotifications')->name('notifications.read');
+    Route::get('/notifications/mark-read/{notification}', 'DashboardController@readNotifications')->name('notifications.mark-read');
+    Route::get('/notifications/mark-unread/{notification}', 'DashboardController@unreadNotifications')->name('notifications.mark-unread');
 
 	/* Order Controller Routes */
 	Route::get('/create-order', 'OrderController@create')->name('create_order');

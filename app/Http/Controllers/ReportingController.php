@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\FactoryOrderExports;
+use App\Exports\DashboardExports;
 use App\Order;
 use App\Vehicle;
 use DateTime;
@@ -13,6 +15,7 @@ use Carbon\Carbon;
 use Dashboard;
 use DB;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportingController extends Controller
 {
@@ -315,21 +318,28 @@ class ReportingController extends Controller
                 ->get();
         }
 
-        return view ('exports.orders', ['data' => $data]);
+        return Excel::download(new DashboardExports( $data, $type ), 'monthly-' . $type . '-' . $month . '-'. $year .'.xlsx');
+
     }
 
     public function quarterlyDownload($type, $year, $quarter)
     {
         $dates = $this->get_dates_of_quarter(intval($quarter), intval($year));
 
-        return $this->returnDataForReports($type, $dates);
+        $data = $this->returnDataForReports($type, $dates);
+
+        return Excel::download(new DashboardExports( $data, $type ), 'quarterly-' . $type . '-' . $quarter . '-'. $year .'.xlsx');
+
     }
 
     public function weeklyDownload($type, $year, $week)
     {
         $dates = $this->getStartAndEndDate($week, $year);
 
-        return $this->returnDataForReports($type, $dates);
+        $data = $this->returnDataForReports($type, $dates);
+
+        return Excel::download(new DashboardExports( $data, $type ), 'weekly-' . $type . '-week-' . $week . '-'. $year .'.xlsx');
+
     }
 
     /**
@@ -359,6 +369,7 @@ class ReportingController extends Controller
                 ->get();
         }
 
-        return view('exports.orders', ['data' => $data]);
+        return $data;
+
     }
 }

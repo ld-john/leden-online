@@ -20,14 +20,14 @@
         <!-- Card Header -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-l-blue">Import CSV</h6>
-            <a href="user-uploads/csv-uploads/csv_order_upload_template.csv" type="download" class="btn btn-sm btn-info"><i class="fas fa-file-download"></i> Download CSV Template</a>
+            <a href="{{ asset('user-uploads/csv-uploads/csv_order_upload_template.csv') }}" download class="btn btn-sm btn-info"><i class="fa-solid fa-download"></i> Download CSV Template</a>
         </div>
         <!-- Card Body -->
         <div class="card-body">
             <div class="row mb-5">
                 <div class="col-md-12">
                     <p>
-                        Use the below form to upload or delete vehicles in bulk. Once orders have been added to the system, you will be given an opportunity to edit these vehicles.
+                        Use the below form to upload, edit or delete vehicles in bulk.
                     </p>
                     <p>
                         You can download a template file using the button above.
@@ -39,6 +39,7 @@
                 <div class="col-md-6">
                     <select name="upload_type" class="form-control">
                         <option value="">Select an upload type</option>
+                        <option value="ford_create">Ford Report</option>
                         <option value="create">Create Vehicles</option>
                         <option value="delete">Delete Vehicles</option>
                     </select>
