@@ -46,6 +46,12 @@
                         @if($delivery_booked)
                             <a class="btn btn-primary btn-sm" href="{{route('deliverybooked.export')}}">Download Delivery Booked</a>
                         @endif
+                        @if($awaiting_ship)
+                            <a class="btn btn-primary btn-sm" href="{{route('awaitingship.export')}}">Download Awaiting Ship</a>
+                        @endif
+                        @if($at_converter)
+                            <a class="btn btn-primary btn-sm" href="{{route('atconverter.export')}}">Download At Converter</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -83,18 +89,21 @@
                     "In Stock - {{ $in_stock }}",
                     "Ready For Delivery - {{ $ready_for_delivery }}",
                     "Delivery Booked - {{ $delivery_booked }}",
+                    "Awaiting Ship - {{ $awaiting_ship }}",
+                    "At Converter - {{ $at_converter }}"
                 ],
                 datasets: [{
                     backgroundColor: [
-                        "#004c6d",
-                        "#255e7e",
-                        "#3d708f",
-                        "#5383a1",
-                        "#6996b3",
-                        "#7faac6",
-                        "#94bed9",
+                        "#004766",
+                        "#006b99",
+                        "#008fcc",
+                        "#00b3ff",
+                        "#33c2ff",
+                        "#66d1ff",
+                        "#99e0ff",
+                        "#ccf0ff"
                     ],
-                    data: [{{ $factory_order }}, {{ $europe_vhc }}, {{ $uk_vhc }}, {{ $in_stock }}, {{ $ready_for_delivery }}, {{ $delivery_booked }} ]
+                    data: [{{ $factory_order }}, {{ $europe_vhc }}, {{ $uk_vhc }}, {{ $in_stock }}, {{ $ready_for_delivery }}, {{ $delivery_booked }}, {{ $awaiting_ship }}, {{ $at_converter }} ]
                 }]
             },
             options: {

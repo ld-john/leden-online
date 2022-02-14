@@ -49,15 +49,15 @@ class DashboardController extends Controller
                 'notifications' => Auth::user()->notifications->take(6),
             ]);
         } else {
-	        $data = Vehicle::select('id', 'make', 'model', 'reg', 'type')
-		        ->where('vehicle_status', 1)
-		        ->with('manufacturer:id,name')
-		        ->where('show_offer', true)
-		        ->get();
+            $data = Vehicle::select('id', 'make', 'model', 'reg', 'type')
+                ->where('vehicle_status', 1)
+                ->with('manufacturer:id,name')
+                ->where('show_offer', true)
+                ->get();
 
             return view('dashboard.dashboard-broker', [
 
-            	'data' => $data,
+                'data' => $data,
                 'live_orders' => $live_orders,
                 'in_stock' => $in_stock->count(),
                 'completed_orders' => $completed->count(),
@@ -74,6 +74,8 @@ class DashboardController extends Controller
         $in_stock = $this->GetVehicleByStatus(1);
         $ready_for_delivery = $this->GetVehicleByStatus(3);
         $delivery_booked = $this->GetVehicleByStatus(6);
+        $awaiting_ship = $this->GetVehicleByStatus(13);
+        $converter = $this->GetVehicleByStatus(12);
 
         $completed = $this->GetVehicleByStatus(7);
         $live_orders = $factory_order->count() + $euro_vhc->count() + $uk_vhc->count() + $in_stock->count() + $ready_for_delivery->count() + $delivery_booked->count();
@@ -90,6 +92,8 @@ class DashboardController extends Controller
             'delivery_booked' => $delivery_booked->count(),
             'live_orders' => $live_orders,
             'notifications' => Auth::user()->notifications->take(6),
+            'awaiting_ship' => $awaiting_ship->count(),
+            'at_converter' => $converter->count(),
         ]);
     }
 
@@ -121,33 +125,33 @@ class DashboardController extends Controller
 
         } else {
 
-	        $orders = Order::whereHas('vehicle', function ($q) use ($status) {
-		        $q->where('vehicle_status', $status);
-	        });
+            $orders = Order::whereHas('vehicle', function ($q) use ($status) {
+                $q->where('vehicle_status', $status);
+            });
 
         }
-	    return $orders->count();
+        return $orders->count();
 
     }
 
-	/* Show all notifications page */
-	public function showNotifications() {
+    /* Show all notifications page */
+    public function showNotifications() {
         $user = Auth::user();
 
-		$all_notifications = $user->notifications()->paginate(15);
+        $all_notifications = $user->notifications()->paginate(15);
 
-		return view('notifications.index', [
-			'all_notifications' => $all_notifications
-		]);
-	}
+        return view('notifications.index', [
+            'all_notifications' => $all_notifications
+        ]);
+    }
 
-	/* Delete all user notifications */
-	public function executeDeleteNotifications(): RedirectResponse
+    /* Delete all user notifications */
+    public function executeDeleteNotifications(): RedirectResponse
     {
-		Auth::user()->notifications()->delete();
+        Auth::user()->notifications()->delete();
 
-		return redirect()->back();
-	}
+        return redirect()->back();
+    }
 
     public function readAllNotifications(): RedirectResponse
     {
