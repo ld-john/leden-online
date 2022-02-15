@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/create-vehicle', 'VehicleController@create')->name('create_vehicle');
     Route::get('/pipeline', 'VehicleController@showLedenStock')->name('pipeline');
     Route::post('/pipeline/delete-selected', 'VehicleController@deleteSelected')->name('pipeline_delete');
-    Route::get('vehicle/delete/{vehicle}', 'VehicleController@destroy')->name('vehicle.delete');
+    Route::get('/vehicle/delete/{vehicle}', 'VehicleController@destroy')->name('vehicle.delete');
     Route::get('/ford-pipeline', 'VehicleController@showFordPipeline')->name('pipeline.ford');
     Route::get('/vehicle/view/{vehicle}', 'VehicleController@show')->name('vehicle.show');
     Route::get('/vehicle/edit/{vehicle}', 'VehicleController@edit')->name('edit_vehicle');

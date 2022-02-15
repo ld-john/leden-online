@@ -37,7 +37,7 @@ class CSVUploadController extends Controller
 
         $request->validate([
             'upload_type' => 'required',
-            'file' => 'required|max:1024',
+            'file' => 'required|max:10240',
             'show_in_ford_pipeline' => 'required'
         ]);
 
@@ -101,7 +101,7 @@ class CSVUploadController extends Controller
 
                     $vehicle->update([
                         'chassis' => $ford_report['VIN'],
-                        'chassis_prefix' => $prefix
+                        'chassis_prefix' => $ford_report['VIN_PREFIX']
                     ]);
                     $order = $vehicle->order;
 
@@ -126,7 +126,7 @@ class CSVUploadController extends Controller
         $header = null;
         $data = [];
         if (($handle = fopen($filename, 'r')) !== false) {
-            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
+            while (($row = fgetcsv($handle, null, $delimiter)) !== false) {
                 if (!$header) {
                     $header = $row;
                 } else {
