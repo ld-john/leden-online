@@ -38,8 +38,10 @@
                                     <th>Model</th>
                                     <th>Derivative</th>
                                     <th>Order Number</th>
+                                    <th>Orbit Number</th>
                                     <th>Registration</th>
                                     <th>Due Date</th>
+                                    <th>Status</th>
                                     <th>Customer</th>
                                     <th>Broker Order Ref</th>
                                     <th>Broker</th>
@@ -54,6 +56,7 @@
                                         <td>{{ $row->vehicle->model ?? ''}}</td>
                                         <td>{{ $row->vehicle->derivative ?? ''}}</td>
                                         <td>{{ $row->order_ref ?? ''}}</td>
+                                        <td>{{ $row->vehicle->orbit_number }}</td>
                                         <td>{{ $row->vehicle->reg ?? ''}}</td>
 
                                         @if ( empty( $row->due_date) || $row->due_date == '0000-00-00 00:00:00')
@@ -61,6 +64,7 @@
                                         @else
                                             <td>{{ \Carbon\Carbon::parse($row->due_date ?? '')->format( 'd/m/Y' )}}</td>
                                         @endif
+                                        <td>{{ $row->vehicle->status() }}</td>
 
                                         <td>@if ( $row->customer->preffered_name == 'customer')
                                                 {{ $row->customer->customer_name ?? ''}}
@@ -87,6 +91,9 @@
                                                 </a>
                                                 <a data-toggle="tooltip" title="Delete Order">
                                                     <livewire:delete-order :order="$row->id" :vehicle="$row->vehicle" />
+                                                </a>
+                                                <a data-toggle="tooltip" title="Quick Edit">
+                                                    <livewire:quick-edit-order :order="$row->id" :vehicle="$row->vehicle" />
                                                 </a>
                                             @endcan
                                         </td>

@@ -24,6 +24,7 @@
                                     <th>Model</th>
                                     <th>Status of Delivery</th>
                                     <th>Order Number</th>
+                                    <th>Orbit Number</th>
                                     <th>Registration</th>
                                     <th>Delivery Date</th>
                                     <th>Customer</th>
@@ -39,18 +40,10 @@
                                         <td>{{ $row->id ?? '' }}</td>
                                         <td>{{ $row->vehicle->model ?? ''}}</td>
                                         <td>
-                                            @switch ($row->vehicle->vehicle_status)
-                                                @case(3)
-                                                Ready for delivery
-                                                @break
-                                                @case(4)
-                                                Factory Order
-                                                @break
-                                                @case(6)
-                                                Delivery Booked
-                                            @endswitch
+                                            {{ $row->vehicle->status() }}
                                         </td>
                                         <td>{{ $row->order_ref ?? ''}}</td>
+                                        <td>{{ $row->vehicle->orbit_number }}</td>
                                         <td>{{ $row->vehicle->reg ?? ''}}</td>
                                         <td>
                                             @if( isset ($row->delivery_date) && ( $row->delivery_date != '0000-00-00 00:00:00') )

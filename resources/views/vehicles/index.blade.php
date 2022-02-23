@@ -54,29 +54,7 @@
                                             <td>{{ $row->type ?? '' }}</td>
                                             <td>{{ $row->chassis ?? '' }}</td>
                                             <td>{{ $row->reg ?? '' }}</td>
-                                            <td>@switch($row->vehicle_status)
-                                                    @case(1)
-                                                    In Stock
-                                                    @break
-                                                    @case(3)
-                                                    Ready for Delivery
-                                                    @break
-                                                    @case(4)
-                                                    Factory Order
-                                                    @break
-                                                    @case(6)
-                                                    Delivery Booked
-                                                    @break
-                                                    @case(7)
-                                                    Completed Orders
-                                                    @break
-                                                    @case(10)
-                                                    Europe VHC
-                                                    @break
-                                                    @default
-                                                    UK VHC
-                                                @endswitch
-                                            </td>
+                                            <td>{{ $row->status() }}</td>
                                             <td width="100px">
                                                 <a href="{{route('vehicle.show', $row->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Vehicle Information"><i class="far fa-eye"></i></a>
                                                 @can('admin')
