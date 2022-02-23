@@ -65,6 +65,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/vehicle/deliverybooked/', [VehicleController::class, 'delivery_booked_export'])->name('deliverybooked.export');
     Route::get('/vehicle/awaitingship/', [VehicleController::class, 'awaiting_ship_export'])->name('awaitingship.export');
     Route::get('/vehicle/atconverter/', [VehicleController::class, 'at_converter_export'])->name('atconverter.export');
+    Route::get('/vehicle/recycle-bin', 'VehicleController@recycle')->name('vehicle.recycle_bin');
+    Route::get('/vehicle/force-delete/{vehicle}', 'VehicleController@forceDelete')->name('vehicle.force-delete');
+    Route::get('/vehicle/restore/{vehicle}', 'VehicleController@restore')->name('vehicle.restore');
 
 
     /* ReportingController routes */
@@ -100,6 +103,8 @@ Route::middleware('auth')->group(function(){
     Route::post('/companies/add', 'CompanyController@store')->name('company.create');
     Route::get('/companies/edit/{company}', 'CompanyController@edit')->name('company.edit')->middleware('can:admin');
     Route::post('/companies/edit/{company}', 'CompanyController@update')->name('company.update');
+
+
 
 
     /* Vehicle Meta CRUD Routes

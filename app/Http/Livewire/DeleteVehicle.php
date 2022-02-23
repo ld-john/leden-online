@@ -25,7 +25,7 @@ class DeleteVehicle extends Component
     {
         $this->modalShow = !$this->modalShow;
     }
-    public function deleteVehicle(): RedirectResponse
+    public function deleteVehicle()
     {
         Vehicle::destroy($this->vehicle->id);
         return redirect()->route('pipeline');

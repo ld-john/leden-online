@@ -96,7 +96,6 @@ class VehicleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Vehicle $vehicle
-     * @return RedirectResponse
      */
     public function destroy(Vehicle $vehicle)
     {
@@ -263,6 +262,25 @@ class VehicleController extends Controller
         })->update(['completed_date' => now()]);
 
         dd($completedVehicles);
+    }
+
+    public function recycle()
+    {
+        $vehicles = Vehicle::onlyTrashed()->latest()->paginate(10);
+
+        return view('vehicles.deleted', ['title' => 'Recycle Bin', 'active_page' => 'vehicle-recycle-bin','vehicles' => $vehicles]);
+    }
+
+    public function forceDelete($vehicle): RedirectResponse
+    {
+        Vehicle::withTrashed()->where('id', $vehicle)->forceDelete();
+        return redirect()->route('vehicle.recycle_bin');
+    }
+
+    public function restore($vehicle): RedirectResponse
+    {
+        Vehicle::withTrashed()->where('id', $vehicle)->restore();
+        return redirect()->route('vehicle.recycle_bin');
     }
 
 
