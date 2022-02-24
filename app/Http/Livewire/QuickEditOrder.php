@@ -19,7 +19,7 @@ class QuickEditOrder extends Component
     public $registration;
     public $order_number;
     protected $rules = [
-        'due_date' => ['sometimes', 'date']
+        'due_date' => 'nullable|date'
     ];
 
     public function toggleEditModal()
@@ -65,6 +65,7 @@ class QuickEditOrder extends Component
         $this->order->save();
 
         $this->due_date = ( $this->due_date ? $this->due_date->format( 'd/m/Y') : null );
+        return $this->redirect(route('order_bank'));
     }
 
     public function render()

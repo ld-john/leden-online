@@ -138,6 +138,8 @@ Route::middleware('auth')->group(function(){
     Route::get('/link/test2/', 'CustomerController@buildNewCustomer')->name('test2');
     Route::get('/link/test3/', 'ManufacturerController@buildManufacturerTable')->name('test3');
     Route::get('/link/completed-date/', 'VehicleController@completedDateCleanup')->name('test4');
+    Route::get('/link/order-ref/', 'VehicleController@orderRefCleanup')->name('test5');
+    Route::get('/link/date-clean-up', 'VehicleController@date_cleaner')->name('test6');
 
 
 });

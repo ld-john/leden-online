@@ -121,6 +121,7 @@ class VehicleForm extends Component
 
             $this->type = $this->vehicle->type;
             $this->orbit_number = $this->vehicle->orbit_number;
+            $this->order_ref = $this->vehicle->ford_order_number;
             $this->broker = $this->vehicle->broker_id;
             $this->dealership = $this->vehicle->dealer_id;
 			$this->registration = $this->vehicle->reg;
@@ -180,7 +181,10 @@ class VehicleForm extends Component
 	{
 		$this->validate();
 
-        $this->registered_date = DateTime::createFromFormat('d/m/Y', $this->registered_date);
+        if ($this->registered_date) {
+            $this->registered_date = DateTime::createFromFormat('d/m/Y', $this->registered_date);
+        }
+
 
 		if ( isset($this->newmake) ) {
 
@@ -213,6 +217,7 @@ class VehicleForm extends Component
 
 		$vehicle->vehicle_status = $this->status;
 		$vehicle->reg = $this->registration;
+        $vehicle->ford_order_number = $this->order_ref;
 		$vehicle->model_year = $this->model_year;
 		$vehicle->make = $this->make;
 		$vehicle->model = $this->model;
@@ -253,13 +258,11 @@ class VehicleForm extends Component
         $this->registered_date = ( $this->registered_date ? $this->registered_date->format( 'd/m/Y') : null );
 
 
-
-
 	}
 
     private function markOrderComplete($vehicle, $order)
     {
-        if ($vehicle->vehicle_status === '7') {
+        if ($vehicle->vehicle_status === '7' && $order->completed_date === null) {
             $order->update(['completed_date' => now()]);
         }
     }

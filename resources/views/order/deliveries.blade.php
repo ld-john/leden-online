@@ -23,7 +23,7 @@
                                     <th>ID</th>
                                     <th>Model</th>
                                     <th>Status of Delivery</th>
-                                    <th>Order Number</th>
+                                    <th>Ford Order Number</th>
                                     <th>Orbit Number</th>
                                     <th>Registration</th>
                                     <th>Delivery Date</th>
@@ -42,7 +42,7 @@
                                         <td>
                                             {{ $row->vehicle->status() }}
                                         </td>
-                                        <td>{{ $row->order_ref ?? ''}}</td>
+                                        <td>{{ $row->vehicle->ford_order_number ?? ''}}</td>
                                         <td>{{ $row->vehicle->orbit_number }}</td>
                                         <td>{{ $row->vehicle->reg ?? ''}}</td>
                                         <td>

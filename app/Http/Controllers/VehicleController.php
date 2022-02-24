@@ -9,6 +9,7 @@ use App\Exports\FactoryOrderExports;
 use App\Exports\InStockExports;
 use App\Exports\ReadyForDeliveryExports;
 use App\Exports\UKVHCExports;
+use App\Invoice;
 use App\Order;
 use App\OrderLegacy;
 
@@ -44,7 +45,7 @@ class VehicleController extends Controller
      */
     public function create()
     {
-	    return view('vehicles.create');
+        return view('vehicles.create');
     }
 
     /**
@@ -55,7 +56,7 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-    	//
+        //
     }
 
     /**
@@ -66,7 +67,7 @@ class VehicleController extends Controller
      */
     public function show(Vehicle $vehicle)
     {
-    	return (view('vehicles.show', ['vehicle' => $vehicle]));
+        return (view('vehicles.show', ['vehicle' => $vehicle]));
     }
 
     /**
@@ -151,35 +152,35 @@ class VehicleController extends Controller
     public function showFordPipeline(Request $request)
     {
 
-	    $data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
-		    ->with('manufacturer:id,name')
-		    ->where('show_in_ford_pipeline', true)->get();
+        $data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
+            ->with('manufacturer:id,name')
+            ->where('show_in_ford_pipeline', true)->get();
 
-	    if (Auth::user()->role == 'dealer') {
-		    $data = $data->where('hide_from_dealer', false );
-	    }
+        if (Auth::user()->role == 'dealer') {
+            $data = $data->where('hide_from_dealer', false );
+        }
 
-	    if (Auth::user()->role == 'broker') {
-		    $data = $data->where('hide_from_broker', false );
-	    }
+        if (Auth::user()->role == 'broker') {
+            $data = $data->where('hide_from_broker', false );
+        }
 
-	    return view('vehicles.index', ['data' => $data, 'title' => 'Ford Pipeline', 'active_page'=> 'ford-pipeline']);
+        return view('vehicles.index', ['data' => $data, 'title' => 'Ford Pipeline', 'active_page'=> 'ford-pipeline']);
     }
 
-	public function showLedenStock(Request $request)
-	{
-		$data = Vehicle::select('id', 'orbit_number', 'make', 'model', 'derivative', 'reg', 'engine', 'vehicle_status', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
-			->with('manufacturer:id,name')
+    public function showLedenStock(Request $request)
+    {
+        $data = Vehicle::select('id', 'orbit_number', 'ford_order_number', 'make', 'model', 'derivative', 'reg', 'engine', 'vehicle_status', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
+            ->with('manufacturer:id,name')
             ->with('order:id,vehicle_id')
-			->where('show_in_ford_pipeline', false)->get();
+            ->where('show_in_ford_pipeline', false)->get();
 
-		if (Auth::user()->role == 'dealer') {
-			$data = $data->where('hide_from_dealer', false );
-		}
+        if (Auth::user()->role == 'dealer') {
+            $data = $data->where('hide_from_dealer', false );
+        }
 
-		if (Auth::user()->role == 'broker') {
-			$data = $data->where('hide_from_broker', false );
-		}
+        if (Auth::user()->role == 'broker') {
+            $data = $data->where('hide_from_broker', false );
+        }
 
         $stock = [];
         foreach ($data as $k => $vehicle) {
@@ -188,15 +189,15 @@ class VehicleController extends Controller
             }
         }
 
-		return view('vehicles.index', ['data'=> $stock, 'title' => 'Leden Stock', 'active_page'=> 'pipeline']);
-	}
+        return view('vehicles.index', ['data'=> $stock, 'title' => 'Leden Stock', 'active_page'=> 'pipeline']);
+    }
 
-	public function deleteSelected()
-	{
-		$ids = request()->input('ids');
+    public function deleteSelected()
+    {
+        $ids = request()->input('ids');
 
-		Vehicle::destroy($ids);
-	}
+        Vehicle::destroy($ids);
+    }
 
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Exception
@@ -259,9 +260,32 @@ class VehicleController extends Controller
     {
         $completedVehicles = Order::whereHas('vehicle', function ($q){
             $q->whereIn('vehicle_status', [7]);
-        })->update(['completed_date' => now()]);
+        })->get();
 
-        dd($completedVehicles);
+        foreach($completedVehicles as $vehicle) {
+            if ($vehicle->completed_date) {
+                continue;
+            }
+            $vehicle->update(['completed_date' => $vehicle->vehicle->updated_at]);
+        }
+
+        dd('Done');
+    }
+
+    public function orderRefCleanup()
+    {
+        $orders = Order::all();
+
+        foreach ($orders as $order) {
+            $vehicle = $order->vehicle;
+            if ($vehicle) {
+                $vehicle->update([
+                    'ford_order_number' => $order->order_ref
+                ]);
+            }
+        }
+
+        dd('done');
     }
 
     public function recycle()
@@ -281,6 +305,53 @@ class VehicleController extends Controller
     {
         Vehicle::withTrashed()->where('id', $vehicle)->restore();
         return redirect()->route('vehicle.recycle_bin');
+    }
+
+    public function date_cleaner() {
+
+        Vehicle::withTrashed()->chunk(100, function($vehicles) {
+
+            foreach ($vehicles as $vehicle) {
+                if ($vehicle->vehicle_registered_on === '0000-00-00 00:00:00') {
+                    $vehicle->update(['vehicle_registered_on' => null]);
+                    var_dump('Vehicles processed');
+                }
+            }
+        });
+        Order::withTrashed()->chunk(100, function ($orders) {
+            foreach ($orders as $order) {
+                if ($order->delivery_date === '0000-00-00 00:00:00'){
+                    $order->update(['delivery_date' => null]);
+                    var_dump('Delivery Date Nulled');
+                }
+                if ($order->due_date === '0000-00-00 00:00:00'){
+                    $order->update(['due_date' => null]);
+                    var_dump('Due Date Nulled');
+                }
+            }
+        });
+        Invoice::chunk(100, function($invoices) {
+            foreach ($invoices as $invoice) {
+                if ($invoice->finance_commission_pay_date === '0000-00-00 00:00:00') {
+                    $invoice->update(['finance_commission_pay_date' => null]);
+                    var_dump('Finance Commission Pay Date Nulled');
+                }
+                if ($invoice->broker_commission_pay_date === '0000-00-00 00:00:00') {
+                    $invoice->update(['broker_commission_pay_date' => null]);
+                    var_dump('Broker Commission Pay Date Nulled');
+                }
+                if ($invoice->broker_pay_date === '0000-00-00 00:00:00') {
+                    $invoice->update(['broker_pay_date' => null]);
+                    var_dump('Broker Pay Date Nulled');
+                }
+                if ($invoice->dealer_pay_date === '0000-00-00 00:00:00') {
+                    $invoice->update(['dealer_pay_date' => null]);
+                    var_dump('Dealer Pay Date Nulled');
+                }
+            }
+        });
+
+
     }
 
 

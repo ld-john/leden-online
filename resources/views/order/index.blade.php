@@ -37,7 +37,7 @@
                                     <th>Leden Order #</th>
                                     <th>Model</th>
                                     <th>Derivative</th>
-                                    <th>Order Number</th>
+                                    <th>Ford Order Number</th>
                                     <th>Orbit Number</th>
                                     <th>Registration</th>
                                     <th>Due Date</th>
@@ -55,7 +55,7 @@
                                         <td>{{ $row->id ?? '' }}</td>
                                         <td>{{ $row->vehicle->model ?? ''}}</td>
                                         <td>{{ $row->vehicle->derivative ?? ''}}</td>
-                                        <td>{{ $row->order_ref ?? ''}}</td>
+                                        <td>{{ $row->vehicle->ford_order_number ?? ''}}</td>
                                         <td>{{ $row->vehicle->orbit_number }}</td>
                                         <td>{{ $row->vehicle->reg ?? ''}}</td>
 

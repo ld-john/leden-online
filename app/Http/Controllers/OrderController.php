@@ -151,7 +151,7 @@ class OrderController extends Controller
 				'broker_ref',
 			)
 			->with([
-				'vehicle:id,model,derivative,reg,vehicle_status,orbit_number',
+				'vehicle:id,model,ford_order_number,derivative,reg,vehicle_status,orbit_number',
 				'customer:id,customer_name,company_name,preferred_name',
 				'broker:id,company_name',
 				'dealer:id,company_name'
@@ -185,7 +185,7 @@ class OrderController extends Controller
 				'broker_ref',
 			)
 			->with([
-				'vehicle:id,model,derivative,reg,vehicle_status,orbit_number',
+				'vehicle:id,model,ford_order_number,derivative,reg,vehicle_status,orbit_number',
 				'customer:id,customer_name,company_name,preferred_name',
 				'broker:id,company_name',
 				'dealer:id,company_name'
@@ -221,7 +221,7 @@ class OrderController extends Controller
 				'broker_ref',
 			)
 			->with([
-				'vehicle:id,vehicle_status,model,derivative,reg,orbit_number',
+				'vehicle:id,vehicle_status,ford_order_number,model,derivative,reg,orbit_number',
 				'customer:id,customer_name,company_name,preferred_name',
 				'broker:id,company_name',
 				'dealer:id,company_name'

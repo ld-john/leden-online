@@ -25,6 +25,7 @@
                                     <th>ID</th>
                                     <th>Make</th>
                                     <th>Model</th>
+                                    <th>Ford Order Number</th>
                                     <th>Derivative</th>
                                     <th>Engine</th>
                                     <th>Colour</th>
@@ -48,6 +49,7 @@
                                             </td>
                                             <td>{{ $row->manufacturer->name ?? '' }}</td>
                                             <td>{{ $row->model ?? '' }}</td>
+                                            <td>{{ $row->ford_order_number ?? '' }}</td>
                                             <td>{{ $row->derivative ?? '' }}</td>
                                             <td>{{ $row->engine ?? '' }}</td>
                                             <td>{{ $row->colour ?? '' }}</td>

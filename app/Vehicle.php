@@ -69,7 +69,8 @@ class Vehicle extends Model
         }
 
         if ( isset ( $fitType) && $fitType !== '' ) {
-            if (gettype($fitType) === 'string') {
+
+            while (gettype($fitType) === 'string') {
                 $fitType = json_decode($fitType);
             }
             $fitOptions = FitOption::select('option_name', 'option_price')->where('option_type', $type)->whereIn('id', $fitType)->get();

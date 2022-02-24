@@ -144,6 +144,19 @@
                                autocomplete="off" placeholder="e.g. 66653275"/>
                     </div>
                 </div>
+                {{-- Ford Order Number --}}
+                <div class="form-group row">
+                    <label for="order_ref" class="col-md-2 col-form-label">Order Ref</label>
+                    <div class="col-md-6">
+                        @error('order_ref')
+                        <div class="input-group-prepend">
+                            <label for="inputGroupOrbitNumberText" class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
+                        </div>
+                        @enderror
+                        <input wire:model="order_ref" type="text" name="order_ref" id="order_ref" class="form-control"
+                               autocomplete="off" placeholder="e.g. K0047"/>
+                    </div>
+                </div>
                 {{-- Type (Required) --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_type"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Vehicle Type</label>
