@@ -372,7 +372,11 @@ class OrderForm extends Component
 
     public function orderFormSubmit()
     {
-        $this->validate();
+
+
+        if ($this->orbit_number === '') {
+            $this->orbit_number = null;
+        }
 
         if ($this->delivery_date) {
             $this->delivery_date = DateTime::createFromFormat('d/m/Y', $this->delivery_date );
@@ -396,6 +400,8 @@ class OrderForm extends Component
             $this->finance_commission_paid = DateTime::createFromFormat('d/m/Y', $this->finance_commission_paid);
         }
 
+        $this->validate();
+
         if ( !isset( $this->order )) {
 
             if (isset($this->newmake)) {
@@ -416,6 +422,11 @@ class OrderForm extends Component
 
             if ( isset($this->vehicle) ) {
                 $vehicle = $this->vehicle;
+                if (isset($this->orbit_number )) {
+                    $vehicle->orbit_number = $this->orbit_number;
+                } elseif ($this->orbit_number === null) {
+                    $vehicle->orbit_number = null;
+                }
             } elseif (!isset ($this->orbit_number) || $this->orbit_number === '') {
                 $vehicle = new Vehicle();
             } else {

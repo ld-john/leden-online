@@ -34,7 +34,7 @@ class QuickEditOrder extends Component
     {
         $this->order = $order;
         $this->vehicle = $vehicle;
-        $this->order_number = $order->order_ref;
+        $this->order_number = $vehicle->ford_order_number;
         $this->registration = $vehicle->reg;
         $this->orbit_number = $vehicle->orbit_number;
         if ( $order->due_date && $order->due_date != '0000-00-00 00:00:00') {
@@ -58,10 +58,10 @@ class QuickEditOrder extends Component
         $this->vehicle->reg = $this->registration;
         $this->vehicle->vehicle_status = $this->vehicleStatus;
         $this->vehicle->orbit_number = $this->orbit_number;
+        $this->vehicle->ford_order_number = $this->order_number;
         $this->vehicle->save();
 
         $this->order->due_date = $this->due_date;
-        $this->order->order_ref = $this->order_number;
         $this->order->save();
 
         $this->due_date = ( $this->due_date ? $this->due_date->format( 'd/m/Y') : null );

@@ -181,6 +181,10 @@ class VehicleForm extends Component
 	{
 		$this->validate();
 
+        if ($this->orbit_number === '') {
+            $this->orbit_number = null;
+        }
+
         if ($this->registered_date) {
             $this->registered_date = DateTime::createFromFormat('d/m/Y', $this->registered_date);
         }
@@ -206,6 +210,8 @@ class VehicleForm extends Component
 			$vehicle = $this->vehicle;
             if (isset($this->orbit_number )) {
                 $vehicle->orbit_number = $this->orbit_number;
+            } elseif ($this->orbit_number === null) {
+                $vehicle->orbit_number = null;
             }
 		} elseif ( !isset ( $this->orbit_number ) || $this->orbit_number === '' ) {
 			$vehicle = new Vehicle();

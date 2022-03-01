@@ -113,13 +113,14 @@ class OrderController extends Controller
 			$newCar = $vehicle->replicate();
 			$newCar->chassis = null;
 			$newCar->reg = null;
+            $newCar->orbit_number = null;
+            $newCar->ford_order_number = $vehicle->ford_order_number . '-copy-'. $i;
 			$newCar->save();
 			$newInvoice = $invoice->replicate();
 			$newInvoice->save();
 			$newOrder = $order->replicate();
 			$newOrder->vehicle_id = $newCar->id;
 			$newOrder->invoice_id = $newInvoice->id;
-			$newOrder->order_ref = $order->order_ref . '-copy-'. $i;
 			$newOrder->broker_ref = null;
 			$newOrder->save();
 		}
@@ -478,7 +479,7 @@ class OrderController extends Controller
 
 		$vehicleDetails = [
             [
-                'Manufacturer Order Ref' => $order->order_ref,
+                'Manufacturer Order Ref' => $order->vehicle->ford_order_number,
                 'Order Date' => $created->format('d/m/Y'),
                 'Delivery Date' => $dateConfirmed,
             ],
