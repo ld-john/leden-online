@@ -6,11 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/QuickEditOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/QuickEditOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/sidebar.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +193,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="HTML" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../LiniaCosAxiom/wp-content/themes/axiom" />
+    <property name="last_opened_file_path" value="D:/ledenpartners-co-uk-200-180222" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -268,7 +267,11 @@
       <workItem from="1645721416377" duration="642000" />
       <workItem from="1645779407470" duration="3086000" />
       <workItem from="1646058420887" duration="1193000" />
-      <workItem from="1646142088511" duration="274000" />
+      <workItem from="1646142088511" duration="1245000" />
+      <workItem from="1646317938661" duration="820000" />
+      <workItem from="1646319037283" duration="1708000" />
+      <workItem from="1646321151623" duration="1667000" />
+      <workItem from="1646740866859" duration="3316000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -382,7 +385,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645700870354</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Fixing some issues with having moved the Order Number and Orbit number">
+      <created>1646142502119</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1646142502119</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -412,6 +422,7 @@
     <MESSAGE value="Vehicle updates&#10;Tables now have tooltips instead of extended button text" />
     <MESSAGE value="Updates to deleting Vehicles and Orders (Now via Livewire)" />
     <MESSAGE value="Fix Date issues&#10;Move Order Ref to Vehicle as Ford Order Number" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Date issues&#10;Move Order Ref to Vehicle as Ford Order Number" />
+    <MESSAGE value="Fixing some issues with having moved the Order Number and Orbit number" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing some issues with having moved the Order Number and Orbit number" />
   </component>
 </project>

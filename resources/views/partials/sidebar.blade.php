@@ -45,12 +45,22 @@
             <span>Completed Orders</span>
         </a>
     </li>
-    <li class="nav-item @if ($activePage == 'pipeline') active @endif">
-        <a class="nav-link" href="{{ route('pipeline') }}">
-            <i class="fa-solid fa-clipboard-list"></i>
-            <span>Leden Stock</span>
-        </a>
-    </li>
+    @can('admin')
+        <li class="nav-item @if ($activePage == 'pipeline') active @endif">
+            <a class="nav-link" href="{{ route('pipeline') }}">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <span>Leden Stock</span>
+            </a>
+        </li>
+    @endcan
+    @can('broker')
+        <li class="nav-item @if ($activePage == 'pipeline') active @endif">
+            <a class="nav-link" href="{{ route('pipeline') }}">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <span>Leden Stock</span>
+            </a>
+        </li>
+    @endcan
     @can('admin')
         <li class="nav-item @if ($activePage == 'ford-pipeline') active @endif">
             <a class="nav-link" href="{{ route('pipeline.ford') }}">

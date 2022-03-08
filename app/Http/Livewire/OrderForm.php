@@ -19,6 +19,7 @@ use App\VehicleMeta\Fuel;
 use App\VehicleMeta\Transmission;
 use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
+use Dotenv\Exception\ValidationException;
 use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
@@ -27,6 +28,7 @@ use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use DateTime;
+use function PHPUnit\Framework\throwException;
 
 class OrderForm extends Component
 {
@@ -370,6 +372,9 @@ class OrderForm extends Component
         unset( $this->attachments[$key] );
     }
 
+    /**
+     * @throws \ErrorException
+     */
     public function orderFormSubmit()
     {
 
@@ -433,6 +438,10 @@ class OrderForm extends Component
                 $vehicle = Vehicle::firstOrNew(array(
                     'orbit_number' => $this->orbit_number,
                 ));
+
+                if ($vehicle->order) {
+                    throw new \ErrorException('Vehicle already ordered');
+                }
             }
 
             $vehicle->vehicle_status = $this->status;

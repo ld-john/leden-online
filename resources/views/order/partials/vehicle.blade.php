@@ -445,7 +445,6 @@
                 <option value="3">
                     Ready for Delivery
                 </option>
-
                 <option value="6">
                     Delivery Booked
                 </option>

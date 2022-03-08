@@ -97,18 +97,55 @@ class CSVUploadController extends Controller
                 $vehicle = Vehicle::where('orbit_number', '=', $ford_report['ORBITNO'])->first();
 
                 if($vehicle) {
+                    if ( $vehicle->vehicle_status === '6' || $vehicle->vehicle_status === '7' || $vehicle->vehicle_status === '3') {
+                        continue;
+                    }
+
                     $prefix = array_shift($ford_report);
+
+                    switch ($ford_report['LOCATION']) {
+                        case 'DELIVERED':
+                            $location = 1;
+                            break;
+                        case 'VFS-NORTH':
+                        case 'VFS-SOUTH':
+                            $location = 12;
+                            break;
+                        case 'DBN DOCKS':
+                        case 'SILV EXP':
+                        case 'VAL PORT':
+                        case 'VALENCIA':
+                            $location = 13;
+                            break;
+                        case 'ANTWERP':
+                        case 'AUTOPORT':
+                        case 'NEW FLUSH':
+                            $location = 10;
+                            break;
+                        case 'DAGTOPS':
+                        case 'LIV DOCKS':
+                        case 'LIVTOPS':
+                        case 'SOTTOPS':
+                            $location = 11;
+                            break;
+                        default:
+                            $location = 4;
+                    }
 
                     $vehicle->update([
                         'chassis' => $ford_report['VIN'],
-                        'chassis_prefix' => $ford_report['VIN_PREFIX']
+                        'chassis_prefix' => $prefix,
+                        'vehicle_status' => $location
                     ]);
-                    $order = $vehicle->order;
 
-                    if($order) {
-                        $order->update([
-                            'due_date' => Carbon::parse($ford_report['ETA_DATE'])->format('Y-m-d h:i:s')
-                        ]);
+                    if($ford_report['ETA_DATE']) {
+                        $order = $vehicle->order;
+
+                        if($order) {
+                            $order->update([
+                                'due_date' => Carbon::createFromFormat('d/m/Y', $ford_report['ETA_DATE'])->format('Y-m-d h:i:s')
+                            ]);
+                        }
                     }
 
                 }
