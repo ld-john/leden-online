@@ -255,7 +255,22 @@ class VehicleController extends Controller
 
         return Excel::download(new DashboardExports($vehicles), 'delivery-booked-orders-' . $date . '.xlsx');
     }
+    public function awaiting_ship_export()
+    {
+        $vehicles = Vehicle::where('vehicle_status', 13)->with('manufacturer:id,name')->get();
 
+        $date = Carbon::now()->format('Y-m_d');
+
+        return Excel::download(new DashboardExports($vehicles), 'awaiting-ship-orders-' . $date . '.xlsx');
+    }
+    public function at_converter_export()
+    {
+        $vehicles = Vehicle::where('vehicle_status', 12)->with('manufacturer:id,name')->get();
+
+        $date = Carbon::now()->format('Y-m_d');
+
+        return Excel::download(new DashboardExports($vehicles), 'awaiting-ship-orders-' . $date . '.xlsx');
+    }
     public function completedDateCleanup()
     {
         $completedVehicles = Order::whereHas('vehicle', function ($q){

@@ -97,7 +97,7 @@ class CSVUploadController extends Controller
                 $vehicle = Vehicle::where('orbit_number', '=', $ford_report['ORBITNO'])->first();
 
                 if($vehicle) {
-                    if ( $vehicle->vehicle_status === '6' || $vehicle->vehicle_status === '7' || $vehicle->vehicle_status === '3') {
+                    if ( $vehicle->vehicle_status === 6 || $vehicle->vehicle_status === 7 || $vehicle->vehicle_status === 3) {
                         continue;
                     }
 
@@ -132,6 +132,8 @@ class CSVUploadController extends Controller
                             $location = 4;
                     }
 
+
+
                     $vehicle->update([
                         'chassis' => $ford_report['VIN'],
                         'chassis_prefix' => $prefix,
@@ -151,7 +153,7 @@ class CSVUploadController extends Controller
                 }
 
             }
-            return redirect()->route('pipeline')->with('successMsg', 'All vehicles have been updated');
+            return redirect()->route('csv_upload')->with('successMsg', 'All vehicles have been updated');
         } else
         {
             return false;
