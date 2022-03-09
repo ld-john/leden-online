@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
-    </list>
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -272,7 +266,7 @@
       <workItem from="1646319037283" duration="1708000" />
       <workItem from="1646321151623" duration="1667000" />
       <workItem from="1646740866859" duration="3998000" />
-      <workItem from="1646837207061" duration="1692000" />
+      <workItem from="1646837207061" duration="2142000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -400,7 +394,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646744291481</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Changes to vehicles that can be updated by Ford Report&#10;Fixing exports for Awaiting Ship and At Converter">
+      <created>1646838986310</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1646838986310</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -432,6 +433,7 @@
     <MESSAGE value="Fix Date issues&#10;Move Order Ref to Vehicle as Ford Order Number" />
     <MESSAGE value="Fixing some issues with having moved the Order Number and Orbit number" />
     <MESSAGE value="Changes to vehicles that can be updated by Ford Report&#10;Validation changes to stop multiple orders on same vehicle&#10;Date fixes to Ford Report Import" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes to vehicles that can be updated by Ford Report&#10;Validation changes to stop multiple orders on same vehicle&#10;Date fixes to Ford Report Import" />
+    <MESSAGE value="Changes to vehicles that can be updated by Ford Report&#10;Fixing exports for Awaiting Ship and At Converter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes to vehicles that can be updated by Ford Report&#10;Fixing exports for Awaiting Ship and At Converter" />
   </component>
 </project>
