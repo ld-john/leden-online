@@ -34,10 +34,13 @@
             <td>{{ $vehicle->reg }}</td>
             <td>
                 @if($vehicle->order)
+
                     @if(Carbon\Carbon::parse($vehicle->order->due_date)->format('y') === '-1')
                         N/a
-                    @else
+                    @elseif($vehicle->order->due_date)
                         {{ Carbon\Carbon::parse($vehicle->order->due_date)->format('d/m/y') }}
+                    @else
+                        N/a
                     @endif
                 @else
                     N/a

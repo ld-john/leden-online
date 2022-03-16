@@ -670,7 +670,7 @@ class OrderForm extends Component
 
     public function render()
     {
-        $companies = Company::latest()->get();
+        $companies = Company::orderBy('company_name', 'asc')->get();
         $fitoptions = FitOption::latest()->get();
 
         $options = [
