@@ -17,33 +17,14 @@
                     <!-- Card Header -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-l-blue">Vehicle Details</h6>
-                        <div>
-                            @if ($vehicle->vehicle_status == 1)
-                                <strong>Vehicle Status:</strong> <span class="badge badge-success">Available</span>
-                            @elseif ($vehicle->vehicle_status == 2)
-                                <strong>Vehicle Status:</strong> <span class="badge badge-warning">Reserved</span>
-                            @elseif ($vehicle->vehicle_status == 3 || $vehicle->vehicle_status == 4 || $vehicle->vehicle_status == 6)
-                                <strong>Vehicle Status:</strong> <span class="badge badge-info">
-                            @if ($vehicle->vehicle_status == 3)
-                                        Ready for delivery
-                                    @elseif ($vehicle->vehicle_status == 4)
-                                        Factory Order
-                                    @elseif($vehicle->vehicle_status == 6)
-                                        Delivery Booked
-                                    @endif
-                        </span>
-                            @elseif ($vehicle->vehicle_status == 7)
-                                <strong>Vehicle Status:</strong> <span class="badge badge-secondary">Completed Order</span>
-                            @else
-                                <strong>Vehicle Status:</strong> <span class="badge badge-secondary">Status Unavailable</span>
-                            @endif
+                        <div class="d-flex align-items-center"><strong>Vehicle Status:</strong> <span class="badge badge-primary ml-3">{{ $vehicle->status() }}</span>
                             @if( isset( $vehicle->order->id ) )
-                                <span class="badge badge-success">Vehicle is on order - <a href="{{route('order.show', $vehicle->order->id)}}">View Order</a></span>
+                                <span class="badge badge-success ml-3">Vehicle is on order - <a href="{{route('order.show', $vehicle->order->id)}}">View Order</a></span>
                             @else
                                 @can('admin')
-                                    <span class="badge badge-success">Vehicle is available for order - <a href="{{route('create_order')}}">Reserve</a> </span>
+                                    <span class="badge badge-success ml-3">Vehicle is available for order - <a class="text-white" href="{{route('create_order')}}">Reserve</a> </span>
                                 @else
-                                    <span class="badge badge-success">Vehicle is available for order - Contact Leden for details</span>
+                                    <span class="badge badge-success ml-3">Vehicle is available for order - Contact Leden for details</span>
                                 @endcan
                             @endif
                         </div>
@@ -64,6 +45,21 @@
                                 <p class="font-weight-bold">{{ $vehicle->model ?? '--'}}</p>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <p>Orbit Number</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">{{ $vehicle->orbit_number ?? '--' }}</p>
+                            </div>
+                            <div class="col-md-2">
+                                <p>Ford Order Ref</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">{{ $vehicle->ford_order_number ?? '--'}}</p>
+                            </div>
+                        </div>
+
 
                         <div class="row">
                             <div class="col-md-2">

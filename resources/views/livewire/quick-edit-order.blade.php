@@ -56,6 +56,12 @@
                         <option value="11">
                             UK VHC
                         </option>
+                        <option value="12">
+                            At Converter
+                        </option>
+                        <option value="13">
+                            Awaiting Ship
+                        </option>
                     </select>
                 </div>
                 @if($errors->count())

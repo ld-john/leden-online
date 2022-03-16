@@ -18,26 +18,8 @@
                     <!-- Card Header -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-l-blue">Vehicle Details</h6>
-                        <div>
-                            @if ($order->vehicle->vehicle_status == 1)
-                                <strong>Vehicle Status:</strong> <span class="badge badge-success">Available</span>
-                            @elseif ($order->vehicle->vehicle_status == 2)
-                                <strong>Vehicle Status:</strong> <span class="badge badge-warning">Reserved</span>
-                            @elseif ($order->vehicle->vehicle_status == 3 || $order->vehicle->vehicle_status == 4 || $order->vehicle->vehicle_status == 6)
-                                <strong>Vehicle Status:</strong> <span class="badge badge-info">
-                        @if ($order->vehicle->vehicle_status == 3)
-                                        Ready for delivery
-                                    @elseif ($order->vehicle->vehicle_status == 4)
-                                        Factory Order
-                                    @elseif($order->vehicle->vehicle_status == 6)
-                                        Delivery Booked
-                                    @endif
-                    </span>
-                            @elseif ($order->vehicle->vehicle_status == 7)
-                                <strong>Vehicle Status:</strong> <span class="badge badge-secondary">Completed Order</span>
-                            @else
-                                <strong>Vehicle Status:</strong> <span class="badge badge-secondary">Status Unavailable</span>
-                            @endif
+                        <div class="d-flex align-items-center">
+                            <strong>Vehicle Status:</strong> <span class="badge badge-primary ml-3"> {{ $order->vehicle->status() }}</span>
                         </div>
                     </div>
                     <!-- Card Body -->
@@ -54,6 +36,21 @@
                             </div>
                             <div class="col-md-4">
                                 <p class="font-weight-bold">{{ $order->vehicle->model ?? '--' }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <p>Orbit Number</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">{{ $order->vehicle->orbit_number ?? '--' }}</p>
+                            </div>
+                            <div class="col-md-2">
+                                <p>Ford Order Ref</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">{{ $order->vehicle->ford_order_number ?? '--'}}</p>
                             </div>
                         </div>
 

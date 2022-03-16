@@ -55,6 +55,10 @@ class Vehicle extends Model
                 return 'Completed Orders';
             case(10):
                 return 'Europe VHC';
+            case (12):
+                return 'At Converter';
+            case (13):
+                return 'Awaiting Ship';
             default :
                 return 'UK VHC';
         }

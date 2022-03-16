@@ -139,7 +139,7 @@ class OrderController extends Controller
 	{
 		$data = Order::latest()
 			->whereHas('vehicle', function($q){
-				$q->whereIn('vehicle_status', [1,2,4,10,11]);
+				$q->whereIn('vehicle_status', [1,2,4,10,11,12,13]);
 			})
 			->select(
 				'id',
