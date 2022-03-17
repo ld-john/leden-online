@@ -30,86 +30,87 @@
                 <div class="card shadow mb-4">
                     <!-- Card Body -->
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable">
-                                <thead>
-                                <tr>
-                                    <th>Leden Order #</th>
-                                    <th>Model</th>
-                                    <th>Derivative</th>
-                                    <th>Ford Order Number</th>
-                                    <th>Orbit Number</th>
-                                    <th>Registration</th>
-                                    <th>Planned Build Date</th>
-                                    <th>Due Date</th>
-                                    <th>Status</th>
-                                    <th>Customer</th>
-                                    <th>Broker Order Ref</th>
-                                    <th>Broker</th>
-                                    <th>Dealership</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach( $data as $row )
-                                    <tr>
-                                        <td>{{ $row->id ?? '' }}</td>
-                                        <td>{{ $row->vehicle->model ?? ''}}</td>
-                                        <td>{{ $row->vehicle->derivative ?? ''}}</td>
-                                        <td>{{ $row->vehicle->ford_order_number ?? ''}}</td>
-                                        <td>{{ $row->vehicle->orbit_number }}</td>
-                                        <td>{{ $row->vehicle->reg ?? ''}}</td>
+                        @livewire('order-table', ['status' => $status])
+{{--                        <div class="table-responsive">--}}
+{{--                            <table class="table table-bordered" id="dataTable">--}}
+{{--                                <thead>--}}
+{{--                                <tr>--}}
+{{--                                    <th>Leden Order #</th>--}}
+{{--                                    <th>Model</th>--}}
+{{--                                    <th>Derivative</th>--}}
+{{--                                    <th>Ford Order Number</th>--}}
+{{--                                    <th>Orbit Number</th>--}}
+{{--                                    <th>Registration</th>--}}
+{{--                                    <th>Planned Build Date</th>--}}
+{{--                                    <th>Due Date</th>--}}
+{{--                                    <th>Status</th>--}}
+{{--                                    <th>Customer</th>--}}
+{{--                                    <th>Broker Order Ref</th>--}}
+{{--                                    <th>Broker</th>--}}
+{{--                                    <th>Dealership</th>--}}
+{{--                                    <th>Action</th>--}}
+{{--                                </tr>--}}
+{{--                                </thead>--}}
+{{--                                <tbody>--}}
+{{--                                @foreach( $data as $row )--}}
+{{--                                    <tr>--}}
+{{--                                        <td>{{ $row->id ?? '' }}</td>--}}
+{{--                                        <td>{{ $row->vehicle->model ?? ''}}</td>--}}
+{{--                                        <td>{{ $row->vehicle->derivative ?? ''}}</td>--}}
+{{--                                        <td>{{ $row->vehicle->ford_order_number ?? ''}}</td>--}}
+{{--                                        <td>{{ $row->vehicle->orbit_number }}</td>--}}
+{{--                                        <td>{{ $row->vehicle->reg ?? ''}}</td>--}}
 
-                                        @if ( empty( $row->vehicle->build_date) || $row->vehicle->build_date == '0000-00-00 00:00:00')
-                                            <td></td>
-                                        @else
-                                            <td>{{ \Carbon\Carbon::parse($row->vehicle->build_date ?? '')->format( 'd/m/Y' )}}</td>
-                                        @endif
+{{--                                        @if ( empty( $row->vehicle->build_date) || $row->vehicle->build_date == '0000-00-00 00:00:00')--}}
+{{--                                            <td></td>--}}
+{{--                                        @else--}}
+{{--                                            <td>{{ \Carbon\Carbon::parse($row->vehicle->build_date ?? '')->format( 'd/m/Y' )}}</td>--}}
+{{--                                        @endif--}}
 
-                                        @if ( empty( $row->due_date) || $row->due_date == '0000-00-00 00:00:00')
-                                            <td></td>
-                                        @else
-                                            <td>{{ \Carbon\Carbon::parse($row->due_date ?? '')->format( 'd/m/Y' )}}</td>
-                                        @endif
+{{--                                        @if ( empty( $row->due_date) || $row->due_date == '0000-00-00 00:00:00')--}}
+{{--                                            <td></td>--}}
+{{--                                        @else--}}
+{{--                                            <td>{{ \Carbon\Carbon::parse($row->due_date ?? '')->format( 'd/m/Y' )}}</td>--}}
+{{--                                        @endif--}}
 
-                                        <td>{{ $row->vehicle->status() }}</td>
+{{--                                        <td>{{ $row->vehicle->status() }}</td>--}}
 
-                                        <td>@if ( $row->customer->preffered_name == 'customer')
-                                                {{ $row->customer->customer_name ?? ''}}
-                                            @else
-                                                {{ $row->customer->customer_name ?? ''}}
-                                            @endif
-                                        </td>
-                                        <td>{{ $row->broker_ref ?? ''}}</td>
-                                        <td>{{ $row->broker->company_name ?? ''}}</td>
-                                        <td>{{ $row->dealer->company_name ?? ''}}</td>
-                                        <td width="100px">
-                                            <a href="{{route('order.show', $row->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Order"><i class="far fa-eye"></i></a>
-                                            @can('admin')
-                                                <a href="{{route('order.edit', $row->id)}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Order"><i class="fas fa-edit"></i></a>
-                                                <a data-toggle="tooltip" title="Copy Order">
-                                                <button type="button"
-                                                        class="btn btn-primary duplicate-order"
-                                                        data-orderNumber="{{ $row->id }}"
-                                                        data-toggle="modal"
-                                                        data-target="#duplicateOrder"
-                                                        onclick="duplicateOrder({{$row->id}})">
-                                                    <i class="fas fa-copy"></i>
-                                                </button>
-                                                </a>
-                                                <a data-toggle="tooltip" title="Delete Order">
-                                                    <livewire:delete-order :order="$row->id" :vehicle="$row->vehicle" />
-                                                </a>
-                                                <a data-toggle="tooltip" title="Quick Edit">
-                                                    <livewire:quick-edit-order :order="$row->id" :vehicle="$row->vehicle" />
-                                                </a>
-                                            @endcan
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+{{--                                        <td>@if ( $row->customer->preffered_name == 'customer')--}}
+{{--                                                {{ $row->customer->customer_name ?? ''}}--}}
+{{--                                            @else--}}
+{{--                                                {{ $row->customer->customer_name ?? ''}}--}}
+{{--                                            @endif--}}
+{{--                                        </td>--}}
+{{--                                        <td>{{ $row->broker_ref ?? ''}}</td>--}}
+{{--                                        <td>{{ $row->broker->company_name ?? ''}}</td>--}}
+{{--                                        <td>{{ $row->dealer->company_name ?? ''}}</td>--}}
+{{--                                        <td width="100px">--}}
+{{--                                            <a href="{{route('order.show', $row->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Order"><i class="far fa-eye"></i></a>--}}
+{{--                                            @can('admin')--}}
+{{--                                                <a href="{{route('order.edit', $row->id)}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Order"><i class="fas fa-edit"></i></a>--}}
+{{--                                                <a data-toggle="tooltip" title="Copy Order">--}}
+{{--                                                <button type="button"--}}
+{{--                                                        class="btn btn-primary duplicate-order"--}}
+{{--                                                        data-orderNumber="{{ $row->id }}"--}}
+{{--                                                        data-toggle="modal"--}}
+{{--                                                        data-target="#duplicateOrder"--}}
+{{--                                                        onclick="duplicateOrder({{$row->id}})">--}}
+{{--                                                    <i class="fas fa-copy"></i>--}}
+{{--                                                </button>--}}
+{{--                                                </a>--}}
+{{--                                                <a data-toggle="tooltip" title="Delete Order">--}}
+{{--                                                    <livewire:delete-order :order="$row->id" :vehicle="$row->vehicle" />--}}
+{{--                                                </a>--}}
+{{--                                                <a data-toggle="tooltip" title="Quick Edit">--}}
+{{--                                                    <livewire:quick-edit-order :order="$row->id" :vehicle="$row->vehicle" />--}}
+{{--                                                </a>--}}
+{{--                                            @endcan--}}
+{{--                                        </td>--}}
+{{--                                    </tr>--}}
+{{--                                @endforeach--}}
+{{--                                </tbody>--}}
+{{--                            </table>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
 

@@ -164,7 +164,7 @@ class OrderController extends Controller
 			$data = $data->where('broker_id', Auth::user()->company_id );
 		}
 
-		return view('order.index', ['data' => $data, 'title' => 'Order Bank', 'active_page' => 'order-bank', 'route' => 'order_bank']);
+		return view('order.index', ['data' => $data, 'title' => 'Order Bank', 'active_page' => 'order-bank', 'route' => 'order_bank', 'status' => [1,4,10,11,12,13]]);
 	}
 
 	public function completedOrders(Request $request)
@@ -198,7 +198,7 @@ class OrderController extends Controller
 			$data = $data->where('broker_id', Auth::user()->company_id );
 		}
 
-		return view('order.index', ['data' => $data, 'title' => 'Completed Orders', 'active_page' => 'completed-orders', 'route' => 'completed_orders']);
+		return view('order.index', ['data' => $data, 'title' => 'Completed Orders', 'active_page' => 'completed-orders', 'route' => 'completed_orders', 'status' => [7]]);
 	}
 
 	public function showManageDeliveries(Request $request)
