@@ -20,6 +20,7 @@
   <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet">
   <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
   <livewire:styles />
+  @stack('custom-styles')
 
   <!-- Scripts -->
   <script src="{{ asset('js/custom.js') }}" defer></script>
@@ -39,13 +40,14 @@
       <div id="content">
         @include('partials.top_bar')
         @yield('content')
-        @include('partials.footer')
-
+      </div>
     </div>
     <!-- End of Content Wrapper -->
 
   </div>
   <!-- End of Page Wrapper -->
+
+  @include('partials.footer')
 
   <!-- Bootstrap core JavaScript-->
   <script src="{{ asset('js/jquery/jquery.min.js') }}"></script>

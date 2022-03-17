@@ -1,6 +1,6 @@
 @extends('layouts.main', [
     'title' => 'Manage Colour Options',
-    'activePage' => 'order-bank'
+    'activePage' => 'colour-manager'
     ])
 
 @section('content')

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Vehicle;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->call(function () {
+            Vehicle::where('deleted_at', '<=', Carbon::now()->subDays(30))->forceDelete();
+        })->daily();
     }
 
     /**

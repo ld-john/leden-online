@@ -4,8 +4,6 @@
   gap: 16px;
 }
 
-
-
 .container-fluid {
   padding-top: 100px;
 }
@@ -14,4 +12,67 @@
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
+}
+
+.colSearch {
+  width: 100%!important;
+  padding: 5px;
+  font-size: 12px;
+  &[data-colName="ID"], &[data-colName="Action"], &[data-colName="noTitle"] {
+    display: none;
+  }
+}
+
+.searchContainer th {
+  padding:2px;
+  background-color: #cdcdcd!important;
+}
+
+.btn {
+  margin-bottom: 2px;
+  &.btn-sm {
+    display: inline-block;
+  }
+}
+
+.modal.show {
+  display: block;
+  padding-right: 17px;
+}
+
+.btn-flex {
+  display: flex;
+  a{
+    flex-shrink: 0;
+    width: 50%;
+  }
+}
+
+.meta-management {
+  margin: 10px 0 40px;
+
+  h4 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 30px;
+  }
+
+}
+
+.h-75p {
+  height: 75px;
+}
+
+.h-300 {
+  height: 500px;
+  overflow-y: auto;
+}
+
+.icon-circle {
+  height: 55px;
+  width: 55px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

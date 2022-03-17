@@ -10,4 +10,11 @@ class Company extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    protected $guarded = [];
+
+    public function vehicles()
+    {
+    	return $this->hasMany(Vehicle::class, 'dealer_id', 'id');
+    }
 }

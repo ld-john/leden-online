@@ -1,6 +1,6 @@
 @extends('layouts.main', [
     'title' => 'Manage Type Options',
-    'activePage' => 'order-bank'
+    'activePage' => 'type-manager'
     ])
 
 @section('content')

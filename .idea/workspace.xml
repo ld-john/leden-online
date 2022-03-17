@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="Setting up basic gating">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,14 +19,12 @@
       <executable path="composer" />
     </execution>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="composer.json" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="LivewireDatatable" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -35,6 +34,9 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -55,7 +57,6 @@
       <path value="$PROJECT_DIR$/vendor/nunomaduro/collision" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
       <path value="$PROJECT_DIR$/vendor/opis/closure" />
-      <path value="$PROJECT_DIR$/vendor/justinrainbow/json-schema" />
       <path value="$PROJECT_DIR$/vendor/fideloper/proxy" />
       <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock" />
       <path value="$PROJECT_DIR$/vendor/phenx/php-font-lib" />
@@ -63,8 +64,6 @@
       <path value="$PROJECT_DIR$/vendor/phenx/php-svg-lib" />
       <path value="$PROJECT_DIR$/vendor/mockery/mockery" />
       <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
-      <path value="$PROJECT_DIR$/vendor/seld/phar-utils" />
-      <path value="$PROJECT_DIR$/vendor/seld/jsonlint" />
       <path value="$PROJECT_DIR$/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/vendor/sabberworm/php-css-parser" />
       <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
@@ -113,7 +112,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/translation-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
       <path value="$PROJECT_DIR$/vendor/symfony/mime" />
-      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
@@ -140,14 +138,12 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/cli-parser" />
       <path value="$PROJECT_DIR$/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
-      <path value="$PROJECT_DIR$/vendor/react/promise" />
       <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
       <path value="$PROJECT_DIR$/vendor/voku/portable-ascii" />
       <path value="$PROJECT_DIR$/vendor/symfony/string" />
       <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
-      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
       <path value="$PROJECT_DIR$/vendor/ramsey/collection" />
       <path value="$PROJECT_DIR$/vendor/brick/math" />
@@ -162,9 +158,25 @@
       <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-debugbar" />
       <path value="$PROJECT_DIR$/vendor/symfony/debug" />
       <path value="$PROJECT_DIR$/vendor/livewire/livewire" />
+      <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
+      <path value="$PROJECT_DIR$/vendor/maatwebsite/excel" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/php-enum" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/vendor/laravel/serializable-closure" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/justinrainbow/json-schema" />
+      <path value="$PROJECT_DIR$/vendor/seld/phar-utils" />
+      <path value="$PROJECT_DIR$/vendor/seld/jsonlint" />
+      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/vendor/react/promise" />
     </include_path>
   </component>
-  <component name="ProjectId" id="1qn4ABPMmp6Khd2K0qaazjvQ6Rw" />
+  <component name="ProjectId" id="1yGOd01KlxTowHiLnyYqA6dZo6t" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -177,67 +189,265 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="HTML" />
+    <property name="last_opened_file_path" value="D:/ledenpartners-co-uk-200-180222" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\John Gotobed\OneDrive - Link Digital\Desktop" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\wamp64\www\leden\storage\app\public" />
+      <recent name="C:\wamp64\www\leden\resources\views\vehicles" />
+      <recent name="C:\wamp64\www\leden\public\js\trumbowyg\ui" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner scope="XML" />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="958b3bf6-4569-4ecb-a11f-762fcb2247cc" name="Default Changelist" comment="" />
-      <created>1617701875935</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1617701875935</updated>
-      <workItem from="1617701877619" duration="785000" />
-      <workItem from="1617788357911" duration="6000" />
-      <workItem from="1618308338316" duration="3477000" />
-      <workItem from="1619600739529" duration="3608000" />
-      <workItem from="1619604901821" duration="15020000" />
-      <workItem from="1619686205552" duration="6001000" />
-      <workItem from="1619769953890" duration="4671000" />
-      <workItem from="1620224725434" duration="4216000" />
-      <workItem from="1620288330218" duration="2181000" />
-      <workItem from="1634221977490" duration="448000" />
-      <workItem from="1634285288374" duration="38000" />
-    </task>
-    <task id="LOCAL-00001" summary="Setting up basic gating">
-      <created>1620290625172</created>
+    <task id="LOCAL-00001" summary="Flags for email">
+      <created>1631625463593</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1620290625172</updated>
+      <updated>1631625463593</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="" />
+      <created>1631874543675</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1631874543675</updated>
+      <workItem from="1631874545283" duration="5464000" />
+      <workItem from="1633519681016" duration="2977000" />
+      <workItem from="1634220081938" duration="4402000" />
+      <workItem from="1634304436710" duration="16000" />
+      <workItem from="1634653685811" duration="5857000" />
+      <workItem from="1634719942717" duration="1302000" />
+      <workItem from="1636623915787" duration="9000" />
+      <workItem from="1637159938581" duration="1339000" />
+      <workItem from="1637226392022" duration="4268000" />
+      <workItem from="1637233806131" duration="3227000" />
+      <workItem from="1637243556501" duration="887000" />
+      <workItem from="1637331456449" duration="3727000" />
+      <workItem from="1637924861470" duration="3440000" />
+      <workItem from="1639490487883" duration="5978000" />
+      <workItem from="1643102311555" duration="25831000" />
+      <workItem from="1643190442984" duration="4598000" />
+      <workItem from="1643278653051" duration="13104000" />
+      <workItem from="1643620496576" duration="6308000" />
+      <workItem from="1643628571009" duration="6013000" />
+      <workItem from="1643888545327" duration="1381000" />
+      <workItem from="1643903901216" duration="3032000" />
+      <workItem from="1644232615975" duration="3342000" />
+      <workItem from="1644235997290" duration="2430000" />
+      <workItem from="1644242257054" duration="3920000" />
+      <workItem from="1644246519066" duration="7999000" />
+      <workItem from="1644314686185" duration="7863000" />
+      <workItem from="1644418563317" duration="7108000" />
+      <workItem from="1644486915111" duration="5336000" />
+      <workItem from="1644492318770" duration="40000" />
+      <workItem from="1644493586942" duration="4867000" />
+      <workItem from="1644508893318" duration="6402000" />
+      <workItem from="1645632478619" duration="3126000" />
+      <workItem from="1645694360425" duration="6667000" />
+      <workItem from="1645701166213" duration="1034000" />
+      <workItem from="1645721416377" duration="642000" />
+      <workItem from="1645779407470" duration="3086000" />
+      <workItem from="1646058420887" duration="1193000" />
+      <workItem from="1646142088511" duration="1245000" />
+      <workItem from="1646317938661" duration="820000" />
+      <workItem from="1646319037283" duration="1708000" />
+      <workItem from="1646321151623" duration="1667000" />
+      <workItem from="1646740866859" duration="3998000" />
+      <workItem from="1646837207061" duration="2180000" />
+      <workItem from="1646843762545" duration="19000" />
+      <workItem from="1647256739260" duration="1613000" />
+      <workItem from="1647446654608" duration="3470000" />
+      <workItem from="1647507733054" duration="13049000" />
+    </task>
+    <task id="LOCAL-00002" summary="Comments Styling">
+      <created>1634293476285</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1634293476285</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Remove Comment Box from Create Order form">
+      <created>1634303762509</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1634303762509</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added Delete options for vehicles and orders. Orders offers a modal to confirm deletion.">
+      <created>1634658224907</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1634658224907</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added Delete options for vehicles and orders. Orders offers a modal to confirm deletion.">
+      <created>1634658913138</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1634658913138</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Debug - Added Delete options for vehicles and orders. Orders offers a modal to confirm deletion.">
+      <created>1634659069544</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1634659069544</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Debug - CR Move event listeners for clicks outside of scope.">
+      <created>1634659275349</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1634659275349</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Debug - Soft Delete Orders added">
+      <created>1634720278580</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1634720278580</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Debug - Soft Delete Orders added">
+      <created>1636538458598</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1636538458598</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Debug - Soft Delete Orders added">
+      <created>1637160959411</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1637160959411</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
+      <created>1637230242542</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1637230242542</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Debug - Soft Delete Orders added">
+      <created>1637243692307</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1637243692307</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Dashboard Updates">
+      <created>1643108804102</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1643108804102</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Vehicle updates&#10;Tables now have tooltips instead of extended button text">
+      <created>1644246813874</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1644246813874</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Updates to deleting Vehicles and Orders (Now via Livewire)">
+      <created>1644324892669</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1644324892669</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Updates to deleting Vehicles and Orders (Now via Livewire)">
+      <created>1645625077429</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1645625077429</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Fix Date issues&#10;Move Order Ref to Vehicle as Ford Order Number">
+      <created>1645700870354</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1645700870354</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Fixing some issues with having moved the Order Number and Orbit number">
+      <created>1646142502119</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1646142502119</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Changes to vehicles that can be updated by Ford Report&#10;Validation changes to stop multiple orders on same vehicle&#10;Date fixes to Ford Report Import">
+      <created>1646744291481</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1646744291481</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Changes to vehicles that can be updated by Ford Report&#10;Fixing exports for Awaiting Ship and At Converter">
+      <created>1646838986310</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1646838986310</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Changes to vehicles that can be updated by Ford Report&#10;Fixing exports for Awaiting Ship and At Converter">
+      <created>1646839375851</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1646839375851</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Changes to vehicles that can be updated by Ford Report&#10;Fixing exports for Awaiting Ship and At Converter">
+      <created>1647446676032</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1647446676032</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Today's date no longer shows when no date set on downloads&#10;Companies Alphabetized for order form">
+      <created>1647448814946</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1647448814946</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Build Date for Vehicles added">
+      <created>1647515453467</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1647515453467</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Build Date for Vehicles added - Quick Editable">
+      <created>1647518369236</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1647518369236</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.History.Properties">
-    <option name="COLUMN_ID_ORDER">
-      <list>
-        <option value="Default.Root" />
-        <option value="Default.Author" />
-        <option value="Default.Date" />
-        <option value="Default.Subject" />
-      </list>
-    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -249,11 +459,26 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Setting up basic gating" />
-    <option name="LAST_COMMIT_MESSAGE" value="Setting up basic gating" />
+    <MESSAGE value="Flags for email" />
+    <MESSAGE value="Comments Styling" />
+    <MESSAGE value="Remove Comment Box from Create Order form" />
+    <MESSAGE value="Added Delete options for vehicles and orders. Orders offers a modal to confirm deletion." />
+    <MESSAGE value="Debug - Added Delete options for vehicles and orders. Orders offers a modal to confirm deletion." />
+    <MESSAGE value="Debug - CR Move event listeners for clicks outside of scope." />
+    <MESSAGE value="Debug - Soft Delete Orders added" />
+    <MESSAGE value="Dashboard Updates" />
+    <MESSAGE value="Vehicle updates&#10;Tables now have tooltips instead of extended button text" />
+    <MESSAGE value="Updates to deleting Vehicles and Orders (Now via Livewire)" />
+    <MESSAGE value="Fix Date issues&#10;Move Order Ref to Vehicle as Ford Order Number" />
+    <MESSAGE value="Fixing some issues with having moved the Order Number and Orbit number" />
+    <MESSAGE value="Changes to vehicles that can be updated by Ford Report&#10;Validation changes to stop multiple orders on same vehicle&#10;Date fixes to Ford Report Import" />
+    <MESSAGE value="Changes to vehicles that can be updated by Ford Report&#10;Fixing exports for Awaiting Ship and At Converter" />
+    <MESSAGE value="Today's date no longer shows when no date set on downloads&#10;Companies Alphabetized for order form" />
+    <MESSAGE value="Build Date for Vehicles added" />
+    <MESSAGE value="Build Date for Vehicles added - Quick Editable" />
+    <option name="LAST_COMMIT_MESSAGE" value="Build Date for Vehicles added - Quick Editable" />
   </component>
 </project>

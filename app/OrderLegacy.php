@@ -248,7 +248,7 @@ class OrderLegacy extends Model
     ];
 
     public function basicCost(){
-        return $this->list_price;
+    	return $this->vehicle->list_price;
     }
 
     public function basicSubTotal(){

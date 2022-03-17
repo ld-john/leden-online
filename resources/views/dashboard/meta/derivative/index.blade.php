@@ -1,6 +1,6 @@
 @extends('layouts.main', [
     'title' => 'Manage Derivative Options',
-    'activePage' => 'order-bank'
+    'activePage' => 'derivative-manager'
     ])
 
 @section('content')

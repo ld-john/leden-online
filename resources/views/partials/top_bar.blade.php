@@ -5,10 +5,10 @@
         <i class="fa fa-bars"></i>
     </button>
     <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto align-items-center">
         <!-- Nav Item - Alerts -->
         <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-white" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
                 @if (Auth::user()->unreadNotifications()->count() > 9)
@@ -22,29 +22,32 @@
                 <h6 class="dropdown-header">
                     Notifications Center
                 </h6>
-                @foreach (Auth::user()->unreadNotifications->take(4) as $notification)
-                    <a class="dropdown-item d-flex align-items-center" href="{{ route('order.show', $notification->data['order_id']) }}">
+                @forelse(Auth::user()->unreadNotifications->take(4) as $notification)
+                    <a class="dropdown-item d-flex align-items-center text-gray-500" href="{{ route('order.show', $notification->data['order_id']) }}">
                         <div class="mr-3">
                             <div class="icon-circle blue-background">
                                 @if ($notification->data['type'] == 'vehicle')
-                                    <i class="fas fa-car text-white"></i>
+                                    <i class="fa-solid fa-car text-white"></i>
                                 @else
-                                    <i class="fas fa-flag text-white"></i>
+                                    <i class="fas fa-flag"></i>
                                 @endif
                             </div>
                         </div>
                         <div>
                             <div class="small text-gray-500">{{ date('l jS F Y \a\t g:ia', strtotime($notification->created_at)) }}</div>
-                            <span class="@if ($notification->read_at == null) font-weight-bold @endif ">{{ $notification->data['message'] }}</span>
+                            <span class="font-weight-bold">{{ $notification->data['message'] }}</span>
                         </div>
                     </a>
-                @endforeach
+                @empty
+                    <p class="text-center text-gray-500 px-4">No Unread Notifications</p>
+                @endforelse
+                <a class="dropdown-item text-center small text-gray-500" href="{{ route('notifications.read') }}">Mark all as read</a>
                 <a class="dropdown-item text-center small text-gray-500" href="{{ route('notifications') }}">View All Notifications</a>
             </div>
         </li>
         <!-- Nav Item - Messages -->
         <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
                 @if (UserMessages::getAllUnreadMessages(Auth::user()->id)->count() > 9)
@@ -77,7 +80,7 @@
         <div class="topbar-divider d-none d-sm-block"></div>
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-white" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline small">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
                 <img class="img-profile rounded-circle" src="{{ asset('images/profile.png') }}">
             </a>

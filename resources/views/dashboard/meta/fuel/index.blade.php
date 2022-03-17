@@ -1,6 +1,6 @@
 @extends('layouts.main', [
     'title' => 'Manage Fuel Options',
-    'activePage' => 'order-bank'
+    'activePage' => 'fuel-manager'
     ])
 
 @section('content')

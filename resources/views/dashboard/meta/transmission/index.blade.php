@@ -1,6 +1,6 @@
 @extends('layouts.main', [
     'title' => 'Manage Transmission Options',
-    'activePage' => 'order-bank'
+    'activePage' => 'transmission-manager'
     ])
 
 @section('content')
