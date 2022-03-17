@@ -78,7 +78,7 @@ class DashboardController extends Controller
         $converter = $this->GetVehicleByStatus(12);
 
         $completed = $this->GetVehicleByStatus(7);
-        $live_orders = $factory_order->count() + $euro_vhc->count() + $uk_vhc->count() + $in_stock->count() + $ready_for_delivery->count() + $delivery_booked->count();
+        $live_orders = $factory_order->count() + $euro_vhc->count() + $uk_vhc->count() + $in_stock->count() + $ready_for_delivery->count() + $delivery_booked->count() + $awaiting_ship->count() + $converter->count();
 
 
 
