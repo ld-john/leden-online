@@ -132,12 +132,17 @@ class CSVUploadController extends Controller
                             $location = 4;
                     }
 
-
+                    if ($ford_report['PLAN_BUILD_DATE']) {
+                        $build_date = $ford_report['PLAN_BUILD_DATE'];
+                    } else {
+                        $build_date = null;
+                    }
 
                     $vehicle->update([
                         'chassis' => $ford_report['VIN'],
                         'chassis_prefix' => $prefix,
-                        'vehicle_status' => $location
+                        'vehicle_status' => $location,
+                        'build_date' => $build_date,
                     ]);
 
                     if($ford_report['ETA_DATE']) {

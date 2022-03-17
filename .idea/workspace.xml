@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_03_16_164406_add_build_date_to_vehicles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/leden.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/leden.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +65,6 @@
       <path value="$PROJECT_DIR$/vendor/nunomaduro/collision" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
       <path value="$PROJECT_DIR$/vendor/opis/closure" />
-      <path value="$PROJECT_DIR$/vendor/justinrainbow/json-schema" />
       <path value="$PROJECT_DIR$/vendor/fideloper/proxy" />
       <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock" />
       <path value="$PROJECT_DIR$/vendor/phenx/php-font-lib" />
@@ -66,8 +72,6 @@
       <path value="$PROJECT_DIR$/vendor/phenx/php-svg-lib" />
       <path value="$PROJECT_DIR$/vendor/mockery/mockery" />
       <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
-      <path value="$PROJECT_DIR$/vendor/seld/phar-utils" />
-      <path value="$PROJECT_DIR$/vendor/seld/jsonlint" />
       <path value="$PROJECT_DIR$/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/vendor/sabberworm/php-css-parser" />
       <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
@@ -116,7 +120,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/translation-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
       <path value="$PROJECT_DIR$/vendor/symfony/mime" />
-      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
@@ -143,7 +146,6 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/cli-parser" />
       <path value="$PROJECT_DIR$/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
-      <path value="$PROJECT_DIR$/vendor/react/promise" />
       <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
       <path value="$PROJECT_DIR$/vendor/voku/portable-ascii" />
       <path value="$PROJECT_DIR$/vendor/symfony/string" />
@@ -273,7 +275,8 @@
       <workItem from="1646837207061" duration="2180000" />
       <workItem from="1646843762545" duration="19000" />
       <workItem from="1647256739260" duration="1613000" />
-      <workItem from="1647446654608" duration="1974000" />
+      <workItem from="1647446654608" duration="3470000" />
+      <workItem from="1647507733054" duration="2569000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -422,7 +425,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647446676032</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Today's date no longer shows when no date set on downloads&#10;Companies Alphabetized for order form">
+      <created>1647448814946</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1647448814946</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -455,6 +465,7 @@
     <MESSAGE value="Fixing some issues with having moved the Order Number and Orbit number" />
     <MESSAGE value="Changes to vehicles that can be updated by Ford Report&#10;Validation changes to stop multiple orders on same vehicle&#10;Date fixes to Ford Report Import" />
     <MESSAGE value="Changes to vehicles that can be updated by Ford Report&#10;Fixing exports for Awaiting Ship and At Converter" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes to vehicles that can be updated by Ford Report&#10;Fixing exports for Awaiting Ship and At Converter" />
+    <MESSAGE value="Today's date no longer shows when no date set on downloads&#10;Companies Alphabetized for order form" />
+    <option name="LAST_COMMIT_MESSAGE" value="Today's date no longer shows when no date set on downloads&#10;Companies Alphabetized for order form" />
   </component>
 </project>

@@ -40,6 +40,7 @@
                                     <th>Ford Order Number</th>
                                     <th>Orbit Number</th>
                                     <th>Registration</th>
+                                    <th>Planned Build Date</th>
                                     <th>Due Date</th>
                                     <th>Status</th>
                                     <th>Customer</th>
@@ -59,11 +60,18 @@
                                         <td>{{ $row->vehicle->orbit_number }}</td>
                                         <td>{{ $row->vehicle->reg ?? ''}}</td>
 
+                                        @if ( empty( $row->vehicle->build_date) || $row->vehicle->build_date == '0000-00-00 00:00:00')
+                                            <td></td>
+                                        @else
+                                            <td>{{ \Carbon\Carbon::parse($row->vehicle->build_date ?? '')->format( 'd/m/Y' )}}</td>
+                                        @endif
+
                                         @if ( empty( $row->due_date) || $row->due_date == '0000-00-00 00:00:00')
                                             <td></td>
                                         @else
                                             <td>{{ \Carbon\Carbon::parse($row->due_date ?? '')->format( 'd/m/Y' )}}</td>
                                         @endif
+
                                         <td>{{ $row->vehicle->status() }}</td>
 
                                         <td>@if ( $row->customer->preffered_name == 'customer')

@@ -133,8 +133,6 @@ class OrderController extends Controller
 		return view('order.reserve', ['vehicle' => $vehicle, 'order' => $order]);
 	}
 
-
-
 	public function showOrderBank(Request $request)
 	{
 		$data = Order::latest()
@@ -152,7 +150,7 @@ class OrderController extends Controller
 				'broker_ref',
 			)
 			->with([
-				'vehicle:id,model,ford_order_number,derivative,reg,vehicle_status,orbit_number',
+				'vehicle:id,model,ford_order_number,build_date,derivative,reg,vehicle_status,orbit_number',
 				'customer:id,customer_name,company_name,preferred_name',
 				'broker:id,company_name',
 				'dealer:id,company_name'
@@ -186,7 +184,7 @@ class OrderController extends Controller
 				'broker_ref',
 			)
 			->with([
-				'vehicle:id,model,ford_order_number,derivative,reg,vehicle_status,orbit_number',
+				'vehicle:id,model,ford_order_number,build_date,derivative,reg,vehicle_status,orbit_number',
 				'customer:id,customer_name,company_name,preferred_name',
 				'broker:id,company_name',
 				'dealer:id,company_name'

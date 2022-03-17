@@ -149,6 +149,22 @@
                                 </div>
                             </div>
                         @endif
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- This space left intentionally blank --->
+                            </div>
+                            <div class="col-md-2">
+                                <p>Planned Build Date</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">
+                                    @if( isset ($vehicle->build_date) && ( $vehicle->build_date != '0000-00-00 00:00:00') )
+                                        {{ date('d/m/Y', strtotime($vehicle->build_date)) }}
+                                    @else
+                                        TBC
+                                    @endif
+                                </p>
+                            </div>
                     </div>
                     <!-- Card Header -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
