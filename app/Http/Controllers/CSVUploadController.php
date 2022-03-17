@@ -133,7 +133,7 @@ class CSVUploadController extends Controller
                     }
 
                     if ($ford_report['PLAN_BUILD_DATE']) {
-                        $build_date = $ford_report['PLAN_BUILD_DATE'];
+                        $build_date = Carbon::createFromFormat('d/m/Y', $ford_report['PLAN_BUILD_DATE'])->format('Y-m-d h:i:s');
                     } else {
                         $build_date = null;
                     }
