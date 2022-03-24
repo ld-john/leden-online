@@ -5,40 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/CsvUploadForm.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/CustomerTable.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/DeleteCustomers.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/QuickEditCustomer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_03_21_110903_remove_company_name_from_customers.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_03_24_091742_add_ring_fenced_stock_to_vehicles.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/user-uploads/csv-uploads/ring_csv_order_upload_template.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/customer/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/csv-upload-form.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/customer-table.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/delete-customers.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/quick-edit-customer.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/upload/csv-upload.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/upload/rf-upload.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Customer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/CsvUploadForm.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/OrderTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Vehicle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/csv-upload-complete.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/csv-upload-complete.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/csv-upload.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/edit-order-dealer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/edit-order-dealer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/customer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/customer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/csv-upload-form.blade.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -313,7 +283,8 @@
       <workItem from="1647856170122" duration="12066000" />
       <workItem from="1647941628618" duration="3663000" />
       <workItem from="1647947861416" duration="25000" />
-      <workItem from="1648112870727" duration="11374000" />
+      <workItem from="1648112870727" duration="11944000" />
+      <workItem from="1648129478913" duration="217000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -490,7 +461,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647534993751</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Format the Build Date from the Importer">
+      <created>1648124431415</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1648124431415</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

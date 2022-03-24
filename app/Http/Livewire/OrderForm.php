@@ -52,8 +52,6 @@ class OrderForm extends Component
     public $newCustomer = false;
     public $customer_id;
     public $name;
-    public $company;
-    public $preferred = "customer";
     public $make;
     public $newmake;
     public $model;
@@ -256,9 +254,8 @@ class OrderForm extends Component
                 $this->finance_commission_paid = $dpd->format('d/m/Y');
             }
 
+            $this->customer_id = $this->order->customer->id;
             $this->name = $this->order->customer->customer_name;
-            $this->company = $this->order->customer->company_name;
-            $this->preferred = $this->order->customer->preferred_name;
             $this->customer_phone = $this->order->customer->phone_number;
             $this->delivery_address_1 = $this->order->customer->address_1;
             $this->delivery_address_2 = $this->order->customer->address_2;
@@ -478,8 +475,6 @@ class OrderForm extends Component
             if (!isset($this->customer_id) || $this->customer_id === '') {
                 $customer = new Customer();
                 $customer->customer_name = $this->name;
-                $customer->company_name = $this->company;
-                $customer->preferred_name = $this->preferred;
                 $customer->address_1 = $this->delivery_address_1;
                 $customer->address_2 = $this->delivery_address_2;
                 $customer->town = $this->delivery_town;
@@ -604,8 +599,6 @@ class OrderForm extends Component
             //Update Customer
             $customer = $this->order->customer;
             $customer->customer_name = $this->name;
-            $customer->company_name = $this->company;
-            $customer->preferred_name = $this->preferred;
             $customer->address_1 = $this->delivery_address_1;
             $customer->address_2 = $this->delivery_address_2;
             $customer->town = $this->delivery_town;
