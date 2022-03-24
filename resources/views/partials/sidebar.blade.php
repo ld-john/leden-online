@@ -62,6 +62,14 @@
         </li>
     @endcan
     @can('admin')
+        <li class="nav-item @if ($activePage == 'ring_fenced_stock') active @endif">
+            <a class="nav-link" href="{{ route('ring_fenced_stock') }}">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <span>Ring fenced Stock</span>
+            </a>
+        </li>
+    @endcan
+    @can('admin')
         <li class="nav-item @if ($activePage == 'ford-pipeline') active @endif">
             <a class="nav-link" href="{{ route('pipeline.ford') }}">
                 <i class="fa-solid fa-clipboard-list"></i>
@@ -78,12 +86,27 @@
         </li>
     @endcan
     @can('admin')
-        <li class="nav-item @if ($activePage == 'csv-upload') active @endif">
-            <a class="nav-link" href="{{ route('csv_upload') }}">
-                <i class="fa-solid fa-file-csv"></i>
-                <span>CSV Upload</span>
+        <li class="nav-item @if ($activePage == 'csv-upload' || $activePage === 'rf-upload') active @endif">
+            <a class="nav-link" data-toggle="collapse" href="#collapseCSVUploads" role="button" aria-expanded="false" aria-controls="collapseCSVUploads">
+                <i class="fa-solid fa-chevron-down"></i>
+                <span>Uploads</span>
             </a>
         </li>
+
+        <div class="collapse" id="collapseCSVUploads">
+            <li class="nav-item @if ($activePage == 'csv-upload') active @endif">
+                <a class="nav-link" href="{{ route('csv_upload') }}">
+                    <i class="fa-solid fa-file-csv"></i>
+                    <span>CSV Upload</span>
+                </a>
+            </li>
+            <li class="nav-item @if ($activePage == 'rf-upload') active @endif">
+                <a class="nav-link" href="{{ route('rf_upload') }}">
+                    <i class="fa-solid fa-file-csv"></i>
+                    <span>Ring Fenced Stock CSV Upload</span>
+                </a>
+            </li>
+        </div>
     @endcan
     @can('admin')
         <li class="nav-item @if ($activePage == 'report-track') active @endif">
@@ -106,6 +129,12 @@
                 <span>User Listing</span>
             </a>
         </li>
+    <li class="nav-item @if ($activePage === 'customers') active @endif">
+        <a class="nav-link" href="{{ route('customer.index') }}">
+            <i class="fa-solid fa-user-group"></i>
+            <span>Customers</span>
+        </a>
+    </li>
         <li class="nav-item @if($activePage=== 'vehicle-recycle-bin') active @endif">
             <a href="{{ route('vehicle.recycle_bin') }}" class="nav-link">
                 <i class="fa-solid fa-trash"></i>

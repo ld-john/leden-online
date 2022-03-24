@@ -19,6 +19,7 @@
   <link href="{{ asset('css/bootstrap-select.css') }}" rel="stylesheet">
   <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet">
   <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <livewire:styles />
   @stack('custom-styles')
 
@@ -61,6 +62,17 @@
   <!-- Custom scripts for all pages-->
   <script src="{{ asset('js/dashboard.js') }}"></script>
   @stack('custom-scripts')
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    // In your Javascript (external .js resource or <script> tag)
+    $(document).ready(function() {
+      $('.customer_select').select2({
+        placeholder: "Select existing Customer",
+        allowClear: true
+      });
+      $('.select2').select2({});
+    });
+  </script>
 
 </body>
 

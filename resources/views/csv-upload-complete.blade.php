@@ -1,6 +1,6 @@
 @extends('layouts.main', [
     'title' => 'CSV Upload - Complete',
-    'activePage' => 'csv-upload'
+    'activePage' => 'upload.csv-upload'
     ])
 
 @section('content')
@@ -46,7 +46,7 @@
             <div class="row mb-3">
                 <div class="col-md-12">
                     <p>
-                        The list below contains all the orders you have just imported. You will be able to edit each order here. Clicking the edit/view buttons will 
+                        The list below contains all the orders you have just imported. You will be able to edit each order here. Clicking the edit/view buttons will
                         open up the order in a new tab so you can refer back to this list and edit multiple orders.
                     </p>
                 </div>

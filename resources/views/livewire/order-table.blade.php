@@ -126,11 +126,8 @@
 
                 <td>{{ $order->vehicle->status() }}</td>
 
-                <td>@if ( $order->customer->preffered_name == 'customer')
-                        {{ $order->customer->customer_name ?? ''}}
-                    @else
-                        {{ $order->customer->customer_name ?? ''}}
-                    @endif
+                <td>
+                    {{ $order->customer->customer_name ?? ''}}
                 </td>
                 <td>{{ $order->broker_ref ?? ''}}</td>
                 <td>{{ $order->broker->company_name ?? ''}}</td>

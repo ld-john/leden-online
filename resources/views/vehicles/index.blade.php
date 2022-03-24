@@ -25,6 +25,7 @@
                                     <th>ID</th>
                                     <th>Make</th>
                                     <th>Model</th>
+
                                     <th>Ford Order Number</th>
                                     <th>Derivative</th>
                                     <th>Engine</th>
@@ -32,6 +33,9 @@
                                     <th>Type</th>
                                     <th>Chassis</th>
                                     <th>Registration</th>
+                                    @if ($active_page === 'ring_fenced_stock')
+                                        <th>Broker</th>
+                                    @endif
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -56,6 +60,9 @@
                                             <td>{{ $row->type ?? '' }}</td>
                                             <td>{{ $row->chassis ?? '' }}</td>
                                             <td>{{ $row->reg ?? '' }}</td>
+                                            @if ($active_page === 'ring_fenced_stock')
+                                                <td>{{ $row->broker->company_name }}</td>
+                                            @endif
                                             <td>{{ $row->status() }}</td>
                                             <td width="100px">
                                                 <a href="{{route('vehicle.show', $row->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Vehicle Information"><i class="far fa-eye"></i></a>

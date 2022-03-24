@@ -135,70 +135,12 @@ class OrderController extends Controller
 
 	public function showOrderBank(Request $request)
 	{
-		$data = Order::latest()
-			->whereHas('vehicle', function($q){
-				$q->whereIn('vehicle_status', [1,2,4,10,11,12,13]);
-			})
-			->select(
-				'id',
-				'vehicle_id',
-				'broker_id',
-				'dealer_id',
-				'customer_id',
-				'order_ref',
-				'due_date',
-				'broker_ref',
-			)
-			->with([
-				'vehicle:id,model,ford_order_number,build_date,derivative,reg,vehicle_status,orbit_number',
-				'customer:id,customer_name,company_name,preferred_name',
-				'broker:id,company_name',
-				'dealer:id,company_name'
-			])->get();
-
-		if (Auth::user()->role == 'dealer') {
-			$data = $data->where('dealer_id', Auth::user()->company_id );
-		}
-
-		if (Auth::user()->role == 'broker') {
-			$data = $data->where('broker_id', Auth::user()->company_id );
-		}
-
-		return view('order.index', ['data' => $data, 'title' => 'Order Bank', 'active_page' => 'order-bank', 'route' => 'order_bank', 'status' => [1,4,10,11,12,13]]);
+		return view('order.index', ['title' => 'Order Bank', 'active_page' => 'order-bank', 'route' => 'order_bank', 'status' => [1,4,10,11,12,13]]);
 	}
 
 	public function completedOrders(Request $request)
 	{
-		$data = Order::latest()
-			->whereHas('vehicle', function($q){
-				$q->whereIn('vehicle_status', [7]);
-			})
-			->select(
-				'id',
-				'vehicle_id',
-				'broker_id',
-				'dealer_id',
-				'customer_id',
-				'order_ref',
-				'due_date',
-				'broker_ref',
-			)
-			->with([
-				'vehicle:id,model,ford_order_number,build_date,derivative,reg,vehicle_status,orbit_number',
-				'customer:id,customer_name,company_name,preferred_name',
-				'broker:id,company_name',
-				'dealer:id,company_name'
-			])->get();
-
-		if (Auth::user()->role == 'dealer') {
-			$data = $data->where('dealer_id', Auth::user()->company_id );
-		}
-
-		if (Auth::user()->role == 'broker') {
-			$data = $data->where('broker_id', Auth::user()->company_id );
-		}
-
-		return view('order.index', ['data' => $data, 'title' => 'Completed Orders', 'active_page' => 'completed-orders', 'route' => 'completed_orders', 'status' => [7]]);
+		return view('order.index', ['title' => 'Completed Orders', 'active_page' => 'completed-orders', 'route' => 'completed_orders', 'status' => [7]]);
 	}
 
 	public function showManageDeliveries(Request $request)
@@ -221,7 +163,7 @@ class OrderController extends Controller
 			)
 			->with([
 				'vehicle:id,vehicle_status,ford_order_number,model,derivative,reg,orbit_number',
-				'customer:id,customer_name,company_name,preferred_name',
+				'customer:id,customer_name',
 				'broker:id,company_name',
 				'dealer:id,company_name'
 			])->get();
@@ -418,7 +360,6 @@ class OrderController extends Controller
 
 		$deliveryAddress = array_filter([
 			$order->customer->customer_name,
-			$order->customer->company_name,
 			$order->customer->address_1,
 			$order->customer->address_2,
 			$order->customer->town,

@@ -10,6 +10,7 @@
         <th>Vehicle Type</th>
         <th>Chassis</th>
         <th>Registration</th>
+        <th>Planned Build Date</th>
         <th>Due Date</th>
         <th>Broker</th>
         <th>Broker Reference</th>
@@ -32,6 +33,15 @@
             <td>{{ $vehicle->type }}</td>
             <td>{{ $vehicle->chassis }}</td>
             <td>{{ $vehicle->reg }}</td>
+            <td>
+                @if(Carbon\Carbon::parse($vehicle->build_date)->format('y') === '-1')
+                    N/a
+                @elseif($vehicle->build_date)
+                    {{ Carbon\Carbon::parse($vehicle->build_date)->format('d/m/y') }}
+                @else
+                    N/a
+                @endif
+            </td>
             <td>
                 @if($vehicle->order)
 

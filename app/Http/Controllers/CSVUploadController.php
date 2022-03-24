@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\Manufacturer;
 use App\Vehicle;
 use Illuminate\Contracts\Foundation\Application;
@@ -28,7 +29,77 @@ class CSVUploadController extends Controller
      */
 
     public function showCsvUpload() {
-        return view('csv-upload');
+        return view('upload.csv-upload');
+    }
+
+    public function showRingFenceUpload()
+    {
+        return view('upload.rf-upload', ['brokers' => Company::orderBy('company_name', 'asc')->where('company_type', 'broker')->get()]);
+    }
+
+    public function executeRfUpload(Request $request)
+    {
+        $file = $request->file('file');
+
+        $request->validate([
+            'file' => 'required|max:10240',
+            'broker' => 'required'
+        ]);
+
+        $broker = $request['broker'];
+
+        $vehicle_uploads = $this->csvToArray($file);
+
+        foreach ($vehicle_uploads as $vehicle_upload) {
+            $upload_manufacturer = Manufacturer::where('name', $vehicle_upload['make'])->firstOrCreate();
+
+            switch($vehicle_upload['status']) {
+                case ('In Stock'):
+                    $upload_status = 1;
+                    break;
+                case('Ready for Delivery'):
+                    $upload_status = 3;
+                    break;
+                case('UK VHC'):
+                    $upload_status = 11;
+                    break;
+                case('Delivery Booked') :
+                    $upload_status = 6;
+                    break;
+                case('Completed Orders'):
+                    $upload_status = 7;
+                    break;
+                case('Europe VHC'):
+                    $upload_status = 10;
+                    break;
+                case ('At Converter'):
+                    $upload_status = 12;
+                    break;
+                case ('Awaiting Ship'):
+                    $upload_status = 13;
+                    break;
+                default :
+                    $upload_status = 4;
+            }
+
+            $vehicle = Vehicle::updateOrCreate(['orbit_number' => $vehicle_upload['orbit_number']],
+            [
+                'vehicle_status' => $upload_status,
+                'ford_order_number' => $vehicle_upload['ford_order_number'],
+                'make' => $upload_manufacturer->id,
+                'model' => $vehicle_upload['model'],
+                'derivative' => $vehicle_upload['derivative'],
+                'engine' => $vehicle_upload['engine'],
+                'colour' => $vehicle_upload['colour'],
+                'fuel_type' => $vehicle_upload['type'],
+                'chassis' => $vehicle_upload['chassis'],
+                'reg' => $vehicle_upload['registration'],
+                'ring_fenced_stock' => 1,
+                'broker_id' => $broker
+            ]);
+
+        }
+        return redirect()->route('ring_fenced_stock')->with('successMsg', 'Your vehicles have been added to the system. You can edit any extra information below.');
     }
 
     public function executeCsvUpload(Request $request)
@@ -109,6 +180,7 @@ class CSVUploadController extends Controller
                             break;
                         case 'VFS-NORTH':
                         case 'VFS-SOUTH':
+                        case 'VFS-SOTON' :
                             $location = 12;
                             break;
                         case 'DBN DOCKS':

@@ -183,13 +183,12 @@
                 <div class="col-md-6">
                     <select class="form-control" required name="vehicle_status" id="vehicle_status">
                         <option value="1" @if ($order_details->vehicle_status == 1) selected @endif>In Stock</option>
-                        <option value="2" @if ($order_details->vehicle_status == 2) selected @endif disabled>Orders Placed</option>
                         <option value="3" @if ($order_details->vehicle_status == 3) selected @endif>Ready for Delivery</option>
                         <option value="4" @if ($order_details->vehicle_status == 4) selected @endif>Factory Order</option>
                         <option value="6" @if ($order_details->vehicle_status == 6) selected @endif>Delivery Booked</option>
-                        <option value="7" @if ($order_details->vehicle_status == 7) selected @endif disabled>Completed Orders</option>
-                        <option value="10" @if ($order_details->vehicle_status == 10) selected @endif disabled>Europe VHC</option>
-                        <option value="11" @if ($order_details->vehicle_status == 11) selected @endif disabled><span style="text-decoration: underline;">UK VHC</span></option>
+                        <option value="7" @if ($order_details->vehicle_status == 7) selected @endif>Completed Orders</option>
+                        <option value="10" @if ($order_details->vehicle_status == 10) selected @endif>Europe VHC</option>
+                        <option value="11" @if ($order_details->vehicle_status == 11) selected @endif>UK VHC</option>
                     </select>
                 </div>
             </div>

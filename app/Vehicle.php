@@ -40,6 +40,11 @@ class Vehicle extends Model
         return $this->belongsTo(Company::class, 'dealer_id', 'id');
     }
 
+    public function broker()
+    {
+        return $this->belongsTo(Company::class, 'broker_id', 'id');
+    }
+
     public function status()
     {
         switch($this->vehicle_status) {

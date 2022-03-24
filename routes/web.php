@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function(){
     /* Vehicle Controller Routes */
     Route::get('/create-vehicle', 'VehicleController@create')->name('create_vehicle');
     Route::get('/pipeline', 'VehicleController@showLedenStock')->name('pipeline');
+    Route::get('/ringfenced-stock', 'VehicleController@showRingFencedStock')->name('ring_fenced_stock');
     Route::post('/pipeline/delete-selected', 'VehicleController@deleteSelected')->name('pipeline_delete');
     Route::get('/vehicle/delete/{vehicle}', 'VehicleController@destroy')->name('vehicle.delete');
     Route::get('/ford-pipeline', 'VehicleController@showFordPipeline')->name('pipeline.ford');
@@ -78,7 +79,12 @@ Route::middleware('auth')->group(function(){
 
     /* CSVUploadController routes */
     Route::get('/csv-upload', 'CSVUploadController@showCsvUpload')->name('csv_upload');
+    Route::get('/rf-upload', 'CSVUploadController@showRingFenceUpload')->name('rf_upload');
     Route::post('/csv-upload', 'CSVUploadController@executeCsvUpload')->name('csv_upload.import');
+    Route::post('/rf-upload', 'CSVUploadController@executeRfUpload')->name('rf_upload.import');
+
+    /* Customer Controller Routes */
+    Route::get('/customers', 'CustomerController@index')->name('customer.index');
 
     /* MessagesController routes */
     Route::get('/messages', 'MessagesController@showMessages')->name('messages');
@@ -139,6 +145,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/link/completed-date/', 'VehicleController@completedDateCleanup')->name('test4');
     Route::get('/link/order-ref/', 'VehicleController@orderRefCleanup')->name('test5');
     Route::get('/link/date-clean-up', 'VehicleController@date_cleaner')->name('test6');
+    Route::get('/link/customer-name-clean-up', 'CustomerController@name_cleaner')->name('test7');
 
 
 });

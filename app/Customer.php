@@ -11,14 +11,16 @@ class Customer extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $guarded = [];
+
     public function name()
     {
-        if ($this->preferred_name === "company") {
-            $name = $this->company_name;
-        } else {
-            $name = $this->customer_name;
-        }
-
-        return $name;
+        return $this->customer_name;
     }
+
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
+
 }

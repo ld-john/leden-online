@@ -20,7 +20,10 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
   <!-- Scripts -->
-  <script src="{{ asset('js/custom.js') }}" defer></script>
+  <script src="{{ asset('js/custom.js') }}"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
 
 </head>
 <body class="login">
@@ -28,4 +31,12 @@
     @yield('content')
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  // In your Javascript (external .js resource or <script> tag)
+  $(document).ready(function() {
+    $('.select2').select2();
+  });
+</script>
+
 </html>

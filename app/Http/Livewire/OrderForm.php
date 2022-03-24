@@ -49,7 +49,7 @@ class OrderForm extends Component
     public $vehicle;
     public $order;
 
-    public $newCustomer = true;
+    public $newCustomer = false;
     public $customer_id;
     public $name;
     public $company;
@@ -674,7 +674,7 @@ class OrderForm extends Component
         $fitoptions = FitOption::latest()->get();
 
         $options = [
-            'customers'         => Customer::all(),
+            'customers'         => Customer::orderBy('customer_name', 'asc')->get(),
             'manufacturers'     => Manufacturer::all()->keyBy('id'),
             'types'             => Type::all(),
             'derivatives'       => Derivative::all(),

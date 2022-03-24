@@ -167,11 +167,12 @@ class VehicleController extends Controller
         return view('vehicles.index', ['data' => $data, 'title' => 'Ford Pipeline', 'active_page'=> 'ford-pipeline']);
     }
 
-    public function showLedenStock(Request $request)
+    public function showLedenStock()
     {
         $data = Vehicle::select('id', 'orbit_number', 'ford_order_number', 'make', 'model', 'derivative', 'reg', 'engine', 'vehicle_status', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
             ->with('manufacturer:id,name')
             ->with('order:id,vehicle_id')
+            ->where('ring_fenced_stock', false)
             ->where('show_in_ford_pipeline', false)->get();
 
         if (Auth::user()->role == 'dealer') {
@@ -191,6 +192,30 @@ class VehicleController extends Controller
 
         return view('vehicles.index', ['data'=> $stock, 'title' => 'Leden Stock', 'active_page'=> 'pipeline']);
     }
+
+    public function showRingFencedStock()
+    {
+        $data = Vehicle::select('id', 'orbit_number', 'ford_order_number', 'make', 'model', 'derivative', 'reg', 'engine', 'vehicle_status', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options', 'broker_id')
+            ->with('manufacturer:id,name')
+            ->with('order:id,vehicle_id')
+            ->where('ring_fenced_stock', true)
+            ->where('show_in_ford_pipeline', false)->get();
+
+        if (Auth::user()->role == 'broker') {
+            $data = $data->where('hide_from_broker', false );
+            $data = $data->where('broker_id', Auth::user()->company_id);
+        }
+
+        $stock = [];
+        foreach ($data as $k => $vehicle) {
+            if (!isset($vehicle->order)){
+                $stock[$k] = $vehicle;
+            }
+        }
+
+        return view('vehicles.index', ['data'=> $stock, 'title' => 'Ring Fenced Stock', 'active_page'=> 'ring_fenced_stock']);
+    }
+
 
     public function deleteSelected()
     {

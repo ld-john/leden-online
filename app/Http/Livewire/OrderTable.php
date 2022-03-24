@@ -4,9 +4,19 @@ namespace App\Http\Livewire;
 
 use App\Order;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class OrderTable extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
+    public function getQueryString(): array
+    {
+        return [];
+    }
+
     public $status;
     public $searchID;
     public $searchDerivative;
@@ -43,7 +53,7 @@ class OrderTable extends Component
             )
             ->with([
                 'vehicle:id,model,ford_order_number,build_date,derivative,reg,vehicle_status,orbit_number',
-                'customer:id,customer_name,company_name,preferred_name',
+                'customer:id,customer_name',
                 'broker:id,company_name',
                 'dealer:id,company_name'
             ])
