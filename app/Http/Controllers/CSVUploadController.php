@@ -48,9 +48,12 @@ class CSVUploadController extends Controller
 
         $broker = $request['broker'];
 
+
         $vehicle_uploads = $this->csvToArray($file);
 
         foreach ($vehicle_uploads as $vehicle_upload) {
+            $dealer = Company::where('company_name', $vehicle_upload['dealer'])->where('company_type', 'dealer')->first();
+
             $upload_manufacturer = Manufacturer::where('name', $vehicle_upload['make'])->firstOrCreate();
 
             switch($vehicle_upload['status']) {
@@ -82,21 +85,26 @@ class CSVUploadController extends Controller
                     $upload_status = 4;
             }
 
-            $vehicle = Vehicle::updateOrCreate(['orbit_number' => $vehicle_upload['orbit_number']],
-            [
-                'vehicle_status' => $upload_status,
-                'ford_order_number' => $vehicle_upload['ford_order_number'],
-                'make' => $upload_manufacturer->id,
-                'model' => $vehicle_upload['model'],
-                'derivative' => $vehicle_upload['derivative'],
-                'engine' => $vehicle_upload['engine'],
-                'colour' => $vehicle_upload['colour'],
-                'fuel_type' => $vehicle_upload['type'],
-                'chassis' => $vehicle_upload['chassis'],
-                'reg' => $vehicle_upload['registration'],
-                'ring_fenced_stock' => 1,
-                'broker_id' => $broker
-            ]);
+            $upload[0]['orbit_number'] = $vehicle_upload['orbit_number'];
+
+            $upload[1]['vehicle_status'] = $upload_status;
+            $upload[1]['ford_order_number'] = $vehicle_upload['ford_order_number'];
+            $upload[1]['make'] = $upload_manufacturer->id;
+            $upload[1]['model'] = $vehicle_upload['model'];
+            $upload[1]['derivative'] = $vehicle_upload['derivative'];
+            $upload[1]['engine'] = $vehicle_upload['engine'];
+            $upload[1]['colour'] = $vehicle_upload['colour'];
+            $upload[1]['type'] = $vehicle_upload['type'];
+            $upload[1]['chassis'] = $vehicle_upload['chassis'];
+            $upload[1]['reg'] = $vehicle_upload['registration'];
+            $upload[1]['ring_fenced_stock'] = 1;
+            $upload[1]['broker_id'] = $broker;
+            $upload[1]['updated_at'] = Carbon::now();
+            $upload[1]['created_at'] = Carbon::now();
+            $upload[1]['dealer_id'] = $dealer->id;
+
+            Vehicle::updateOrInsert($upload[0], $upload[1]);
+
 
         }
         return redirect()->route('ring_fenced_stock')->with('successMsg', 'Your vehicles have been added to the system. You can edit any extra information below.');
@@ -217,12 +225,19 @@ class CSVUploadController extends Controller
                         'build_date' => $build_date,
                     ]);
 
-                    if($ford_report['ETA_DATE']) {
-                        $order = $vehicle->order;
+                    $order = $vehicle->order;
 
-                        if($order) {
+                    if($order) {
+                        if($ford_report['ETA_DATE']) {
+
+
+
                             $order->update([
                                 'due_date' => Carbon::createFromFormat('d/m/Y', $ford_report['ETA_DATE'])->format('Y-m-d h:i:s')
+                            ]);
+                        } else {
+                            $order->update([
+                                'due_date' => null
                             ]);
                         }
                     }

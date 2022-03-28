@@ -35,6 +35,9 @@
                     <p class="mb-0 mt-2">Planned Build Date</p>
                     <input wire:model="build_date" type="text" name="build_date" id="build_date" class="form-control"
                             autocomplete="off" placeholder="e.g. 30/03/2019">
+                    <p class="mb-0 mt-2">Order Date</p>
+                    <input wire:model="order_date" type="text" name="order_date" id="order_date" class="form-control"
+                           autocomplete="off" placeholder="e.g. 30/03/2019">
                     <p class="mb-0 mt-2">Status</p>
                     <select wire:model="vehicleStatus" class="form-control" name="vehicle_status" id="vehicle_status">
                         <option value="">Please Select Status</option>

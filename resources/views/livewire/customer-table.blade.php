@@ -47,9 +47,7 @@
                     <td>{{ count($customer->orders) }}</td>
                     <td width="120px">
                          <div class="d-flex justify-content-between">
-                              @if(count($customer->orders) === 0)
-                                   <a data-toggle="tooltip" title="Delete Customer"><livewire:delete-customers :customer="$customer->id" :key="time().$customer->id" /></a>
-                              @endif
+                              <a data-toggle="tooltip" title="Delete Customer"><livewire:delete-customers :customer="$customer->id" :key="time().$customer->id" /></a>
                               <a data-toggle="tooltip" title="Edit Customer"><livewire:quick-edit-customer :customer="$customer->id" :key="time().$customer->id" /></a>
                          </div>
                     </td>

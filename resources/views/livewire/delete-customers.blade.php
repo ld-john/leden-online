@@ -16,11 +16,26 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to delete the record for {{ $customer->customer_name }}
+                    @if (count($customer->orders) > 0 )
+                        <p>{{ $customer->customer_name ?? 'This customer' }} has placed the following orders:</p>
+                        <ul>
+                            @foreach($orders as $order)
+                                <li><a target="_blank" href="{{ route('order.show', $order->id) }}">{{$order->id}}</a> -
+                                    <a data-toggle="tooltip" title="Delete Order"><livewire:delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
+                                </li>
+
+                            @endforeach
+                        </ul>
+                        <p>Please remove these orders before deleting the customer record.</p>
+                    @else
+                    <p>Are you sure you want to delete the record for {{ $customer->customer_name ?? 'this customer' }}</p>
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click="toggleDeleteModal">Close</button>
-                    <button type="button" class="btn btn-danger" wire:click="deleteCustomer">Delete</button>
+                    @if (count($customer->orders) === 0 )
+                        <button type="button" class="btn btn-danger" wire:click="deleteCustomer">Delete</button>
+                    @endif
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Order;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -31,10 +32,17 @@ class OrderTable extends Component
     public $searchBroker;
     public $searchDealer;
     public $paginate = 10;
+    public $brokerID;
+    public $dealerID;
 
     public function mount($status)
     {
         $this->status = $status;
+        if( Auth::user()->role === 'broker' ) {
+            $this->brokerID = Auth::user()->company->id;
+        } elseif ( Auth::user()->role === 'dealer' ) {
+            $this->dealerID = Auth::user()->company->id;
+        }
     }
 
     public function render()
@@ -57,6 +65,12 @@ class OrderTable extends Component
                 'broker:id,company_name',
                 'dealer:id,company_name'
             ])
+            ->when($this->brokerID, function ($query) {
+                $query->where('broker_id', $this->brokerID);
+            })
+            ->when($this->dealerID, function ($query) {
+                $query->where('dealer_id', $this->dealerID);
+            })
             ->when($this->searchID, function ($query) {
                 $query->where('id', 'like', '%'.$this->searchID.'%');
             })
@@ -111,7 +125,7 @@ class OrderTable extends Component
                     $query->where('company_name', 'like', '%'.$this->searchDealer.'%');
                 });
             })
-            ->orderBy('id', 'asc')
+            ->orderBy('created_at', 'asc')
             ->paginate($this->paginate);
 
         return view('livewire.order-table', ['orders' => $orders]);

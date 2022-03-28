@@ -46,6 +46,6 @@ class DeleteOrder extends Component
 
         Invoice::destroy($invoice);
         Order::destroy($this->order->id);
-        return redirect()->route('order_bank');
+        return redirect(request()->header('Referer'));
     }
 }

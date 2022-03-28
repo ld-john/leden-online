@@ -6,6 +6,7 @@ use App\Order;
 use App\Vehicle;
 use DateTime;
 use Exception;
+use Illuminate\Support\Facades\Date;
 use Livewire\Component;
 
 class QuickEditOrder extends Component
@@ -19,6 +20,7 @@ class QuickEditOrder extends Component
     public $registration;
     public $order_number;
     public $build_date;
+    public $order_date;
     protected $rules = [
         'due_date' => 'nullable|date',
         'build_date' => 'nullable|date'
@@ -36,9 +38,12 @@ class QuickEditOrder extends Component
     {
         $this->order = $order;
         $this->vehicle = $vehicle;
+
         $this->order_number = $vehicle->ford_order_number;
         $this->registration = $vehicle->reg;
         $this->orbit_number = $vehicle->orbit_number;
+        $orderDate = new DateTime($order->created_at);
+        $this->order_date = $orderDate->format( 'd/m/Y' );
         if ( $order->vehicle->build_date && $order->vehicle->build_date != '0000-00-00 00:00:00') {
 
             $del = new DateTime( $order->vehicle->build_date);
@@ -65,6 +70,10 @@ class QuickEditOrder extends Component
             $this->build_date = DateTime::createFromFormat('d/m/Y', $this->build_date);
         }
 
+        if ($this->order_date) {
+            $this->order_date = DateTime::createFromFormat('d/m/Y', $this->order_date);
+        }
+
         $this->validate();
 
         $this->vehicle->reg = $this->registration;
@@ -75,10 +84,12 @@ class QuickEditOrder extends Component
         $this->vehicle->save();
 
         $this->order->due_date = $this->due_date;
+        $this->order->created_at = $this->order_date;
         $this->order->save();
 
         $this->due_date = ( $this->due_date ? $this->due_date->format( 'd/m/Y') : null );
         $this->build_date = ( $this->build_date ? $this->build_date->format( 'd/m/Y') : null );
+        $this->order_date = ( $this->order_date ? $this->order_date->format( 'd/m/Y' ) : null );
         return $this->redirect(route('order_bank'));
     }
 

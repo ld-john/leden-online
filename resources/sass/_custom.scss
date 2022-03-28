@@ -5,7 +5,12 @@
   padding-top: 100px;
 }
 
+.main-sidebar {
+  min-height: calc(100vh - 50px);
+}
+
 .sticky-footer {
+  height: 50px;
   grid-column: 1 / -1;
 }
 
