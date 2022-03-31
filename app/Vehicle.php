@@ -64,8 +64,10 @@ class Vehicle extends Model
                 return 'At Converter';
             case (13):
                 return 'Awaiting Ship';
-            default :
+            case (11):
                 return 'UK VHC';
+            default :
+                return 'Not Known';
         }
     }
 

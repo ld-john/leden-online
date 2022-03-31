@@ -1,16 +1,17 @@
 <div>
-    <div class="w-25 p-3 d-flex align-items-center">
-        Show
-        <select wire:model="paginate" name="" id="" class="form-control mx-2">
-            <option value='10'>10</option>
-            <option value='25'>25</option>
-            <option value='50'>50</option>
-            <option value='100'>100</option>
+    <div class="d-flex justify-content-between">
+        <div class="w-25 p-3 d-flex align-items-center">
+            Show
+            <select wire:model="paginate" name="" id="" class="form-control mx-2">
+                <option value='10'>10</option>
+                <option value='25'>25</option>
+                <option value='50'>50</option>
+                <option value='100'>100</option>
 
-        </select>
-        entries
+            </select>
+            entries
+        </div>
     </div>
-
     <table class="table table-bordered">
         <thead>
         <tr class="blue-background text-white">
@@ -33,7 +34,9 @@
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchID" type="text" class="form-control" placeholder="Search ID">
             </th>
-            <th class="p-1"></th>
+            <th class="p-1">
+                <input wire:model.debounce:500ms="searchModel" type="text" class="form-control" placeholder="Search Model">
+            </th>
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchDerivative" type="text" class="form-control" placeholder="Search Derivatives">
             </th>
@@ -49,7 +52,9 @@
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchBuildDate" type="text" class="form-control" placeholder="Search Build Date">
             </th>
-            <th class="p-1"></th>
+            <th class="p-1">
+                <input wire:model.debounce:500ms="searchDueDate" type="text" class="form-control" placeholder="Search Due Date">
+            </th>
             <th class="p-1">
                 <select wire:model="searchStatus" name="status" id="status" class="form-control">
                     <option value="">Select Status</option>
@@ -147,5 +152,11 @@
     @endforeach
         </tbody>
     </table>
-    {{ $orders->links() }}
+    <div class="d-flex justify-content-between">
+        <p>Showing {{ $orders->firstItem() }} - {{ $orders->lastItem() }} of {{$orders->total()}}</p>
+        <div>
+            {{ $orders->links() }}
+        </div>
+    </div>
+
 </div>

@@ -20,6 +20,7 @@ class OrderTable extends Component
 
     public $status;
     public $searchID;
+    public $searchModel;
     public $searchDerivative;
     public $searchOrderNumber;
     public $searchOrbitNumber;
@@ -74,6 +75,11 @@ class OrderTable extends Component
             ->when($this->searchID, function ($query) {
                 $query->where('id', 'like', '%'.$this->searchID.'%');
             })
+            ->when($this->searchModel, function ($query) {
+                $query->whereHas('vehicle', function ($query) {
+                    $query->where('model', 'like', '%'.$this->searchModel.'%');
+                });
+            })
             ->when($this->searchDerivative, function ($query) {
                 $query->whereHas('vehicle', function ($query) {
                     $query->where('derivative', 'like', '%'.$this->searchDerivative.'%');
@@ -93,6 +99,9 @@ class OrderTable extends Component
                 $query->whereHas('vehicle', function ($query) {
                     $query->where('reg', 'like', '%'.$this->searchReg.'%');
                 });
+            })
+            ->when($this->searchDueDate, function ($query) {
+                $query->where('due_date', 'like', '%'.$this->searchDueDate.'%');
             })
             ->when($this->searchBuildDate, function ($query) {
                 $query->whereHas('vehicle', function ($query) {

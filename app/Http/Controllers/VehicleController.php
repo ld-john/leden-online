@@ -28,15 +28,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class VehicleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return void
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -46,17 +37,6 @@ class VehicleController extends Controller
     public function create()
     {
         return view('vehicles.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -82,21 +62,10 @@ class VehicleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param Vehicle $vehicle
-     * @return void
-     */
-    public function update(Request $request, Vehicle $vehicle)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param Vehicle $vehicle
+     * @return RedirectResponse
      */
     public function destroy(Vehicle $vehicle)
     {
@@ -104,124 +73,18 @@ class VehicleController extends Controller
         return redirect()->route('pipeline')->with('successMsg', 'Vehicle #' . $vehicle->id . ' deleted successfully - ' . $vehicle->niceName() );
     }
 
-    public function buildNewVehicle()
+    public function showFordPipeline()
     {
-
-        $orders = OrderLegacy::withTrashed()->get();
-
-        foreach ( $orders as $order ) {
-
-            $vehicle = new Vehicle();
-
-            $vehicle->vehicle_status = $order->vehicle_status;
-            $vehicle->reg = $order->vehicle_reg;
-            $vehicle->model_year = $order->model_year;
-            $vehicle->make = $order->vehicle_make;
-            $vehicle->model = $order->vehicle_model;
-            $vehicle->derivative = $order->vehicle_derivative;
-            $vehicle->engine = $order->vehicle_engine;
-            $vehicle->transmission = $order->vehicle_trans;
-            $vehicle->fuel_type = $order->vehicle_fuel_type;
-            $vehicle->doors = $order->vehicle_doors;
-            $vehicle->colour = $order->vehicle_colour;
-            $vehicle->body = $order->vehicle_body;
-            $vehicle->trim = $order->vehicle_trim;
-            $vehicle->chassis_prefix = $order->chassis_prefix;
-            $vehicle->chassis = $order->chassis;
-            $vehicle->type = $order->vehicle_type;
-            $vehicle->metallic_paint = $order->metallic_paint;
-            $vehicle->list_price = $order->list_price;
-            $vehicle->first_reg_fee = $order->first_reg_fee;
-            $vehicle->rfl_cost = $order->rfl_cost;
-            $vehicle->onward_delivery = $order->onward_delivery;
-            $vehicle->vehicle_registered_on = $order->vehicle_registered_on;
-            $vehicle->hide_from_broker = $order->hide_from_broker;
-            $vehicle->hide_from_dealer = $order->hide_from_dealer;
-            $vehicle->show_in_ford_pipeline = $order->show_in_ford_pipeline;
-            $vehicle->deleted_at = $order->deleted_at;
-
-            $vehicle->save();
-
-        }
-
-        dd( 'Done' );
-
-    }
-
-
-    public function showFordPipeline(Request $request)
-    {
-
-        $data = Vehicle::select('id', 'make', 'model', 'derivative', 'reg', 'engine', 'doors', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
-            ->with('manufacturer:id,name')
-            ->where('show_in_ford_pipeline', true)->get();
-
-        if (Auth::user()->role == 'dealer') {
-            $data = $data->where('hide_from_dealer', false );
-        }
-
-        if (Auth::user()->role == 'broker') {
-            $data = $data->where('hide_from_broker', false );
-        }
-
-        return view('vehicles.index', ['data' => $data, 'title' => 'Ford Pipeline', 'active_page'=> 'ford-pipeline']);
+        return view('vehicles.index', ['ringfenced' => false, 'fordpipeline' =>true, 'title' => 'Ford Pipeline', 'active_page'=> 'ford-pipeline']);
     }
 
     public function showLedenStock()
-    {
-        $data = Vehicle::select('id', 'orbit_number', 'ford_order_number', 'make', 'model', 'derivative', 'reg', 'engine', 'vehicle_status', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
-            ->with('manufacturer:id,name')
-            ->with('order:id,vehicle_id')
-            ->where('ring_fenced_stock', false)
-            ->where('show_in_ford_pipeline', false)->get();
-
-        if (Auth::user()->role == 'dealer') {
-            $data = $data->where('hide_from_dealer', false );
-        }
-
-        if (Auth::user()->role == 'broker') {
-            $data = $data->where('hide_from_broker', false );
-        }
-
-        $stock = [];
-        foreach ($data as $k => $vehicle) {
-            if (!isset($vehicle->order)){
-                $stock[$k] = $vehicle;
-            }
-        }
-
-        return view('vehicles.index', ['data'=> $stock, 'title' => 'Leden Stock', 'active_page'=> 'pipeline']);
+    {        return view('vehicles.index', ['ringfenced' => false, 'fordpipeline' => false, 'title' => 'Leden Stock', 'active_page'=> 'pipeline']);
     }
 
     public function showRingFencedStock()
     {
-        $data = Vehicle::select('id', 'orbit_number', 'ford_order_number', 'make', 'model', 'derivative', 'reg', 'engine', 'vehicle_status', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options', 'broker_id')
-            ->with('manufacturer:id,name')
-            ->with('order:id,vehicle_id')
-            ->where('ring_fenced_stock', true)
-            ->where('show_in_ford_pipeline', false)->get();
-
-        if (Auth::user()->role == 'broker') {
-            $data = $data->where('hide_from_broker', false );
-            $data = $data->where('broker_id', Auth::user()->company_id);
-        }
-
-        $stock = [];
-        foreach ($data as $k => $vehicle) {
-            if (!isset($vehicle->order)){
-                $stock[$k] = $vehicle;
-            }
-        }
-
-        return view('vehicles.index', ['data'=> $stock, 'title' => 'Ring Fenced Stock', 'active_page'=> 'ring_fenced_stock']);
-    }
-
-
-    public function deleteSelected()
-    {
-        $ids = request()->input('ids');
-
-        Vehicle::destroy($ids);
+        return view('vehicles.index', ['ringfenced'=> true, 'fordpipeline' => false, 'title' => 'Ring Fenced Stock', 'active_page'=> 'ring_fenced_stock']);
     }
 
     /**

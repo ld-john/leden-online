@@ -17,69 +17,70 @@
                 <div class="card shadow mb-4">
                     <!-- Card Body -->
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-sm" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>ID</th>
-                                    <th>Make</th>
-                                    <th>Model</th>
+                        @livewire('vehicle-table', ['ringfenced' => $ringfenced, 'fordpipeline' => $fordpipeline])
+{{--                        <div class="table-responsive">--}}
+{{--                            <table class="table table-bordered table-striped table-sm" id="dataTable" width="100%" cellspacing="0">--}}
+{{--                                <thead>--}}
+{{--                                <tr>--}}
+{{--                                    <th></th>--}}
+{{--                                    <th>ID</th>--}}
+{{--                                    <th>Make</th>--}}
+{{--                                    <th>Model</th>--}}
 
-                                    <th>Ford Order Number</th>
-                                    <th>Derivative</th>
-                                    <th>Engine</th>
-                                    <th>Colour</th>
-                                    <th>Type</th>
-                                    <th>Chassis</th>
-                                    <th>Registration</th>
-                                    @if ($active_page === 'ring_fenced_stock')
-                                        <th>Broker</th>
-                                    @endif
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach( $data as $row )
-                                    @if(! $row->order()->exists())
-                                        <tr>
-                                            <td></td>
-                                            <td>
-                                                <strong>{{ $row->id ?? '' }}</strong>
-                                                @if($row->orbit_number)
-                                                    <br>(Orbit Number: {{ $row->orbit_number }})
-                                                @endif
-                                            </td>
-                                            <td>{{ $row->manufacturer->name ?? '' }}</td>
-                                            <td>{{ $row->model ?? '' }}</td>
-                                            <td>{{ $row->ford_order_number ?? '' }}</td>
-                                            <td>{{ $row->derivative ?? '' }}</td>
-                                            <td>{{ $row->engine ?? '' }}</td>
-                                            <td>{{ $row->colour ?? '' }}</td>
-                                            <td>{{ $row->type ?? '' }}</td>
-                                            <td>{{ $row->chassis ?? '' }}</td>
-                                            <td>{{ $row->reg ?? '' }}</td>
-                                            @if ($active_page === 'ring_fenced_stock')
-                                                <td>{{ $row->broker->company_name }}</td>
-                                            @endif
-                                            <td>{{ $row->status() }}</td>
-                                            <td width="100px">
-                                                <a href="{{route('vehicle.show', $row->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Vehicle Information"><i class="far fa-eye"></i></a>
-                                                @can('admin')
-                                                    <a href="{{route('edit_vehicle', $row->id)}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Vehicle Information"><i class="fas fa-edit"></i></a>
-                                                    <a href="{{route('order.reserve', $row->id)}}" class="btn btn-primary" data-toggle="tooltip" title="Create order with Vehicle"><i class="fas fa-plus-square"></i></a>
-                                                    <a data-toggle="tooltip" title="Delete Vehicle">
-                                                        <livewire:delete-vehicle :vehicle="$row->id" />
-                                                    </a>
-                                                @endcan
-                                            </td>
-                                        </tr>
-                                    @endif
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+{{--                                    <th>Ford Order Number</th>--}}
+{{--                                    <th>Derivative</th>--}}
+{{--                                    <th>Engine</th>--}}
+{{--                                    <th>Colour</th>--}}
+{{--                                    <th>Type</th>--}}
+{{--                                    <th>Chassis</th>--}}
+{{--                                    <th>Registration</th>--}}
+{{--                                    @if ($active_page === 'ring_fenced_stock')--}}
+{{--                                        <th>Broker</th>--}}
+{{--                                    @endif--}}
+{{--                                    <th>Status</th>--}}
+{{--                                    <th>Action</th>--}}
+{{--                                </tr>--}}
+{{--                                </thead>--}}
+{{--                                <tbody>--}}
+{{--                                @foreach( $data as $row )--}}
+{{--                                    @if(! $row->order()->exists())--}}
+{{--                                        <tr>--}}
+{{--                                            <td></td>--}}
+{{--                                            <td>--}}
+{{--                                                <strong>{{ $row->id ?? '' }}</strong>--}}
+{{--                                                @if($row->orbit_number)--}}
+{{--                                                    <br>(Orbit Number: {{ $row->orbit_number }})--}}
+{{--                                                @endif--}}
+{{--                                            </td>--}}
+{{--                                            <td>{{ $row->manufacturer->name ?? '' }}</td>--}}
+{{--                                            <td>{{ $row->model ?? '' }}</td>--}}
+{{--                                            <td>{{ $row->ford_order_number ?? '' }}</td>--}}
+{{--                                            <td>{{ $row->derivative ?? '' }}</td>--}}
+{{--                                            <td>{{ $row->engine ?? '' }}</td>--}}
+{{--                                            <td>{{ $row->colour ?? '' }}</td>--}}
+{{--                                            <td>{{ $row->type ?? '' }}</td>--}}
+{{--                                            <td>{{ $row->chassis ?? '' }}</td>--}}
+{{--                                            <td>{{ $row->reg ?? '' }}</td>--}}
+{{--                                            @if ($active_page === 'ring_fenced_stock')--}}
+{{--                                                <td>{{ $row->broker->company_name }}</td>--}}
+{{--                                            @endif--}}
+{{--                                            <td>{{ $row->status() }}</td>--}}
+{{--                                            <td width="100px">--}}
+{{--                                                <a href="{{route('vehicle.show', $row->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Vehicle Information"><i class="far fa-eye"></i></a>--}}
+{{--                                                @can('admin')--}}
+{{--                                                    <a href="{{route('edit_vehicle', $row->id)}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Vehicle Information"><i class="fas fa-edit"></i></a>--}}
+{{--                                                    <a href="{{route('order.reserve', $row->id)}}" class="btn btn-primary" data-toggle="tooltip" title="Create order with Vehicle"><i class="fas fa-plus-square"></i></a>--}}
+{{--                                                    <a data-toggle="tooltip" title="Delete Vehicle">--}}
+{{--                                                        <livewire:delete-vehicle :vehicle="$row->id" />--}}
+{{--                                                    </a>--}}
+{{--                                                @endcan--}}
+{{--                                            </td>--}}
+{{--                                        </tr>--}}
+{{--                                    @endif--}}
+{{--                                @endforeach--}}
+{{--                                </tbody>--}}
+{{--                            </table>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
 
