@@ -19,6 +19,7 @@ class OrderTable extends Component
     }
 
     public $status;
+    public $view;
     public $searchID;
     public $searchModel;
     public $searchDerivative;
@@ -27,6 +28,7 @@ class OrderTable extends Component
     public $searchReg;
     public $searchBuildDate;
     public $searchDueDate;
+    public $searchDeliveryDate;
     public $searchStatus;
     public $searchCustomer;
     public $searchBrokerRef;
@@ -36,9 +38,10 @@ class OrderTable extends Component
     public $brokerID;
     public $dealerID;
 
-    public function mount($status)
+    public function mount($status, $view)
     {
         $this->status = $status;
+        $this->view = $view;
         if( Auth::user()->role === 'broker' ) {
             $this->brokerID = Auth::user()->company->id;
         } elseif ( Auth::user()->role === 'dealer' ) {
@@ -58,6 +61,7 @@ class OrderTable extends Component
                 'customer_id',
                 'order_ref',
                 'due_date',
+                'delivery_date',
                 'broker_ref',
             )
             ->with([
@@ -102,6 +106,9 @@ class OrderTable extends Component
             })
             ->when($this->searchDueDate, function ($query) {
                 $query->where('due_date', 'like', '%'.$this->searchDueDate.'%');
+            })
+            ->when($this->searchDeliveryDate, function ($query) {
+                $query->where('delivery_date', 'like', '%'.$this->searchDeliveryDate.'%');
             })
             ->when($this->searchBuildDate, function ($query) {
                 $query->whereHas('vehicle', function ($query) {

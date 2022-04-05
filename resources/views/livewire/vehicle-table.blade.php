@@ -26,6 +26,9 @@
             <th>Registration</th>
             <th>Planned Build Date</th>
             <th>Dealership</th>
+            @if($ringfenced)
+                <th>Broker</th>
+            @endif
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -64,6 +67,11 @@
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchDealer" type="text" class="form-control" placeholder="Search Dealer">
             </th>
+            @if($ringfenced)
+            <th class="p-1">
+                <input wire:model.debounce:500ms="searchBroker" type="text" class="form-control" placeholder="Search Broker">
+            </th>
+            @endif
             <th class="p-1">
                 <select wire:model="searchStatus" name="status" id="status" class="form-control">
                     <option value="">Select Status</option>
@@ -125,12 +133,23 @@
                 <td>{{ $vehicle->type }}</td>
                 <td>{{ $vehicle->chassis }}</td>
                 <td>{{ $vehicle->reg }}</td>
-                <td>{{ $vehicle->build_date }}</td>
+                @if ( empty( $vehicle->build_date) || $vehicle->build_date == '0000-00-00 00:00:00')
+                    <td></td>
+                @else
+                    <td>{{ \Carbon\Carbon::parse($vehicle->build_date ?? '')->format( 'd/m/Y' )}}</td>
+                @endif
                 <td>
                     @if ($vehicle->dealer)
                         {{ $vehicle->dealer->company_name }}
                     @endif
                 </td>
+                @if($ringfenced)
+                    <td>
+                    @if($vehicle->broker)
+                        {{ $vehicle->broker->company_name }}
+                    @endif
+                    </td>
+                @endif
                 <td>{{ $vehicle->status() }}</td>
                 <td width="120px">
                     <a href="{{route('vehicle.show', $vehicle->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Vehicle Information"><i class="far fa-eye"></i></a>

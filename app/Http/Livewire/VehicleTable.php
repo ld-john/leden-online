@@ -3,10 +3,22 @@
 namespace App\Http\Livewire;
 
 use App\Vehicle;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class VehicleTable extends Component
 {
+
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
+    public function getQueryString(): array
+    {
+        return [];
+    }
+
     public $paginate = 10;
     public $ringfenced;
     public $fordpipeline;
@@ -23,18 +35,29 @@ class VehicleTable extends Component
     public $searchRegistration;
     public $searchBuildDate;
     public $searchDealer;
+    public $role;
 
     public function mount($ringfenced, $fordpipeline)
     {
         $this->ringfenced = $ringfenced;
         $this->fordpipeline = $fordpipeline;
+        $this->role = Auth::user()->role;
     }
 
     public function render()
     {
-        $data = Vehicle::select('id', 'orbit_number', 'ford_order_number', 'make', 'model', 'derivative', 'reg', 'engine', 'vehicle_status', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
+        $data = Vehicle::select('id', 'orbit_number', 'ford_order_number', 'make', 'model', 'derivative', 'reg', 'engine', 'vehicle_status', 'colour', 'type','chassis', 'dealer_fit_options', 'dealer_id','broker_id', 'build_date', 'factory_fit_options')
             ->with('manufacturer:id,name')
             ->with('order:id,vehicle_id')
+            ->when($this->role === 'broker', function ($query) {
+                $query->where('hide_from_broker', false);
+            })
+            ->when($this->role === 'broker' && $this->ringfenced, function ($query) {
+                $query->where('broker_id', Auth::user()->company->id);
+            })
+            ->when($this->role === 'dealer', function ($query) {
+                $query->where('hide_from_dealer', false);
+            })
             ->where('ring_fenced_stock', $this->ringfenced)
             ->where('show_in_ford_pipeline', $this->fordpipeline)
             ->doesntHave('order')

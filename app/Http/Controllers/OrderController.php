@@ -133,50 +133,19 @@ class OrderController extends Controller
 		return view('order.reserve', ['vehicle' => $vehicle, 'order' => $order]);
 	}
 
-	public function showOrderBank(Request $request)
+	public function showOrderBank()
 	{
 		return view('order.index', ['title' => 'Order Bank', 'active_page' => 'order-bank', 'route' => 'order_bank', 'status' => [1,4,10,11,12,13]]);
 	}
 
-	public function completedOrders(Request $request)
+	public function completedOrders()
 	{
 		return view('order.index', ['title' => 'Completed Orders', 'active_page' => 'completed-orders', 'route' => 'completed_orders', 'status' => [7]]);
 	}
 
-	public function showManageDeliveries(Request $request)
+	public function showManageDeliveries()
 	{
-
-		$data = Order::latest()
-			->whereHas('vehicle', function($q){
-				$q->whereIn('vehicle_status', [3,6]);
-			})
-			->select(
-				'id',
-				'vehicle_id',
-				'broker_id',
-				'dealer_id',
-				'customer_id',
-				'order_ref',
-				'delivery_date',
-				'due_date',
-				'broker_ref',
-			)
-			->with([
-				'vehicle:id,vehicle_status,ford_order_number,model,derivative,reg,orbit_number',
-				'customer:id,customer_name',
-				'broker:id,company_name',
-				'dealer:id,company_name'
-			])->get();
-
-		if (Auth::user()->role == 'dealer') {
-			$data = $data->where('dealer_id', Auth::user()->company_id );
-		}
-
-		if (Auth::user()->role == 'broker') {
-			$data = $data->where('broker_id', Auth::user()->company_id );
-		}
-
-		return view('order.deliveries', ['data' => $data]);
+		return view('order.deliveries', ['status' => [3, 6]]);
 	}
 
 
@@ -252,8 +221,6 @@ class OrderController extends Controller
 
             }
 		}
-
-
 
 		return redirect()->route('order.show', $order->id)->with('successMsg', 'You have accepted the proposed delivery date');
 	}
@@ -483,6 +450,22 @@ class OrderController extends Controller
 		return $pdf->download('leden-order-' . $order->id . '.pdf');
 
 	}
+
+    public function VehicleBrokerDealerCleanup()
+    {
+        Order::chunk(100, function($orders) {
+            foreach ($orders as $order) {
+                $vehicle = $order->vehicle;
+                if ($vehicle) {
+                    $vehicle->update([
+                        'broker_id' => $order->broker_id,
+                        'dealer_id' => $order->dealer_id
+                    ]);
+                }
+            }
+            var_dump('Done');
+        });
+    }
 
 	public function DateChangeEmail($company_id, Order $order)
 	{

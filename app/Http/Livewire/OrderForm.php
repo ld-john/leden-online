@@ -443,6 +443,8 @@ class OrderForm extends Component
 
             $vehicle->vehicle_status = $this->status;
             $vehicle->reg = $this->registration;
+            $vehicle->dealer_id = $this->dealership;
+            $vehicle->broker_id = $this->broker;
             $vehicle->vehicle_registered_on = $this->registered_date;
             $vehicle->model_year = $this->model_year;
             $vehicle->ford_order_number = $this->order_ref;
@@ -546,6 +548,8 @@ class OrderForm extends Component
 
             $vehicle->vehicle_status = $this->status;
             $vehicle->reg = $this->registration;
+            $vehicle->broker_id = $this->broker;
+            $vehicle->dealer_id = $this->dealership;
             $vehicle->orbit_number = $this->orbit_number;
             $vehicle->ford_order_number = $this->order_ref;
             $vehicle->broker_id = $this->broker;
