@@ -269,7 +269,11 @@
                             @can('admin')
                                 <a data-toggle="tooltip" title="Delete Order"><livewire:delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
                                 <a data-toggle="tooltip" title="Quick Edit"> <livewire:quick-edit-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
+                                @if($order->vehicle->vehicle_registered_on && $order->vehicle->vehicle_registered_on < $now)
+                                    <a wire:click="markCompleted({{$order->id}})" data-toggle="tooltip" title="Mark as Complete" class="btn btn-success"><i class="fa-solid fa-check"></i></a>
+                                @endif
                             @endcan
+
                         </div>
                     </td>
                 </tr>

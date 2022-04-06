@@ -487,9 +487,6 @@
                             <option value="6">
                                 Delivery Booked
                             </option>
-                            <option value="7">
-                                Completed Orders
-                            </option>
                             <option value="10">
                                 Europe VHC
                             </option>

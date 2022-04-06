@@ -21,6 +21,8 @@ class QuickEditOrder extends Component
     public $order_number;
     public $build_date;
     public $order_date;
+    public $registered_date;
+    public $now;
     protected $rules = [
         'due_date' => 'nullable|date',
         'build_date' => 'nullable|date'
@@ -38,6 +40,15 @@ class QuickEditOrder extends Component
     {
         $this->order = $order;
         $this->vehicle = $vehicle;
+
+        $this->now = date('d/m/Y');
+        if ($order->vehicle->vehicle_registered_on && $order->vehicle->vehicle_registered_on != '0000-00-00 00:00:00' )
+        {
+            $tempDate = new DateTime($order->vehicle->vehicle_registered_on);
+            $this->registered_date = $tempDate->format('d/m/Y');
+        } else {
+            $this->registered_date = null;
+        }
 
         $this->order_number = $vehicle->ford_order_number;
         $this->registration = $vehicle->reg;

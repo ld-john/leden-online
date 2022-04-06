@@ -37,9 +37,12 @@ class OrderTable extends Component
     public $paginate = 10;
     public $brokerID;
     public $dealerID;
+    public $now;
 
     public function mount($status, $view)
     {
+        $this->now = date('Y-m-d h:i:s');
+
         $this->status = $status;
         $this->view = $view;
         if( Auth::user()->role === 'broker' ) {
@@ -47,6 +50,15 @@ class OrderTable extends Component
         } elseif ( Auth::user()->role === 'dealer' ) {
             $this->dealerID = Auth::user()->company->id;
         }
+    }
+
+    public function markCompleted(Order $order)
+    {
+        $vehicle = $order->vehicle;
+
+        $vehicle->update(['vehicle_status' => 7]);
+
+        $order->update(['completed_date' => $this->now]);
     }
 
     public function render()
@@ -63,9 +75,10 @@ class OrderTable extends Component
                 'due_date',
                 'delivery_date',
                 'broker_ref',
+
             )
             ->with([
-                'vehicle:id,model,ford_order_number,build_date,derivative,reg,vehicle_status,orbit_number',
+                'vehicle:id,model,ford_order_number,build_date,derivative,reg,vehicle_status,orbit_number,vehicle_registered_on',
                 'customer:id,customer_name',
                 'broker:id,company_name',
                 'dealer:id,company_name'

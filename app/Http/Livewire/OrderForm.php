@@ -120,6 +120,7 @@ class OrderForm extends Component
     public $attachments = [];
     public $fields = 1;
     public $successMsg;
+    public $now;
     protected $rules = [
         'make' => 'required_without:newmake',
         'model' => 'required',
@@ -171,6 +172,7 @@ class OrderForm extends Component
      */
     public function mount()
     {
+        $this->now = date('d/m/Y');
         $newCustomer = $this->newCustomer;
 
         if (isset ($this->vehicle))

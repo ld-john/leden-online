@@ -53,9 +53,11 @@
                         <option value="6">
                             Delivery Booked
                         </option>
+                        @if ($registered_date && $registered_date < $now)
                         <option value="7">
                             Completed Orders
                         </option>
+                        @endif
                         <option value="10">
                             Europe VHC
                         </option>
