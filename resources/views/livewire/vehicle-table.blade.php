@@ -20,6 +20,7 @@
             <th>Ford Order Number</th>
             <th>Derivative</th>
             <th>Engine</th>
+            <th>Transmission</th>
             <th>Colour</th>
             <th>Type</th>
             <th>Chassis</th>
@@ -30,6 +31,7 @@
                 <th>Broker</th>
             @endif
             <th>Status</th>
+            <th>Last Updated</th>
             <th>Action</th>
         </tr>
         <tr class="bg-light">
@@ -44,10 +46,13 @@
                 <input wire:model.debounce:500ms="searchOrderNumber" type="text" class="form-control" placeholder="Search Ford Order Number">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="SearchDerivative" type="text" class="form-control" placeholder="Search Derivative">
+                <input wire:model.debounce:500ms="searchDerivative" type="text" class="form-control" placeholder="Search Derivative">
             </th>
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchEngine" type="text" class="form-control" placeholder="Search Engine">
+            </th>
+            <th class="p-1">
+                <input wire:model.debounce:500ms="searchTransmission" type="text" class="form-control" placeholder="Search Transmission">
             </th>
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchColour" type="text" class="form-control" placeholder="Search Colour">
@@ -113,6 +118,7 @@
                 </select>
             </th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -129,6 +135,7 @@
                 <td>{{ $vehicle->ford_order_number }}</td>
                 <td>{{ $vehicle->derivative }}</td>
                 <td>{{ $vehicle->engine }}</td>
+                <td>{{ $vehicle->transmission }}</td>
                 <td>{{ $vehicle->colour }}</td>
                 <td>{{ $vehicle->type }}</td>
                 <td>{{ $vehicle->chassis }}</td>
@@ -151,6 +158,9 @@
                     </td>
                 @endif
                 <td>{{ $vehicle->status() }}</td>
+                <td>
+                    {{ \Carbon\Carbon::parse($vehicle->updated_at)->format( 'd/m/Y h:ia') }}
+                </td>
                 <td width="120px">
                     <a href="{{route('vehicle.show', $vehicle->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Vehicle Information"><i class="far fa-eye"></i></a>
                     @can('admin')
@@ -159,12 +169,17 @@
                         <a data-toggle="tooltip" title="Delete Vehicle">
                             <livewire:delete-vehicle :vehicle="$vehicle->id" :key="time().$vehicle->id" />
                         </a>
+                        @if($vehicle->ring_fenced_stock === 1)
+                            <a wire:click="unRingFenceVehicle({{ $vehicle->id }})" class="btn btn-primary" data-toggle="tooltip" title="Move to Leden Stock"><i class="fa-solid fa-car"></i></a>
+                        @else
+                            <livewire:ring-fence-modal :vehicle="$vehicle->id" :key="time().$vehicle->id" />
+                        @endif
                     @endcan
                 </td>
             </tr>
         @empty
             <tr>
-                <td colspan="14"><strong>No Results found</strong></td>
+                <td colspan="17"><strong>No Results found</strong></td>
             </tr>
         @endforelse
         </tbody>

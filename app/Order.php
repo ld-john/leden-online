@@ -12,9 +12,6 @@ class Order extends Model
     use SoftDeletes;
 
     protected $guarded = [];
-    /**
-     * @var mixed
-     */
 
     public function vehicle(): \Illuminate\Database\Eloquent\Relations\HasOne
     {

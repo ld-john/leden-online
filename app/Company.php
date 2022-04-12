@@ -13,8 +13,13 @@ class Company extends Model
 
     protected $guarded = [];
 
-    public function vehicles()
+    public function vehicles(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
     	return $this->hasMany(Vehicle::class, 'dealer_id', 'id');
+    }
+
+    public function users(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(User::class, 'company_id', 'id');
     }
 }

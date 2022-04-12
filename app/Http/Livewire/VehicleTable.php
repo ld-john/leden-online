@@ -20,6 +20,7 @@ class VehicleTable extends Component
     }
 
     public $paginate = 10;
+
     public $ringfenced;
     public $fordpipeline;
     public $stock;
@@ -35,6 +36,7 @@ class VehicleTable extends Component
     public $searchRegistration;
     public $searchBuildDate;
     public $searchDealer;
+    public $searchBroker;
     public $role;
 
     public function mount($ringfenced, $fordpipeline)
@@ -44,9 +46,14 @@ class VehicleTable extends Component
         $this->role = Auth::user()->role;
     }
 
+    public function unRingFenceVehicle(Vehicle $vehicle)
+    {
+        $vehicle->update(['ring_fenced_stock' => 0, 'broker_id' => null]);
+    }
+
     public function render()
     {
-        $data = Vehicle::select('id', 'orbit_number', 'ford_order_number', 'make', 'model', 'derivative', 'reg', 'engine', 'vehicle_status', 'colour', 'type','chassis', 'dealer_fit_options', 'dealer_id','broker_id', 'build_date', 'factory_fit_options')
+        $data = Vehicle::select('id', 'orbit_number', 'ford_order_number', 'make', 'model', 'derivative', 'reg', 'engine','transmission','ring_fenced_stock', 'vehicle_status', 'colour', 'type','chassis', 'dealer_fit_options', 'dealer_id','broker_id', 'build_date', 'factory_fit_options', 'updated_at')
             ->with('manufacturer:id,name')
             ->with('order:id,vehicle_id')
             ->when($this->role === 'broker', function ($query) {
@@ -99,6 +106,11 @@ class VehicleTable extends Component
             ->when($this->searchDealer, function ($query) {
                 $query->whereHas('dealer',function ($query) {
                     $query->where('company_name', 'like', '%'.$this->searchDealer.'%');
+                });
+            })
+            ->when($this->searchBroker, function ($query) {
+                $query->whereHas('broker', function($query) {
+                   $query->where('company_name', 'like', '%'.$this->searchBroker.'%');
                 });
             })
             ->paginate($this->paginate);

@@ -24,6 +24,7 @@ class Vehicle extends Model
     /**
      * @var mixed|string
      */
+    protected $touches = ['order'];
 
     public function order(): \Illuminate\Database\Eloquent\Relations\HasOne
     {

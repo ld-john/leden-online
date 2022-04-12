@@ -149,18 +149,33 @@
             </a>
         </li>
         @can('admin')
-            <li class="nav-item @if ($activePage == 'user-manager') active @endif">
-                <a class="nav-link" href="{{ route('user_manager') }}">
-                    <i class="fa-solid fa-users"></i>
-                    <span>User Listing</span>
+            <li class="nav-item @if ($activePage == 'user-manager' || $activePage === 'company-manager' || $activePage === 'customers') active @endif">
+                <a class="nav-link" data-toggle="collapse" href="#collapseListings" role="button" aria-expanded="false" aria-controls="collapseCSVUploads">
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <span>Listings</span>
                 </a>
             </li>
-            <li class="nav-item @if ($activePage === 'customers') active @endif">
-                <a class="nav-link" href="{{ route('customer.index') }}">
-                    <i class="fa-solid fa-user-group"></i>
-                    <span>Customers</span>
-                </a>
-            </li>
+
+            <div class="collapse" id="collapseListings">
+                <li class="nav-item @if ($activePage == 'user-manager') active @endif">
+                    <a class="nav-link" href="{{ route('user_manager') }}">
+                        <i class="fa-solid fa-users"></i>
+                        <span>User Listing</span>
+                    </a>
+                </li>
+                <li class="nav-item @if ($activePage == 'company-manager') active @endif">
+                    <a class="nav-link" href="{{ route('company_manager') }}">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Company Listings</span>
+                    </a>
+                </li>
+                <li class="nav-item @if ($activePage === 'customers') active @endif">
+                    <a class="nav-link" href="{{ route('customer.index') }}">
+                        <i class="fa-solid fa-user-group"></i>
+                        <span>Customers</span>
+                    </a>
+                </li>
+            </div>
             <li class="nav-item @if($activePage=== 'vehicle-recycle-bin') active @endif">
                 <a href="{{ route('vehicle.recycle_bin') }}" class="nav-link">
                     <i class="fa-solid fa-trash"></i>

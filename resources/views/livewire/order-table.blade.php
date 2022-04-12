@@ -29,6 +29,7 @@
             <th>Broker Order Ref</th>
             <th>Broker</th>
             <th>Dealership</th>
+            <th>Last Updated</th>
             <th>Action</th>
         </tr>
         <tr class="bg-light">
@@ -105,11 +106,12 @@
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchDealer" type="text" class="form-control" placeholder="Search Dealer">
             </th>
+            <th></th>
             <th class="p-1"></th>
         </tr>
         </thead>
         <tbody>
-        @foreach($orders as $order)
+        @forelse($orders as $order)
             <tr>
                 <td>{{ $order->id ?? '' }}</td>
                 <td>{{ $order->vehicle->model ?? ''}}</td>
@@ -138,6 +140,7 @@
                 <td>{{ $order->broker_ref ?? ''}}</td>
                 <td>{{ $order->broker->company_name ?? ''}}</td>
                 <td>{{ $order->dealer->company_name ?? ''}}</td>
+                <td>{{ \Carbon\Carbon::parse($order->updated_at)->format('d/m/Y h:ia') }}</td>
                 <td width="120px">
                     <div class="d-flex flex-wrap">
                         <a href="{{route('order.show', $order->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Order"><i class="far fa-eye"></i></a>
@@ -145,12 +148,16 @@
                             <a href="{{route('order.edit', $order->id)}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Order"><i class="fas fa-edit"></i></a>
                             <a data-toggle="tooltip" title="Copy Order"><livewire:duplicate-order :order="$order->id" :key="time().$order->id" /></a>
                             <a data-toggle="tooltip" title="Delete Order"><livewire:delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
-                            <a data-toggle="tooltip" title="Quick Edit"> <livewire:quick-edit-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
+                            <a data-toggle="tooltip" title="Quick Edit"> <livewire:quick-edit-order :order="$order->id" :vehicle="$order->vehicle" view="order" :key="time().$order->id" /></a>
                         @endcan
                     </div>
                 </td>
             </tr>
-    @endforeach
+        @empty
+            <tr>
+                <td colspan="15"> No Results found - Please try again</td>
+            </tr>
+        @endforelse
         </tbody>
     </table>
     @elseif($view === 'delivery')
@@ -168,6 +175,7 @@
                 <th>Broker Order Ref</th>
                 <th>Broker</th>
                 <th>Dealership</th>
+                <th>Last Updated</th>
                 <th>Action</th>
             </tr>
             <tr class="bg-light">
@@ -238,11 +246,12 @@
                 <th class="p-1">
                     <input wire:model.debounce:500ms="searchDealer" type="text" class="form-control" placeholder="Search Dealer">
                 </th>
+                <th></th>
                 <th class="p-1"></th>
             </tr>
             </thead>
             <tbody>
-            @foreach($orders as $order)
+            @forelse($orders as $order)
                 <tr>
                     <td>{{ $order->id ?? '' }}</td>
                     <td>{{ $order->vehicle->model ?? ''}}</td>
@@ -263,13 +272,14 @@
                     </td>
                     <td>{{ $order->broker->company_name ?? ''}}</td>
                     <td>{{ $order->dealer->company_name ?? ''}}</td>
+                    <td>{{ \Carbon\Carbon::parse($order->updated_at)->format('d/m/Y h:ia') }}</td>
                     <td width="120px">
                         <div class="d-flex flex-wrap">
                             <a href="{{route('order.show', $order->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Order"><i class="far fa-eye"></i></a>
                             @can('admin')
                                 <a data-toggle="tooltip" title="Delete Order"><livewire:delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
-                                <a data-toggle="tooltip" title="Quick Edit"> <livewire:quick-edit-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
-                                @if($order->vehicle->vehicle_registered_on && $order->vehicle->vehicle_registered_on < $now)
+                                <a data-toggle="tooltip" title="Quick Edit"> <livewire:quick-edit-order :order="$order->id" :vehicle="$order->vehicle" view="delivery" :key="time().$order->id" /></a>
+                                @if($order->vehicle->vehicle_registered_on && $order->vehicle->vehicle_registered_on !== '0000-00-00 00:00:00' && $order->vehicle->vehicle_registered_on < $now)
                                     <a wire:click="markCompleted({{$order->id}})" data-toggle="tooltip" title="Mark as Complete" class="btn btn-success"><i class="fa-solid fa-check"></i></a>
                                 @endif
                             @endcan
@@ -277,12 +287,18 @@
                         </div>
                     </td>
                 </tr>
-            @endforeach
+                @empty
+                    <tr>
+                        <td colspan="15"> No Results found - Please try again</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     @endif
     <div class="d-flex justify-content-between">
+        @if(!$orders->isEmpty())
         <p>Showing {{ $orders->firstItem() }} - {{ $orders->lastItem() }} of {{$orders->total()}}</p>
+        @endif
         <div>
             {{ $orders->links() }}
         </div>

@@ -22,7 +22,9 @@ class QuickEditOrder extends Component
     public $build_date;
     public $order_date;
     public $registered_date;
+    public $view;
     public $now;
+    public $return;
     protected $rules = [
         'due_date' => 'nullable|date',
         'build_date' => 'nullable|date'
@@ -36,10 +38,17 @@ class QuickEditOrder extends Component
     /**
      * @throws Exception
      */
-    public function mount(Order $order, Vehicle $vehicle)
+    public function mount(Order $order, Vehicle $vehicle, $view)
     {
         $this->order = $order;
         $this->vehicle = $vehicle;
+        $this->view = $view;
+
+        if ($this->view === 'order') {
+            $this->return = 'order_bank';
+        } else {
+            $this->return = 'manage_deliveries';
+        }
 
         $this->now = date('d/m/Y');
         if ($order->vehicle->vehicle_registered_on && $order->vehicle->vehicle_registered_on != '0000-00-00 00:00:00' )
@@ -85,6 +94,11 @@ class QuickEditOrder extends Component
             $this->order_date = DateTime::createFromFormat('d/m/Y', $this->order_date);
         }
 
+        if ($this->registered_date) {
+            $this->registered_date = DateTime::createFromFormat('d/m/Y', $this->registered_date);
+        }
+
+
         $this->validate();
 
         $this->vehicle->reg = $this->registration;
@@ -92,16 +106,20 @@ class QuickEditOrder extends Component
         $this->vehicle->orbit_number = $this->orbit_number;
         $this->vehicle->ford_order_number = $this->order_number;
         $this->vehicle->build_date = $this->build_date;
+        $this->vehicle->vehicle_registered_on = $this->registered_date;
         $this->vehicle->save();
 
-        $this->order->due_date = $this->due_date;
-        $this->order->created_at = $this->order_date;
-        $this->order->save();
+        $order = $this->order;
+
+        $order->due_date = $this->due_date;
+        $order->created_at = $this->order_date;
+        $order->save();
 
         $this->due_date = ( $this->due_date ? $this->due_date->format( 'd/m/Y') : null );
         $this->build_date = ( $this->build_date ? $this->build_date->format( 'd/m/Y') : null );
         $this->order_date = ( $this->order_date ? $this->order_date->format( 'd/m/Y' ) : null );
-        return $this->redirect(route('order_bank'));
+        $this->registered_date = ( $this->registered_date ? $this->registered_date->format( 'd/m/Y' ) : null );
+        return $this->redirect(route($this->return));
     }
 
     public function render()

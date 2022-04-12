@@ -5,14 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/CompanyTable.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/RingFenceModal.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/UserTable.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/company-table.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/ring-fence-modal.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/user-table.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/OrderTable.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/QuickEditOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/QuickEditOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/VehicleTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/VehicleTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Vehicle.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/companies/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/companies/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/quick-edit-customer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/quick-edit-customer.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/quick-edit-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/quick-edit-order.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/reporting/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/reporting/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/users/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -299,7 +314,15 @@
       <workItem from="1648723484147" duration="914000" />
       <workItem from="1649149581930" duration="3242000" />
       <workItem from="1649152902779" duration="38000" />
-      <workItem from="1649241612945" duration="3603000" />
+      <workItem from="1649241612945" duration="4547000" />
+      <workItem from="1649246521985" duration="600000" />
+      <workItem from="1649256247704" duration="4111000" />
+      <workItem from="1649319054255" duration="475000" />
+      <workItem from="1649320211685" duration="4000" />
+      <workItem from="1649331260237" duration="420000" />
+      <workItem from="1649335142007" duration="166000" />
+      <workItem from="1649682406887" duration="9152000" />
+      <workItem from="1649743054051" duration="3158000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -511,7 +534,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649152708004</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Marking Orders Complete requires the vehicle to have a registration date that has passed.">
+      <created>1649245802290</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1649245802290</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -551,6 +581,7 @@
     <MESSAGE value="Order Date Editable, delete customers connected to orders, RingFenced Stock Dealer added, due date can now be nulled by import, dealer and broker can't see other orders." />
     <MESSAGE value="Page Uniformity Changes" />
     <MESSAGE value="Page Uniformity Changes - Manage Deliveries now Livewire&#10;&#10;Quick Edit added to Manage Deliveries&#10;&#10;Dealers and Brokers should have accurate numbers." />
-    <option name="LAST_COMMIT_MESSAGE" value="Page Uniformity Changes - Manage Deliveries now Livewire&#10;&#10;Quick Edit added to Manage Deliveries&#10;&#10;Dealers and Brokers should have accurate numbers." />
+    <MESSAGE value="Marking Orders Complete requires the vehicle to have a registration date that has passed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Marking Orders Complete requires the vehicle to have a registration date that has passed." />
   </component>
 </project>
