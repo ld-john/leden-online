@@ -37,6 +37,7 @@ class VehicleTable extends Component
     public $searchBuildDate;
     public $searchDealer;
     public $searchBroker;
+    public $searchTransmission;
     public $role;
 
     public function mount($ringfenced, $fordpipeline)
@@ -78,6 +79,9 @@ class VehicleTable extends Component
             })
             ->when($this->searchModel, function ($query) {
                 $query->where('model', 'like', '%'.$this->searchModel.'%');
+            })
+            ->when($this->searchTransmission, function ($query) {
+                $query->where('transmission', 'like', '%'.$this->searchTransmission.'%');
             })
             ->when($this->searchOrderNumber, function ($query) {
                 $query->where('ford_order_number', 'like', '%'.$this->searchOrderNumber.'%');

@@ -28,7 +28,7 @@
                     Vehicle unsold
                 @endif
             </td>
-            <td>{{ $vehicle->order->order_ref ?? '' }}</td>
+            <td>{{ $vehicle->ford_order_number ?? '' }}</td>
             <td>{{ $vehicle->orbit_number }}</td>
             <td>{{ $vehicle->type }}</td>
             <td>{{ $vehicle->chassis }}</td>
