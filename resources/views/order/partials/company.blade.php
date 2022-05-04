@@ -85,15 +85,13 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="broker_order_ref">Broker Order Ref</label>
     <div class="col-md-6">
-        <input wire:model="broker_ref" type="text" name="broker_order_ref" id="broker_order_ref"
-               class="form-control" autocomplete="off" placeholder="e.g. Q1780361"/>
+        <input wire:model="broker_ref" type="text" name="broker_order_ref" id="broker_order_ref" class="form-control" autocomplete="off" />
     </div>
 </div>
 {{-- Order Ref --}}
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="order_ref"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Order Ref</label>
     <div class="col-md-6">
-        <input wire:model="order_ref" type="text" name="order_ref" id="order_ref" class="form-control"
-               autocomplete="off" placeholder="e.g. K0047"/>
+        <input wire:model="order_ref" type="text" name="order_ref" id="order_ref" class="form-control" autocomplete="off" />
     </div>
 </div>

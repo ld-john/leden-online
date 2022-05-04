@@ -3,7 +3,7 @@
     <label for="list_price" class="col-md-2 col-form-label">List Price (£)</label>
     <div class="col-md-6">
         <input wire:model="list_price" type="number" name="list_price" id="list_price" step=".01"
-               class="form-control" autocomplete="off" placeholder="e.g. 10985.24" onchange="invoiceValueChange()"/>
+               class="form-control" autocomplete="off" onchange="invoiceValueChange()"/>
     </div>
 </div>
 {{-- Metallic Paint --}}
@@ -11,7 +11,7 @@
     <label for="metallic_paint" class="col-md-2 col-form-label">Metallic Paint (£)</label>
     <div class="col-md-6">
         <input wire:model="metallic_paint" type="number" name="metallic_paint" id="metallic_paint" step=".01"
-               class="form-control" autocomplete="off" placeholder="e.g. 389.55" onchange="invoiceValueChange()" />
+               class="form-control" autocomplete="off" onchange="invoiceValueChange()" />
     </div>
 </div>
 {{-- Dealer Discount --}}
@@ -19,17 +19,15 @@
     <label for="dealer_discount" class="col-md-2 col-form-label">Dealer Discount (%)</label>
     <div class="col-md-6">
         <input wire:model="dealer_discount" type="number" name="dealer_discount" id="dealer_discount" step=".01"
-               class="form-control discount" autocomplete="off" placeholder="e.g. 2.857" onchange="invoiceValueChange()" />
+               class="form-control discount" autocomplete="off" onchange="invoiceValueChange()" />
     </div>
 </div>
 {{-- Manufacturer Discount --}}
 <div class="form-group row">
-    <label for="manufacturer_discount" class="col-md-2 col-form-label">Manufacturer Discount
-        (%)</label>
+    <label for="manufacturer_discount" class="col-md-2 col-form-label">Manufacturer Discount (%)</label>
     <div class="col-md-6">
         <input wire:model="manufacturer_discount" type="number" name="manufacturer_discount" id="manufacturer_discount"
-               step=".01" class="form-control discount" autocomplete="off"
-               placeholder="e.g. 3.879" onchange="invoiceValueChange()"/>
+               step=".01" class="form-control discount" autocomplete="off" onchange="invoiceValueChange()"/>
     </div>
 </div>
 {{-- Total Discount --}}
@@ -43,12 +41,11 @@
 </div>
 {{-- Manufacturer Delivery Cost --}}
 <div class="form-group row">
-    <label for="manufacturer_delivery_cost" class="col-md-2 col-form-label">Manufacturer
-        Delivery Cost (£)</label>
+    <label for="manufacturer_delivery_cost" class="col-md-2 col-form-label">Manufacturer Delivery Cost (£)</label>
     <div class="col-md-6">
         <input wire:model="manufacturer_delivery_cost" type="number" name="manufacturer_delivery_cost"
                id="manufacturer_delivery_cost" step=".01" class="form-control invoice-total"
-               autocomplete="off" placeholder="e.g. 88.59" onchange="invoiceValueChange()"/>
+               autocomplete="off" onchange="invoiceValueChange()"/>
     </div>
 </div>
 {{-- 1st Reg Fee --}}
@@ -56,7 +53,7 @@
     <label for="first_reg_fee" class="col-md-2 col-form-label">1st Reg Fee (£)</label>
     <div class="col-md-6">
         <input wire:model="first_reg_fee" type="number" name="first_reg_fee" id="first_reg_fee" step=".01"
-               class="form-control" autocomplete="off" placeholder="e.g. 199.99" onchange="invoiceValueChange()" />
+               class="form-control" autocomplete="off" onchange="invoiceValueChange()" />
     </div>
 </div>
 {{-- RFL --}}
@@ -64,7 +61,7 @@
     <label for="rfl_cost" class="col-md-2 col-form-label">RFL (£)</label>
     <div class="col-md-6">
         <input wire:model="rfl_cost" type="number" name="rfl_cost" id="rfl_cost" step=".01" class="form-control"
-               autocomplete="off" placeholder="e.g. 85.00" onchange="invoiceValueChange()"/>
+               autocomplete="off" onchange="invoiceValueChange()"/>
     </div>
 </div>
 {{-- Onward Delivery --}}
@@ -72,7 +69,7 @@
     <label for="onward_delivery" class="col-md-2 col-form-label">Onward Delivery (£)</label>
     <div class="col-md-6">
         <input wire:model="onward_delivery" type="number" name="onward_delivery" id="onward_delivery" step=".01"
-               class="form-control invoice-total" autocomplete="off" placeholder="e.g. 85.00" onchange="invoiceValueChange()"/>
+               class="form-control invoice-total" autocomplete="off" onchange="invoiceValueChange()"/>
     </div>
 </div>
 {{-- Invoice Funder For --}}
@@ -80,7 +77,7 @@
     <label for="invoice_funder_for" class="col-md-2 col-form-label">Invoice Funder For (£)</label>
     <div class="col-md-6">
         <input wire:model="invoice_funder_for" type="number" name="invoice_funder_for" id="invoice_funder_for" step=".01"
-               class="form-control" autocomplete="off" placeholder="e.g. 85.00" onchange="invoiceValueChange()"/>
+               class="form-control" autocomplete="off" onchange="invoiceValueChange()"/>
     </div>
 </div>
 {{-- Estimated Invoice Value --}}

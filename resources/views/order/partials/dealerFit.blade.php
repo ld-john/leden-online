@@ -11,12 +11,13 @@
     <div class="col-md-5">
         <div class="row dealer-row">
             <div class="col-md-6">
-                <input wire:model="dealer_fit_name_manual_add" type="text" class="form-control" placeholder="e.g. LED Lights"/>
+                <label for="name">Name</label>
+                <input wire:model="dealer_fit_name_manual_add" type="text" class="form-control" />
                 @error('dealer_fit_name_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror
             </div>
             <div class="col-md-6">
-                <input wire:model="dealer_fit_price_manual_add" type="number" step=".01" class="form-control"
-                       placeholder="e.g. 20.99"/>
+                <label for="price">Price</label>
+                <input wire:model="dealer_fit_price_manual_add" type="number" step=".01" class="form-control" />
                 @error('dealer_fit_price_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror
             </div>
         </div>

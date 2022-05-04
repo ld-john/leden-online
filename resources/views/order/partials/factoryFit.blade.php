@@ -11,12 +11,13 @@
     <div class="col-md-5 factory-row">
         <div class="row">
             <div class="col-md-6">
-                <input wire:model="factory_fit_name_manual_add" type="text" class="form-control" placeholder="e.g. LED Lights"/>
+                <label>Name</label>
+                <input wire:model="factory_fit_name_manual_add" type="text" class="form-control" />
                 @error('factory_fit_name_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror
             </div>
             <div class="col-md-6">
-                <input wire:model="factory_fit_price_manual_add" type="number" step=".01" class="form-control"
-                       placeholder="e.g. 189.99"/>
+                <label>Price</label>
+                <input wire:model="factory_fit_price_manual_add" type="number" step=".01" class="form-control" />
                 @error('factory_fit_price_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror
             </div>
         </div>

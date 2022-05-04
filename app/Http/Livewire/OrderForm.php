@@ -117,6 +117,14 @@ class OrderForm extends Component
     public $dealer_invoice_number;
     public $dealer_pay_date;
     public $dealer_invoice_override;
+    public $fleet_procure_invoice;
+    public $fleet_invoice_number;
+    public $fleet_procure_paid;
+    public $finance_bonus_invoice;
+    public $finance_company_bonus_invoice_number;
+    public $finance_company_bonus_pay_date;
+    public $ford_bonus_invoice;
+    public $ford_bonus_pay_date;
     public $attachments = [];
     public $fields = 1;
     public $successMsg;
@@ -220,40 +228,55 @@ class OrderForm extends Component
             if ( $this->order->due_date ) {
 
                 $del = new DateTime( $this->order->due_date);
-                $this->due_date = $del->format( 'd/m/Y');
+                $this->due_date = $del->format( 'Y-m-d');
 
             }
 
             if ( $this->order->delivery_date ) {
 
                 $del = new DateTime( $this->order->delivery_date );
-                $this->delivery_date = $del->format( 'd/m/Y');
+                $this->delivery_date = $del->format( 'Y-m-d');
 
             }
 
             if ( $this->order->vehicle->vehicle_registered_on) {
                 $reg = new DateTime( $this->order->vehicle->vehicle_registered_on );
-                $this->registered_date = $reg->format( 'd/m/Y' );
+                $this->registered_date = $reg->format( 'Y-m-d' );
             }
 
             if ($this->order->invoice->dealer_pay_date) {
                 $dpd = new DateTime ($this->order->invoice->dealer_pay_date);
-                $this->dealer_pay_date = $dpd->format('d/m/Y');
+                $this->dealer_pay_date = $dpd->format('Y-m-d');
             }
 
             if ($this->order->invoice->broker_pay_date) {
                 $dpd = new DateTime ($this->order->invoice->broker_pay_date);
-                $this->invoice_broker_paid = $dpd->format('d/m/Y');
+                $this->invoice_broker_paid = $dpd->format('Y-m-d');
             }
 
             if ($this->order->invoice->broker_commission_pay_date) {
                 $dpd = new DateTime ($this->order->invoice->broker_commission_pay_date);
-                $this->commission_broker_paid = $dpd->format('d/m/Y');
+                $this->commission_broker_paid = $dpd->format('Y-m-d');
             }
 
             if ($this->order->invoice->finance_commission_pay_date) {
                 $dpd = new DateTime ($this->order->invoice->finance_commission_pay_date);
-                $this->finance_commission_paid = $dpd->format('d/m/Y');
+                $this->finance_commission_paid = $dpd->format('Y-m-d');
+            }
+
+            if ($this->order->invoice->fleet_procure_pay_date) {
+                $date = new DateTime ($this->order->invoice->fleet_procure_pay_date);
+                $this->fleet_procure_paid = $date->format('Y-m-d');
+            }
+
+            if ($this->order->invoice->finance_company_bonus_pay_date) {
+                $date = new DateTime ($this->order->invoice->finance_company_bonus_pay_date);
+                $this->finance_company_bonus_pay_date = $date->format('Y-m-d');
+            }
+
+            if ($this->order->invoice->ford_bonus_pay_date) {
+                $date = new DateTime ($this->order->invoice->ford_bonus_pay_date);
+                $this->ford_bonus_pay_date = $date->format('Y-m-d');
             }
 
             $this->customer_id = $this->order->customer->id;
@@ -276,6 +299,11 @@ class OrderForm extends Component
             $this->manufacturer_discount = $this->order->invoice->manufacturer_discount;
             $this->invoice_funder_for = $this->order->invoice->invoice_funder_for;
             $this->manufacturer_delivery_cost = $this->order->invoice->manufacturer_delivery_cost;
+            $this->fleet_procure_invoice = $this->order->invoice->fleet_procure_invoice;
+            $this->fleet_invoice_number = $this->order->invoice->fleet_procure_invoice_number;
+            $this->finance_bonus_invoice = $this->order->invoice->finance_company_bonus_invoice;
+            $this->finance_company_bonus_invoice_number = $this->order->invoice->finance_company_bonus_invoice_number;
+            $this->ford_bonus_invoice = $this->order->invoice->ford_bonus;
 
             $this->order_ref = $this->order->vehicle->ford_order_number;
             $this->broker_ref = $this->order->broker_ref;
@@ -382,28 +410,6 @@ class OrderForm extends Component
             $this->orbit_number = null;
         }
 
-        if ($this->delivery_date) {
-            $this->delivery_date = DateTime::createFromFormat('d/m/Y', $this->delivery_date );
-        }
-        if ($this->due_date) {
-            $this->due_date = DateTime::createFromFormat('d/m/Y', $this->due_date );
-        }
-        if ($this->registered_date) {
-            $this->registered_date = DateTime::createFromFormat('d/m/Y', $this->registered_date);
-        }
-        if ($this->dealer_pay_date) {
-            $this->dealer_pay_date = DateTime::createFromFormat('d/m/Y', $this->dealer_pay_date);
-        }
-        if ($this->invoice_broker_paid) {
-            $this->invoice_broker_paid = DateTime::createFromFormat('d/m/Y', $this->invoice_broker_paid);
-        }
-        if ($this->commission_broker_paid) {
-            $this->commission_broker_paid = DateTime::createFromFormat('d/m/Y', $this->commission_broker_paid);
-        }
-        if ($this->finance_commission_paid) {
-            $this->finance_commission_paid = DateTime::createFromFormat('d/m/Y', $this->finance_commission_paid);
-        }
-
         $this->validate();
 
         if ( !isset( $this->order )) {
@@ -443,51 +449,11 @@ class OrderForm extends Component
                 }
             }
 
-            $vehicle->vehicle_status = $this->status;
-            $vehicle->reg = $this->registration;
-            $vehicle->dealer_id = $this->dealership;
-            $vehicle->broker_id = $this->broker;
-            $vehicle->vehicle_registered_on = $this->registered_date;
-            $vehicle->model_year = $this->model_year;
-            $vehicle->ford_order_number = $this->order_ref;
-            $vehicle->make = $this->make;
-            $vehicle->model = $this->model;
-            $vehicle->chassis = $this->chassis;
-            $vehicle->derivative = $this->derivative;
-            $vehicle->engine = $this->engine;
-            $vehicle->transmission = $this->transmission;
-            $vehicle->fuel_type = $this->fuel_type;
-            $vehicle->colour = $this->colour;
-            $vehicle->trim = $this->trim;
-            $vehicle->dealer_fit_options = isset($this->dealer_fit_options) ? json_encode($this->dealer_fit_options) : null;
-            $vehicle->factory_fit_options = isset($this->factory_fit_options) ? json_encode($this->factory_fit_options) : null;
-            $vehicle->chassis_prefix = $this->chassis_prefix;
-            $vehicle->type = $this->type;
-            $vehicle->metallic_paint = $this->metallic_paint;
-            $vehicle->list_price = $this->list_price;
-            $vehicle->first_reg_fee = $this->first_reg_fee;
-            $vehicle->rfl_cost = $this->rfl_cost;
-            $vehicle->broker_id = $this->broker;
-            $vehicle->dealer_id = $this->dealership;
-            $vehicle->onward_delivery = $this->onward_delivery;
-            $vehicle->hide_from_broker = $this->hide_from_broker;
-            $vehicle->hide_from_dealer = $this->hide_from_dealer;
-            $vehicle->show_in_ford_pipeline = $this->ford_pipeline;
-
-            $vehicle->save();
+            $this->saveVehicleDetails($vehicle);
 
             if (!isset($this->customer_id) || $this->customer_id === '') {
                 $customer = new Customer();
-                $customer->customer_name = $this->name;
-                $customer->address_1 = $this->delivery_address_1;
-                $customer->address_2 = $this->delivery_address_2;
-                $customer->town = $this->delivery_town;
-                $customer->city = $this->delivery_city;
-                $customer->county = $this->delivery_county;
-                $customer->postcode = $this->delivery_postcode;
-                $customer->phone_number = $this->customer_phone;
-
-                $customer->save();
+                $this->saveCustomerDetails($customer);
 
                 $customer = $customer->id;
             } else {
@@ -495,25 +461,7 @@ class OrderForm extends Component
             }
 
             $invoice = new Invoice();
-            $invoice->finance_commission_invoice_number = $this->invoice_finance_number;
-            $invoice->broker_invoice_number = $this->invoice_broker_number;
-            $invoice->broker_commission_invoice_number = $this->commission_broker_number;
-            $invoice->dealer_discount = $this->dealer_discount;
-            $invoice->manufacturer_discount = $this->manufacturer_discount;
-            $invoice->manufacturer_delivery_cost = $this->manufacturer_delivery_cost;
-            $invoice->onward_delivery = $this->onward_delivery;
-            $invoice->invoice_funder_for = $this->invoice_funder_for;
-            $invoice->invoice_value = $this->invoice_finance;
-            $invoice->invoice_value_to_broker = $this->invoice_value_to_broker;
-            $invoice->commission_to_broker = $this->commission_broker;
-            $invoice->commission_to_finance_company = $this->invoice_finance;
-            $invoice->finance_commission_pay_date = $this->finance_commission_paid;
-            $invoice->broker_commission_pay_date = $this->commission_broker_paid;
-            $invoice->broker_pay_date = $this->invoice_broker_paid;
-            $invoice->dealer_pay_date = $this->dealer_pay_date;
-            $invoice->dealer_invoice_number = $this->dealer_invoice_number;
-            $invoice->save();
-
+            $this->saveInvoice($invoice);
 
             $order = new Order();
             $order->vehicle_id = $vehicle->id;
@@ -543,77 +491,17 @@ class OrderForm extends Component
             $this->successMsg = "Order Created";
         } else {
 
-
-
             //Update Vehicle
             $vehicle = $this->order->vehicle;
-
-            $vehicle->vehicle_status = $this->status;
-            $vehicle->reg = $this->registration;
-            $vehicle->broker_id = $this->broker;
-            $vehicle->dealer_id = $this->dealership;
-            $vehicle->orbit_number = $this->orbit_number;
-            $vehicle->ford_order_number = $this->order_ref;
-            $vehicle->broker_id = $this->broker;
-            $vehicle->dealer_id = $this->dealership;
-            $vehicle->vehicle_registered_on = $this->registered_date;
-            $vehicle->model_year = $this->model_year;
-            $vehicle->make = $this->make;
-            $vehicle->model = $this->model;
-            $vehicle->derivative = $this->derivative;
-            $vehicle->engine = $this->engine;
-            $vehicle->transmission = $this->transmission;
-            $vehicle->fuel_type = $this->fuel_type;
-            $vehicle->colour = $this->colour;
-            $vehicle->trim = $this->trim;
-            $vehicle->dealer_fit_options = $this->dealer_fit_options;
-            $vehicle->factory_fit_options = $this->factory_fit_options;
-            $vehicle->chassis = $this->chassis;
-            $vehicle->chassis_prefix = $this->chassis_prefix;
-            $vehicle->type = $this->type;
-            $vehicle->metallic_paint = $this->metallic_paint;
-            $vehicle->list_price = $this->list_price;
-            $vehicle->first_reg_fee = $this->first_reg_fee;
-            $vehicle->rfl_cost = $this->rfl_cost;
-            $vehicle->onward_delivery = $this->onward_delivery;
-            $vehicle->hide_from_broker = $this->hide_from_broker;
-            $vehicle->hide_from_dealer = $this->hide_from_dealer;
-            $vehicle->show_in_ford_pipeline = $this->ford_pipeline;
-            $vehicle->save();
+            $this->saveVehicleDetails($vehicle);
 
             //Update Invoice
             $invoice = $this->order->invoice;
-            $invoice->finance_commission_invoice_number = $this->invoice_finance_number;
-            $invoice->broker_invoice_number = $this->invoice_broker_number;
-            $invoice->broker_commission_invoice_number = $this->commission_broker_number;
-            $invoice->dealer_discount = $this->dealer_discount;
-            $invoice->manufacturer_discount = $this->manufacturer_discount;
-            $invoice->manufacturer_delivery_cost = $this->manufacturer_delivery_cost;
-            $invoice->onward_delivery = $this->onward_delivery;
-            $invoice->invoice_funder_for = $this->invoice_funder_for;
-            $invoice->invoice_value = $this->invoice_finance;
-            $invoice->invoice_value_to_broker = $this->invoice_value_to_broker;
-            $invoice->commission_to_broker = $this->commission_broker;
-            $invoice->commission_to_finance_company = $this->invoice_finance;
-            $invoice->finance_commission_pay_date = $this->finance_commission_paid;
-            $invoice->broker_commission_pay_date = $this->commission_broker_paid;
-            $invoice->broker_pay_date = $this->invoice_broker_paid;
-            $invoice->dealer_pay_date = $this->dealer_pay_date;
-            $invoice->dealer_invoice_number = $this->dealer_invoice_number;
-            $invoice->save();
+            $this->saveInvoice($invoice);
 
             //Update Customer
             $customer = $this->order->customer;
-            $customer->customer_name = $this->name;
-            $customer->address_1 = $this->delivery_address_1;
-            $customer->address_2 = $this->delivery_address_2;
-            $customer->town = $this->delivery_town;
-            $customer->city = $this->delivery_city;
-            $customer->county = $this->delivery_county;
-            $customer->postcode = $this->delivery_postcode;
-            $customer->phone_number = $this->customer_phone;
-
-            $customer->save();
+            $this->saveCustomerDetails($customer);
 
             //Update Order
             $order = $this->order;
@@ -654,15 +542,6 @@ class OrderForm extends Component
                 $file->save();
             }
 
-
-            $this->delivery_date = ( $this->delivery_date ? $this->delivery_date->format( 'd/m/Y') : null );
-            $this->due_date = ( $this->due_date ? $this->due_date->format( 'd/m/Y') : null );
-            $this->registered_date = ( $this->registered_date ? $this->registered_date->format( 'd/m/Y') : null );
-            $this->dealer_pay_date = ($this->dealer_pay_date ? $this->dealer_pay_date->format('d/m/Y') : null);
-            $this->invoice_broker_paid = ($this->invoice_broker_paid ? $this->invoice_broker_paid->format('d/m/Y') : null);
-            $this->commission_broker_paid = ($this->commission_broker_paid ? $this->commission_broker_paid->format('d/m/Y') : null);
-            $this->finance_commission_paid = ($this->finance_commission_paid ? $this->finance_commission_paid->format('d/m/Y') : null);
-
             $this->successMsg = "Order Updated";
         }
     }
@@ -699,5 +578,98 @@ class OrderForm extends Component
         if ($vehicle->vehicle_status === '7') {
             $order->update(['completed_date' => now()]);
         }
+    }
+
+    /**
+     * @param Invoice $invoice
+     * @return void
+     */
+    public function saveInvoice(Invoice $invoice): void
+    {
+        $invoice->finance_commission_invoice_number = $this->invoice_finance_number;
+        $invoice->broker_invoice_number = $this->invoice_broker_number;
+        $invoice->broker_commission_invoice_number = $this->commission_broker_number;
+        $invoice->dealer_discount = $this->dealer_discount;
+        $invoice->manufacturer_discount = $this->manufacturer_discount;
+        $invoice->manufacturer_delivery_cost = $this->manufacturer_delivery_cost;
+        $invoice->onward_delivery = $this->onward_delivery;
+        $invoice->invoice_funder_for = $this->invoice_funder_for;
+        $invoice->invoice_value = $this->invoice_finance;
+        $invoice->invoice_value_to_broker = $this->invoice_value_to_broker;
+        $invoice->commission_to_broker = $this->commission_broker;
+        $invoice->commission_to_finance_company = $this->invoice_finance;
+        $invoice->finance_commission_pay_date = $this->finance_commission_paid;
+        $invoice->broker_commission_pay_date = $this->commission_broker_paid;
+        $invoice->broker_pay_date = $this->invoice_broker_paid;
+        $invoice->dealer_pay_date = $this->dealer_pay_date;
+        $invoice->dealer_invoice_number = $this->dealer_invoice_number;
+        $invoice->fleet_procure_invoice = $this->fleet_procure_invoice;
+        $invoice->fleet_procure_invoice_number = $this->fleet_invoice_number;
+        $invoice->fleet_procure_pay_date = $this->fleet_procure_paid;
+        $invoice->finance_company_bonus_invoice = $this->finance_bonus_invoice;
+        $invoice->finance_company_bonus_invoice_number = $this->finance_company_bonus_invoice_number;
+        $invoice->finance_company_bonus_pay_date = $this->finance_company_bonus_pay_date;
+        $invoice->ford_bonus = $this->ford_bonus_invoice;
+        $invoice->ford_bonus_pay_date = $this->ford_bonus_pay_date;
+
+        $invoice->save();
+    }
+
+    /**
+     * @param Customer $customer
+     * @return void
+     */
+    public function saveCustomerDetails(Customer $customer): void
+    {
+        $customer->customer_name = $this->name;
+        $customer->address_1 = $this->delivery_address_1;
+        $customer->address_2 = $this->delivery_address_2;
+        $customer->town = $this->delivery_town;
+        $customer->city = $this->delivery_city;
+        $customer->county = $this->delivery_county;
+        $customer->postcode = $this->delivery_postcode;
+        $customer->phone_number = $this->customer_phone;
+
+        $customer->save();
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     * @return void
+     */
+    public function saveVehicleDetails(Vehicle $vehicle): void
+    {
+        $vehicle->vehicle_status = $this->status;
+        $vehicle->reg = $this->registration;
+        $vehicle->dealer_id = $this->dealership;
+        $vehicle->broker_id = $this->broker;
+        $vehicle->vehicle_registered_on = $this->registered_date;
+        $vehicle->model_year = $this->model_year;
+        $vehicle->ford_order_number = $this->order_ref;
+        $vehicle->make = $this->make;
+        $vehicle->model = $this->model;
+        $vehicle->chassis = $this->chassis;
+        $vehicle->derivative = $this->derivative;
+        $vehicle->engine = $this->engine;
+        $vehicle->transmission = $this->transmission;
+        $vehicle->fuel_type = $this->fuel_type;
+        $vehicle->colour = $this->colour;
+        $vehicle->trim = $this->trim;
+        $vehicle->dealer_fit_options = isset($this->dealer_fit_options) ? json_encode($this->dealer_fit_options) : null;
+        $vehicle->factory_fit_options = isset($this->factory_fit_options) ? json_encode($this->factory_fit_options) : null;
+        $vehicle->chassis_prefix = $this->chassis_prefix;
+        $vehicle->type = $this->type;
+        $vehicle->metallic_paint = $this->metallic_paint;
+        $vehicle->list_price = $this->list_price;
+        $vehicle->first_reg_fee = $this->first_reg_fee;
+        $vehicle->rfl_cost = $this->rfl_cost;
+        $vehicle->broker_id = $this->broker;
+        $vehicle->dealer_id = $this->dealership;
+        $vehicle->onward_delivery = $this->onward_delivery;
+        $vehicle->hide_from_broker = $this->hide_from_broker;
+        $vehicle->hide_from_dealer = $this->hide_from_dealer;
+        $vehicle->show_in_ford_pipeline = $this->ford_pipeline;
+
+        $vehicle->save();
     }
 }

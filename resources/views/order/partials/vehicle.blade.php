@@ -1,13 +1,8 @@
 {{-- Make (Required) --}}
 <div class="form-group row">
-
     <label class="col-md-2 col-form-label" for="vehicle_make"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Make</label>
-
     <div class="col-md-6">
-
         @if ( $makeInput )
-
-
             <div class="input-group mb-3">
                 @error('make')
                 <div class="input-group-prepend">
@@ -21,25 +16,19 @@
                     @endforeach
                 </select>
             </div>
-
         @else
-
             <input type="text"
                    name="vehicle_make"
                    id="vehicle_make"
                    class="form-control mb-3"
                    autocomplete="off"
-                   placeholder="e.g. Ford"
                    @unless ( is_null( $make ) )
                    value="{{$manufacturers[$make]['name']}}"
                    @endunless
                    wire:model.lazy="newmake"
             />
-
         @endIf
-
     </div>
-
     <div class="col-md-2">
         <button class="btn btn-secondary switch-inputs"
                 type="button"
@@ -53,18 +42,13 @@
             @endif
         </button>
     </div>
-
 </div>
 {{-- Model (Required) --}}
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="vehicle_model"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Vehicle Model</label>
     <div class="col-md-6">
-
         @if ( $modelInput )
-
             <div class="input-group mb-3">
-
-
                 @error('model')
                 <div class="input-group-prepend">
                     <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
@@ -91,14 +75,10 @@
                        name="vehicle_model"
                        id="inputGroupModelText"
                        class="form-control"
-                       placeholder="e.g. Fiesta"
                 />
             </div>
-
         @endif
-
     </div>
-
     <div class="col-md-2">
         <button class="btn btn-secondary remove-selected"
                 type="button"
@@ -123,7 +103,7 @@
         </div>
         @enderror
         <input wire:model="orbit_number" type="text" name="orbit_number" id="orbit_number" class="form-control"
-               autocomplete="off" placeholder="e.g. 66653275"/>
+               autocomplete="off" />
     </div>
 </div>
 {{-- Type (Required) --}}
@@ -149,7 +129,7 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="vehicle_reg">Registration Number</label>
     <div class="col-md-6 mb-3">
-        <input wire:model="registration" type="text" name="vehicle_reg" id="vehicle_reg" class="form-control" placeholder="e.g. WM63 NKZ"/>
+        <input wire:model="registration" type="text" name="vehicle_reg" id="vehicle_reg" class="form-control"/>
     </div>
 </div>
 {{-- Derivative (Required) --}}
@@ -174,7 +154,7 @@
         </div>
     @else
         <div class="col-md-6 mb-3">
-            <input wire:model="derivative" type="text" name="vehicle_derivative" id="vehicle_derivative" class="form-control" autocomplete="off" placeholder="e.g. ST-Line X PHEV"/>
+            <input wire:model="derivative" type="text" name="vehicle_derivative" id="vehicle_derivative" class="form-control" autocomplete="off" />
         </div>
     @endif
     <div class="col-md-2">
@@ -213,7 +193,7 @@
     @else
         <div class="col-md-6 mb-3">
             <input wire:model="engine" type="text" name="vehicle_engine" id="vehicle_engine"
-                   class="form-control" autocomplete="off" placeholder="e.g. 1.6 Litre"/>
+                   class="form-control" autocomplete="off" />
         </div>
     @endif
 
@@ -257,8 +237,7 @@
                    name="vehicle_trans"
                    id="vehicle_trans"
                    class="form-control"
-                   autocomplete="off"
-                   placeholder="e.g. Manual"/>
+                   autocomplete="off" />
         </div>
     @endif
     <div class="col-md-2">
@@ -301,8 +280,7 @@
                    name="vehicle_fuel"
                    id="vehicle_fuel"
                    class="form-control"
-                   autocomplete="off"
-                   placeholder="e.g. Petrol"/>
+                   autocomplete="off" />
         </div>
     @endif
     <div class="col-md-2">
@@ -345,9 +323,7 @@
                    name="vehicle_colour"
                    id="vehicle_colour"
                    class="form-control"
-                   autocomplete="off"
-
-                   placeholder="e.g. Metropolis White"/>
+                   autocomplete="off" />
         </div>
     @endif
     <div class="col-md-2">
@@ -390,8 +366,7 @@
                    name="vehicle_trim"
                    id="vehicle_trim"
                    class="form-control"
-                   autocomplete="off"
-                   placeholder="e.g. Petrol"/>
+                   autocomplete="off" />
         </div>
     @endif
     <div class="col-md-2">
@@ -413,7 +388,7 @@
     <label class="col-md-2 col-form-label" for="chassis_prefix">Chassis Prefix</label>
     <div class="col-md-6">
         <input wire:model="chassis_prefix" type="text" name="chassis_prefix" id="chassis_prefix" class="form-control"
-               autocomplete="off" placeholder="e.g. WF0E"/>
+               autocomplete="off"/>
     </div>
 </div>
 {{-- Chassis--}}
@@ -421,7 +396,7 @@
     <label class="col-md-2 col-form-label" for="chassis">Chassis</label>
     <div class="col-md-6">
         <input wire:model="chassis" type="text" name="chassis" id="chassis" class="form-control"
-               autocomplete="off" placeholder="e.g. WF0EXXTTGEJG05509"/>
+               autocomplete="off" />
     </div>
 </div>
 {{-- Vehicle Status --}}
@@ -465,6 +440,9 @@
                 <option value="13">
                     Awaiting Ship
                 </option>
+                <option value="14">
+                    Recall
+                </option>
             </select>
         </div>
     </div>
@@ -473,8 +451,8 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="due_date">Due Date to Dealer</label>
     <div class="col-md-6">
-        <input wire:model="due_date" type="text" name="due_date" id="due_date" class="form-control"
-               autocomplete="off" placeholder="e.g. 30/03/2019"
+        <input wire:model="due_date" type="date" name="due_date" class="form-control"
+               autocomplete="off"
                onchange="this.dispatchEvent(new InputEvent('input'))"
         />
     </div>
@@ -483,9 +461,8 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="delivery_date">Delivery Date</label>
     <div class="col-md-6">
-        <input type="text" name="delivery_date" id="delivery_date" class="form-control"
-               autocomplete="off" placeholder="e.g. 20/06/1993" wire:model="delivery_date"
-               onchange="this.dispatchEvent(new InputEvent('input'))"/>
+        <input type="date" name="delivery_date" class="form-control"
+               autocomplete="off" wire:model="delivery_date" />
     </div>
 </div>
 {{-- Model Year --}}
@@ -493,7 +470,7 @@
     <label class="col-md-2 col-form-label" for="model_year">Model Year</label>
     <div class="col-md-6">
         <input type="text" name="model_year" id="model_year" class="form-control"
-               autocomplete="off" placeholder="e.g. 2020 .50" wire:model="model_year"
+               autocomplete="off" wire:model="model_year"
                onchange="this.dispatchEvent(new InputEvent('input'))"/>
     </div>
 </div>
@@ -502,12 +479,10 @@
     <label class="col-md-2 col-form-label" for="vehicle_registered_on">Vehicle
         Registered</label>
     <div class="col-md-6">
-        <input type="text"
+        <input type="date"
                name="vehicle_registered_on"
-               id="vehicle_registered_on"
                class="form-control"
                autocomplete="off"
-               placeholder="e.g. 14/05/2020"
                wire:model="registered_date"
                onchange="this.dispatchEvent(new InputEvent('input'))"
         />

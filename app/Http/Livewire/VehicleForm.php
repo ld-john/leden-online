@@ -107,16 +107,12 @@ class VehicleForm extends Component
 	{
 		if (isset ($this->vehicle))
 		{
-
-		    //$this->make =  ( Manufacturer::where( 'id' , $this->make )->exists() ? $this->vehicle->make : null );
-            //$this->model =  ( Manufacturer::where( 'id' , $this->make )->exists() ? $this->vehicle->model : null );
-
             $this->make = ( $this->vehicle->make ?: null );
             $this->model = ( $this->vehicle->make ? $this->vehicle->model : null );
 
             if ( $this->vehicle->vehicle_registered_on) {
                 $reg = new DateTime( $this->vehicle->vehicle_registered_on );
-                $this->registered_date = $reg->format( 'd/m/Y' );
+                $this->registered_date = $reg->format( 'Y-m-d' );
             }
 
             $this->type = $this->vehicle->type;
@@ -184,11 +180,6 @@ class VehicleForm extends Component
         if ($this->orbit_number === '') {
             $this->orbit_number = null;
         }
-
-        if ($this->registered_date) {
-            $this->registered_date = DateTime::createFromFormat('d/m/Y', $this->registered_date);
-        }
-
 
 		if ( isset($this->newmake) ) {
 
@@ -260,9 +251,6 @@ class VehicleForm extends Component
 		}
 
         $this->markOrderComplete($vehicle, $vehicle->order());
-
-        $this->registered_date = ( $this->registered_date ? $this->registered_date->format( 'd/m/Y') : null );
-
 
 	}
 
