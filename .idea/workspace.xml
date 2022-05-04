@@ -5,26 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_05_04_082754_add_new_invoice_fields.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/_link.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_link.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/customer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/customer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/dealerFit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/dealerFit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/delivery.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/delivery.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/factoryFit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/factoryFit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/VehicleTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/VehicleTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +22,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="LivewireDatatable" />
+        <entry key="$PROJECT_DIR$" value="Factory_Fit_Options_Overhaul" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
