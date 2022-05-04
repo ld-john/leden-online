@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Customer;
 
 use App\Customer;
 use App\Order;
@@ -26,7 +26,7 @@ class CustomerTable extends Component
     {
         $customers = Customer::orderBy('customer_name', 'asc')->paginate($this->paginate);
 
-        return view('livewire.customer-table', ['customers' => $customers]);
+        return view('livewire.customer.customer-table', ['customers' => $customers]);
     }
 
     public function mergeSelected()

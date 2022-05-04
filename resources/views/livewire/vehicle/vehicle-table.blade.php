@@ -167,12 +167,12 @@
                         <a href="{{route('edit_vehicle', $vehicle->id)}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Vehicle Information"><i class="fas fa-edit"></i></a>
                         <a href="{{route('order.reserve', $vehicle->id)}}" class="btn btn-primary" data-toggle="tooltip" title="Create order with Vehicle"><i class="fas fa-plus-square"></i></a>
                         <a data-toggle="tooltip" title="Delete Vehicle">
-                            <livewire:delete-vehicle :vehicle="$vehicle->id" :key="time().$vehicle->id" />
+                            <livewire:vehicle.delete-vehicle :vehicle="$vehicle->id" :key="time().$vehicle->id" />
                         </a>
                         @if($vehicle->ring_fenced_stock === 1)
                             <a wire:click="unRingFenceVehicle({{ $vehicle->id }})" class="btn btn-primary" data-toggle="tooltip" title="Move to Leden Stock"><i class="fa-solid fa-car"></i></a>
                         @else
-                            <livewire:ring-fence-modal :vehicle="$vehicle->id" :key="time().$vehicle->id" />
+                            <livewire:vehicle.ring-fence-modal :vehicle="$vehicle->id" :key="time().$vehicle->id" />
                         @endif
                     @endcan
                 </td>

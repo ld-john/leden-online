@@ -13,7 +13,7 @@
             <!-- Doughnut Chart -->
             <div class="col-lg-10">
                 <h1 class="h3 mb-4 text-gray-800">Edit Order - #{{ $order->id }}</h1>
-                @livewire('order-form', ['order' => $order])
+                @livewire('order.order-form', ['order' => $order])
             </div>
 
         </div>

@@ -15,7 +15,7 @@
         @include('partials.successMsg')
         <div class="card shadow mb-4">
             <div class="card-body">
-                @livewire('company-table')
+                @livewire('customer.company-table')
             </div>
         </div>
 

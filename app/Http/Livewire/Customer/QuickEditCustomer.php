@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Customer;
 
 use App\Customer;
 use Cassandra\Custom;
@@ -55,6 +55,6 @@ class QuickEditCustomer extends Component
 
     public function render()
     {
-        return view('livewire.quick-edit-customer');
+        return view('livewire.customer.quick-edit-customer');
     }
 }

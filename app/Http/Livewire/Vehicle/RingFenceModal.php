@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Vehicle;
 
 use App\Company;
 use App\Vehicle;
@@ -36,6 +36,6 @@ class RingFenceModal extends Component
 
     public function render()
     {
-        return view('livewire.ring-fence-modal');
+        return view('livewire.vehicle.ring-fence-modal');
     }
 }

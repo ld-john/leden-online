@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Vehicle;
 
 use App\Vehicle;
 use Illuminate\Http\RedirectResponse;
@@ -18,7 +18,7 @@ class DeleteVehicle extends Component
 
     public function render()
     {
-        return view('livewire.delete-vehicle');
+        return view('livewire.vehicle.delete-vehicle');
     }
 
     public function toggleDeleteModal()

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Customer;
 
 use App\Customer;
 use App\Invoice;
@@ -28,7 +28,7 @@ class DeleteCustomers extends Component
 
     public function render()
     {
-        return view('livewire.delete-customers');
+        return view('livewire.customer.delete-customers');
     }
 
     public function deleteCustomer()

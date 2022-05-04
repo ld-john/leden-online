@@ -5,8 +5,75 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/VehicleTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/VehicleTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/FitOptionsController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/CompanyTable.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/CustomerTable.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/DeleteCustomers.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/QuickEditCustomer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/FitOptionsEditor.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/DeleteOrder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/DuplicateOrder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/DeleteVehicle.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/RingFenceModal.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleTable.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_05_04_105722_add_new_fields_to_fit_options.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/meta/fitoptions/dealerfit/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/meta/fitoptions/factoryfit/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/customer/company-table.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/customer/customer-table.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/customer/delete-customers.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/customer/quick-edit-customer.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/fit-options/fit-options-editor.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/order/delete-order.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/order/duplicate-order.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/delete-vehicle.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/ring-fence-modal.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/CompanyTable.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/CustomerTable.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/DeleteCustomers.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/DeleteOrder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/DeleteVehicle.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/DuplicateOrder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderForm.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/OrderTable.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/QuickEditCustomer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/QuickEditOrder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/RingFenceModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/VehicleForm.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/VehicleTable.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/companies/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/companies/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/customer/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/customer/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/company-table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/customer-table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/delete-customers.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/delete-order.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/delete-vehicle.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/duplicate-order.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order-form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order-table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/quick-edit-customer.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/quick-edit-order.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/ring-fence-modal.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle-form.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle-table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/deliveries.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/deliveries.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/reserve.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/reserve.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +89,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Factory_Fit_Options_Overhaul" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -531,7 +598,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651047256324</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Fixed an error with Transmission filtering on Vehicle Tables&#10;Fixed an error with the Order Number on Excel Exports from the dashboard.">
+      <created>1651661689944</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1651661689944</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use App\Order;
 use Illuminate\Support\Facades\Auth;
@@ -157,6 +157,6 @@ class OrderTable extends Component
             ->orderBy('created_at', 'asc')
             ->paginate($this->paginate);
 
-        return view('livewire.order-table', ['orders' => $orders]);
+        return view('livewire.order.order-table', ['orders' => $orders]);
     }
 }

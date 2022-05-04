@@ -11,7 +11,7 @@
             <!-- Doughnut Chart -->
             <div class="col-lg-10">
                 <h1 class="h3 mb-4 text-gray-800">Create Order</h1>
-                @livewire('order-form')
+                @livewire('order.order-form')
             </div>
 
         </div>

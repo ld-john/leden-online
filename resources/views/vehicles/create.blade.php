@@ -8,10 +8,9 @@
     <div class="container-fluid">
         <!-- Content Row -->
         <div class="row justify-content-center">
-            <!-- Doughnut Chart -->
             <div class="col-lg-10">
                 <h1 class="h3 mb-4 text-gray-800">Create New Vehicle</h1>
-                @livewire('vehicle-form')
+                @livewire('vehicle.vehicle-form')
             </div>
         </div>
     </div>

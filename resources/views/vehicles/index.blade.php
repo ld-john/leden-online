@@ -17,7 +17,7 @@
                 <div class="card shadow mb-4">
                     <!-- Card Body -->
                     <div class="card-body">
-                        @livewire('vehicle-table', ['ringfenced' => $ringfenced, 'fordpipeline' => $fordpipeline])
+                        @livewire('vehicle.vehicle-table', ['ringfenced' => $ringfenced, 'fordpipeline' => $fordpipeline])
                     </div>
                 </div>
 

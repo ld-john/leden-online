@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Vehicle;
 
 use App\Vehicle;
 use Illuminate\Support\Facades\Auth;
@@ -127,6 +127,6 @@ class VehicleTable extends Component
             ->get();
         $status = $status->map->only(['vehicle_status'])->flatten()->unique();
 
-        return view('livewire.vehicle-table', ['vehicles' => $data, 'status' => $status]);
+        return view('livewire.vehicle.vehicle-table', ['vehicles' => $data, 'status' => $status]);
     }
 }

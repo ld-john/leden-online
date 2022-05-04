@@ -30,7 +30,7 @@
                 <div class="card shadow mb-4">
                     <!-- Card Body -->
                     <div class="card-body">
-                        @livewire('customer-table')
+                        @livewire('customer.customer-table')
                     </div>
                 </div>
             </div>

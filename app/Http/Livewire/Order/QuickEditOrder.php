@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use App\Order;
 use App\Vehicle;
@@ -124,6 +124,6 @@ class QuickEditOrder extends Component
 
     public function render()
     {
-        return view('livewire.quick-edit-order');
+        return view('livewire.order.quick-edit-order');
     }
 }

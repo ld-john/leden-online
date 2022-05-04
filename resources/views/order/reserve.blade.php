@@ -16,7 +16,7 @@
                 @if (isset($order))
                     <p>Vehicle is already reserved</p>
                 @else
-                    @livewire('order-form', ['vehicle' => $vehicle])
+                    @livewire('order.order-form', ['vehicle' => $vehicle])
                 @endif
             </div>
         </div>

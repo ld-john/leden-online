@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use App\Invoice;
 use App\Order;
@@ -24,7 +24,7 @@ class DuplicateOrder extends Component
 
     public function render()
     {
-        return view('livewire.duplicate-order');
+        return view('livewire.order.duplicate-order');
     }
 
     public function duplicateOrder()

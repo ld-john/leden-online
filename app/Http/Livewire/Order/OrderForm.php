@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use App\Company;
 use App\Customer;
@@ -570,7 +570,7 @@ class OrderForm extends Component
             'factory_options'   => $fitoptions->where('option_type', 'factory'),
             'dealer_options'    => $fitoptions->where('option_type', 'dealer')
         ];
-        return view('livewire.order-form', $options );
+        return view('livewire.order.order-form', $options );
     }
 
     private function markOrderComplete($vehicle, $order)

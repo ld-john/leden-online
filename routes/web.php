@@ -131,6 +131,10 @@ Route::middleware('auth')->group(function(){
     Route::get('/manage/vehiclemeta/trim', 'Vehicle\TrimController@index')->name('meta.trim.index');
 // Vehicle\Type
     Route::get('/manage/vehiclemeta/type', 'Vehicle\TypeController@index')->name('meta.type.index');
+    // Factory Fit Options
+    Route::get('/manage/vehiclemeta/factoryfit', 'FitOptionsController@factoryFitIndex')->name('meta.factoryfit.index');
+    // Dealer Fit Options
+    Route::get('/manage/vehiclemeta/dealerfit', 'FitOptionsController@dealerFitIndex')->name('meta.dealerfit.index');
 
     /*
      * Data Management Routes

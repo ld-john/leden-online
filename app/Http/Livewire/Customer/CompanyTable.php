@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Customer;
 
 use App\Company;
 use Livewire\Component;
@@ -47,6 +47,6 @@ class CompanyTable extends Component
                 $query->where('company_phone', 'like', '%'.$this->searchPhone.'%');
             })
             ->paginate($this->paginate);
-        return view('livewire.company-table', ['companies' => $data]);
+        return view('livewire.customer.company-table', ['companies' => $data]);
     }
 }

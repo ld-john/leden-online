@@ -146,9 +146,9 @@
                         <a href="{{route('order.show', $order->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Order"><i class="far fa-eye"></i></a>
                         @can('admin')
                             <a href="{{route('order.edit', $order->id)}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Order"><i class="fas fa-edit"></i></a>
-                            <a data-toggle="tooltip" title="Copy Order"><livewire:duplicate-order :order="$order->id" :key="time().$order->id" /></a>
-                            <a data-toggle="tooltip" title="Delete Order"><livewire:delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
-                            <a data-toggle="tooltip" title="Quick Edit"> <livewire:quick-edit-order :order="$order->id" :vehicle="$order->vehicle" view="order" :key="time().$order->id" /></a>
+                            <a data-toggle="tooltip" title="Copy Order"><livewire:order.duplicate-order :order="$order->id" :key="time().$order->id" /></a>
+                            <a data-toggle="tooltip" title="Delete Order"><livewire:order.delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
+                            <a data-toggle="tooltip" title="Quick Edit"> <livewire:order.quick-edit-order :order="$order->id" :vehicle="$order->vehicle" view="order" :key="time().$order->id" /></a>
                         @endcan
                     </div>
                 </td>
@@ -277,8 +277,8 @@
                         <div class="d-flex flex-wrap">
                             <a href="{{route('order.show', $order->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Order"><i class="far fa-eye"></i></a>
                             @can('admin')
-                                <a data-toggle="tooltip" title="Delete Order"><livewire:delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
-                                <a data-toggle="tooltip" title="Quick Edit"> <livewire:quick-edit-order :order="$order->id" :vehicle="$order->vehicle" view="delivery" :key="time().$order->id" /></a>
+                                <a data-toggle="tooltip" title="Delete Order"><livewire:order.delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
+                                <a data-toggle="tooltip" title="Quick Edit"> <livewire:order.quick-edit-order :order="$order->id" :vehicle="$order->vehicle" view="delivery" :key="time().$order->id" /></a>
                                 @if($order->vehicle->vehicle_registered_on && $order->vehicle->vehicle_registered_on !== '0000-00-00 00:00:00' && $order->vehicle->vehicle_registered_on < $now)
                                     <a wire:click="markCompleted({{$order->id}})" data-toggle="tooltip" title="Mark as Complete" class="btn btn-success"><i class="fa-solid fa-check"></i></a>
                                 @endif

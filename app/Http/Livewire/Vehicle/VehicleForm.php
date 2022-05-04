@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Vehicle;
 
 use App\Company;
 use App\Customer;
@@ -279,6 +279,6 @@ class VehicleForm extends Component
 			'factory_options'   => $fitoptions->where('option_type', 'factory'),
 			'dealer_options'    => $fitoptions->where('option_type', 'dealer')
 		];
-		return view('livewire.vehicle-form', $options );
+		return view('livewire.vehicle.vehicle-form', $options );
 	}
 }

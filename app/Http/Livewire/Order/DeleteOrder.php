@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use App\Invoice;
 use App\Order;
@@ -29,7 +29,7 @@ class DeleteOrder extends Component
 
     public function render()
     {
-        return view('livewire.delete-order');
+        return view('livewire.order.delete-order');
     }
 
     public function deleteOrder()
