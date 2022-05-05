@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $option_type
  * @property string $option_name
  * @property float $option_price
+ * @property string $model
+ * @property string $model_year
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption newModelQuery()
@@ -26,5 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class FitOption extends Model
 {
-    //
+    public function dealer(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Company::class, 'id', 'dealer_id');
+    }
 }

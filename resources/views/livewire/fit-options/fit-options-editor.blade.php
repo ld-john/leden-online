@@ -1,4 +1,5 @@
 <div>
+    @livewire('fit-options.new-fit-option', ['fitType' => $fitType])
     <div class="d-flex justify-content-between align-items-center">
         <div class="w-25 p-3 d-flex align-items-center">
             Show
@@ -29,12 +30,16 @@
             <tr>
                 <td>{{ $fitOption->option_name }}</td>
                 <td>{{ $fitOption->model }}</td>
-                <td>{{ $fitOption->model_year }}</td>
+                <td>{{ $fitOption->model_year }}MY</td>
                 @if($fitType === 'dealer')
-                    <td>{{ $fitOption->dealer }}</td>
+                    <td>
+                        @if($fitOption->dealer)
+                            {{ $fitOption->dealer->company_name }}
+                        @endif
+                    </td>
                 @endif
                 <td>£{{ number_format($fitOption->option_price, 2, '.', '') }}</td>
-                <td>{{ $fitOption->option_type }}</td>
+                <td>@livewire('fit-options.edit-fit-option', ['fitOption' => $fitOption->id, 'key' => time().$fitOption->id ])</td>
             </tr>
         @empty
             <tr>

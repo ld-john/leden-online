@@ -11,7 +11,7 @@
             <!-- Doughnut Chart -->
             <div class="col-lg-10">
                 <h1 class="h3 mb-4 text-gray-800">Edit Vehicle</h1>
-                @livewire('vehicle-form', ['vehicle' => $vehicle])
+                @livewire('vehicle.vehicle-form', ['vehicle' => $vehicle])
             </div>
         </div>
     </div>

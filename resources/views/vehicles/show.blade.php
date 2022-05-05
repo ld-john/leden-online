@@ -179,7 +179,7 @@
                             <div class="col-md-4">
                                 <ul>
                                     @forelse($vehicle->getFitOptions('factory') as $option)
-                                        <li>{{$option->option_name}} - £{{$option->option_price}}</li>
+                                        <li>{{$option->model}}-{{$option->model_year}}MY-{{$option->option_name}} - £{{number_format($option->option_price, 2, '.', '')}}</li>
                                     @empty
                                         <li>No options selected</li>
                                     @endforelse
@@ -191,7 +191,7 @@
                             <div class="col-md-4">
                                 <ul>
                                     @forelse($vehicle->getFitOptions('dealer') as $option)
-                                        <li>{{$option->option_name}} - £{{$option->option_price}}</li>
+                                        <li>{{$option->dealer}}-{{$option->model}}-{{$option->model_year}}MY-{{$option->option_name}} - £{{number_format($option->option_price, 2, '.', '')}}</li>
                                     @empty
                                         <li>No options selected</li>
                                     @endforelse

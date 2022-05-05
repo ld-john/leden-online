@@ -196,6 +196,8 @@
             <div class="collapse" id="collapseMeta">
 
                 <ul class="sidebar navbar-nav">
+                    <li class="nav-item @if ($activePage == 'factory-fit-options') active @endif"><a class="nav-link" href="{{ route('meta.factoryfit.index') }}">Factory Fit Options</a></li>
+                    <li class="nav-item @if ($activePage == 'dealer-fit-options') active @endif"><a class="nav-link" href="{{ route('meta.dealerfit.index') }}">Dealer Fit Options</a></li>
                     <li class="nav-item @if ($activePage == 'colour-manager') active @endif"><a class="nav-link" href="{{ route('meta.colour.index') }}">Colours </a></li>
                     <li class="nav-item @if ($activePage == 'derivative-manager') active @endif"><a class="nav-link" href="{{ route('meta.derivative.index') }}">Derivatives </a></li>
                     <li class="nav-item @if ($activePage == 'engine-manager') active @endif"><a class="nav-link" href="{{ route('meta.engine.index') }}">Engines</a></li>

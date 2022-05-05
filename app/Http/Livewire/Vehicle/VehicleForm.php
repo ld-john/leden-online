@@ -3,14 +3,9 @@
 namespace App\Http\Livewire\Vehicle;
 
 use App\Company;
-use App\Customer;
 use App\FitOption;
-use App\Invoice;
 use App\Manufacturer;
-use App\Order;
-use App\OrderUpload;
 use App\Vehicle;
-use App\VehicleMeta\Body;
 use App\VehicleMeta\Colour;
 use App\VehicleMeta\Derivative;
 use App\VehicleMeta\Engine;
@@ -19,15 +14,21 @@ use App\VehicleMeta\Transmission;
 use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
 use DateTime;
-use Faker\Provider\es_VE\Internet;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class VehicleForm extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
+    public function getQueryString(): array
+    {
+        return [];
+    }
+
 	public $makeInput = true, $modelInput = true, $derivativeInput = true, $engineInput = true, $transmissionInput = true, $fuelInput = true, $colourInput = true, $trimInput = true;
 
 	public $vehicle;
@@ -71,6 +72,8 @@ class VehicleForm extends Component
 	public $hide_from_broker = "0";
 	public $hide_from_dealer = "0";
     public $broker;
+    public $factoryFitSearch;
+    public $dealerFitSearch;
 	public $successMsg = '';
 	protected $rules = array(
 		'make' => 'required_without:newmake',
@@ -132,8 +135,8 @@ class VehicleForm extends Component
 			$this->status = $this->vehicle->vehicle_status;
 			$this->model_year = $this->vehicle->model_year;
 			$this->ford_pipeline = $this->vehicle->show_in_ford_pipeline;
-			$this->factory_fit_options = $this->vehicle->factory_fit_options;
-			$this->dealer_fit_options = $this->vehicle->dealer_fit_options;
+			$this->factory_fit_options = json_decode($this->vehicle->factory_fit_options);
+			$this->dealer_fit_options = json_decode($this->vehicle->dealer_fit_options);
 			$this->list_price = $this->vehicle->list_price;
 			$this->metallic_paint = $this->vehicle->metallic_paint;
 			$this->first_reg_fee = $this->vehicle->first_reg_fee;
@@ -275,9 +278,33 @@ class VehicleForm extends Component
 			'fuel_types'        => Fuel::all(),
 			'colours'           => Colour::all(),
 			'trims'             => Trim::all(),
-
-			'factory_options'   => $fitoptions->where('option_type', 'factory'),
-			'dealer_options'    => $fitoptions->where('option_type', 'dealer')
+            'factory_options' => FitOption::latest()
+                ->where('option_type', 'factory')
+                ->when($this->model, function ($query) {
+                    $query->where('model', $this->model);
+                })
+                ->when($this->model_year, function ($query) {
+                    $query->where('model_year', $this->model_year);
+                })
+                ->when($this->factoryFitSearch, function ($query) {
+                    $query->where('option_name', 'like', '%'.$this->factoryFitSearch.'%');
+                })
+                ->paginate(5),
+			'dealer_options'    => FitOption::latest()
+                ->where('option_type', 'dealer')
+                ->when($this->model, function ($query) {
+                    $query->where('model', $this->model);
+                })
+                ->when($this->model_year, function ($query) {
+                    $query->where('model_year', $this->model_year);
+                })
+                ->when($this->dealership, function ($query) {
+                    $query->where('dealer_id', $this->dealership);
+                })
+                ->when($this->dealerFitSearch, function ($query) {
+                    $query->where('option_name', 'like', '%'.$this->dealerFitSearch.'%');
+                })
+                ->paginate(5)
 		];
 		return view('livewire.vehicle.vehicle-form', $options );
 	}
