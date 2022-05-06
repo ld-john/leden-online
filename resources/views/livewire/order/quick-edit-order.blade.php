@@ -20,31 +20,31 @@
                     @if($view === 'order')
                         <p class="mb-0 mt-2">Order number</p>
                         <input wire:model="order_number" type="text" name="order_number" id="order_number" class="form-control"
-                               autocomplete="off" placeholder="e.g. K0047"
+                               autocomplete="off"
                         />
                         <p class="mb-0 mt-2">Registration</p>
                         <input wire:model="registration" type="text" name="registration" id="registration" class="form-control"
-                               autocomplete="off" placeholder="e.g. WM63 NKZ"
+                               autocomplete="off"
                         />
                         <p class="mb-0 mt-2">Orbit Number</p>
                         <input wire:model="orbit_number" type="text" name="orbit_number" id="orbit_number" class="form-control"
-                               autocomplete="off" placeholder="e.g. 66653275"
+                               autocomplete="off"
                         />
                         <p class="mb-0 mt-2">Due Date</p>
-                        <input wire:model="due_date" type="text" name="due_date" id="due_date" class="form-control"
-                               autocomplete="off" placeholder="e.g. 30/03/2019"
+                        <input wire:model="due_date" type="date" name="due_date" id="due_date" class="form-control"
+                               autocomplete="off"
                         />
                         <p class="mb-0 mt-2">Planned Build Date</p>
-                        <input wire:model="build_date" type="text" name="build_date" id="build_date" class="form-control"
-                               autocomplete="off" placeholder="e.g. 30/03/2019">
+                        <input wire:model="build_date" type="date" name="build_date" id="build_date" class="form-control"
+                               autocomplete="off" />
                         <p class="mb-0 mt-2">Order Date</p>
-                        <input wire:model="order_date" type="text" name="order_date" id="order_date" class="form-control"
-                               autocomplete="off" placeholder="e.g. 30/03/2019">
+                        <input wire:model="order_date" type="date" name="order_date" id="order_date" class="form-control"
+                               autocomplete="off" />
                     @endif
                     @if($view === 'delivery')
                         <p class="mb-0 mt-2">Registration Date</p>
-                        <input wire:model="registered_date" type="text" name="registration_date" id="registration_date" class="form-control"
-                               autocomplete="off" placeholder="e.g. 30/03/2019">
+                        <input wire:model="registered_date" type="date" name="registration_date" id="registration_date" class="form-control"
+                               autocomplete="off" />
                     @endif
                     <p class="mb-0 mt-2">Status</p>
                     <select wire:model="vehicleStatus" class="form-control" name="vehicle_status" id="vehicle_status">

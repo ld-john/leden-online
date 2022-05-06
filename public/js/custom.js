@@ -133,6 +133,17 @@
     });
   });
 
+  $('.model_year').datepicker({
+      format: "yyyy MM",
+      minViewMode: 1,
+      autoclose: true,
+      language: 'qtrs',
+  }).on("click", function(event) {
+      $(".month").each(function(index, element) {
+          if (index > 3) $(element).remove();
+      });
+  });
+
   // Tooltip init
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()

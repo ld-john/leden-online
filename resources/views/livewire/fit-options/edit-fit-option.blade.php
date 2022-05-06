@@ -26,8 +26,8 @@
                            autocomplete="off"
                     />
                     <p class="mb-0 mt-2">Model Year</p>
-                    <input wire:model="model_year" type="text" name="model_year" class="form-control"
-                           autocomplete="off"
+                    <input wire:model="model_year" type="text" name="model_year" class="form-control model_year"
+                           autocomplete="off" onchange="this.dispatchEvent(new InputEvent('input'))"
                     />
                     @if($fitOption->option_type === 'dealer')
                         <p class="mb-0 mt-2">Dealer</p>

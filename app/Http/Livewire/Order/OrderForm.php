@@ -51,7 +51,7 @@ class OrderForm extends Component
 
     public $newCustomer = false;
     public $customer_id;
-    public $name;
+    public $customer_name;
     public $make;
     public $newmake;
     public $model;
@@ -125,6 +125,8 @@ class OrderForm extends Component
     public $finance_company_bonus_pay_date;
     public $ford_bonus_invoice;
     public $ford_bonus_pay_date;
+    public $factoryFitSearch;
+    public $dealerFitSearch;
     public $attachments = [];
     public $fields = 1;
     public $successMsg;
@@ -180,7 +182,7 @@ class OrderForm extends Component
      */
     public function mount()
     {
-        $this->now = date('d/m/Y');
+        $this->now = date('Y-m-d');
         $newCustomer = $this->newCustomer;
 
         if (isset ($this->vehicle))
@@ -188,7 +190,7 @@ class OrderForm extends Component
 
             if ( $this->vehicle->vehicle_registered_on) {
                 $reg = new DateTime( $this->vehicle->vehicle_registered_on );
-                $this->registered_date = $reg->format( 'd/m/Y' );
+                $this->registered_date = $reg->format( 'Y-m-d' );
             }
 
             $this->make = $this->vehicle->make;
@@ -357,6 +359,10 @@ class OrderForm extends Component
         }
     }
 
+    public function setNewCustomer($input)
+    {
+        $this->newCustomer = $input;
+    }
 
     public function newFactoryFit() {
 
@@ -453,6 +459,7 @@ class OrderForm extends Component
 
             if (!isset($this->customer_id) || $this->customer_id === '') {
                 $customer = new Customer();
+
                 $this->saveCustomerDetails($customer);
 
                 $customer = $customer->id;
@@ -549,7 +556,6 @@ class OrderForm extends Component
     public function render()
     {
         $companies = Company::orderBy('company_name', 'asc')->get();
-        $fitoptions = FitOption::latest()->get();
 
         $options = [
             'customers'         => Customer::orderBy('customer_name', 'asc')->get(),
@@ -567,8 +573,34 @@ class OrderForm extends Component
             'registration_companies' => $companies->where('company_type', 'registration'),
             'invoice_companies'      => $companies->where('company_type', 'invoice'),
 
-            'factory_options'   => $fitoptions->where('option_type', 'factory'),
-            'dealer_options'    => $fitoptions->where('option_type', 'dealer')
+            'factory_options' => FitOption::latest()
+                ->where('option_type', 'factory')
+                ->when($this->model, function ($query) {
+                    $query->where('model', $this->model);
+                })
+                ->when($this->model_year, function ($query) {
+                    $query->where('model_year', $this->model_year);
+                })
+                ->when($this->factoryFitSearch, function ($query) {
+                    $query->where('option_name', 'like', '%'.$this->factoryFitSearch.'%');
+                })
+                ->paginate(5),
+            'dealer_options'    => FitOption::latest()
+                ->where('option_type', 'dealer')
+                ->when($this->model, function ($query) {
+                    $query->where('model', $this->model);
+                })
+                ->when($this->model_year, function ($query) {
+                    $query->where('model_year', $this->model_year);
+                })
+                ->when($this->dealership, function ($query) {
+                    $query->where('dealer_id', $this->dealership);
+                })
+                ->when($this->dealerFitSearch, function ($query) {
+                    $query->where('option_name', 'like', '%'.$this->dealerFitSearch.'%');
+                })
+                ->paginate(5)
+
         ];
         return view('livewire.order.order-form', $options );
     }
@@ -621,7 +653,9 @@ class OrderForm extends Component
      */
     public function saveCustomerDetails(Customer $customer): void
     {
-        $customer->customer_name = $this->name;
+        if ( $this->customer_name ) {
+            $customer->customer_name = $this->customer_name;
+        }
         $customer->address_1 = $this->delivery_address_1;
         $customer->address_2 = $this->delivery_address_2;
         $customer->town = $this->delivery_town;
@@ -663,8 +697,6 @@ class OrderForm extends Component
         $vehicle->list_price = $this->list_price;
         $vehicle->first_reg_fee = $this->first_reg_fee;
         $vehicle->rfl_cost = $this->rfl_cost;
-        $vehicle->broker_id = $this->broker;
-        $vehicle->dealer_id = $this->dealership;
         $vehicle->onward_delivery = $this->onward_delivery;
         $vehicle->hide_from_broker = $this->hide_from_broker;
         $vehicle->hide_from_dealer = $this->hide_from_dealer;

@@ -18,6 +18,11 @@ class QuickEditCustomer extends Component
     public $postcode;
     public $phone_number;
     public $modalShow = false;
+    protected $rules = array(
+        'customer_name' => 'required',
+        'address_1' => 'required',
+        'phone_number' => 'required|numeric'
+    );
 
     public function mount(Customer $customer)
     {

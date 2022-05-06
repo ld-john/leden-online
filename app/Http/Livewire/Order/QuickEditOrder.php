@@ -26,6 +26,8 @@ class QuickEditOrder extends Component
     public $now;
     public $return;
     protected $rules = [
+        'vehicleStatus' => 'required',
+        'order_number' => 'required',
         'due_date' => 'nullable|date',
         'build_date' => 'nullable|date'
     ];
@@ -50,11 +52,11 @@ class QuickEditOrder extends Component
             $this->return = 'manage_deliveries';
         }
 
-        $this->now = date('d/m/Y');
+        $this->now = date('Y-m-d');
         if ($order->vehicle->vehicle_registered_on && $order->vehicle->vehicle_registered_on != '0000-00-00 00:00:00' )
         {
             $tempDate = new DateTime($order->vehicle->vehicle_registered_on);
-            $this->registered_date = $tempDate->format('d/m/Y');
+            $this->registered_date = $tempDate->format('Y-m-d');
         } else {
             $this->registered_date = null;
         }
@@ -63,17 +65,17 @@ class QuickEditOrder extends Component
         $this->registration = $vehicle->reg;
         $this->orbit_number = $vehicle->orbit_number;
         $orderDate = new DateTime($order->created_at);
-        $this->order_date = $orderDate->format( 'd/m/Y' );
+        $this->order_date = $orderDate->format( 'Y-m-d' );
         if ( $order->vehicle->build_date && $order->vehicle->build_date != '0000-00-00 00:00:00') {
 
             $del = new DateTime( $order->vehicle->build_date);
-            $this->build_date = $del->format( 'd/m/Y');
+            $this->build_date = $del->format( 'Y-m-d');
 
         }
         if ( $order->due_date && $order->due_date != '0000-00-00 00:00:00') {
 
             $del = new DateTime( $order->due_date);
-            $this->due_date = $del->format( 'd/m/Y');
+            $this->due_date = $del->format( 'Y-m-d');
 
         }
         $this->vehicleStatus = $vehicle->vehicle_status;
@@ -81,23 +83,6 @@ class QuickEditOrder extends Component
 
     public function saveOrder()
     {
-
-        if ($this->due_date) {
-            $this->due_date = DateTime::createFromFormat('d/m/Y', $this->due_date );
-        }
-
-        if ($this->build_date) {
-            $this->build_date = DateTime::createFromFormat('d/m/Y', $this->build_date);
-        }
-
-        if ($this->order_date) {
-            $this->order_date = DateTime::createFromFormat('d/m/Y', $this->order_date);
-        }
-
-        if ($this->registered_date) {
-            $this->registered_date = DateTime::createFromFormat('d/m/Y', $this->registered_date);
-        }
-
 
         $this->validate();
 
@@ -115,10 +100,6 @@ class QuickEditOrder extends Component
         $order->created_at = $this->order_date;
         $order->save();
 
-        $this->due_date = ( $this->due_date ? $this->due_date->format( 'd/m/Y') : null );
-        $this->build_date = ( $this->build_date ? $this->build_date->format( 'd/m/Y') : null );
-        $this->order_date = ( $this->order_date ? $this->order_date->format( 'd/m/Y' ) : null );
-        $this->registered_date = ( $this->registered_date ? $this->registered_date->format( 'd/m/Y' ) : null );
         return $this->redirect(route($this->return));
     }
 

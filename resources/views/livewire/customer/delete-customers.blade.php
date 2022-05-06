@@ -21,7 +21,7 @@
                         <ul>
                             @foreach($orders as $order)
                                 <li><a target="_blank" href="{{ route('order.show', $order->id) }}">{{$order->id}}</a> -
-                                    <a data-toggle="tooltip" title="Delete Order"><livewire:delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
+                                    <a data-toggle="tooltip" title="Delete Order"><livewire:order.delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
                                 </li>
 
                             @endforeach

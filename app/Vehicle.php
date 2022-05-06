@@ -85,7 +85,7 @@ class Vehicle extends Model
             while (gettype($fitType) === 'string') {
                 $fitType = json_decode($fitType);
             }
-            $fitOptions = FitOption::select('option_name','model', 'model_year', 'dealer', 'option_price')->where('option_type', $type)->whereIn('id', $fitType)->get();
+            $fitOptions = FitOption::select('option_name','model', 'model_year', 'dealer_id', 'option_price')->where('option_type', $type)->whereIn('id', $fitType)->get();
         } else {
             return [];
         }

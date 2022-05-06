@@ -525,53 +525,7 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                <div class="form-group row">
-                    <div class="col-md-4">
-                        <div><strong>Model:</strong></div>
-                        <input type="text" disabled wire:model="model" class="form-control">
-                    </div>
-                    <div class="col-md-4">
-                        <div><strong>Model Year:</strong></div>
-                        <input type="text" disabled wire:model="model_year" class="form-control">
-                    </div>
-                    <div class="col-md-4">
-                        <div><strong>Search</strong></div>
-                        <input type="text" class="form-control" wire:model="factoryFitSearch">
-                    </div>
-                </div>
-                @if($model && $model_year)
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr class="blue-background text-white">
-                            <th></th>
-                            <th>Option Name</th>
-                            <th>Price</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @forelse($factory_options as $option)
-                            <tr>
-                                <td><input type="checkbox" value="{{$option->id}}" wire:model="factory_fit_options"></td>
-                                <td>{{$option->option_name}}</td>
-                                <td>£{{ number_format($option->option_price, 2, '.', '') }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3">Sorry, Nothing matches your search</td>
-                            </tr>
-                        @endforelse
-                    </table>
-                    <div class="d-flex justify-content-between">
-                        @if(!$factory_options->isEmpty())
-                            <p>Showing {{ $factory_options->firstItem() }} - {{ $factory_options->lastItem() }} of {{$factory_options->total()}}</p>
-                        @endif
-                        <div>
-                            {{ $factory_options->links() }}
-                        </div>
-                    </div>
-                @else
-                    Please select the Model and Model Year above
-                @endif
+                @include('partials.factory-fit')
             </div>
             <!-- Card Header -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -579,88 +533,7 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                <div class="form-group row">
-                    <div class="col-md-3">
-                        <div><strong>Model:</strong></div>
-                        <input type="text" disabled wire:model="model" class="form-control">
-                    </div>
-                    <div class="col-md-3">
-                        <div><strong>Model Year:</strong></div>
-                        <input type="text" disabled wire:model="model_year" class="form-control">
-                    </div>
-                    <div class="col-md-3">
-                        <div><strong>Dealer:</strong></div>
-                        <input type="text" disabled value=" @if($dealership) {{ \App\Company::where('id', $dealership )->first()->company_name }} @endif" class="form-control">
-                    </div>
-                    <div class="col-md-3">
-                        <div><strong>Search</strong></div>
-                        <input type="text" class="form-control" wire:model="dealerFitSearch">
-                    </div>
-                </div>
-                @if($model && $model_year && $dealership)
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr class="blue-background text-white">
-                            <th></th>
-                            <th>Option Name</th>
-                            <th>Price</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @forelse($dealer_options as $option)
-                            <tr>
-                                <td><input type="checkbox" value="{{$option->id}}" wire:model="dealer_fit_options"></td>
-                                <td>{{$option->option_name}}</td>
-                                <td>£{{ number_format($option->option_price, 2, '.', '') }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3">Sorry, Nothing matches your search</td>
-                            </tr>
-                        @endforelse
-                    </table>
-                    <div class="d-flex justify-content-between">
-                        @if(!$dealer_options->isEmpty())
-                            <p>Showing {{ $dealer_options->firstItem() }} - {{ $dealer_options->lastItem() }} of {{$dealer_options->total()}}</p>
-                        @endif
-                        <div>
-                            {{ $dealer_options->links() }}
-                        </div>
-                    </div>
-                @else
-                    Please select the Model and Model Year and Dealership above
-                @endif
-{{--                <div class="form-group row mb-5">--}}
-{{--                    <label class="col-md-2 col-form-label">Dealer Fit Options</label>--}}
-{{--                    <div class="col-md-5">--}}
-{{--                        <select wire:model.lazy="dealer_fit_options" class="custom-select" multiple>--}}
-{{--                            @foreach ($dealer_options as $dealer_option)--}}
-{{--                                <option data-cost="{{ $dealer_option->option_price }}" value="{{ $dealer_option->id }}">--}}
-{{--                                    {{ $dealer_option->option_name }} - &pound;{{ $dealer_option->option_price }}--}}
-{{--                                </option>--}}
-{{--                            @endforeach--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-5">--}}
-{{--                        <div class="row dealer-row">--}}
-{{--                            <div class="col-md-6">--}}
-{{--                                <label>Name</label>--}}
-{{--                                <input wire:model="dealer_fit_name_manual_add" type="text" class="form-control"/>--}}
-{{--                                @error('dealer_fit_name_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror--}}
-{{--                            </div>--}}
-{{--                            <div class="col-md-6">--}}
-{{--                                <label>Price</label>--}}
-{{--                                <input wire:model="dealer_fit_price_manual_add" type="number" step=".01" class="form-control" />--}}
-{{--                                @error('dealer_fit_price_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="add-dealer-con mt-4">--}}
-{{--                            <button wire:click="newDealerFit" class="btn btn-sm btn-secondary" id="add-dealer-option" type="button">--}}
-{{--                                Add New Option--}}
-{{--                            </button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                @include('partials.dealer-fit')
             </div>
             <!-- Card Header -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

@@ -67,7 +67,7 @@
 
                 <div id="collapseFactoryFit" class="collapse @if( $showFactoryFitOptions ) show @endif" aria-labelledby="headingFactoryFit">
                     <div class="card-body">
-                        @include('order.partials.factoryFit')
+                        @include('partials.factory-fit')
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
 
                 <div id="collapseDealerFit" class="collapse @if( $showDealerFitOptions ) show @endif" aria-labelledby="headingDealerFit" >
                     <div class="card-body">
-                        @include('order.partials.dealerFit')
+                        @include('partials.dealer-fit')
                     </div>
                 </div>
             </div>

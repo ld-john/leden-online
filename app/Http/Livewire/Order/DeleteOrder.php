@@ -38,7 +38,9 @@ class DeleteOrder extends Component
         {
             Vehicle::destroy($this->vehicle->id);
         } else {
-            $this->vehicle->vehicle_status = $this->vehicleStatus;
+            if ($this->vehicleStatus) {
+                $this->vehicle->vehicle_status = $this->vehicleStatus;
+            }
             $this->vehicle->save();
         }
 

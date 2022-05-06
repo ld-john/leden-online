@@ -212,7 +212,7 @@
                                     <h6 class="font-weight-bold">Dealer Fit Options</h6>
                                     <ul>
                                         @forelse($order->vehicle->getFitOptions('dealer') as $option)
-                                            @include('partials.view-order-cost-section', ['name' => $option->dealer . $option->model . '-'. $option->model_year . 'MY-' . $option->option_name, 'value' => $option->option_price])
+                                            @include('partials.view-order-cost-section', ['name' => $option->model . '-'. $option->model_year . 'MY-' . $option->option_name, 'value' => $option->option_price])
                                         @empty
                                             <li>No options selected</li>
                                         @endforelse
