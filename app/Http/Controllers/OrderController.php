@@ -517,4 +517,35 @@ class OrderController extends Controller
         }
 	}
 
+    public function invoice_value_cleaner()
+    {
+        Invoice::chunk(100, function($invoices) {
+            foreach ($invoices as $invoice) {
+                if ($invoice->invoice_value_from_dealer || $invoice->invoice_value_to_dealer) {
+                    var_dump('skipped');
+                    continue;
+                }
+                if($invoice->order) {
+                    if ($invoice->order->vehicle) {
+                        $invoice_value = $invoice->order->invoiceDifferenceExVat();
+                        if ($invoice_value < 0) {
+                            $invoice->invoice_value_from_dealer = $invoice_value * -1;
+                            $invoice->invoice_value_to_dealer = null;
+                        } else {
+                            $invoice->invoice_value_to_dealer = $invoice_value;
+                            $invoice->invoice_value_from_dealer = null;
+                        }
+                        $invoice->save();
+                    } else {
+                        var_dump('no vehicle');
+                    }
+                } else {
+                    var_dump('no order');
+                }
+
+                var_dump('done');
+            }
+        });
+    }
+
 }

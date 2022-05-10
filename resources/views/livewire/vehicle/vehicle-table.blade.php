@@ -31,6 +31,7 @@
                 <th>Broker</th>
             @endif
             <th>Status</th>
+            <th>Extras</th>
             <th>Last Updated</th>
             <th>Action</th>
         </tr>
@@ -119,6 +120,7 @@
             </th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -158,6 +160,9 @@
                     </td>
                 @endif
                 <td>{{ $vehicle->status() }}</td>
+                <td>
+                    <livewire:vehicle.fit-options-modal :vehicle="$vehicle->id" :key="time().$vehicle->id" />
+                </td>
                 <td>
                     {{ \Carbon\Carbon::parse($vehicle->updated_at)->format( 'd/m/Y h:ia') }}
                 </td>

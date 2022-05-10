@@ -247,10 +247,10 @@
                             <div class="row">
                                 <div class="col">
                                     @include('partials.view-order-cost-section', ['name' => 'Please invoice funder for', 'value' => $order->invoice->invoice_funder_for])
-                                    @if ($order->invoiceDifferenceExVat() > 0)
+                                    @if ($order->invoice->invoice_value_to_dealer)
                                         <h6 class="font-weight-bold">We will invoice you for the difference</h6>
                                         @include('partials.view-order-cost-section', ['name' => 'inc VAT', 'value' => $order->invoiceDifferenceIncVat()])
-                                        @include('partials.view-order-cost-section', ['name' => 'exc VAT', 'value' => $order->invoiceDifferenceExVat()])
+                                        @include('partials.view-order-cost-section', ['name' => 'exc VAT', 'value' => $order->invoice->invoice_value_to_dealer])
                                     @else
                                         <h6 class="font-weight-bold">Invoice from Dealer</h6>
                                         @include('partials.view-order-cost-section', ['name' => 'Dealer Invoice Value', 'value' => ($order->invoice->invoice_value_from_dealer)])

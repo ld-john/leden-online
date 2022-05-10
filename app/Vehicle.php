@@ -8,11 +8,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Maatwebsite\Excel\Excel;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
 
+/**
+ * @property mixed $vehicle_status
+ * @property mixed $reg
+ * @property mixed|string $show_in_ford_pipeline
+ * @property mixed|string $hide_from_dealer
+ * @property mixed|string $hide_from_broker
+ * @property mixed $onward_delivery
+ * @property mixed $rfl_cost
+ * @property mixed $first_reg_fee
+ * @property mixed $list_price
+ * @property mixed $metallic_paint
+ * @property mixed $type
+ * @property mixed $chassis_prefix
+ * @property false|mixed|string|null $factory_fit_options
+ * @property false|mixed|string|null $dealer_fit_options
+ * @property mixed $trim
+ * @property mixed $colour
+ * @property mixed $fuel_type
+ * @property mixed $transmission
+ * @property mixed $engine
+ * @property mixed $derivative
+ * @property mixed $chassis
+ * @property mixed $model
+ * @property mixed $make
+ * @property mixed $ford_order_number
+ * @property mixed $model_year
+ * @property mixed $vehicle_registered_on
+ * @property mixed $broker_id
+ * @property mixed $dealer_id
+ */
 class Vehicle extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
+    /**
+     * @var mixed
+     */
     protected $guarded = [];
 
     protected $attributes = [

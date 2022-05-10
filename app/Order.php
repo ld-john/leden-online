@@ -6,6 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property mixed $id
+ * @property mixed $invoice_id
+ * @property mixed $invoice_company_id
+ * @property mixed $registration_company_id
+ * @property mixed $delivery_date
+ * @property mixed $due_date
+ * @property mixed $broker_ref
+ * @property mixed $comments
+ * @property mixed $dealer_id
+ * @property mixed $broker_id
+ * @property mixed $customer_id
+ * @property mixed $vehicle_id
+ */
 class Order extends Model
 {
     use HasFactory;

@@ -7,10 +7,8 @@ use App\Customer;
 use App\FitOption;
 use App\Invoice;
 use App\Manufacturer;
-use App\Notifications\notifications;
 use App\Order;
 use App\OrderUpload;
-use App\User;
 use App\Vehicle;
 use App\VehicleMeta\Colour;
 use App\VehicleMeta\Derivative;
@@ -19,16 +17,12 @@ use App\VehicleMeta\Fuel;
 use App\VehicleMeta\Transmission;
 use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
-use Dotenv\Exception\ValidationException;
+use ErrorException;
 use Exception;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use DateTime;
-use function PHPUnit\Framework\throwException;
 
 class OrderForm extends Component
 {
@@ -133,6 +127,7 @@ class OrderForm extends Component
     public $now;
     protected $rules = [
         'make' => 'required_without:newmake',
+        'customer_name' => 'required_without:customer_id',
         'model' => 'required',
         'type' => 'required',
         'derivative' => 'required',
@@ -157,6 +152,7 @@ class OrderForm extends Component
 
     protected $messages = [
         'make.required_without' => 'No <strong>Make</strong> selected',
+        'customer_name.required_without' => 'No <strong>Customer Name</strong> selected',
         'model.required' => 'No <strong>Model</strong> selected',
         'type.required' => 'No <strong>Vehicle Type</strong> selected',
         'derivative.required' => 'No <strong>Vehicle Derivative</strong> selected',
@@ -282,7 +278,7 @@ class OrderForm extends Component
             }
 
             $this->customer_id = $this->order->customer->id;
-            $this->name = $this->order->customer->customer_name;
+            $this->customer_name = $this->order->customer->customer_name;
             $this->customer_phone = $this->order->customer->phone_number;
             $this->delivery_address_1 = $this->order->customer->address_1;
             $this->delivery_address_2 = $this->order->customer->address_2;
@@ -306,6 +302,12 @@ class OrderForm extends Component
             $this->finance_bonus_invoice = $this->order->invoice->finance_company_bonus_invoice;
             $this->finance_company_bonus_invoice_number = $this->order->invoice->finance_company_bonus_invoice_number;
             $this->ford_bonus_invoice = $this->order->invoice->ford_bonus;
+
+            if ($this->order->invoice->invoice_value_to_dealer) {
+                $this->dealer_invoice_override = $this->order->invoice->invoice_value_to_dealer;
+            } elseif ($this->order->invoice->invoice_value_from_dealer) {
+                $this->dealer_invoice_override = 0 - $this->order->invoice->invoice_value_from_dealer;
+            }
 
             $this->order_ref = $this->order->vehicle->ford_order_number;
             $this->broker_ref = $this->order->broker_ref;
@@ -359,58 +361,16 @@ class OrderForm extends Component
         }
     }
 
-    public function setNewCustomer($input)
-    {
-        $this->newCustomer = $input;
-    }
-
-    public function newFactoryFit() {
-
-        $this->validate([
-            'factory_fit_name_manual_add' => 'required',
-            'factory_fit_price_manual_add' => 'required'
-        ]);
-
-        $factory_fit_option = new FitOption();
-        $factory_fit_option->option_name = $this->factory_fit_name_manual_add;
-        $factory_fit_option->option_price = $this->factory_fit_price_manual_add;
-        $factory_fit_option->option_type = 'factory';
-        $factory_fit_option->save();
-
-        $this->factory_fit_options[] = strval( $factory_fit_option->id );
-
-    }
-
-    public function newDealerFit() {
-        $this->validate([
-            'dealer_fit_name_manual_add' => 'required',
-            'dealer_fit_price_manual_add' => 'required'
-        ]);
-        $dealer_fit_option = new FitOption();
-        $dealer_fit_option->option_name = $this->dealer_fit_name_manual_add;
-        $dealer_fit_option->option_price = $this->dealer_fit_price_manual_add;
-        $dealer_fit_option->option_type = 'dealer';
-        $dealer_fit_option->save();
-
-        $this->dealer_fit_options[] = strval( $dealer_fit_option->id );
-    }
-
-    public function handleAddField()
-    {
-        $this->fields++;
-    }
-
     public function removeAttachment($key)
     {
         unset( $this->attachments[$key] );
     }
 
     /**
-     * @throws \ErrorException
+     * @throws ErrorException
      */
     public function orderFormSubmit()
     {
-
 
         if ($this->orbit_number === '') {
             $this->orbit_number = null;
@@ -451,7 +411,7 @@ class OrderForm extends Component
                 ));
 
                 if ($vehicle->order) {
-                    throw new \ErrorException('Vehicle already ordered');
+                    throw new ErrorException('Vehicle already ordered');
                 }
             }
 
@@ -485,6 +445,8 @@ class OrderForm extends Component
             $order->save();
 
             $this->markOrderComplete($vehicle, $order);
+
+            $this->setInvoiceValue($order, $invoice);
 
             foreach ($this->attachments as $attachment) {
                 $file = new OrderUpload();
@@ -527,18 +489,7 @@ class OrderForm extends Component
 
             $this->markOrderComplete($vehicle, $order);
 
-            $invoice_value = $order->invoiceDifferenceExVat();
-
-            if($invoice_value < 0) {
-                if($this->dealer_invoice_override) {
-                    $invoice->invoice_value_from_dealer = $this->dealer_invoice_override;
-                } else {
-                    $invoice->invoice_value_from_dealer = $invoice_value * -1;
-                }
-            } else {
-                $invoice->invoice_value_from_dealer = null;
-            }
-            $invoice->save();
+            $this->setInvoiceValue($order, $invoice);
 
             foreach ($this->attachments as $attachment) {
                 $file = new OrderUpload();
@@ -553,12 +504,21 @@ class OrderForm extends Component
         }
     }
 
+    public function clearCustomerID()
+    {
+        $this->customer_id = null;
+    }
+
     public function render()
     {
         $companies = Company::orderBy('company_name', 'asc')->get();
 
         $options = [
-            'customers'         => Customer::orderBy('customer_name', 'asc')->get(),
+            'customers'         => Customer::orderBy('customer_name', 'asc')
+                ->when($this->customer_name, function ($query) {
+                    $query->where('customer_name', 'like', '%'.$this->customer_name.'%');
+                })
+                ->paginate(5),
             'manufacturers'     => Manufacturer::all()->keyBy('id'),
             'types'             => Type::all(),
             'derivatives'       => Derivative::all(),
@@ -653,9 +613,7 @@ class OrderForm extends Component
      */
     public function saveCustomerDetails(Customer $customer): void
     {
-        if ( $this->customer_name ) {
-            $customer->customer_name = $this->customer_name;
-        }
+        $customer->customer_name = $this->customer_name;
         $customer->address_1 = $this->delivery_address_1;
         $customer->address_2 = $this->delivery_address_2;
         $customer->town = $this->delivery_town;
@@ -703,5 +661,35 @@ class OrderForm extends Component
         $vehicle->show_in_ford_pipeline = $this->ford_pipeline;
 
         $vehicle->save();
+    }
+
+    /**
+     * @param $order
+     * @param $invoice
+     * @return void
+     */
+    public function setInvoiceValue($order, $invoice): void
+    {
+        $invoice_value = $order->invoiceDifferenceExVat();
+
+        if ($this->dealer_invoice_override && $this->dealer_invoice_override !== '') {
+            if ($this->dealer_invoice_override < 0) {
+                $invoice->invoice_value_from_dealer = $this->dealer_invoice_override * -1;
+                $invoice->invoice_value_to_dealer = null;
+            } else {
+                $invoice->invoice_value_to_dealer = $this->dealer_invoice_override;
+                $invoice->invoice_value_from_dealer = null;
+            }
+        } else {
+            $invoice_value = $order->invoiceDifferenceExVat();
+            if ($invoice_value < 0) {
+                $invoice->invoice_value_from_dealer = $invoice_value * -1;
+                $invoice->invoice_value_to_dealer = null;
+            } else {
+                $invoice->invoice_value_to_dealer = $invoice_value;
+                $invoice->invoice_value_from_dealer = null;
+            }
+        }
+        $invoice->save();
     }
 }

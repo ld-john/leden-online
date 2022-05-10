@@ -151,6 +151,6 @@ Route::middleware('auth')->group(function(){
     Route::get('/link/date-clean-up', 'VehicleController@date_cleaner')->name('test6');
     Route::get('/link/customer-name-clean-up', 'CustomerController@name_cleaner')->name('test7');
     Route::get('/link/vehicle-broker-dealer-clean-up', 'OrderController@VehicleBrokerDealerCleanup')->name('test8');
-
+    Route::get('/link/invoice-value-clean-up', 'OrderController@invoice_value_cleaner')->name('test8');
 
 });
