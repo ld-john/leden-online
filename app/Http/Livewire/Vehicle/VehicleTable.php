@@ -68,7 +68,8 @@ class VehicleTable extends Component
             })
             ->where('ring_fenced_stock', $this->ringfenced)
             ->where('show_in_ford_pipeline', $this->fordpipeline)
-            ->doesntHave('order')
+            ->doesntHave('reservation')
+            ->doesntHave('order', 'and')
             ->when($this->searchStatus, function ($query) {
                 $query->where('vehicle_status', $this->searchStatus);
             })

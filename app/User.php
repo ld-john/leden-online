@@ -20,6 +20,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string $password
  * @property string|null $remember_token
  * @property-read int|null $notifications_count
+ * @property boolean $reservation_allowed
  */
 class User extends Authenticatable
 {

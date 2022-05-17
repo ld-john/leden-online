@@ -35,6 +35,13 @@
         </li>
 
         <div class="collapse" id="collapseOrders">
+
+            <li class="nav-item @if ($activePage == 'reservations') active @endif">
+                <a class="nav-link" href="{{ route('reservation.index') }}">
+                    <i class="fa-solid fa-bookmark"></i>
+                    <span>Reservations</span>
+                </a>
+            </li>
             <li class="nav-item @if ($activePage == 'order-bank') active @endif">
                 <a class="nav-link" href="{{ route('order_bank') }}">
                     <i class="fa-solid fa-piggy-bank"></i>

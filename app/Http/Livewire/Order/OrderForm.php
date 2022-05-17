@@ -9,6 +9,7 @@ use App\Invoice;
 use App\Manufacturer;
 use App\Order;
 use App\OrderUpload;
+use App\Reservation;
 use App\Vehicle;
 use App\VehicleMeta\Colour;
 use App\VehicleMeta\Derivative;
@@ -217,6 +218,8 @@ class OrderForm extends Component
             $this->show_offer = $this->vehicle->show_offer;
             $this->hide_from_broker = $this->vehicle->hide_from_broker;
             $this->hide_from_dealer = $this->vehicle->hide_from_dealer;
+            $this->broker = $this->vehicle->broker_id;
+            $this->dealership = $this->vehicle->dealer_id;
         }
 
         if (isset($this->order)) {
@@ -502,6 +505,9 @@ class OrderForm extends Component
 
             $this->successMsg = "Order Updated";
         }
+
+        $reservation = Reservation::where('vehicle_id', $vehicle->id)->delete();
+
     }
 
     public function clearCustomerID()

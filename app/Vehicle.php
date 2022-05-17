@@ -37,6 +37,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Exception;
  * @property mixed $vehicle_registered_on
  * @property mixed $broker_id
  * @property mixed $dealer_id
+ * @property mixed $manufacturer
+ * @property mixed $id
  */
 class Vehicle extends Model
 {
@@ -64,22 +66,27 @@ class Vehicle extends Model
         return $this->hasOne(Order::class, 'vehicle_id', 'id' );
     }
 
-    public function manufacturer()
+    public function reservation(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne( Reservation::class, 'vehicle_id', 'id' );
+    }
+
+    public function manufacturer(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Manufacturer::class, 'id', 'make');
     }
 
-    public function dealer()
+    public function dealer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Company::class, 'dealer_id', 'id');
     }
 
-    public function broker()
+    public function broker(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Company::class, 'broker_id', 'id');
     }
 
-    public function status()
+    public function status(): string
     {
         switch($this->vehicle_status) {
             case (1):
@@ -126,7 +133,7 @@ class Vehicle extends Model
         return $fitOptions;
     }
 
-    public function niceName()
+    public function niceName(): string
     {
         return $this->manufacturer->name . ' '.  $this->model . ' ' . $this->derivative;
     }

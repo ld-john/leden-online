@@ -27,7 +27,7 @@ class UserTable extends Component
 
     public function render()
     {
-        $data = User::select('id', 'firstname', 'lastname', 'email', 'company_id', 'role', 'is_deleted')
+        $data = User::select('id', 'firstname', 'lastname', 'email', 'company_id', 'role','reservation_allowed', 'is_deleted')
             ->with('company:id,company_name')
             ->when($this->searchID, function ($query) {
                 $query->where('id', 'like', '%'.$this->searchID.'%');

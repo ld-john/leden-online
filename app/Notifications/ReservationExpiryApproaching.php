@@ -2,27 +2,30 @@
 
 namespace App\Notifications;
 
+use App\Reservation;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class notifications extends Notification
+class ReservationExpiryApproaching extends Notification
 {
     use Queueable;
 
-    private $message;
+    /**
+     * @var Reservation
+     */
+    private $reservation;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($message, $order_id, $type)
+    public function __construct(Reservation $reservation)
     {
-        $this->message = $message;
-        $this->order_id = $order_id;
-        $this->type = $type;
+        $this->reservation = $reservation;
     }
 
     /**
@@ -33,7 +36,6 @@ class notifications extends Notification
      */
     public function via($notifiable)
     {
-        //return ['mail'];
         return ['database'];
     }
 
@@ -60,9 +62,9 @@ class notifications extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => $this->message,
-            'order_id' => $this->order_id,
-            'type' => $this->type,
+            'reservation' => $this->reservation->id,
+            'type' => 'vehicle',
+            'message' => 'Your Reservation on Vehicle #' . $this->reservation->vehicle_id . ' is expiring soon, Please place an order with Leden\'s office by ' . Carbon::parse($this->reservation->expiry_date)->format('d/m/Y')
         ];
     }
 }

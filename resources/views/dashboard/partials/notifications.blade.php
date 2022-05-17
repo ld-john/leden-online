@@ -9,7 +9,7 @@
         <div class="card-body">
             @if (count($notifications) > 0)
                 @foreach ($notifications as $notification)
-                    <a href="{{ route('order.show', $notification->data['order_id']) }}" class="notification">
+                    <div class="notification">
                         <div class="row mb-2">
                             <div class="col-md-1">
                                 <div class="icon-circle blue-background">
@@ -25,7 +25,7 @@
                                 <span class="@if ($notification->read_at == null) font-weight-bold @endif ">{{ $notification->data['message'] }}</span>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 @endforeach
             @else
                 You have no notifications to display

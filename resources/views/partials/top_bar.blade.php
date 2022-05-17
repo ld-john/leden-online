@@ -23,7 +23,7 @@
                     Notifications Center
                 </h6>
                 @forelse(Auth::user()->unreadNotifications->take(4) as $notification)
-                    <a class="dropdown-item d-flex align-items-center text-gray-500" href="{{ route('order.show', $notification->data['order_id']) }}">
+                    <div class="dropdown-item d-flex align-items-center text-gray-500">
                         <div class="mr-3">
                             <div class="icon-circle blue-background">
                                 @if ($notification->data['type'] == 'vehicle')
@@ -37,7 +37,7 @@
                             <div class="small text-gray-500">{{ date('l jS F Y \a\t g:ia', strtotime($notification->created_at)) }}</div>
                             <span class="font-weight-bold">{{ $notification->data['message'] }}</span>
                         </div>
-                    </a>
+                    </div>
                 @empty
                     <p class="text-center text-gray-500 px-4">No Unread Notifications</p>
                 @endforelse

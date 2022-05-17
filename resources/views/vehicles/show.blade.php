@@ -17,16 +17,8 @@
                     <!-- Card Header -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-l-blue">Vehicle Details</h6>
-                        <div class="d-flex align-items-center"><strong>Vehicle Status:</strong> <span class="badge badge-primary ml-3">{{ $vehicle->status() }}</span>
-                            @if( isset( $vehicle->order->id ) )
-                                <span class="badge badge-success ml-3">Vehicle is on order - <a href="{{route('order.show', $vehicle->order->id)}}">View Order</a></span>
-                            @else
-                                @can('admin')
-                                    <span class="badge badge-success ml-3">Vehicle is available for order - <a class="text-white" href="{{route('create_order')}}">Reserve</a> </span>
-                                @else
-                                    <span class="badge badge-success ml-3">Vehicle is available for order - Contact Leden for details</span>
-                                @endcan
-                            @endif
+                        <div class="d-flex align-items-center"><strong>Vehicle Status:</strong>
+                            <span class="badge badge-primary ml-3">{{ $vehicle->status() }}</span>
                         </div>
                     </div>
                     <!-- Card Body -->
@@ -165,6 +157,7 @@
                                     @endif
                                 </p>
                             </div>
+                        </div>
                     </div>
                     <!-- Card Header -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -196,6 +189,28 @@
                                         <li>No options selected</li>
                                     @endforelse
                                 </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @if( $vehicle->order || $vehicle->reservation )
+                                    @if (Auth::user()->company_id === $vehicle->reservation->broker_id)
+                                        {{ $vehicle->reservation->customer->firstname }} {{ $vehicle->reservation->customer->lastname }} has reserved this vehicle until {{ \Carbon\Carbon::parse($vehicle->reservation->expiry_date)->format('d/m/Y') }}
+                                    @else
+                                        Vehicle is on order or reserved by a different company
+                                    @endif
+                                @else
+                                    @can('admin')
+                                        <a class="btn btn-warning" href="{{ route('order.reserve', $vehicle->id ) }}">Place Order with Vehicle #{{ $vehicle->id }}</a>
+                                    @endcan
+                                    @can('broker')
+                                        @if ($reservation_allowed)
+                                            <a class="btn btn-secondary" href="{{ route('reservation.create', $vehicle->id ) }}">Reserve Vehicle #{{ $vehicle->id }}</a>
+                                        @endif
+                                    @endcan
+                                @endif
                             </div>
                         </div>
                     </div>

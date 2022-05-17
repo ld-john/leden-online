@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="col-md-11">
                                         <div class="small text-gray-500">{{ date('l jS F Y \a\t g:ia', strtotime($notification->created_at)) }}</div>
-                                        <a href="{{ route('order.show', $notification->data['order_id']) }}" class="@if ($notification->read_at == null) text-white font-weight-bold @endif ">{{ $notification->data['message'] }}</a>
+                                        <div class="@if ($notification->read_at == null) text-white font-weight-bold @endif ">{{ $notification->data['message'] }}</a>
                                         <br>
                                         @if ($notification->read_at == null)
                                             <a href="{{ route('notifications.mark-read', $notification->id) }}" class="text-white">Mark as read </a>

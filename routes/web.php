@@ -40,14 +40,18 @@ Route::middleware('auth')->group(function(){
     Route::get('/orders/view/{order}', 'OrderController@show')->name('order.show');
     Route::get('/orders/duplicate/{order}', 'OrderController@duplicate')->name('order.duplicate');
     Route::get('/orders/edit/{order}', 'OrderController@edit')->name('order.edit');
-    Route::get('/orders/reserve/{vehicle}', 'OrderController@showReserveOrder')->name('order.reserve');
+    Route::get('/orders/{vehicle}', 'OrderController@showReserveOrder')->name('order.reserve');
     Route::get('/orders/accept-date/{order}', 'OrderController@dateAccept')->name('order.date.accept');
     Route::get('/orders/change-date/{order}', 'OrderController@showDateChange')->name('order.date.change');
     Route::post('/orders/change-date/{order}', 'OrderController@storeDateChange')->name('order.date.update');
     Route::get('/orders/pdf/{order}', 'OrderController@downloadPDF')->name('order.pdf');
     Route::get('/orders/delete/{order}', 'OrderController@destroy')->name('order.destroy');
 
-
+    /* Reservation Controller Routes */
+    Route::get( '/reserve-vehicle/{vehicle}', 'ReservationController@create' )->name('reservation.create');
+    Route::get( '/reservations', 'ReservationController@index')->name('reservation.index');
+    Route::get( '/reservations/{reservation}/extend', 'ReservationController@extend')->name('reservation.extend');
+    Route::get('/reservations/{user}/toggle', 'ReservationController@toggle')->name('reservation.toggle');
 
     /* Vehicle Controller Routes */
     Route::get('/create-vehicle', 'VehicleController@create')->name('create_vehicle');
@@ -69,7 +73,6 @@ Route::middleware('auth')->group(function(){
     Route::get('/vehicle/recycle-bin', 'VehicleController@recycle')->name('vehicle.recycle_bin');
     Route::get('/vehicle/force-delete/{vehicle}', 'VehicleController@forceDelete')->name('vehicle.force-delete');
     Route::get('/vehicle/restore/{vehicle}', 'VehicleController@restore')->name('vehicle.restore');
-
 
     /* ReportingController routes */
     Route::get('/reporting', 'ReportingController@showReporting')->name('reporting');

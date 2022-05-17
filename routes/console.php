@@ -1,5 +1,8 @@
 <?php
 
+use App\Reservation;
+use App\Vehicle;
+use Carbon\Carbon;
 use Illuminate\Foundation\Inspiring;
 
 /*
@@ -16,3 +19,12 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+Artisan::command('cleanVehicle', function () {
+    $date = Carbon::now()->subDays(30);
+    Vehicle::where('deleted_at', '<', $date)->onlyTrashed()->forceDelete();
+});
+
+Artisan::command('checkReservationExpiry', function () {
+   Reservation::checkExpiry();
+});

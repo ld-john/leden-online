@@ -27,9 +27,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->call(function () {
-            Vehicle::where('deleted_at', '<=', Carbon::now()->subDays(30))->forceDelete();
-        })->daily();
+        $schedule->command('cleanVehicle')->dailyAt('23:55');
+        $schedule->command('checkReservationExpiry')->dailyAt('23:55');
     }
 
     /**

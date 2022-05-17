@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 use App\MessageGroup;
 use Carbon\Carbon;
 use App\Message;
-use DataTables;
 use App\User;
-use Helper;
 use Auth;
 use DB;
 
@@ -176,5 +174,10 @@ class MessagesController extends Controller
             ->get();
 
         return $all_unread_messages;
+    }
+
+    public function showNotification(Notification $notification)
+    {
+        return view('notifications.show', ['notification' => $notification]);
     }
 }

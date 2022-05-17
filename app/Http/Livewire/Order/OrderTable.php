@@ -46,9 +46,9 @@ class OrderTable extends Component
         $this->status = $status;
         $this->view = $view;
         if( Auth::user()->role === 'broker' ) {
-            $this->brokerID = Auth::user()->company->id;
+            $this->brokerID = Auth::user()->company_id;
         } elseif ( Auth::user()->role === 'dealer' ) {
-            $this->dealerID = Auth::user()->company->id;
+            $this->dealerID = Auth::user()->company_id;
         }
     }
 

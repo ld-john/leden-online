@@ -13,6 +13,7 @@ use App\Invoice;
 use App\Order;
 use App\OrderLegacy;
 
+use App\Reservation;
 use App\Vehicle;
 
 use Carbon\Carbon;
@@ -47,7 +48,16 @@ class VehicleController extends Controller
      */
     public function show(Vehicle $vehicle)
     {
-        return (view('vehicles.show', ['vehicle' => $vehicle]));
+        $user = Auth::user();
+        $reservation_allowed = $user->reservation_allowed;
+        if ($reservation_allowed) {
+            $old_reservations = Reservation::where('customer_id', $user->id)->where('vehicle_id', $vehicle->id)->withTrashed()->get();
+            if( $old_reservations->count() > 0 ) {
+                $reservation_allowed = 0;
+            }
+        }
+
+        return (view('vehicles.show', ['vehicle' => $vehicle, 'reservation_allowed' => $reservation_allowed]));
     }
 
     /**

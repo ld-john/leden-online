@@ -1,5 +1,5 @@
 @extends('layouts.main', [
-    'title' => 'Reserve Vehicle - #{{ vehicle->id }}',
+    'title' => 'Order Vehicle - #{{ vehicle->id }}',
     'activePage' => 'edit-order'
     ])
 
@@ -12,9 +12,9 @@
 
             <!-- Doughnut Chart -->
             <div class="col-lg-10">
-                <h1 class="h3 mb-4 text-gray-800">Reserve Vehicle - #{{ $vehicle->id }}</h1>
+                <h1 class="h3 mb-4 text-gray-800">Order Vehicle - #{{ $vehicle->id }}</h1>
                 @if (isset($order))
-                    <p>Vehicle is already reserved</p>
+                    <p>Vehicle is already on order</p>
                 @else
                     @livewire('order.order-form', ['vehicle' => $vehicle])
                 @endif
