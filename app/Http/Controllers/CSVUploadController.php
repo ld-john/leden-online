@@ -3,22 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\CsvData;
+use App\FitOption;
+use App\Http\Requests\CsvImportRequest;
+use App\Imports\FitOptionImport;
 use App\Manufacturer;
 use App\Vehicle;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\notifications;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use DataTables;
-use App\User;
-use Helper;
-use Auth;
-use DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\HeadingRowImport;
 
 class CSVUploadController extends Controller
 {
@@ -28,16 +26,17 @@ class CSVUploadController extends Controller
      * @return Application|Factory|View
      */
 
-    public function showCsvUpload() {
+    public function showCsvUpload(): View|Factory|Application
+    {
         return view('upload.csv-upload');
     }
 
-    public function showRingFenceUpload()
+    public function showRingFenceUpload(): Factory|View|Application
     {
         return view('upload.rf-upload', ['brokers' => Company::orderBy('company_name', 'asc')->where('company_type', 'broker')->get()]);
     }
 
-    public function executeRfUpload(Request $request)
+    public function executeRfUpload(Request $request): RedirectResponse
     {
         $file = $request->file('file');
 
@@ -110,7 +109,7 @@ class CSVUploadController extends Controller
         return redirect()->route('ring_fenced_stock')->with('successMsg', 'Your vehicles have been added to the system. You can edit any extra information below.');
     }
 
-    public function executeCsvUpload(Request $request)
+    public function executeCsvUpload(Request $request): bool|RedirectResponse
     {
         $file = $request->file('file');
 
@@ -268,5 +267,52 @@ class CSVUploadController extends Controller
         }
 
         return $data;
+    }
+
+    public function showFitOptionUpload() {
+        return view('fit-options.index');
+    }
+
+    public function parseFitOptionImport(CsvImportRequest $request)
+    {
+        if ($request->has('header')) {
+            $headings = (new HeadingRowImport)->toArray($request->file('csv_file'));
+            $data = Excel::toArray(new FitOptionImport, $request->file('csv_file'));
+        } else {
+            $data = array_map('str_getcsv', file('csv_file')->getRealPath());
+        }
+
+        if(count($data) > 0) {
+            $csv_data = array_slice($data, 0, 2);
+
+            $csv_data_file = CsvData::create([
+                'csv_filename' => $request->file('csv_file')->getClientOriginalName(),
+                'csv_header' => $request->has('header'),
+                'csv_data' => json_encode($data)
+            ]);
+        } else {
+            return redirect()->back();
+        }
+
+        return view('import_fields', [
+            'headings' => $headings ?? null,
+            'csv_data' => $csv_data,
+            'csv_data_file' => $csv_data_file
+        ]);
+
+    }
+
+    public function processFitOptionImport( Request $request ) {
+        $data = CsvData::find($request->csv_data_field_id);
+        $csv_data = json_decode($data->csv_data, true);
+
+        foreach ($csv_data[0] as $row) {
+            $fitOption = new FitOption();
+            foreach (config('app.db_fields') as $field) {
+                $fitOption->$field = $row[$request->fields[$field]];
+            }
+            $fitOption->save();
+        }
+        return redirect()->route('meta.factoryfit.index');
     }
 }

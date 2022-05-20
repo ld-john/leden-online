@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -59,5 +60,12 @@ class User extends Authenticatable
     public function company()
     {
     	return $this->hasOne(Company::class, 'id', 'company_id');
+    }
+
+    public function fullName(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value, $attributes) => $attributes['firstname'] . ' ' . $attributes['lastname']
+        );
     }
 }

@@ -70,12 +70,8 @@ class OrderForm extends Component
     public $model_year;
     public $registered_date;
     public $ford_pipeline = "0";
-    public $factory_fit_options; // Vehicle -> JSON of IDs to fit_options
-    public $factory_fit_name_manual_add; // View use only
-    public $factory_fit_price_manual_add;
-    public $dealer_fit_options; // Vehicle
-    public $dealer_fit_name_manual_add;
-    public $dealer_fit_price_manual_add;
+    public $factory_fit_options = []; // Vehicle -> JSON of IDs to fit_options
+    public $dealer_fit_options = []; // Vehicle
     public $dealership;
     public $registration_company; // Order
     public $invoice_company; // Order
@@ -653,8 +649,8 @@ class OrderForm extends Component
         $vehicle->fuel_type = $this->fuel_type;
         $vehicle->colour = $this->colour;
         $vehicle->trim = $this->trim;
-        $vehicle->dealer_fit_options = isset($this->dealer_fit_options) ? json_encode($this->dealer_fit_options) : null;
-        $vehicle->factory_fit_options = isset($this->factory_fit_options) ? json_encode($this->factory_fit_options) : null;
+        $vehicle->dealer_fit_options =  json_encode($this->dealer_fit_options);
+        $vehicle->factory_fit_options = json_encode($this->factory_fit_options);
         $vehicle->chassis_prefix = $this->chassis_prefix;
         $vehicle->type = $this->type;
         $vehicle->metallic_paint = $this->metallic_paint;

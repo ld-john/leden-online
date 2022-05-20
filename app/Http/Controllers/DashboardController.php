@@ -46,7 +46,6 @@ class DashboardController extends Controller
                 'live_orders' => $live_orders,
                 'in_stock' => $in_stock->count(),
                 'completed_orders' => $completed->count(),
-                'notifications' => Auth::user()->notifications->take(6),
             ]);
         } else {
             $data = Vehicle::select('id', 'make', 'model', 'reg', 'type')
@@ -61,7 +60,6 @@ class DashboardController extends Controller
                 'live_orders' => $live_orders,
                 'in_stock' => $in_stock->count(),
                 'completed_orders' => $completed->count(),
-                'notifications' => Auth::user()->notifications->take(6),
             ]);
         }
     }
@@ -80,8 +78,6 @@ class DashboardController extends Controller
         $completed = $this->GetVehicleByStatus(7);
         $live_orders = $factory_order->count() + $euro_vhc->count() + $uk_vhc->count() + $in_stock->count() + $ready_for_delivery->count() + $delivery_booked->count() + $awaiting_ship->count() + $converter->count();
 
-
-
         return view('dashboard.dashboard-admin', [
             'in_stock' => $in_stock->count(),
             'ready_for_delivery' => $ready_for_delivery->count(),
@@ -91,7 +87,6 @@ class DashboardController extends Controller
             'uk_vhc' => $uk_vhc->count(),
             'delivery_booked' => $delivery_booked->count(),
             'live_orders' => $live_orders,
-            'notifications' => Auth::user()->notifications->take(6),
             'awaiting_ship' => $awaiting_ship->count(),
             'at_converter' => $converter->count(),
         ]);

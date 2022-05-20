@@ -39,7 +39,12 @@
                     </td>
                 @endif
                 <td>£{{ number_format($fitOption->option_price, 2, '.', '') }}</td>
-                <td>@livewire('fit-options.edit-fit-option', ['fitOption' => $fitOption->id, 'key' => time().$fitOption->id ])</td>
+                <td>
+                    <a data-toggle="tooltip" title="Delete Fit Option">
+                        <livewire:fit-options.delete-fit-option :fitOption="$fitOption->id" :key="time().$fitOption->id" />
+                    </a>
+                    @livewire('fit-options.edit-fit-option', ['fitOption' => $fitOption->id, 'key' => time().$fitOption->id ])
+                </td>
             </tr>
         @empty
             <tr>

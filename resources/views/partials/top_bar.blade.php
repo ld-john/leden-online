@@ -7,44 +7,7 @@
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto align-items-center">
         <!-- Nav Item - Alerts -->
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle text-white" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
-                @if (Auth::user()->unreadNotifications()->count() > 9)
-                    <span class="badge badge-danger badge-counter">9+</span>
-                @elseif (Auth::user()->unreadNotifications()->count() > 0)
-                    <span class="badge badge-danger badge-counter">{{ Auth::user()->unreadNotifications()->count() }}</span>
-                @endif
-            </a>
-            <!-- Dropdown - Alerts -->
-            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                    Notifications Center
-                </h6>
-                @forelse(Auth::user()->unreadNotifications->take(4) as $notification)
-                    <div class="dropdown-item d-flex align-items-center text-gray-500">
-                        <div class="mr-3">
-                            <div class="icon-circle blue-background">
-                                @if ($notification->data['type'] == 'vehicle')
-                                    <i class="fa-solid fa-car text-white"></i>
-                                @else
-                                    <i class="fas fa-flag"></i>
-                                @endif
-                            </div>
-                        </div>
-                        <div>
-                            <div class="small text-gray-500">{{ date('l jS F Y \a\t g:ia', strtotime($notification->created_at)) }}</div>
-                            <span class="font-weight-bold">{{ $notification->data['message'] }}</span>
-                        </div>
-                    </div>
-                @empty
-                    <p class="text-center text-gray-500 px-4">No Unread Notifications</p>
-                @endforelse
-                <a class="dropdown-item text-center small text-gray-500" href="{{ route('notifications.read') }}">Mark all as read</a>
-                <a class="dropdown-item text-center small text-gray-500" href="{{ route('notifications') }}">View All Notifications</a>
-            </div>
-        </li>
+        @livewire('notification.notifications-popup')
         <!-- Nav Item - Messages -->
         <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle text-white" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

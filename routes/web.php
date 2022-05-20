@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function(){
     Route::get( '/reservations', 'ReservationController@index')->name('reservation.index');
     Route::get( '/reservations/{reservation}/extend', 'ReservationController@extend')->name('reservation.extend');
     Route::get('/reservations/{user}/toggle', 'ReservationController@toggle')->name('reservation.toggle');
+    Route::get('/reservations/{vehicle}/admin', 'ReservationController@admin_create')->name('reservation.admin');
 
     /* Vehicle Controller Routes */
     Route::get('/create-vehicle', 'VehicleController@create')->name('create_vehicle');
@@ -83,8 +84,11 @@ Route::middleware('auth')->group(function(){
     /* CSVUploadController routes */
     Route::get('/csv-upload', 'CSVUploadController@showCsvUpload')->name('csv_upload');
     Route::get('/rf-upload', 'CSVUploadController@showRingFenceUpload')->name('rf_upload');
+    Route::get('/fit-option-upload', 'CSVUploadController@showFitOptionUpload')->name('fit_option_upload');
     Route::post('/csv-upload', 'CSVUploadController@executeCsvUpload')->name('csv_upload.import');
     Route::post('/rf-upload', 'CSVUploadController@executeRfUpload')->name('rf_upload.import');
+    Route::post('/import_parse', 'CSVUploadController@parseFitOptionImport')->name('import_parse');
+    Route::post('/import_process', 'CSVUploadController@processFitOptionImport')->name('import_process');
 
     /* Customer Controller Routes */
     Route::get('/customers', 'CustomerController@index')->name('customer.index');

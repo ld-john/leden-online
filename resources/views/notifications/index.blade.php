@@ -11,7 +11,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-md-12">
                         <h1 class="h3 mb-4 text-gray-800">All Notifications</h1>
                     </div>
                     @if (count($all_notifications) > 0)
@@ -38,8 +38,7 @@
                                     </div>
                                     <div class="col-md-11">
                                         <div class="small text-gray-500">{{ date('l jS F Y \a\t g:ia', strtotime($notification->created_at)) }}</div>
-                                        <div class="@if ($notification->read_at == null) text-white font-weight-bold @endif ">{{ $notification->data['message'] }}</a>
-                                        <br>
+                                        <div class="@if ($notification->read_at == null) text-white font-weight-bold @endif ">{{ $notification->data['message'] }}</a></div>
                                         @if ($notification->read_at == null)
                                             <a href="{{ route('notifications.mark-read', $notification->id) }}" class="text-white">Mark as read </a>
                                         @else

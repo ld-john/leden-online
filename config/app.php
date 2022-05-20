@@ -237,4 +237,13 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
+    'db_fields' => [
+        'option_type',
+        'option_name',
+        'model',
+        'model_year',
+        'dealer_id',
+        'option_price'
+    ]
+
 ];

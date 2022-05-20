@@ -22,6 +22,7 @@
             <th>Engine</th>
             <th>Transmission</th>
             <th>Colour</th>
+            <th>Extras</th>
             <th>Type</th>
             <th>Chassis</th>
             <th>Registration</th>
@@ -31,7 +32,6 @@
                 <th>Broker</th>
             @endif
             <th>Status</th>
-            <th>Extras</th>
             <th>Last Updated</th>
             <th>Action</th>
         </tr>
@@ -58,6 +58,7 @@
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchColour" type="text" class="form-control" placeholder="Search Colour">
             </th>
+            <th></th>
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchType" type="text" class="form-control" placeholder="Search Type">
             </th>
@@ -120,7 +121,6 @@
             </th>
             <th></th>
             <th></th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -139,6 +139,9 @@
                 <td>{{ $vehicle->engine }}</td>
                 <td>{{ $vehicle->transmission }}</td>
                 <td>{{ $vehicle->colour }}</td>
+                <td>
+                    <livewire:vehicle.fit-options-modal :vehicle="$vehicle->id" :key="time().$vehicle->id" />
+                </td>
                 <td>{{ $vehicle->type }}</td>
                 <td>{{ $vehicle->chassis }}</td>
                 <td>{{ $vehicle->reg }}</td>
@@ -160,9 +163,6 @@
                     </td>
                 @endif
                 <td>{{ $vehicle->status() }}</td>
-                <td>
-                    <livewire:vehicle.fit-options-modal :vehicle="$vehicle->id" :key="time().$vehicle->id" />
-                </td>
                 <td>
                     {{ \Carbon\Carbon::parse($vehicle->updated_at)->format( 'd/m/Y h:ia') }}
                 </td>

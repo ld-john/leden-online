@@ -12,13 +12,17 @@
 
             <div class="col-lg-10">
                 <h1 class="h3 mb-4 text-gray-800">View Vehicle - #{{ $vehicle->id }}</h1>
-
                 <div class="card shadow mb-4">
                     <!-- Card Header -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-l-blue">Vehicle Details</h6>
                         <div class="d-flex align-items-center"><strong>Vehicle Status:</strong>
                             <span class="badge badge-primary ml-3">{{ $vehicle->status() }}</span>
+                            @if( $vehicle->reservation )
+                                <span class="badge badge-success ml-3">Reserved</span>
+                            @elseif($vehicle->order )
+                                <span class="badge badge-danger ml-3">On Order</span>
+                            @endif
                         </div>
                     </div>
                     <!-- Card Body -->
@@ -199,7 +203,11 @@
                                     @if (Auth::user()->company_id === $vehicle->reservation->broker_id)
                                         {{ $vehicle->reservation->customer->firstname }} {{ $vehicle->reservation->customer->lastname }} has reserved this vehicle until {{ \Carbon\Carbon::parse($vehicle->reservation->expiry_date)->format('d/m/Y') }}
                                     @else
-                                        Vehicle is on order or reserved by a different company
+                                        @can('admin')
+                                            {{ $vehicle->reservation->customer->firstname }} {{ $vehicle->reservation->customer->lastname }} from {{ $vehicle->reservation->company->company_name }} has reserved this vehicle until {{ \Carbon\Carbon::parse($vehicle->reservation->expiry_date)->format('d/m/Y') }}
+                                        @else
+                                            Vehicle is on order or reserved by a different company
+                                        @endcan
                                     @endif
                                 @else
                                     @can('admin')
@@ -211,6 +219,9 @@
                                         @endif
                                     @endcan
                                 @endif
+                                @can('admin')
+                                    <a class="btn btn-primary" href="{{ route('reservation.admin', $vehicle->id) }}">Reserve this Vehicle</a>
+                                @endcan
                             </div>
                         </div>
                     </div>

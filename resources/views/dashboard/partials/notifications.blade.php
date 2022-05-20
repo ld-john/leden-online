@@ -7,29 +7,7 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            @if (count($notifications) > 0)
-                @foreach ($notifications as $notification)
-                    <div class="notification">
-                        <div class="row mb-2">
-                            <div class="col-md-1">
-                                <div class="icon-circle blue-background">
-                                    @if ($notification->data['type'] == 'vehicle')
-                                        <i class="fas fa-car text-white"></i>
-                                    @else
-                                        <i class="fas fa-flag text-white"></i>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-md-11">
-                                <div class="small text-gray-500">{{ date('l jS F Y \a\t g:ia', strtotime($notification->created_at)) }}</div>
-                                <span class="@if ($notification->read_at == null) font-weight-bold @endif ">{{ $notification->data['message'] }}</span>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            @else
-                You have no notifications to display
-            @endif
+            @livewire('notification.notification-panel')
         </div>
     </div>
 </div>

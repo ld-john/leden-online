@@ -10229,6 +10229,19 @@ table.dataTable {
   justify-content: center;
 }
 
+.notification-dropdown {
+  position: absolute;
+  right: 0;
+  z-index: 1000;
+  min-width: 10rem;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  display: none;
+}
+.notification-dropdown.show {
+  display: block;
+}
+
 .multi-select-container {
   display: inline-block;
   position: relative;

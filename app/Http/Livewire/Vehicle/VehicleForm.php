@@ -53,10 +53,10 @@ class VehicleForm extends Component
 	public $model_year;
 	public $registered_date;
 	public $ford_pipeline = "0";
-	public $factory_fit_options; // Vehicle -> JSON of IDs to fit_options
+	public $factory_fit_options = []; // Vehicle -> JSON of IDs to fit_options
 	public $factory_fit_name_manual_add; // View use only
 	public $factory_fit_price_manual_add;
-	public $dealer_fit_options; // Vehicle
+	public $dealer_fit_options = []; // Vehicle
 	public $dealer_fit_name_manual_add;
 	public $dealer_fit_price_manual_add;
 	public $list_price;
@@ -230,8 +230,8 @@ class VehicleForm extends Component
 		$vehicle->dealer_id = $this->dealership;
         $vehicle->broker_id = $this->broker;
 		$vehicle->trim = $this->trim;
-		$vehicle->dealer_fit_options = $this->dealer_fit_options;
-		$vehicle->factory_fit_options = $this->factory_fit_options;
+		$vehicle->dealer_fit_options = json_encode($this->dealer_fit_options);
+		$vehicle->factory_fit_options = json_encode($this->factory_fit_options);
 		$vehicle->chassis_prefix = $this->chassis_prefix;
 		$vehicle->type = $this->type;
 		$vehicle->metallic_paint = $this->metallic_paint;

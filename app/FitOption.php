@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\FitOption
@@ -13,8 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $option_price
  * @property string $model
  * @property string $model_year
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption query()
@@ -24,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption whereOptionPrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption whereOptionType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 class FitOption extends Model
 {
@@ -32,4 +34,5 @@ class FitOption extends Model
     {
         return $this->hasOne(Company::class, 'id', 'dealer_id');
     }
+
 }

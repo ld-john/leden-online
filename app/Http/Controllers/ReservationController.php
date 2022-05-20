@@ -31,6 +31,11 @@ class ReservationController extends Controller
         return view('reservations.index');
     }
 
+    public function admin_create(Vehicle $vehicle)
+    {
+        return view('reservations.create', ['vehicle' => $vehicle]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -66,13 +71,20 @@ class ReservationController extends Controller
     public function extend(Reservation $reservation)
     {
         $new_date = Carbon::parse($reservation->expiry_date)->addWeekday(1);
-        $reservation->update(
-          [
-              'expiry_date' => $new_date,
-              'status' => 'extended',
-              'leden_user_id' => Auth::user()->id
-          ]
-        );
+        if ($reservation->status === 'active') {
+            $reservation->update([
+                'expiry_date' => $new_date,
+                'status' => 'extended',
+                'leden_user_id' => Auth::user()->id
+            ]);
+        } else {
+            $reservation->update([
+                'expiry_date' => $new_date,
+                'status' => 'extended_deadline_approaching',
+                'leden_user_id' => Auth::user()->id
+            ]);
+        }
+
         return redirect( route('reservation.index') );
     }
 
