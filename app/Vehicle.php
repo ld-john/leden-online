@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Maatwebsite\Excel\Excel;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
@@ -61,29 +64,44 @@ class Vehicle extends Model
      */
     protected $touches = ['order'];
 
-    public function order(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function order(): HasOne
     {
         return $this->hasOne(Order::class, 'vehicle_id', 'id' );
     }
 
-    public function reservation(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function reservation(): HasOne
     {
         return $this->hasOne( Reservation::class, 'vehicle_id', 'id' );
     }
 
-    public function manufacturer(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function manufacturer(): HasOne
     {
         return $this->hasOne(Manufacturer::class, 'id', 'make');
     }
 
-    public function dealer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function dealer(): BelongsTo
     {
         return $this->belongsTo(Company::class, 'dealer_id', 'id');
     }
 
-    public function broker(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function broker(): BelongsTo
     {
         return $this->belongsTo(Company::class, 'broker_id', 'id');
+    }
+
+    public function fitOptions(): BelongsToMany
+    {
+        return $this->belongsToMany(FitOption::class, 'fit_options_vehicle',  'vehicle_id', 'option_id');
+    }
+
+    public function factoryFitOptions()
+    {
+        return $this->fitOptions()->where('option_type', '=', 'factory')->get();
+    }
+
+    public function dealerFitOptions()
+    {
+        return $this->fitOptions()->where('option_type', '=', 'dealer')->get();
     }
 
     public function status(): string

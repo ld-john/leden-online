@@ -3,7 +3,10 @@
 namespace App;
 
 use Eloquent;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -30,9 +33,28 @@ use Illuminate\Support\Carbon;
  */
 class FitOption extends Model
 {
-    public function dealer(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function dealer(): HasOne
     {
         return $this->hasOne(Company::class, 'id', 'dealer_id');
+    }
+
+    public function vehicles(): BelongsToMany
+    {
+        return $this->belongsToMany(Vehicle::class, 'fit_options_vehicle', 'option_id', 'vehicle_id');
+    }
+
+    public function factoryOptionName(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value, $attributes) => $attributes['option_name'] . '-' . $attributes['model_year'] . 'MY-'. $attributes['model']
+        );
+    }
+
+    public function dealerOptionName(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value, $attributes) => $attributes['option_name'] . '-' . $attributes['model_year'] . 'MY-'. $attributes['model']
+        );
     }
 
 }

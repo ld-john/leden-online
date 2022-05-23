@@ -203,8 +203,6 @@ class OrderForm extends Component
             $this->status = $this->vehicle->vehicle_status;
             $this->model_year = $this->vehicle->model_year;
             $this->ford_pipeline = $this->vehicle->show_in_ford_pipeline;
-            $this->factory_fit_options = $this->vehicle->factory_fit_options;
-            $this->dealer_fit_options = $this->vehicle->dealer_fit_options;
             $this->list_price = $this->vehicle->list_price;
             $this->metallic_paint = $this->vehicle->metallic_paint;
             $this->first_reg_fee = $this->vehicle->first_reg_fee;
@@ -216,6 +214,8 @@ class OrderForm extends Component
             $this->hide_from_dealer = $this->vehicle->hide_from_dealer;
             $this->broker = $this->vehicle->broker_id;
             $this->dealership = $this->vehicle->dealer_id;
+            $this->factory_fit_options = $this->vehicle->factoryFitOptions()->pluck('id')->toArray();
+            $this->dealer_fit_options = $this->vehicle->dealerFitOptions()->pluck('id')->toArray();
         }
 
         if (isset($this->order)) {
@@ -331,8 +331,8 @@ class OrderForm extends Component
             $this->status = $this->order->vehicle->vehicle_status;
             $this->model_year = $this->order->vehicle->model_year;
             $this->ford_pipeline = $this->order->vehicle->show_in_ford_pipeline;
-            $this->factory_fit_options = $this->order->vehicle->factory_fit_options;
-            $this->dealer_fit_options = $this->order->vehicle->dealer_fit_options;
+            $this->factory_fit_options = $this->order->vehicle->factoryFitOptions()->pluck('id')->toArray();
+            $this->dealer_fit_options = $this->order->vehicle->dealerFitOptions()->pluck('id')->toArray();
             $this->list_price = $this->order->vehicle->list_price;
             $this->metallic_paint = $this->order->vehicle->metallic_paint;
             $this->first_reg_fee = $this->order->vehicle->first_reg_fee;
@@ -649,8 +649,6 @@ class OrderForm extends Component
         $vehicle->fuel_type = $this->fuel_type;
         $vehicle->colour = $this->colour;
         $vehicle->trim = $this->trim;
-        $vehicle->dealer_fit_options =  json_encode($this->dealer_fit_options);
-        $vehicle->factory_fit_options = json_encode($this->factory_fit_options);
         $vehicle->chassis_prefix = $this->chassis_prefix;
         $vehicle->type = $this->type;
         $vehicle->metallic_paint = $this->metallic_paint;
@@ -663,6 +661,10 @@ class OrderForm extends Component
         $vehicle->show_in_ford_pipeline = $this->ford_pipeline;
 
         $vehicle->save();
+
+        $fitOptions = array_merge($this->factory_fit_options, $this->dealer_fit_options);
+
+        $vehicle->fitOptions()->sync($fitOptions);
     }
 
     /**

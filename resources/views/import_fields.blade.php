@@ -14,10 +14,11 @@
             <div class="col-lg-12">
                 <h1 class="h3 mb-4 text-gray-800">Fit Options Upload - Select Fields</h1>
                 <div class="card shadow mb-4">
+                    <div class="card-body">
                     <form action="{{route('import_process')}}" method="POST">
                         @csrf
                         <input type="hidden" name="csv_data_field_id" value="{{ $csv_data_file->id }}">
-                        <table class="table">
+                        <table class="table table-bordered">
                             @if(isset($headings))
                                 <thead>
                                 <tr>
@@ -55,6 +56,7 @@
                         </table>
                         <input type="submit" value="Upload" class="mt-4 btn btn-primary">
                     </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -196,8 +196,8 @@
                                         <div class="col">
                                             <h6 class="font-weight-bold">Factory Options</h6>
                                             <ul>
-                                                @forelse($order->vehicle->getFitOptions('factory') as $option)
-                                                    @include('partials.view-order-cost-section', ['name' => $option->model . '-'. $option->model_year . 'MY-' . $option->option_name, 'value' => $option->option_price])
+                                                @forelse($order->vehicle->factoryFitOptions() as $option)
+                                                    @include('partials.view-order-cost-section', ['name' => $option->factoryOptionName, 'value' => $option->option_price])
                                                 @empty
                                                     <li>No options selected</li>
                                                 @endforelse
@@ -211,8 +211,8 @@
                                 <div class="col-6">
                                     <h6 class="font-weight-bold">Dealer Fit Options</h6>
                                     <ul>
-                                        @forelse($order->vehicle->getFitOptions('dealer') as $option)
-                                            @include('partials.view-order-cost-section', ['name' => $option->model . '-'. $option->model_year . 'MY-' . $option->option_name, 'value' => $option->option_price])
+                                        @forelse($order->vehicle->dealerFitOptions() as $option)
+                                            @include('partials.view-order-cost-section', ['name' => $option->dealerOptionName, 'value' => $option->option_price])
                                         @empty
                                             <li>No options selected</li>
                                         @endforelse

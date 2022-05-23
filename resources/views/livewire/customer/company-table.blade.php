@@ -17,6 +17,7 @@
      <table class="table table-bordered">
           <thead>
           <tr class="blue-background text-white">
+               <th>Leden ID</th>
                <th>Company Name</th>
                <th>Address</th>
                <th>Email</th>
@@ -26,6 +27,7 @@
                <th>Actions</th>
           </tr>
           <tr class="bg-light">
+               <th></th>
                <th class="p-1">
                     <input wire:model.debounce:500ms="searchName" type="text" class="form-control" placeholder="Search Name">
                </th>
@@ -54,6 +56,7 @@
           <tbody>
           @forelse($companies as $company)
                <tr>
+                    <td>{{ $company->id }}</td>
                     <td>{{ $company->company_name }}</td>
                     <td>{{ $company->company_address1 }} <br> {{ $company->company_address2 }} <br> {{ $company->company_city }}
                          <br> {{ $company->company_county }} <br> {{ $company->company_country }} <br> {{ $company->company_postcode }}</td>

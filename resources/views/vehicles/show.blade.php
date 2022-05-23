@@ -175,11 +175,9 @@
                             </div>
                             <div class="col-md-4">
                                 <ul>
-                                    @forelse($vehicle->getFitOptions('factory') as $option)
-                                        <li>{{$option->model}}-{{$option->model_year}}MY-{{$option->option_name}} - £{{number_format($option->option_price, 2, '.', '')}}</li>
-                                    @empty
-                                        <li>No options selected</li>
-                                    @endforelse
+                                    @foreach($vehicle->factoryFitOptions() as $fitOption)
+                                        <li>{{ $fitOption->factoryOptionName }} - £{{ number_format($fitOption->option_price, 2, '.', '') }}</li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div class="col-md-2">
@@ -187,11 +185,9 @@
                             </div>
                             <div class="col-md-4">
                                 <ul>
-                                    @forelse($vehicle->getFitOptions('dealer') as $option)
-                                        <li>{{$option->model}}-{{$option->model_year}}MY-{{$option->option_name}} - £{{number_format($option->option_price, 2, '.', '')}}</li>
-                                    @empty
-                                        <li>No options selected</li>
-                                    @endforelse
+                                    @foreach($vehicle->dealerFitOptions() as $fitOption)
+                                        <li>{{ $fitOption->dealerOptionName }} - £{{ number_format($fitOption->option_price, 2, '.', '') }}</li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -200,15 +196,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 @if( $vehicle->order || $vehicle->reservation )
-                                    @if (Auth::user()->company_id === $vehicle->reservation->broker_id)
-                                        {{ $vehicle->reservation->customer->firstname }} {{ $vehicle->reservation->customer->lastname }} has reserved this vehicle until {{ \Carbon\Carbon::parse($vehicle->reservation->expiry_date)->format('d/m/Y') }}
-                                    @else
-                                        @can('admin')
-                                            {{ $vehicle->reservation->customer->firstname }} {{ $vehicle->reservation->customer->lastname }} from {{ $vehicle->reservation->company->company_name }} has reserved this vehicle until {{ \Carbon\Carbon::parse($vehicle->reservation->expiry_date)->format('d/m/Y') }}
-                                        @else
-                                            Vehicle is on order or reserved by a different company
-                                        @endcan
-                                    @endif
+
                                 @else
                                     @can('admin')
                                         <a class="btn btn-warning" href="{{ route('order.reserve', $vehicle->id ) }}">Place Order with Vehicle #{{ $vehicle->id }}</a>
@@ -219,9 +207,20 @@
                                         @endif
                                     @endcan
                                 @endif
-                                @can('admin')
-                                    <a class="btn btn-primary" href="{{ route('reservation.admin', $vehicle->id) }}">Reserve this Vehicle</a>
-                                @endcan
+
+                                @if (!$vehicle->order)
+                                    @can('broker')
+                                        @if (Auth::user()->company_id === $vehicle->reservation?->broker_id)
+                                            {{ $vehicle->reservation->customer->fullName }} has reserved this vehicle until {{ \Carbon\Carbon::parse($vehicle->reservation->expiry_date)->format('d/m/Y') }}
+                                        @else
+                                            Vehicle is on order or reserved by a different company
+                                        @endif
+                                    @endcan
+                                    @can('admin')
+                                        <a class="btn btn-primary" href="{{ route('reservation.admin', $vehicle->id) }}">Reserve this Vehicle</a>
+                                       {{ $vehicle->reservation?->customer->fullName }} from {{ $vehicle->reservation?->company->company_name }} has reserved this vehicle until {{ \Carbon\Carbon::parse($vehicle->reservation?->expiry_date)->format('d/m/Y') }}
+                                    @endcan
+                                @endif
                             </div>
                         </div>
                     </div>

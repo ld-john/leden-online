@@ -54,11 +54,7 @@ class VehicleForm extends Component
 	public $registered_date;
 	public $ford_pipeline = "0";
 	public $factory_fit_options = []; // Vehicle -> JSON of IDs to fit_options
-	public $factory_fit_name_manual_add; // View use only
-	public $factory_fit_price_manual_add;
 	public $dealer_fit_options = []; // Vehicle
-	public $dealer_fit_name_manual_add;
-	public $dealer_fit_price_manual_add;
 	public $list_price;
 	public $metallic_paint;
 	public $dealer_discount;
@@ -135,8 +131,8 @@ class VehicleForm extends Component
 			$this->status = $this->vehicle->vehicle_status;
 			$this->model_year = $this->vehicle->model_year;
 			$this->ford_pipeline = $this->vehicle->show_in_ford_pipeline;
-			$this->factory_fit_options = json_decode($this->vehicle->factory_fit_options);
-			$this->dealer_fit_options = json_decode($this->vehicle->dealer_fit_options);
+			$this->factory_fit_options = $this->vehicle->factoryFitOptions()->pluck('id')->toArray();
+			$this->dealer_fit_options = $this->vehicle->dealerFitOptions()->pluck('id')->toArray();
 			$this->list_price = $this->vehicle->list_price;
 			$this->metallic_paint = $this->vehicle->metallic_paint;
 			$this->first_reg_fee = $this->vehicle->first_reg_fee;
@@ -153,27 +149,6 @@ class VehicleForm extends Component
 	public function updated($propertyName)
 	{
 		$this->validateOnly($propertyName);
-	}
-
-	public function newFactoryFit() {
-		$factory_fit_option = new FitOption();
-		$factory_fit_option->option_name = $this->factory_fit_name_manual_add;
-		$factory_fit_option->option_price = $this->factory_fit_price_manual_add;
-		$factory_fit_option->option_type = 'factory';
-		$factory_fit_option->save();
-
-		$this->factory_fit_options[] = strval( $factory_fit_option->id );
-
-	}
-
-	public function newDealerFit() {
-		$dealer_fit_option = new FitOption();
-		$dealer_fit_option->option_name = $this->dealer_fit_name_manual_add;
-		$dealer_fit_option->option_price = $this->dealer_fit_price_manual_add;
-		$dealer_fit_option->option_type = 'dealer';
-		$dealer_fit_option->save();
-
-		$this->dealer_fit_options[] = strval( $dealer_fit_option->id );
 	}
 
 	public function orderFormSubmit()
@@ -230,8 +205,6 @@ class VehicleForm extends Component
 		$vehicle->dealer_id = $this->dealership;
         $vehicle->broker_id = $this->broker;
 		$vehicle->trim = $this->trim;
-		$vehicle->dealer_fit_options = json_encode($this->dealer_fit_options);
-		$vehicle->factory_fit_options = json_encode($this->factory_fit_options);
 		$vehicle->chassis_prefix = $this->chassis_prefix;
 		$vehicle->type = $this->type;
 		$vehicle->metallic_paint = $this->metallic_paint;
@@ -246,6 +219,10 @@ class VehicleForm extends Component
 		$vehicle->show_discount = $this->show_discount;
 		$vehicle->show_in_ford_pipeline = $this->ford_pipeline;
 		$vehicle->save();
+
+        $fitOptions = array_merge($this->factory_fit_options, $this->dealer_fit_options);
+
+        $vehicle->fitOptions()->sync($fitOptions);
 
 		if ($this->vehicle) {
 			$this->successMsg = "Vehicle Edited";

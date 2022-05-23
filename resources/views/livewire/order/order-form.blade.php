@@ -1,6 +1,5 @@
-
-
 <div>
+    {{ var_dump($dealer_fit_options) }}
     <form wire:submit.prevent="orderFormSubmit" method="POST" enctype="multipart/form-data">
         @csrf
         @if ($successMsg)

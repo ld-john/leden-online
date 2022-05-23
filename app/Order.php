@@ -89,19 +89,16 @@ class Order extends Model
 
 	public function factoryOptions()
 	{
-		return $this->vehicle->getFitOptions('factory');
+		return $this->vehicle->factoryFitOptions();
 	}
 	public function dealerOptions()
 	{
-		return $this->vehicle->getFitOptions('dealer');
+		return $this->vehicle->dealerFitOptions();
 	}
 
-	public function factoryOptionsSubTotal(){
-    	if (!isset($this->vehicle->factory_fit_options))
-	    {
-	    	return 0;
-	    }
-		return $this->vehicle->getFitOptions('factory')->sum('option_price');
+	public function factoryOptionsSubTotal()
+    {
+		return $this->vehicle->factoryFitOptions()->sum('option_price');
 	}
 
 	public function factoryOptionsDiscount(){
@@ -112,12 +109,9 @@ class Order extends Model
 		return $this->factoryOptionsSubTotal() - $this->factoryOptionsDiscount();
 	}
 
-	public function dealerOptionsTotal(){
-		if (!isset($this->vehicle->dealer_fit_options))
-		{
-			return 0;
-		}
-		return $this->vehicle->getFitOptions('dealer')->sum('option_price');
+	public function dealerOptionsTotal()
+    {
+		return $this->vehicle->dealerFitOptions()->sum('option_price');
 	}
 
 	public function invoiceSubTotal(){

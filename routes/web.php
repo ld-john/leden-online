@@ -149,15 +149,16 @@ Route::middleware('auth')->group(function(){
      *
      */
 
-    Route::get('/link/test/4', 'OrderController@dataTest')->name('test4');
-    Route::get('/link/test/', 'VehicleController@getVehicleMeta')->name('test');
-    Route::get('/link/test2/', 'CustomerController@buildNewCustomer')->name('test2');
-    Route::get('/link/test3/', 'ManufacturerController@buildManufacturerTable')->name('test3');
-    Route::get('/link/completed-date/', 'VehicleController@completedDateCleanup')->name('test4');
-    Route::get('/link/order-ref/', 'VehicleController@orderRefCleanup')->name('test5');
-    Route::get('/link/date-clean-up', 'VehicleController@date_cleaner')->name('test6');
-    Route::get('/link/customer-name-clean-up', 'CustomerController@name_cleaner')->name('test7');
-    Route::get('/link/vehicle-broker-dealer-clean-up', 'OrderController@VehicleBrokerDealerCleanup')->name('test8');
-    Route::get('/link/invoice-value-clean-up', 'OrderController@invoice_value_cleaner')->name('test8');
+//    Route::get('/link/test/4', 'OrderController@dataTest')->name('test4');
+//    Route::get('/link/test/', 'VehicleController@getVehicleMeta')->name('test');
+//    Route::get('/link/test2/', 'CustomerController@buildNewCustomer')->name('test2');
+//    Route::get('/link/test3/', 'ManufacturerController@buildManufacturerTable')->name('test3');
+//    Route::get('/link/completed-date/', 'VehicleController@completedDateCleanup')->name('test4');
+//    Route::get('/link/order-ref/', 'VehicleController@orderRefCleanup')->name('test5');
+//    Route::get('/link/date-clean-up', 'VehicleController@date_cleaner')->name('test6');
+//    Route::get('/link/customer-name-clean-up', 'CustomerController@name_cleaner')->name('test7');
+//    Route::get('/link/vehicle-broker-dealer-clean-up', 'OrderController@VehicleBrokerDealerCleanup')->name('test8');
+//    Route::get('/link/invoice-value-clean-up', 'OrderController@invoice_value_cleaner')->name('test9');
+    Route::get('/link/fit-option-clean-up', 'VehicleController@fitOptionsCleanUp');
 
 });

@@ -3,6 +3,9 @@
 namespace App\Http\Livewire\FitOptions;
 
 use App\FitOption;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Livewire\Component;
 
 class DeleteFitOption extends Component
@@ -18,6 +21,12 @@ class DeleteFitOption extends Component
     public function toggleDeleteModal()
     {
         $this->modalShow = !$this->modalShow;
+    }
+
+    public function deleteFitOption(): Redirector|Application|RedirectResponse
+    {
+        $this->fitOption->delete();
+        return redirect(request()->header('Referer'));
     }
 
     public function render()

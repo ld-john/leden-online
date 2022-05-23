@@ -267,5 +267,26 @@ class VehicleController extends Controller
 
     }
 
+    public function fitOptionsCleanUp()
+    {
+
+        Vehicle::withTrashed()->chunk(100, function($vehicles) {
+           foreach ($vehicles as $vehicle) {
+               $factory = json_decode($vehicle->factory_fit_options) ?? [];
+               while (gettype($factory) === 'string') {
+                   $factory = json_decode($factory);
+               }
+               $dealer = json_decode($vehicle->dealer_fit_options) ?? [];
+               while (gettype($dealer) === 'string') {
+                   $dealer = json_decode($dealer);
+               }
+               $fitOptions = array_merge($dealer, $factory);
+
+               $vehicle->fitOptions()->sync($fitOptions);
+               var_dump('Done');
+           }
+        });
+    }
+
 
 }

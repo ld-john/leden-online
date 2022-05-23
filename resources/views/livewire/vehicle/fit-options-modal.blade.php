@@ -1,6 +1,6 @@
 <div>
-    @if( count($vehicle->getFitOptions()) >= 1)
-        <button class="btn btn-primary" wire:click="toggleModal()">Yes <span class="badge badge-light">{{ count($vehicle->getFitOptions()) }}</span></button>
+    @if( count($vehicle->factoryFitOptions()) >= 1)
+        <button class="btn btn-primary" wire:click="toggleModal()">Yes <span class="badge badge-light">{{ count($vehicle->factoryFitOptions()) }}</span></button>
     @else
         No
     @endif
@@ -15,8 +15,8 @@
                 </div>
                 <div class="modal-body">
                     <ul>
-                        @foreach($vehicle->getFitOptions() as $option)
-                            <li>{{ $option->model }} - {{ $option->model_year }} MY - {{ $option->option_name }}</li>
+                        @foreach($vehicle->factoryFitOptions() as $option)
+                            <li>{{ $option->factoryOptionName }}</li>
                         @endforeach
                     </ul>
                 </div>

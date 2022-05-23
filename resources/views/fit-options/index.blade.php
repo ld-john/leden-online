@@ -18,7 +18,7 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-l-blue">Import CSV</h6>
-                            <a href="{{ asset('user-uploads/csv-uploads/csv_order_upload_template.csv') }}" download class="btn btn-sm btn-info"><i class="fa-solid fa-download"></i> Download CSV Template</a>
+                            <a href="{{ asset('user-uploads/csv-uploads/fit_option_upload_template.csv') }}" download class="btn btn-sm btn-info"><i class="fa-solid fa-download"></i> Download CSV Template</a>
                         </div>
                         <!-- Card Body -->
                         <div class="card-body">

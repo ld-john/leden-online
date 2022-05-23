@@ -139,6 +139,12 @@
                         <span>Ring Fenced Stock CSV Upload</span>
                     </a>
                 </li>
+                <li class="nav-item @if ($activePage == 'fit-options-upload') active @endif">
+                    <a class="nav-link" href="{{ route('fit_option_upload') }}">
+                        <i class="fa-solid fa-file-csv"></i>
+                        <span>Fit Options CSV Upload</span>
+                    </a>
+                </li>
             </div>
         @endcan
         @can('admin')
