@@ -6,13 +6,15 @@
     <tr class="blue-background text-white">
         <th style="width: 45px"></th>
         <th>Customer Name</th>
+        <th>Address</th>
     </tr>
     </thead>
     <tbody>
     @forelse ( $customers as $customer )
         <tr>
             <td><input type="radio" value="{{$customer->id}}" wire:model="customer_id"></td>
-            <td>{{ $customer->customer_name }}</td>
+            <td>{{ $customer->name() }}</td>
+            <td>{{ $customer->address_1 }}</td>
         </tr>
     @empty
         <tr>

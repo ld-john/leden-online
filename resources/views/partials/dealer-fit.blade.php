@@ -1,22 +1,18 @@
 <div class="form-group row">
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div><strong>Model:</strong></div>
         <input type="text" disabled wire:model="model" class="form-control">
     </div>
-    <div class="col-md-3">
-        <div><strong>Model Year:</strong></div>
-        <input type="text" disabled wire:model="model_year" class="form-control">
-    </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div><strong>Dealer:</strong></div>
-        <input type="text" disabled value=" @if($dealership) {{ \App\Company::where('id', $dealership )->first()->company_name }} @endif" class="form-control">
+        <input type="text" disabled value=" @if($dealership) {{ \App\Company::where('id', $dealership )->first()?->company_name }} @endif" class="form-control">
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div><strong>Search</strong></div>
         <input type="text" class="form-control" wire:model="dealerFitSearch">
     </div>
 </div>
-@if($model && $model_year && $dealership)
+@if($model && $dealership)
     <table class="table table-bordered">
         <thead>
         <tr class="blue-background text-white">
@@ -47,5 +43,5 @@
         </div>
     </div>
 @else
-    Please select the Model and Model Year and Dealership above
+    Please select the Model and Dealership above
 @endif

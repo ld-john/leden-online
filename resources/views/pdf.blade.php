@@ -46,7 +46,7 @@
 <table cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
     <tr>
         <td>
-            <img src="{{asset('leden-group-ltd.png')}}" width="350" height="auto" style="display: block;" />
+            <img src="{{asset('images/leden-group-ltd.png')}}" width="350" height="auto" style="display: block;" />
         </td>
     </tr>
     <tr>

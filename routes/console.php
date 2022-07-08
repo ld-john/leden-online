@@ -22,9 +22,16 @@ Artisan::command('inspire', function () {
 
 Artisan::command('cleanVehicle', function () {
     $date = Carbon::now()->subDays(30);
-    Vehicle::where('deleted_at', '<', $date)->onlyTrashed()->forceDelete();
+    $deleted = Vehicle::where('deleted_at', '>', $date)->onlyTrashed()->get();
+
+    var_dump(count($deleted));
+
+    foreach ($deleted as $item) {
+        $item->forceDelete();
+    }
+
 });
 
 Artisan::command('checkReservationExpiry', function () {
-   Reservation::checkExpiry();
+   (new App\Reservation)->checkExpiry();
 });

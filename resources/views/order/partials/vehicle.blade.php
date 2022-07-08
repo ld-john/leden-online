@@ -414,6 +414,9 @@
                 <option value="4">
                     Factory Order
                 </option>
+                @if ($registered_date)
+                    <option value="15">In Stock (Registered)</option>
+                @endif
                 <option value="1">
                     In Stock
                 </option>

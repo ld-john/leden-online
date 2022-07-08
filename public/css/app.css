@@ -10242,6 +10242,12 @@ table.dataTable {
   display: block;
 }
 
+.messages-box,
+.contact-box {
+  height: 510px;
+  overflow-y: scroll;
+}
+
 .multi-select-container {
   display: inline-block;
   position: relative;

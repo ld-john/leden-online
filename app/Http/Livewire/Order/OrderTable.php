@@ -45,9 +45,9 @@ class OrderTable extends Component
 
         $this->status = $status;
         $this->view = $view;
-        if( Auth::user()->role === 'broker' ) {
+        if (Auth::user()->role === 'broker') {
             $this->brokerID = Auth::user()->company_id;
-        } elseif ( Auth::user()->role === 'dealer' ) {
+        } elseif (Auth::user()->role === 'dealer') {
             $this->dealerID = Auth::user()->company_id;
         }
     }
@@ -63,9 +63,10 @@ class OrderTable extends Component
 
     public function render()
     {
-        $orders = Order::whereHas('vehicle', function($q){
-                $q->whereIn('vehicle_status', $this->status);
-            })->select(
+        $orders = Order::whereHas('vehicle', function ($q) {
+            $q->whereIn('vehicle_status', $this->status);
+        })
+            ->select(
                 'id',
                 'vehicle_id',
                 'broker_id',
@@ -75,13 +76,13 @@ class OrderTable extends Component
                 'due_date',
                 'delivery_date',
                 'broker_ref',
-                'updated_at'
+                'updated_at',
             )
             ->with([
                 'vehicle:id,model,ford_order_number,build_date,derivative,reg,vehicle_status,orbit_number,vehicle_registered_on',
                 'customer:id,customer_name',
                 'broker:id,company_name',
-                'dealer:id,company_name'
+                'dealer:id,company_name',
             ])
             ->when($this->brokerID, function ($query) {
                 $query->where('broker_id', $this->brokerID);
@@ -90,68 +91,116 @@ class OrderTable extends Component
                 $query->where('dealer_id', $this->dealerID);
             })
             ->when($this->searchID, function ($query) {
-                $query->where('id', 'like', '%'.$this->searchID.'%');
+                $query->where('id', 'like', '%' . $this->searchID . '%');
             })
             ->when($this->searchModel, function ($query) {
                 $query->whereHas('vehicle', function ($query) {
-                    $query->where('model', 'like', '%'.$this->searchModel.'%');
+                    $query->where(
+                        'model',
+                        'like',
+                        '%' . $this->searchModel . '%',
+                    );
                 });
             })
             ->when($this->searchDerivative, function ($query) {
                 $query->whereHas('vehicle', function ($query) {
-                    $query->where('derivative', 'like', '%'.$this->searchDerivative.'%');
+                    $query->where(
+                        'derivative',
+                        'like',
+                        '%' . $this->searchDerivative . '%',
+                    );
                 });
             })
             ->when($this->searchOrderNumber, function ($query) {
                 $query->whereHas('vehicle', function ($query) {
-                    $query->where('ford_order_number', 'like', '%'.$this->searchOrderNumber.'%');
+                    $query->where(
+                        'ford_order_number',
+                        'like',
+                        '%' . $this->searchOrderNumber . '%',
+                    );
                 });
             })
             ->when($this->searchOrbitNumber, function ($query) {
                 $query->whereHas('vehicle', function ($query) {
-                    $query->where('orbit_number', 'like', '%'.$this->searchOrbitNumber.'%');
+                    $query->where(
+                        'orbit_number',
+                        'like',
+                        '%' . $this->searchOrbitNumber . '%',
+                    );
                 });
             })
             ->when($this->searchReg, function ($query) {
                 $query->whereHas('vehicle', function ($query) {
-                    $query->where('reg', 'like', '%'.$this->searchReg.'%');
+                    $query->where('reg', 'like', '%' . $this->searchReg . '%');
                 });
             })
             ->when($this->searchDueDate, function ($query) {
-                $query->where('due_date', 'like', '%'.$this->searchDueDate.'%');
+                $query->where(
+                    'due_date',
+                    'like',
+                    '%' . $this->searchDueDate . '%',
+                );
             })
             ->when($this->searchDeliveryDate, function ($query) {
-                $query->where('delivery_date', 'like', '%'.$this->searchDeliveryDate.'%');
+                $query->where(
+                    'delivery_date',
+                    'like',
+                    '%' . $this->searchDeliveryDate . '%',
+                );
             })
             ->when($this->searchBuildDate, function ($query) {
                 $query->whereHas('vehicle', function ($query) {
-                    $query->where('build_date', 'like', '%'.$this->searchBuildDate.'%');
+                    $query->where(
+                        'build_date',
+                        'like',
+                        '%' . $this->searchBuildDate . '%',
+                    );
                 });
             })
             ->when($this->searchBuildDate, function ($query) {
-                $query->where('due_date', 'like', '%'.$this->searchDueDate.'%');
+                $query->where(
+                    'due_date',
+                    'like',
+                    '%' . $this->searchDueDate . '%',
+                );
             })
             ->when($this->searchStatus, function ($query) {
-                $query->whereHas('vehicle',function ($query) {
+                $query->whereHas('vehicle', function ($query) {
                     $query->where('vehicle_status', $this->searchStatus);
                 });
             })
             ->when($this->searchCustomer, function ($query) {
                 $query->whereHas('customer', function ($query) {
-                    $query->where('customer_name', 'like', '%'.$this->searchCustomer.'%');
+                    $query->where(
+                        'customer_name',
+                        'like',
+                        '%' . $this->searchCustomer . '%',
+                    );
                 });
             })
             ->when($this->searchBrokerRef, function ($query) {
-                $query->where('broker_ref', 'like', '%'.$this->searchBrokerRef.'%');
+                $query->where(
+                    'broker_ref',
+                    'like',
+                    '%' . $this->searchBrokerRef . '%',
+                );
             })
             ->when($this->searchBroker, function ($query) {
                 $query->whereHas('broker', function ($query) {
-                    $query->where('company_name', 'like', '%'.$this->searchBroker.'%');
+                    $query->where(
+                        'company_name',
+                        'like',
+                        '%' . $this->searchBroker . '%',
+                    );
                 });
             })
             ->when($this->searchDealer, function ($query) {
                 $query->whereHas('dealer', function ($query) {
-                    $query->where('company_name', 'like', '%'.$this->searchDealer.'%');
+                    $query->where(
+                        'company_name',
+                        'like',
+                        '%' . $this->searchDealer . '%',
+                    );
                 });
             })
             ->orderBy('created_at', 'asc')

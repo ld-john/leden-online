@@ -84,37 +84,7 @@
                     <option value="">Select Status</option>
                     @foreach($status as $item)
                         <option value="{{ $item }}">
-                            @switch($item)
-                                @case(1)
-                                In Stock
-                                @break
-                                @case(3)
-                                Ready for Delivery
-                                @break
-                                @case(4)
-                                Factory Order
-                                @break
-                                @case(6)
-                                Delivery Booked
-                                @break
-                                @case(7)
-                                Completed Orders
-                                @break
-                                @case(10)
-                                Europe VHC
-                                @break
-                                @case(12)
-                                At Converter
-                                @break
-                                @case(13)
-                                Awaiting Ship
-                                @break
-                                @case(11)
-                                UK VHC
-                                @break
-                                @default
-                                Not Known
-                            @endswitch
+                            {{ \App\Vehicle::statusMatch($item) }}
                         </option>
                     @endforeach
                 </select>

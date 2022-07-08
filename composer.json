@@ -10,7 +10,7 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
-        "barryvdh/laravel-dompdf": "^0.8.7",
+        "barryvdh/laravel-dompdf": "^v1.0.0",
         "doctrine/dbal": "^3.3.6",
         "fideloper/proxy": "^4.4.1",
         "guzzlehttp/guzzle": "^7.4.2",

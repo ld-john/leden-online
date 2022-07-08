@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -53,107 +54,89 @@ class Vehicle extends Model
      */
     protected $guarded = [];
 
-    protected $attributes = [
-        'factory_fit_options' => [],
-        'dealer_fit_options' => [],
-    ];
-
-
     /**
      * @var mixed|string
      */
-    protected $touches = ['order'];
+    protected $touches = ["order"];
 
     public function order(): HasOne
     {
-        return $this->hasOne(Order::class, 'vehicle_id', 'id' );
+        return $this->hasOne(Order::class, "vehicle_id", "id");
     }
 
     public function reservation(): HasOne
     {
-        return $this->hasOne( Reservation::class, 'vehicle_id', 'id' );
+        return $this->hasOne(Reservation::class, "vehicle_id", "id");
     }
 
     public function manufacturer(): HasOne
     {
-        return $this->hasOne(Manufacturer::class, 'id', 'make');
+        return $this->hasOne(Manufacturer::class, "id", "make");
     }
 
     public function dealer(): BelongsTo
     {
-        return $this->belongsTo(Company::class, 'dealer_id', 'id');
+        return $this->belongsTo(Company::class, "dealer_id", "id");
     }
 
     public function broker(): BelongsTo
     {
-        return $this->belongsTo(Company::class, 'broker_id', 'id');
+        return $this->belongsTo(Company::class, "broker_id", "id");
     }
 
     public function fitOptions(): BelongsToMany
     {
-        return $this->belongsToMany(FitOption::class, 'fit_options_vehicle',  'vehicle_id', 'option_id');
+        return $this->belongsToMany(
+            FitOption::class,
+            "fit_options_vehicle",
+            "vehicle_id",
+            "option_id"
+        );
     }
 
-    public function factoryFitOptions()
+    public function factoryFitOptions(): Collection
     {
-        return $this->fitOptions()->where('option_type', '=', 'factory')->get();
+        return $this->fitOptions()
+            ->where("option_type", "=", "factory")
+            ->get();
     }
 
-    public function dealerFitOptions()
+    public function dealerFitOptions(): Collection
     {
-        return $this->fitOptions()->where('option_type', '=', 'dealer')->get();
+        return $this->fitOptions()
+            ->where("option_type", "=", "dealer")
+            ->get();
     }
 
     public function status(): string
     {
-        switch($this->vehicle_status) {
-            case (1):
-                return 'In Stock';
-            case(3):
-                return 'Ready for Delivery';
-            case(4):
-                return 'Factory Order';
-            case(6) :
-                return 'Delivery Booked';
-            case(7):
-                return 'Completed Orders';
-            case(10):
-                return 'Europe VHC';
-            case (12):
-                return 'At Converter';
-            case (13):
-                return 'Awaiting Ship';
-            case (11):
-                return 'UK VHC';
-            default :
-                return 'Not Known';
-        }
+        return $this->statusMatch($this->vehicle_status);
     }
 
-    public function getFitOptions( $type = 'factory' )
+    public static function statusMatch($value): string
     {
-        if ( $type == 'factory') {
-            $fitType = $this->factory_fit_options;
-        } elseif ( $type == 'dealer') {
-            $fitType = $this->dealer_fit_options;
-        }
-
-        if ( isset ( $fitType) && $fitType !== '' ) {
-
-            while (gettype($fitType) === 'string') {
-                $fitType = json_decode($fitType);
-            }
-            $fitOptions = FitOption::select('option_name','model', 'model_year', 'dealer_id', 'option_price')->where('option_type', $type)->whereIn('id', $fitType)->get();
-        } else {
-            return [];
-        }
-
-        return $fitOptions;
+        return match ($value) {
+            1 => "In Stock",
+            3 => "Ready for Delivery",
+            4 => "Factory Order",
+            6 => "Delivery Booked",
+            7 => "Completed Orders",
+            10 => "Europe VHC",
+            12 => "At Converter",
+            13 => "Awaiting Ship",
+            11 => "UK VHC",
+            14 => "Recall",
+            15 => "In Stock (Registered)",
+            default => "Not Known",
+        };
     }
 
     public function niceName(): string
     {
-        return $this->manufacturer->name . ' '.  $this->model . ' ' . $this->derivative;
+        return $this->manufacturer->name .
+            " " .
+            $this->model .
+            " " .
+            $this->derivative;
     }
-
 }

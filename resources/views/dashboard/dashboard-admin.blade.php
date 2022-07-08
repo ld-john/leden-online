@@ -52,6 +52,9 @@
                         @if($at_converter)
                             <a class="btn btn-primary btn-sm" href="{{route('atconverter.export')}}">Download At Converter</a>
                         @endif
+                        @if($registered)
+                            <a class="btn btn-primary btn-sm" href="{{route('registered.export')}}">Download In Stock (Registered)</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -90,20 +93,22 @@
                     "Ready For Delivery - {{ $ready_for_delivery }}",
                     "Delivery Booked - {{ $delivery_booked }}",
                     "Awaiting Ship - {{ $awaiting_ship }}",
-                    "At Converter - {{ $at_converter }}"
+                    "At Converter - {{ $at_converter }}",
+                    "In Stock (Registered) - {{ $registered }}"
                 ],
                 datasets: [{
                     backgroundColor: [
                         "#004766",
+                        "#005980",
                         "#006b99",
+                        "#007db3",
                         "#008fcc",
+                        "#00a1e6",
                         "#00b3ff",
-                        "#33c2ff",
-                        "#66d1ff",
-                        "#99e0ff",
-                        "#ccf0ff"
+                        "#1abaff",
+                        "#33c2ff"
                     ],
-                    data: [{{ $factory_order }}, {{ $europe_vhc }}, {{ $uk_vhc }}, {{ $in_stock }}, {{ $ready_for_delivery }}, {{ $delivery_booked }}, {{ $awaiting_ship }}, {{ $at_converter }} ]
+                    data: [{{ $factory_order }}, {{ $europe_vhc }}, {{ $uk_vhc }}, {{ $in_stock }}, {{ $ready_for_delivery }}, {{ $delivery_booked }}, {{ $awaiting_ship }}, {{ $at_converter }}, {{ $registered }} ]
                 }]
             },
             options: {

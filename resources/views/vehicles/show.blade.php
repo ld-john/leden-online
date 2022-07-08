@@ -218,7 +218,9 @@
                                     @endcan
                                     @can('admin')
                                         <a class="btn btn-primary" href="{{ route('reservation.admin', $vehicle->id) }}">Reserve this Vehicle</a>
-                                       {{ $vehicle->reservation?->customer->fullName }} from {{ $vehicle->reservation?->company->company_name }} has reserved this vehicle until {{ \Carbon\Carbon::parse($vehicle->reservation?->expiry_date)->format('d/m/Y') }}
+                                        @if ($vehicle->reservation)
+                                            {{ $vehicle->reservation?->customer->fullName }} from {{ $vehicle->reservation?->company->company_name }} has reserved this vehicle until {{ \Carbon\Carbon::parse($vehicle->reservation?->expiry_date)->format('d/m/Y') }}
+                                        @endif
                                     @endcan
                                 @endif
                             </div>

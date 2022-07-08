@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/vehicle/deliverybooked/', [VehicleController::class, 'delivery_booked_export'])->name('deliverybooked.export');
     Route::get('/vehicle/awaitingship/', [VehicleController::class, 'awaiting_ship_export'])->name('awaitingship.export');
     Route::get('/vehicle/atconverter/', [VehicleController::class, 'at_converter_export'])->name('atconverter.export');
+    Route::get('/vehicle/registered/', [VehicleController::class, 'in_stock_registered_export'])->name('registered.export');
     Route::get('/vehicle/recycle-bin', 'VehicleController@recycle')->name('vehicle.recycle_bin');
     Route::get('/vehicle/force-delete/{vehicle}', 'VehicleController@forceDelete')->name('vehicle.force-delete');
     Route::get('/vehicle/restore/{vehicle}', 'VehicleController@restore')->name('vehicle.restore');
@@ -117,9 +118,6 @@ Route::middleware('auth')->group(function(){
     Route::get('/companies/edit/{company}', 'CompanyController@edit')->name('company.edit')->middleware('can:admin');
     Route::post('/companies/edit/{company}', 'CompanyController@update')->name('company.update');
 
-
-
-
     /* Vehicle Meta CRUD Routes
      * Added 04.05.2021 - By Link
     */
@@ -159,6 +157,6 @@ Route::middleware('auth')->group(function(){
 //    Route::get('/link/customer-name-clean-up', 'CustomerController@name_cleaner')->name('test7');
 //    Route::get('/link/vehicle-broker-dealer-clean-up', 'OrderController@VehicleBrokerDealerCleanup')->name('test8');
 //    Route::get('/link/invoice-value-clean-up', 'OrderController@invoice_value_cleaner')->name('test9');
-    Route::get('/link/fit-option-clean-up', 'VehicleController@fitOptionsCleanUp');
+//    Route::get('/link/fit-option-clean-up', 'VehicleController@fitOptionsCleanUp');
 
 });

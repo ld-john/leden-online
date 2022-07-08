@@ -13,6 +13,9 @@ use App\Vehicle;
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,7 +92,7 @@ class OrderController extends Controller
 	 * @param Order $order
 	 * @return RedirectResponse
      */
-	public function destroy(Order $order)
+	public function destroy(Order $order): RedirectResponse
 	{
 		Order::destroy($order->id);
         return redirect()->route('order_bank')->with('successMsg', 'Order #' . $order->id . ' deleted successfully - ' . $order->vehicle->niceName() );
@@ -103,7 +106,7 @@ class OrderController extends Controller
 	 * @return RedirectResponse
 	 */
 
-	public function duplicate( Request $request, Order $order )
+	public function duplicate( Request $request, Order $order ): RedirectResponse
 	{
 		$vehicle = Vehicle::where('id', $order->vehicle_id)->first();
 		$invoice = Invoice::where('id', $order->invoice_id)->first();
@@ -127,15 +130,15 @@ class OrderController extends Controller
 		return redirect()->route('order_bank')->with('successMsg', 'Order successfully duplicated');
 	}
 
-	public function showReserveOrder(Vehicle $vehicle)
+	public function showReserveOrder(Vehicle $vehicle): Factory|View|Application
 	{
 		$order = Order::where('vehicle_id', '=', $vehicle->id)->first();
 		return view('order.reserve', ['vehicle' => $vehicle, 'order' => $order]);
 	}
 
-	public function showOrderBank()
+	public function showOrderBank(): Factory|View|Application
 	{
-		return view('order.index', ['title' => 'Order Bank', 'active_page' => 'order-bank', 'route' => 'order_bank', 'status' => [1,4,10,11,12,13]]);
+		return view('order.index', ['title' => 'Order Bank', 'active_page' => 'order-bank', 'route' => 'order_bank', 'status' => [1,4,10,11,12,13,14,15]]);
 	}
 
 	public function completedOrders()
@@ -232,7 +235,7 @@ class OrderController extends Controller
 		]);
 	}
 
-	public function storeDateChange(Request $request, Order $order)
+	public function storeDateChange(Request $request, Order $order): RedirectResponse
 	{
 		$this->validate($request, [
 			'delivery_date' => 'required'
@@ -382,7 +385,6 @@ class OrderController extends Controller
             $dateConfirmed = 'TBC';
         }
 
-
 		$vehicleDetails = [
             [
                 'Manufacturer Order Ref' => $order->vehicle->ford_order_number,
@@ -451,22 +453,6 @@ class OrderController extends Controller
 
 	}
 
-    public function VehicleBrokerDealerCleanup()
-    {
-        Order::chunk(100, function($orders) {
-            foreach ($orders as $order) {
-                $vehicle = $order->vehicle;
-                if ($vehicle) {
-                    $vehicle->update([
-                        'broker_id' => $order->broker_id,
-                        'dealer_id' => $order->dealer_id
-                    ]);
-                }
-            }
-            var_dump('Done');
-        });
-    }
-
 	public function DateChangeEmail($company_id, Order $order)
 	{
 		$users = User::where('company_id', $company_id)->get();
@@ -516,36 +502,5 @@ class OrderController extends Controller
 
         }
 	}
-
-    public function invoice_value_cleaner()
-    {
-        Invoice::chunk(100, function($invoices) {
-            foreach ($invoices as $invoice) {
-                if ($invoice->invoice_value_from_dealer || $invoice->invoice_value_to_dealer) {
-                    var_dump('skipped');
-                    continue;
-                }
-                if($invoice->order) {
-                    if ($invoice->order->vehicle) {
-                        $invoice_value = $invoice->order->invoiceDifferenceExVat();
-                        if ($invoice_value < 0) {
-                            $invoice->invoice_value_from_dealer = $invoice_value * -1;
-                            $invoice->invoice_value_to_dealer = null;
-                        } else {
-                            $invoice->invoice_value_to_dealer = $invoice_value;
-                            $invoice->invoice_value_from_dealer = null;
-                        }
-                        $invoice->save();
-                    } else {
-                        var_dump('no vehicle');
-                    }
-                } else {
-                    var_dump('no order');
-                }
-
-                var_dump('done');
-            }
-        });
-    }
 
 }

@@ -2,12 +2,21 @@
 
 namespace App\Http\Livewire\FitOptions;
 
-use App\Company;
 use App\FitOption;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class FitOptionsEditor extends Component
 {
+    use WithPagination;
+
+    public function getQueryString(): array
+    {
+        return [];
+    }
+
+    protected $paginationTheme = 'bootstrap';
+
     public $fitType;
     public $paginate = 10;
 

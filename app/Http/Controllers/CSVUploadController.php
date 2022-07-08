@@ -47,7 +47,6 @@ class CSVUploadController extends Controller
 
         $broker = $request['broker'];
 
-
         $vehicle_uploads = $this->csvToArray($file);
 
         foreach ($vehicle_uploads as $vehicle_upload) {
@@ -55,34 +54,17 @@ class CSVUploadController extends Controller
 
             $upload_manufacturer = Manufacturer::where('name', $vehicle_upload['make'])->firstOrCreate();
 
-            switch($vehicle_upload['status']) {
-                case ('In Stock'):
-                    $upload_status = 1;
-                    break;
-                case('Ready for Delivery'):
-                    $upload_status = 3;
-                    break;
-                case('UK VHC'):
-                    $upload_status = 11;
-                    break;
-                case('Delivery Booked') :
-                    $upload_status = 6;
-                    break;
-                case('Completed Orders'):
-                    $upload_status = 7;
-                    break;
-                case('Europe VHC'):
-                    $upload_status = 10;
-                    break;
-                case ('At Converter'):
-                    $upload_status = 12;
-                    break;
-                case ('Awaiting Ship'):
-                    $upload_status = 13;
-                    break;
-                default :
-                    $upload_status = 4;
-            }
+	        $upload_status = match ($vehicle_upload['status']) {
+		        'In Stock' => 1,
+		        'Ready for Delivery' => 3,
+		        'UK VHC' => 11,
+		        'Delivery Booked' => 6,
+		        'Completed Orders' => 7,
+		        'Europe VHC' => 10,
+		        'At Converter' => 12,
+		        'Awaiting Ship' => 13,
+		        default => 4,
+	        };
 
             $upload[0]['orbit_number'] = $vehicle_upload['orbit_number'];
 
@@ -175,47 +157,24 @@ class CSVUploadController extends Controller
                 $vehicle = Vehicle::where('orbit_number', '=', $ford_report['ORBITNO'])->first();
 
                 if($vehicle) {
-                    if ( $vehicle->vehicle_status === 6 || $vehicle->vehicle_status === 7 || $vehicle->vehicle_status === 3) {
+                    if ( $vehicle->vehicle_status === 6 || $vehicle->vehicle_status === 7 || $vehicle->vehicle_status === 3 || $vehicle->vehicle_status === 14) {
                         continue;
                     }
 
                     $prefix = array_shift($ford_report);
 
-                    switch ($ford_report['LOCATION']) {
-                        case 'DELIVERED':
-                            $location = 1;
-                            break;
-                        case 'VFS-NORTH':
-                        case 'VFS-SOUTH':
-                        case 'VFS-SOTON' :
-                            $location = 12;
-                            break;
-                        case 'DBN DOCKS':
-                        case 'SILV EXP':
-                        case 'VAL PORT':
-                        case 'VALENCIA':
-                            $location = 13;
-                            break;
-                        case 'ANTWERP':
-                        case 'AUTOPORT':
-                        case 'NEW FLUSH':
-                            $location = 10;
-                            break;
-                        case 'DAGTOPS':
-                        case 'LIV DOCKS':
-                        case 'LIVTOPS':
-                        case 'SOTTOPS':
-                            $location = 11;
-                            break;
-                        default:
-                            $location = 4;
-                    }
+	                $location = match ($ford_report['LOCATION']) {
+		                'DELIVERED' => 1,
+		                'VFS-NORTH', 'VFS-SOUTH', 'VFS-SOTON' => 12,
+		                'DBN DOCKS', 'SILV EXP', 'VAL PORT', 'VALENCIA' => 13,
+		                'ANTWERP', 'AUTOPORT', 'NEW FLUSH' => 10,
+		                'DAGTOPS', 'LIV DOCKS', 'LIVTOPS', 'SOTTOPS' => 11,
+		                default => 4,
+	                };
 
-                    if ($ford_report['PLAN_BUILD_DATE']) {
-                        $build_date = Carbon::createFromFormat('d/m/Y', $ford_report['PLAN_BUILD_DATE'])->format('Y-m-d h:i:s');
-                    } else {
-                        $build_date = null;
-                    }
+	                $build_date = null;
+
+					if ($ford_report['PLAN_BUILD_DATE']) $build_date = Carbon::createFromFormat('d/m/Y', $ford_report['PLAN_BUILD_DATE'])->format('Y-m-d h:i:s');
 
                     $vehicle->update([
                         'chassis' => $ford_report['VIN'],
@@ -228,9 +187,6 @@ class CSVUploadController extends Controller
 
                     if($order) {
                         if($ford_report['ETA_DATE']) {
-
-
-
                             $order->update([
                                 'due_date' => Carbon::createFromFormat('d/m/Y', $ford_report['ETA_DATE'])->format('Y-m-d h:i:s')
                             ]);
@@ -269,11 +225,12 @@ class CSVUploadController extends Controller
         return $data;
     }
 
-    public function showFitOptionUpload() {
+    public function showFitOptionUpload(): Factory|View|Application
+    {
         return view('fit-options.index');
     }
 
-    public function parseFitOptionImport(CsvImportRequest $request)
+    public function parseFitOptionImport(CsvImportRequest $request): View|Factory|RedirectResponse|Application
     {
         if ($request->has('header')) {
             $headings = (new HeadingRowImport)->toArray($request->file('csv_file'));
@@ -302,7 +259,8 @@ class CSVUploadController extends Controller
 
     }
 
-    public function processFitOptionImport( Request $request ) {
+    public function processFitOptionImport( Request $request ): RedirectResponse
+    {
         $data = CsvData::find($request->csv_data_field_id);
         $csv_data = json_decode($data->csv_data, true);
 

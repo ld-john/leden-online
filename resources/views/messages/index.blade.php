@@ -24,6 +24,8 @@
             </div>
         </div>
         @endif
+        @livewire('messages.messages')
+
 
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->

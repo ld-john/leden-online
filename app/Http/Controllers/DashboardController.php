@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\Vehicle;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
@@ -27,7 +30,7 @@ class DashboardController extends Controller
      *
      * @return Renderable
      */
-    public function index(Request $request)
+    public function index(Request $request): Renderable
     {
         $factory_order = $this->GetVehicleByStatus(4, Auth::user()->role);
         $euro_vhc = $this->GetVehicleByStatus(10, Auth::user()->role);
@@ -64,7 +67,7 @@ class DashboardController extends Controller
         }
     }
 
-    protected function adminDashboard()
+    protected function adminDashboard(): Factory|View|Application
     {
         $factory_order = $this->GetVehicleByStatus(4);
         $euro_vhc = $this->GetVehicleByStatus(10);
@@ -74,6 +77,7 @@ class DashboardController extends Controller
         $delivery_booked = $this->GetVehicleByStatus(6);
         $awaiting_ship = $this->GetVehicleByStatus(13);
         $converter = $this->GetVehicleByStatus(12);
+		$registered = $this->GetVehicleByStatus(15);
 
         $completed = $this->GetVehicleByStatus(7);
         $live_orders = $factory_order->count() + $euro_vhc->count() + $uk_vhc->count() + $in_stock->count() + $ready_for_delivery->count() + $delivery_booked->count() + $awaiting_ship->count() + $converter->count();
@@ -86,6 +90,7 @@ class DashboardController extends Controller
             'europe_vhc' => $euro_vhc->count(),
             'uk_vhc' => $uk_vhc->count(),
             'delivery_booked' => $delivery_booked->count(),
+			'registered' => $registered->count(),
             'live_orders' => $live_orders,
             'awaiting_ship' => $awaiting_ship->count(),
             'at_converter' => $converter->count(),

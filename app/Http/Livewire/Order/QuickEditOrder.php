@@ -29,7 +29,7 @@ class QuickEditOrder extends Component
         'vehicleStatus' => 'required',
         'order_number' => 'required',
         'due_date' => 'nullable|date',
-        'build_date' => 'nullable|date'
+        'build_date' => 'nullable|date',
     ];
 
     public function toggleEditModal()
@@ -53,8 +53,10 @@ class QuickEditOrder extends Component
         }
 
         $this->now = date('Y-m-d');
-        if ($order->vehicle->vehicle_registered_on && $order->vehicle->vehicle_registered_on != '0000-00-00 00:00:00' )
-        {
+        if (
+            $order->vehicle->vehicle_registered_on &&
+            $order->vehicle->vehicle_registered_on != '0000-00-00 00:00:00'
+        ) {
             $tempDate = new DateTime($order->vehicle->vehicle_registered_on);
             $this->registered_date = $tempDate->format('Y-m-d');
         } else {
@@ -65,24 +67,26 @@ class QuickEditOrder extends Component
         $this->registration = $vehicle->reg;
         $this->orbit_number = $vehicle->orbit_number;
         $orderDate = new DateTime($order->created_at);
-        $this->order_date = $orderDate->format( 'Y-m-d' );
-        if ( $order->vehicle->build_date && $order->vehicle->build_date != '0000-00-00 00:00:00') {
-
-            $del = new DateTime( $order->vehicle->build_date);
-            $this->build_date = $del->format( 'Y-m-d');
-
+        $this->order_date = $orderDate->format('Y-m-d');
+        if (
+            $order->vehicle->build_date &&
+            $order->vehicle->build_date != '0000-00-00 00:00:00'
+        ) {
+            $del = new DateTime($order->vehicle->build_date);
+            $this->build_date = $del->format('Y-m-d');
         }
-        if ( $order->due_date && $order->due_date != '0000-00-00 00:00:00') {
-
-            $del = new DateTime( $order->due_date);
-            $this->due_date = $del->format( 'Y-m-d');
-
+        if ($order->due_date && $order->due_date != '0000-00-00 00:00:00') {
+            $del = new DateTime($order->due_date);
+            $this->due_date = $del->format('Y-m-d');
         }
         $this->vehicleStatus = $vehicle->vehicle_status;
     }
 
     public function saveOrder()
     {
+        if ($this->orbit_number === '') {
+            $this->orbit_number = null;
+        }
 
         $this->validate();
 

@@ -153,7 +153,7 @@ class VehicleController extends Controller
 
         return Excel::download(new DashboardExports($vehicles), 'delivery-booked-orders-' . $date . '.xlsx');
     }
-    public function awaiting_ship_export()
+    public function awaiting_ship_export(): BinaryFileResponse
     {
         $vehicles = Vehicle::where('vehicle_status', 13)->with('manufacturer:id,name')->get();
 
@@ -161,7 +161,7 @@ class VehicleController extends Controller
 
         return Excel::download(new DashboardExports($vehicles), 'awaiting-ship-orders-' . $date . '.xlsx');
     }
-    public function at_converter_export()
+    public function at_converter_export(): BinaryFileResponse
     {
         $vehicles = Vehicle::where('vehicle_status', 12)->with('manufacturer:id,name')->get();
 
@@ -169,37 +169,15 @@ class VehicleController extends Controller
 
         return Excel::download(new DashboardExports($vehicles), 'awaiting-ship-orders-' . $date . '.xlsx');
     }
-    public function completedDateCleanup()
-    {
-        $completedVehicles = Order::whereHas('vehicle', function ($q){
-            $q->whereIn('vehicle_status', [7]);
-        })->get();
 
-        foreach($completedVehicles as $vehicle) {
-            if ($vehicle->completed_date) {
-                continue;
-            }
-            $vehicle->update(['completed_date' => $vehicle->vehicle->updated_at]);
-        }
+	public function in_stock_registered_export(): BinaryFileResponse
+	{
+		$vehicles = Vehicle::where('vehicle_status', 15)->with('manufacturer:id,name')->get();
 
-        dd('Done');
-    }
+		$date = Carbon::now()->format('Y-m_d');
 
-    public function orderRefCleanup()
-    {
-        $orders = Order::all();
-
-        foreach ($orders as $order) {
-            $vehicle = $order->vehicle;
-            if ($vehicle) {
-                $vehicle->update([
-                    'ford_order_number' => $order->order_ref
-                ]);
-            }
-        }
-
-        dd('done');
-    }
+		return Excel::download(new DashboardExports($vehicles), 'in-stock-registered-' . $date . '.xlsx');
+	}
 
     public function recycle()
     {
@@ -218,74 +196,6 @@ class VehicleController extends Controller
     {
         Vehicle::withTrashed()->where('id', $vehicle)->restore();
         return redirect()->route('vehicle.recycle_bin');
-    }
-
-    public function date_cleaner() {
-
-        Vehicle::withTrashed()->chunk(100, function($vehicles) {
-
-            foreach ($vehicles as $vehicle) {
-                if ($vehicle->vehicle_registered_on === '0000-00-00 00:00:00') {
-                    $vehicle->update(['vehicle_registered_on' => null]);
-                    var_dump('Vehicles processed');
-                }
-            }
-        });
-        Order::withTrashed()->chunk(100, function ($orders) {
-            foreach ($orders as $order) {
-                if ($order->delivery_date === '0000-00-00 00:00:00'){
-                    $order->update(['delivery_date' => null]);
-                    var_dump('Delivery Date Nulled');
-                }
-                if ($order->due_date === '0000-00-00 00:00:00'){
-                    $order->update(['due_date' => null]);
-                    var_dump('Due Date Nulled');
-                }
-            }
-        });
-        Invoice::chunk(100, function($invoices) {
-            foreach ($invoices as $invoice) {
-                if ($invoice->finance_commission_pay_date === '0000-00-00 00:00:00') {
-                    $invoice->update(['finance_commission_pay_date' => null]);
-                    var_dump('Finance Commission Pay Date Nulled');
-                }
-                if ($invoice->broker_commission_pay_date === '0000-00-00 00:00:00') {
-                    $invoice->update(['broker_commission_pay_date' => null]);
-                    var_dump('Broker Commission Pay Date Nulled');
-                }
-                if ($invoice->broker_pay_date === '0000-00-00 00:00:00') {
-                    $invoice->update(['broker_pay_date' => null]);
-                    var_dump('Broker Pay Date Nulled');
-                }
-                if ($invoice->dealer_pay_date === '0000-00-00 00:00:00') {
-                    $invoice->update(['dealer_pay_date' => null]);
-                    var_dump('Dealer Pay Date Nulled');
-                }
-            }
-        });
-
-
-    }
-
-    public function fitOptionsCleanUp()
-    {
-
-        Vehicle::withTrashed()->chunk(100, function($vehicles) {
-           foreach ($vehicles as $vehicle) {
-               $factory = json_decode($vehicle->factory_fit_options) ?? [];
-               while (gettype($factory) === 'string') {
-                   $factory = json_decode($factory);
-               }
-               $dealer = json_decode($vehicle->dealer_fit_options) ?? [];
-               while (gettype($dealer) === 'string') {
-                   $dealer = json_decode($dealer);
-               }
-               $fitOptions = array_merge($dealer, $factory);
-
-               $vehicle->fitOptions()->sync($fitOptions);
-               var_dump('Done');
-           }
-        });
     }
 
 

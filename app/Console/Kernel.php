@@ -25,10 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-        $schedule->command('cleanVehicle')->dailyAt('23:55');
-        $schedule->command('checkReservationExpiry')->dailyAt('23:55');
+        $schedule->command('cleanVehicle')->dailyAt('23:50');
+        $schedule->command('checkReservationExpiry')->dailyAt('23:55')->withoutOverlapping()->runInBackground();;
     }
 
     /**

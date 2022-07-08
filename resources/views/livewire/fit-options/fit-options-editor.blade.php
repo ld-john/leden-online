@@ -45,7 +45,7 @@
                             <livewire:fit-options.delete-fit-option :fitOption="$fitOption->id" :key="time().$fitOption->id" />
                         </a>
                     @endif
-                    @livewire('fit-options.edit-fit-option', ['fitOption' => $fitOption->id, 'key' => time().$fitOption->id ])
+                    <livewire:fit-options.edit-fit-option :fitOption="$fitOption->id" :key="time().$fitOption->id" />
                 </td>
             </tr>
         @empty
