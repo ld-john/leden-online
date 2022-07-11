@@ -44,28 +44,27 @@
 </head>
 
 <table cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
-    <tr>
-        <td>
-            <img src="{{asset('images/leden-group-ltd.png')}}" width="350" height="auto" style="display: block;" />
-        </td>
-    </tr>
+
     <tr>
         <td style="padding:40px 0px 0px 0px;">
             <table cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
-                    <td valign="top" width="25%">
+                    <td valign="middle" width="20%">
+                        <img src="{{asset('images/leden-group-ltd.png')}}" width="90%" height="auto" style="display: block;" />
+                    </td>
+                    <td valign="top" width="20%">
                         <strong>Delivery Details:</strong><br>
                         {!! implode('<br>', $deliveryAddress) !!}
                     </td>
-                    <td valign="top" width="25%">
+                    <td valign="top" width="20%">
                         <strong>Invoice Details:</strong><br>
                         {!! implode('<br>', $invoiceAddress) !!}
                     </td>
-                    <td valign="top" width="25%">
+                    <td valign="top" width="20%">
                         <strong>Registration Details:</strong><br>
                         {!! implode('<br>', $registrationAddress) !!}
                     </td>
-                    <td valign="top">
+                    <td valign="top" width="20%">
                         <strong>Dealer Address:</strong><br>
                         {!! implode('<br>', $dealerAddress) !!}
                     </td>
@@ -237,7 +236,20 @@
                             </tr>
                             <tr>
                                 <td>AOC:</td>
-                                <td>ACT:</td>
+                                <td>Orbit:</td>
+                            </tr>
+                        </table>
+                        <table cellspacing="0" cellpadding="0" border="0" width="100%" class="contents" style="margin-top: 10px">
+                            <tr>
+                                <th colspan="2"></th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    FIN: {{$order->fin_number}}
+                                </td>
+                                <td>
+                                    Deal: {{$order->deal_number}}
+                                </td>
                             </tr>
                         </table>
                     </td>
@@ -328,7 +340,8 @@
     </tr>
     <tr>
         <td bgcolor="#1f3458" style="text-align: center; padding: 5px 20px; font-size: 14px; color: #ffffff;">
-            Copyright &copy; 2020 The Leden Group Limited, All rights reserved.
+            @php ($time = date('Y-m-d'))
+            Copyright &copy; {{\Carbon\Carbon::createFromFormat('Y-m-d', $time)->year}} The Leden Group Limited, All rights reserved.
         </td>
     </tr>
 </table>

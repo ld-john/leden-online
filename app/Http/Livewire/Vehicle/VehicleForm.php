@@ -64,8 +64,10 @@ class VehicleForm extends Component
     public $model_year;
     public $registered_date;
     public $ford_pipeline = '0';
-    public $factory_fit_options = []; // Vehicle -> JSON of IDs to fit_options
-    public $dealer_fit_options = []; // Vehicle
+    public $factoryFitOptions = []; // Vehicle -> JSON of IDs to fit_options
+    public $dealerFitOptions = []; // Vehicle
+    public $factoryFitOptionsArray = [];
+    public $dealerFitOptionsArray = [];
     public $list_price;
     public $metallic_paint;
     public $dealer_discount;
@@ -141,14 +143,16 @@ class VehicleForm extends Component
             $this->status = $this->vehicle->vehicle_status;
             $this->model_year = $this->vehicle->model_year;
             $this->ford_pipeline = $this->vehicle->show_in_ford_pipeline;
-            $this->factory_fit_options = $this->vehicle
+            $this->factoryFitOptions = $this->vehicle
                 ->factoryFitOptions()
                 ->pluck('id')
                 ->toArray();
-            $this->dealer_fit_options = $this->vehicle
+            $this->dealerFitOptions = $this->vehicle
                 ->dealerFitOptions()
                 ->pluck('id')
                 ->toArray();
+            $this->factoryFitOptionsArray = $this->vehicle->factoryFitOptions();
+            $this->dealerFitOptionsArray = $this->vehicle->dealerFitOptions();
             $this->list_price = $this->vehicle->list_price;
             $this->metallic_paint = $this->vehicle->metallic_paint;
             $this->first_reg_fee = $this->vehicle->first_reg_fee;
@@ -237,8 +241,8 @@ class VehicleForm extends Component
         $vehicle->save();
 
         $fitOptions = array_merge(
-            $this->factory_fit_options,
-            $this->dealer_fit_options,
+            $this->factoryFitOptions,
+            $this->dealerFitOptions,
         );
 
         $vehicle->fitOptions()->sync($fitOptions);
@@ -310,5 +314,16 @@ class VehicleForm extends Component
                 ->paginate(5),
         ];
         return view('livewire.vehicle.vehicle-form', $options);
+    }
+    public function updatedFactoryFitOptions()
+    {
+        $this->factoryFitOptionsArray = FitOption::find(
+            $this->factoryFitOptions,
+        );
+    }
+
+    public function updatedDealerFitOptions()
+    {
+        $this->dealerFitOptionsArray = FitOption::find($this->dealerFitOptions);
     }
 }

@@ -4,6 +4,10 @@
         @if ($successMsg)
             <div class="alert alert-success" role="alert">
                 {{$successMsg}}
+                <br>
+                <div class="btn-group">
+                    <a href="{{ route('order.pdf', $order->id) }}" class="btn btn-secondary">Download Order PDF</a>
+                </div>
             </div>
         @endif
 
@@ -32,6 +36,23 @@
                 <div id="collapseCustomer" class="collapse @if( $showCustomerInfo ) show @endif" aria-labelledby="headingCustomer">
                     <div class="card-body">
                         @include('order.partials.customer')
+                    </div>
+                </div>
+            </div>
+
+            {{-- Company Details --}}
+            <div class="card mb-3">
+                <div class="card-header" id="headingCompany">
+                    <h5 class="mb-0">
+                        <button type="button" class="btn btn-link" wire:click="$set('showCompanyInfo' , {{!$showCompanyInfo}})" data-toggle="collapse" data-target="#collapseCompany" aria-expanded="true" aria-controls="collapseCompany">
+                            Company
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseCompany" class="collapse @if( $showCompanyInfo ) show @endif" aria-labelledby="headingCompany">
+                    <div class="card-body">
+                        @include('order.partials.company')
                     </div>
                 </div>
             </div>
@@ -83,23 +104,6 @@
                 <div id="collapseDealerFit" class="collapse @if( $showDealerFitOptions ) show @endif" aria-labelledby="headingDealerFit" >
                     <div class="card-body">
                         @include('partials.dealer-fit')
-                    </div>
-                </div>
-            </div>
-
-            {{-- Company Details --}}
-            <div class="card mb-3">
-                <div class="card-header" id="headingCompany">
-                    <h5 class="mb-0">
-                        <button type="button" class="btn btn-link" wire:click="$set('showCompanyInfo' , {{!$showCompanyInfo}})" data-toggle="collapse" data-target="#collapseCompany" aria-expanded="true" aria-controls="collapseCompany">
-                            Company
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapseCompany" class="collapse @if( $showCompanyInfo ) show @endif" aria-labelledby="headingCompany">
-                    <div class="card-body">
-                        @include('order.partials.company')
                     </div>
                 </div>
             </div>
@@ -165,31 +169,24 @@
                         </button>
                     </h5>
                 </div>
-
                 <div id="collapseAdditional" class="collapse @if( $showAdditionalInformation ) show @endif" aria-labelledby="headingAdditional">
                     <div class="card-body">
                         @include('order.partials.additional')
                     </div>
                 </div>
             </div>
-
-
         </div>
-
         <div class="card-footer text-right">
             <button class="btn btn-primary" id="goButton" type="submit">Save Order</button>
         </div>
-
     </form>
-
 </div>
-
 
 @push('custom-scripts')
 
     <script>
         $( function (){
-            $('#goButton').click(function(event){
+            $('#goButton').click(function(){
                 window.scrollTo(0,0);
             });
 

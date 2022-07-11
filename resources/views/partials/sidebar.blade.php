@@ -67,7 +67,6 @@
                 <span>Stock</span>
             </a>
         </li>
-
         <div class="collapse" id="collapseStock">
             @can('admin')
                 <li class="nav-item @if ($activePage == 'pipeline') active @endif">
@@ -125,7 +124,6 @@
                     <span>Uploads</span>
                 </a>
             </li>
-
             <div class="collapse" id="collapseCSVUploads">
                 <li class="nav-item @if ($activePage == 'csv-upload') active @endif">
                     <a class="nav-link" href="{{ route('csv_upload') }}">
@@ -168,7 +166,6 @@
                     <span>Listings</span>
                 </a>
             </li>
-
             <div class="collapse" id="collapseListings">
                 <li class="nav-item @if ($activePage == 'user-manager') active @endif">
                     <a class="nav-link" href="{{ route('user_manager') }}">
@@ -196,19 +193,16 @@
                 </a>
             </li>
         @endcan
-
-
         @can('admin')
-            <li class="nav-item @if ($activePage == 'colour-manager' || $activePage == 'derivative-manager' || $activePage == 'engine-manager' || $activePage == 'fuel-manager' || $activePage == 'transmission-manager' || $activePage == 'trim-manager' || $activePage == 'type-manager') active @endif">
+            <li class="nav-item @if ($activePage === 'dealer-fit-options' || $activePage === 'factory-fit-options' || $activePage === 'make-manager' || $activePage == 'colour-manager' || $activePage == 'derivative-manager' || $activePage == 'engine-manager' || $activePage == 'fuel-manager' || $activePage == 'transmission-manager' || $activePage == 'trim-manager' || $activePage == 'type-manager') active @endif">
                 <a class="nav-link" data-toggle="collapse" href="#collapseMeta" role="button" aria-expanded="false" aria-controls="collapseCSVUploads">
                     <i class="fa-solid fa-chevron-down"></i>
                     <span>Meta Management</span>
                 </a>
             </li>
-
             <div class="collapse" id="collapseMeta">
-
                 <ul class="sidebar navbar-nav">
+                    <li class="nav-item @if($activePage === 'make-manager') active @endif"><a class="nav-link" href="{{ route('meta.make.index') }}">Make</a></li>
                     <li class="nav-item @if ($activePage == 'factory-fit-options') active @endif"><a class="nav-link" href="{{ route('meta.factoryfit.index') }}">Factory Fit Options</a></li>
                     <li class="nav-item @if ($activePage == 'dealer-fit-options') active @endif"><a class="nav-link" href="{{ route('meta.dealerfit.index') }}">Dealer Fit Options</a></li>
                     <li class="nav-item @if ($activePage == 'colour-manager') active @endif"><a class="nav-link" href="{{ route('meta.colour.index') }}">Colours </a></li>

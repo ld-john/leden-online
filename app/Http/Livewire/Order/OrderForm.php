@@ -20,6 +20,9 @@ use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
 use ErrorException;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -86,8 +89,8 @@ class OrderForm extends Component
     public $model_year;
     public $registered_date;
     public $ford_pipeline = '0';
-    public $factory_fit_options = []; // Vehicle -> JSON of IDs to fit_options
-    public $dealer_fit_options = []; // Vehicle
+    public $factoryFitOptions = []; // Vehicle -> JSON of IDs to fit_options
+    public $dealerFitOptions = []; // Vehicle
     public $dealership;
     public $registration_company; // Order
     public $invoice_company; // Order
@@ -130,9 +133,13 @@ class OrderForm extends Component
     public $finance_bonus_invoice;
     public $finance_company_bonus_invoice_number;
     public $finance_company_bonus_pay_date;
+    public $fin_number;
+    public $deal_number;
     public $ford_bonus_invoice;
     public $ford_bonus_pay_date;
     public $factoryFitSearch;
+    public $factoryFitOptionsArray = [];
+    public $dealerFitOptionsArray = [];
     public $dealerFitSearch;
     public $attachments = [];
     public $fields = 1;
@@ -179,20 +186,10 @@ class OrderForm extends Component
         'status.required' => 'No <strong>Order Status</strong> selected',
         'attachments.*.max' =>
             'An <strong>Attachment</strong> is too big! (Max 1Mb)',
-        'attachments.*.max' =>
-            'An <strong>Attachment</strong> is too big! (Max 1Mb)',
         'dealership.required' => 'No <strong>Dealer</strong> selected',
         'broker.required' => 'No <strong>Broker</strong> selected',
         'order_ref.required' =>
             'You must supply an <strong>Order Ref.</strong>',
-        'factory_fit_name_manual_add.required' =>
-            '<strong>Factory Fit Option</strong> requires a <strong>Name</strong> selected',
-        'dealer_fit_name_manual_add.required' =>
-            '<strong>Dealer Fit Option</strong> requires a <strong>Name</strong> selected',
-        'factory_fit_price_manual_add.required' =>
-            '<strong>Factory Fit Option</strong> requires a <strong>Price</strong> selected',
-        'dealer_fit_price_manual_add.required' =>
-            '<strong>Dealer Fit Option</strong> requires a <strong>Price</strong> selected',
     ];
 
     /**
@@ -237,14 +234,17 @@ class OrderForm extends Component
             $this->hide_from_dealer = $this->vehicle->hide_from_dealer;
             $this->broker = $this->vehicle->broker_id;
             $this->dealership = $this->vehicle->dealer_id;
-            $this->factory_fit_options = $this->vehicle
+            $this->factoryFitOptions = $this->vehicle
                 ->factoryFitOptions()
                 ->pluck('id')
                 ->toArray();
-            $this->dealer_fit_options = $this->vehicle
+
+            $this->dealerFitOptions = $this->vehicle
                 ->dealerFitOptions()
                 ->pluck('id')
                 ->toArray();
+            $this->factoryFitOptionsArray = $this->vehicle->factoryFitOptions();
+            $this->dealerFitOptionsArray = $this->vehicle->dealerFitOptions();
         }
 
         if (isset($this->order)) {
@@ -384,14 +384,18 @@ class OrderForm extends Component
             $this->status = $this->order->vehicle->vehicle_status;
             $this->model_year = $this->order->vehicle->model_year;
             $this->ford_pipeline = $this->order->vehicle->show_in_ford_pipeline;
-            $this->factory_fit_options = $this->order->vehicle
+            $this->fin_number = $this->order->fin_number;
+            $this->deal_number = $this->order->deal_number;
+            $this->factoryFitOptions = $this->order->vehicle
                 ->factoryFitOptions()
                 ->pluck('id')
                 ->toArray();
-            $this->dealer_fit_options = $this->order->vehicle
+            $this->dealerFitOptions = $this->order->vehicle
                 ->dealerFitOptions()
                 ->pluck('id')
                 ->toArray();
+            $this->factoryFitOptionsArray = $this->order->vehicle->factoryFitOptions();
+            $this->dealerFitOptionsArray = $this->order->vehicle->dealerFitOptions();
             $this->list_price = $this->order->vehicle->list_price;
             $this->metallic_paint = $this->order->vehicle->metallic_paint;
             $this->first_reg_fee = $this->order->vehicle->first_reg_fee;
@@ -402,6 +406,18 @@ class OrderForm extends Component
             $this->hide_from_broker = $this->order->vehicle->hide_from_broker;
             $this->hide_from_dealer = $this->order->vehicle->hide_from_dealer;
         }
+    }
+
+    public function updatedFactoryFitOptions()
+    {
+        $this->factoryFitOptionsArray = FitOption::find(
+            $this->factoryFitOptions,
+        );
+    }
+
+    public function updatedDealerFitOptions()
+    {
+        $this->dealerFitOptionsArray = FitOption::find($this->dealerFitOptions);
     }
 
     public function updated($propertyName)
@@ -497,6 +513,8 @@ class OrderForm extends Component
             $order->registration_company_id = $this->registration_company;
             $order->invoice_company_id = $this->invoice_company;
             $order->invoice_id = $invoice->id;
+            $order->fin_number = $this->fin_number;
+            $order->deal_number = $this->deal_number;
             $order->save();
 
             $this->markOrderComplete($vehicle, $order);
@@ -539,6 +557,8 @@ class OrderForm extends Component
             $order->registration_company_id = $this->registration_company;
             $order->invoice_company_id = $this->invoice_company;
             $order->invoice_id = $invoice->id;
+            $order->fin_number = $this->fin_number;
+            $order->deal_number = $this->deal_number;
             $order->save();
 
             $this->markOrderComplete($vehicle, $order);
@@ -558,6 +578,7 @@ class OrderForm extends Component
         }
 
         $reservation = Reservation::where('vehicle_id', $vehicle->id)->delete();
+        $this->order = $order;
     }
 
     public function clearCustomerID()
@@ -565,7 +586,7 @@ class OrderForm extends Component
         $this->customer_id = null;
     }
 
-    public function render()
+    public function render(): Factory|View|Application
     {
         $companies = Company::orderBy('company_name', 'asc')->get();
 
@@ -735,8 +756,8 @@ class OrderForm extends Component
         $vehicle->save();
 
         $fitOptions = array_merge(
-            $this->factory_fit_options,
-            $this->dealer_fit_options,
+            $this->factoryFitOptions,
+            $this->dealerFitOptions,
         );
 
         $vehicle->fitOptions()->sync($fitOptions);

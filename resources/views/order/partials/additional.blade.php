@@ -22,3 +22,19 @@
         <li>{{$attachment->getClientOriginalName()}} <button wire:click.prevent="removeAttachment({{$key}})">Delete</button></li>
     @endforeach
 </ul>
+{{-- FIN Number --}}
+<div class="form-group row">
+    <label for="fin_number" class="col-md-2 col-form-label">FIN</label>
+    <div class="col-md-6">
+        <input wire:model="fin_number" type="text" name="fin_number" id="fin_number"
+               class="form-control" autocomplete="off" />
+    </div>
+</div>
+{{-- Deal Number --}}
+<div class="form-group row">
+    <label for="deal_number" class="col-md-2 col-form-label">Deal Number</label>
+    <div class="col-md-6">
+        <input wire:model="deal_number" type="text" name="deal_number" id="deal_number"
+               class="form-control" autocomplete="off" />
+    </div>
+</div>

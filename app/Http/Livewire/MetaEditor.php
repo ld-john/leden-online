@@ -2,6 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -17,15 +22,13 @@ class MetaEditor extends Component
         'metadata.*.name' => 'required',
     ];
 
-
-    public function mount(){
-
+    public function mount()
+    {
         $items = $this->namespace . $this->metatype;
         $this->metadata = $items::all();
-
     }
 
-    public function new()
+    public function new(): Redirector|Application|RedirectResponse
     {
         $model = $this->namespace . $this->metatype;
 
@@ -34,21 +37,43 @@ class MetaEditor extends Component
         $meta->name = $this->newname;
         $meta->save();
 
-        session()->flash('successMsg', Str::plural($this->metatype) . ' entry : "' . $meta->name . '" [id: ' . $meta->id. '] added');
-        return redirect(route('meta.' . strtolower($this->metatype) . '.index'));
+        session()->flash(
+            'successMsg',
+            Str::plural($this->metatype) .
+                ' entry : "' .
+                $meta->name .
+                '" [id: ' .
+                $meta->id .
+                '] added',
+        );
+        return redirect(
+            route('meta.' . strtolower($this->metatype) . '.index'),
+        );
     }
 
-    public function removeEntry($id, $name) {
+    public function removeEntry(
+        $id,
+        $name,
+    ): Redirector|Application|RedirectResponse {
         $model = $this->namespace . $this->metatype;
 
         $model::destroy($id);
 
-        session()->flash('successMsg', Str::plural($this->metatype) . ' entry : "' . $name . '" [id: ' . $id. '] deleted');
-        return redirect(route('meta.' . strtolower($this->metatype) . '.index'));
-
+        session()->flash(
+            'successMsg',
+            Str::plural($this->metatype) .
+                ' entry : "' .
+                $name .
+                '" [id: ' .
+                $id .
+                '] deleted',
+        );
+        return redirect(
+            route('meta.' . strtolower($this->metatype) . '.index'),
+        );
     }
 
-    public function save()
+    public function save(): Redirector|Application|RedirectResponse
     {
         $this->validate();
 
@@ -56,16 +81,17 @@ class MetaEditor extends Component
             $meta->update();
         }
 
-        session()->flash('successMsg', Str::plural($this->metatype) . ' updated!');
-        return redirect(route('meta.' . strtolower($this->metatype) . '.index'));
-
-
+        session()->flash(
+            'successMsg',
+            Str::plural($this->metatype) . ' updated!',
+        );
+        return redirect(
+            route('meta.' . strtolower($this->metatype) . '.index'),
+        );
     }
 
-    public function render()
+    public function render(): Factory|View|Application
     {
         return view('livewire.meta-editor');
     }
-
-
 }

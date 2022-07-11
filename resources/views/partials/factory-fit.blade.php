@@ -24,7 +24,7 @@
         <tbody>
         @forelse($factory_options as $option)
             <tr>
-                <td><input type="checkbox" value="{{$option->id}}" wire:model="factory_fit_options"></td>
+                <td><input type="checkbox" value="{{$option->id}}" wire:model="factoryFitOptions"></td>
                 <td>{{$option->option_name}}</td>
                 <td>£{{ number_format($option->option_price, 2, '.', '') }}</td>
             </tr>
@@ -45,3 +45,20 @@
 @else
     Please select the Model and Model Year above
 @endif
+<div class="form-group row" style="margin-top: 10px">
+    <table class="table table-bordered">
+        <thead>
+        <tr class="blue-background text-white">
+            <th>Option Name</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach($factoryFitOptionsArray as $option)
+            <tr>
+                <td>{{ $option->option_name }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</div>
