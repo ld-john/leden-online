@@ -1,4 +1,4 @@
-<div wire:poll>
+<div>
      <li class="nav-item dropdown no-arrow mx-1">
           <a class="nav-link dropdown-toggle text-white" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" wire:click="toggleMenu">
                <i class="fa-solid fa-bell"></i>

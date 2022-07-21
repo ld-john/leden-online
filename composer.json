@@ -11,7 +11,7 @@
         "php": "^8.0.2",
         "ext-json": "*",
         "barryvdh/laravel-dompdf": "^v1.0.0",
-        "doctrine/dbal": "^3.3.6",
+        "doctrine/dbal": "^3.3",
         "guzzlehttp/guzzle": "^7.4.2",
         "laravel/framework": "^9.0",
         "laravel/tinker": "^2.0",

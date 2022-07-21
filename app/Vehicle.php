@@ -43,6 +43,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Exception;
  * @property mixed $dealer_id
  * @property mixed $manufacturer
  * @property mixed $id
+ * @property mixed $order
  */
 class Vehicle extends Model
 {
@@ -57,54 +58,54 @@ class Vehicle extends Model
     /**
      * @var mixed|string
      */
-    protected $touches = ["order"];
+    protected $touches = ['order'];
 
     public function order(): HasOne
     {
-        return $this->hasOne(Order::class, "vehicle_id", "id");
+        return $this->hasOne(Order::class, 'vehicle_id', 'id');
     }
 
     public function reservation(): HasOne
     {
-        return $this->hasOne(Reservation::class, "vehicle_id", "id");
+        return $this->hasOne(Reservation::class, 'vehicle_id', 'id');
     }
 
     public function manufacturer(): HasOne
     {
-        return $this->hasOne(Manufacturer::class, "id", "make");
+        return $this->hasOne(Manufacturer::class, 'id', 'make');
     }
 
     public function dealer(): BelongsTo
     {
-        return $this->belongsTo(Company::class, "dealer_id", "id");
+        return $this->belongsTo(Company::class, 'dealer_id', 'id');
     }
 
     public function broker(): BelongsTo
     {
-        return $this->belongsTo(Company::class, "broker_id", "id");
+        return $this->belongsTo(Company::class, 'broker_id', 'id');
     }
 
     public function fitOptions(): BelongsToMany
     {
         return $this->belongsToMany(
             FitOption::class,
-            "fit_options_vehicle",
-            "vehicle_id",
-            "option_id"
+            'fit_options_vehicle',
+            'vehicle_id',
+            'option_id',
         );
     }
 
     public function factoryFitOptions(): Collection
     {
         return $this->fitOptions()
-            ->where("option_type", "=", "factory")
+            ->where('option_type', '=', 'factory')
             ->get();
     }
 
     public function dealerFitOptions(): Collection
     {
         return $this->fitOptions()
-            ->where("option_type", "=", "dealer")
+            ->where('option_type', '=', 'dealer')
             ->get();
     }
 
@@ -116,27 +117,29 @@ class Vehicle extends Model
     public static function statusMatch($value): string
     {
         return match ($value) {
-            1 => "In Stock",
-            3 => "Ready for Delivery",
-            4 => "Factory Order",
-            6 => "Delivery Booked",
-            7 => "Completed Orders",
-            10 => "Europe VHC",
-            12 => "At Converter",
-            13 => "Awaiting Ship",
-            11 => "UK VHC",
-            14 => "Recall",
-            15 => "In Stock (Registered)",
-            default => "Not Known",
+            1 => 'In Stock',
+            3 => 'Ready for Delivery',
+            4 => 'Factory Order',
+            5 => 'Awaiting Delivery Confirmation',
+            6 => 'Delivery Booked',
+            7 => 'Completed Orders',
+            10 => 'Europe VHC',
+            12 => 'At Converter',
+            13 => 'Awaiting Ship',
+            11 => 'UK VHC',
+            14 => 'Recall',
+            15 => 'In Stock (Registered)',
+            16 => 'Damaged/Recalled',
+            default => 'Not Known',
         };
     }
 
     public function niceName(): string
     {
         return $this->manufacturer->name .
-            " " .
+            ' ' .
             $this->model .
-            " " .
+            ' ' .
             $this->derivative;
     }
 }

@@ -39,12 +39,22 @@ class DashboardController extends Controller
         $ready_for_delivery = $this->GetVehicleByStatus(3, Auth::user()->role);
         $delivery_booked = $this->GetVehicleByStatus(6, Auth::user()->role);
         $completed = $this->GetVehicleByStatus(7, Auth::user()->role);
-        $live_orders = $factory_order->count() + $euro_vhc->count() + $uk_vhc->count() + $in_stock->count() + $ready_for_delivery->count() + $delivery_booked->count();
+        $awaiting_delivery_confirmation = $this->GetVehicleByStatus(
+            5,
+            Auth::user()->role,
+        );
+        $live_orders =
+            $factory_order->count() +
+            $euro_vhc->count() +
+            $uk_vhc->count() +
+            $in_stock->count() +
+            $ready_for_delivery->count() +
+            $delivery_booked->count() +
+            $awaiting_delivery_confirmation->count();
 
         if (Auth::user()->role == 'admin') {
             return $this->adminDashboard();
         } elseif (Auth::user()->role === 'dealer') {
-
             return view('dashboard.dashboard-dealer', [
                 'live_orders' => $live_orders,
                 'in_stock' => $in_stock->count(),
@@ -58,7 +68,6 @@ class DashboardController extends Controller
                 ->get();
 
             return view('dashboard.dashboard-broker', [
-
                 'data' => $data,
                 'live_orders' => $live_orders,
                 'in_stock' => $in_stock->count(),
@@ -77,10 +86,18 @@ class DashboardController extends Controller
         $delivery_booked = $this->GetVehicleByStatus(6);
         $awaiting_ship = $this->GetVehicleByStatus(13);
         $converter = $this->GetVehicleByStatus(12);
-		$registered = $this->GetVehicleByStatus(15);
+        $registered = $this->GetVehicleByStatus(15);
 
         $completed = $this->GetVehicleByStatus(7);
-        $live_orders = $factory_order->count() + $euro_vhc->count() + $uk_vhc->count() + $in_stock->count() + $ready_for_delivery->count() + $delivery_booked->count() + $awaiting_ship->count() + $converter->count();
+        $live_orders =
+            $factory_order->count() +
+            $euro_vhc->count() +
+            $uk_vhc->count() +
+            $in_stock->count() +
+            $ready_for_delivery->count() +
+            $delivery_booked->count() +
+            $awaiting_ship->count() +
+            $converter->count();
 
         return view('dashboard.dashboard-admin', [
             'in_stock' => $in_stock->count(),
@@ -90,7 +107,7 @@ class DashboardController extends Controller
             'europe_vhc' => $euro_vhc->count(),
             'uk_vhc' => $uk_vhc->count(),
             'delivery_booked' => $delivery_booked->count(),
-			'registered' => $registered->count(),
+            'registered' => $registered->count(),
             'live_orders' => $live_orders,
             'awaiting_ship' => $awaiting_ship->count(),
             'at_converter' => $converter->count(),
@@ -99,14 +116,12 @@ class DashboardController extends Controller
 
     public static function GetVehicleByStatus($vehicle_status, $role = null)
     {
-
-
         $vehicles = Vehicle::where('vehicle_status', $vehicle_status);
 
-        if ( $role === 'dealer' ) {
+        if ($role === 'dealer') {
             $vehicles->where('dealer_id', Auth::user()->company_id);
         }
-        if ( $role === 'broker' ) {
+        if ($role === 'broker') {
             $vehicles->where('broker_id', Auth::user()->company_id);
         }
 
@@ -115,40 +130,38 @@ class DashboardController extends Controller
 
     public static function GetOrdersByVehicleStatus($status)
     {
-        if ( Auth::user()->role != 'admin') {
-
+        if (Auth::user()->role != 'admin') {
             $searchField = Auth::user()->role . '_id';
 
             $orders = Order::whereHas('vehicle', function ($q) use ($status) {
                 $q->where('vehicle_status', $status);
             })->where($searchField, Auth::user()->company_id);
-
         } else {
-
             $orders = Order::whereHas('vehicle', function ($q) use ($status) {
                 $q->where('vehicle_status', $status);
             });
-
         }
         return $orders->count();
-
     }
 
     /* Show all notifications page */
-    public function showNotifications() {
+    public function showNotifications()
+    {
         $user = Auth::user();
 
         $all_notifications = $user->notifications()->paginate(15);
 
         return view('notifications.index', [
-            'all_notifications' => $all_notifications
+            'all_notifications' => $all_notifications,
         ]);
     }
 
     /* Delete all user notifications */
     public function executeDeleteNotifications(): RedirectResponse
     {
-        Auth::user()->notifications()->delete();
+        Auth::user()
+            ->notifications()
+            ->delete();
 
         return redirect()->back();
     }
@@ -160,13 +173,15 @@ class DashboardController extends Controller
         return redirect()->back();
     }
 
-    public function readNotifications(DatabaseNotification $notification): RedirectResponse
-    {
+    public function readNotifications(
+        DatabaseNotification $notification,
+    ): RedirectResponse {
         $notification->markAsRead();
         return redirect()->back();
     }
-    public function unreadNotifications(DatabaseNotification $notification): RedirectResponse
-    {
+    public function unreadNotifications(
+        DatabaseNotification $notification,
+    ): RedirectResponse {
         $notification->read_at = null;
         $notification->save();
 

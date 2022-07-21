@@ -139,7 +139,7 @@
                 <td width="120px">
                     <a href="{{route('vehicle.show', $vehicle->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Vehicle Information"><i class="far fa-eye"></i></a>
                     @can('admin')
-                        <a href="{{route('edit_vehicle', $vehicle->id)}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Vehicle Information"><i class="fas fa-edit"></i></a>
+                        <a href="{{route('vehicle.edit', $vehicle->id)}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Vehicle Information"><i class="fas fa-edit"></i></a>
                         <a href="{{route('order.reserve', $vehicle->id)}}" class="btn btn-primary" data-toggle="tooltip" title="Create order with Vehicle"><i class="fas fa-plus-square"></i></a>
                         <a data-toggle="tooltip" title="Delete Vehicle">
                             <livewire:vehicle.delete-vehicle :vehicle="$vehicle->id" :key="time().$vehicle->id" />

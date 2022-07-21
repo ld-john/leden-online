@@ -75,6 +75,7 @@ class OrderTable extends Component
                 'order_ref',
                 'due_date',
                 'delivery_date',
+                'delivery_id',
                 'broker_ref',
                 'updated_at',
             )

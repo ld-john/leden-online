@@ -1,4 +1,4 @@
-<div wire:poll.10s>
+<div>
     @forelse($notifications as $notification)
         <div class="notification">
             <div class="row mb-2">

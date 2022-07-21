@@ -40,6 +40,7 @@
                   <select name="upload_type" class="form-control">
                     <option value="">Select an upload type</option>
                     <option value="ford_create">Ford Report</option>
+                    <option value="ford_test">Ford Test Upload</option>
                     <option value="create">Create Vehicles</option>
                     <option value="delete">Delete Vehicles</option>
                   </select>

@@ -1,7 +1,4 @@
 <div>
-    @if (session()->has('message'))
-        <h5 class="alert alert-success">{{ session('message') }}</h5>
-    @endif
     <div class="row">
         <div class="col-6 mb-5">
             <h2>Add New Make </h2>

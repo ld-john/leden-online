@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -22,6 +24,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $remember_token
  * @property-read int|null $notifications_count
  * @property boolean $reservation_allowed
+ * @property mixed $canPerform
  */
 class User extends Authenticatable
 {
@@ -39,9 +42,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes that should be cast to native types.
@@ -52,20 +53,27 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function canPerform(): BelongsToMany
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
     public function abilities(): string
     {
         return $this->role;
     }
 
-    public function company()
+    public function company(): HasOne
     {
-    	return $this->hasOne(Company::class, 'id', 'company_id');
+        return $this->hasOne(Company::class, 'id', 'company_id');
     }
 
     public function fullName(): Attribute
     {
         return new Attribute(
-            get: fn ($value, $attributes) => $attributes['firstname'] . ' ' . $attributes['lastname']
+            get: fn($value, $attributes) => $attributes['firstname'] .
+                ' ' .
+                $attributes['lastname'],
         );
     }
 }

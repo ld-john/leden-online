@@ -7,9 +7,12 @@ use App\Customer;
 use App\FitOption;
 use App\Invoice;
 use App\Manufacturer;
+use App\Notifications\DeliveryDateSetNotification;
+use App\Notifications\VehicleInStockNotification;
 use App\Order;
 use App\OrderUpload;
 use App\Reservation;
+use App\User;
 use App\Vehicle;
 use App\VehicleMeta\Colour;
 use App\VehicleMeta\Derivative;
@@ -18,6 +21,7 @@ use App\VehicleMeta\Fuel;
 use App\VehicleMeta\Transmission;
 use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
+use Carbon\Carbon;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -32,16 +36,12 @@ use Livewire\WithPagination;
 class OrderForm extends Component
 {
     use WithFileUploads;
-
     use WithPagination;
-
     protected string $paginationTheme = 'bootstrap';
-
     public function getQueryString(): array
     {
         return [];
     }
-
     public bool $trimInput = true;
     public bool $colourInput = true;
     public bool $fuelInput = true;
@@ -50,7 +50,6 @@ class OrderForm extends Component
     public bool $derivativeInput = true;
     public bool $modelInput = true;
     public bool $makeInput = true;
-
     public bool $showAdditionalInformation = false;
     public bool $showDeliveryInformation = false;
     public bool $showInvoicingInformation = false;
@@ -62,7 +61,6 @@ class OrderForm extends Component
     public bool $showCustomerInfo = true;
     public $vehicle;
     public $order;
-
     public $newCustomer = false;
     public $customer_id;
     public $customer_name;
@@ -127,14 +125,15 @@ class OrderForm extends Component
     public $dealer_invoice_number;
     public $dealer_pay_date;
     public $dealer_invoice_override;
+    public $dealer_invoice_override_allowed = false;
     public $fleet_procure_invoice;
     public $fleet_invoice_number;
     public $fleet_procure_paid;
     public $finance_bonus_invoice;
     public $finance_company_bonus_invoice_number;
     public $finance_company_bonus_pay_date;
-    public $fin_number;
-    public $deal_number;
+    public $fin_number = '65634';
+    public $deal_number = '90191';
     public $ford_bonus_invoice;
     public $ford_bonus_pay_date;
     public $factoryFitSearch;
@@ -169,7 +168,6 @@ class OrderForm extends Component
         'commission_broker_paid' => 'nullable|date',
         'finance_commission_paid' => 'nullable|date',
     ];
-
     protected $messages = [
         'make.required_without' => 'No <strong>Make</strong> selected',
         'customer_name.required_without' =>
@@ -191,7 +189,6 @@ class OrderForm extends Component
         'order_ref.required' =>
             'You must supply an <strong>Order Ref.</strong>',
     ];
-
     /**
      * @throws Exception
      */
@@ -238,7 +235,6 @@ class OrderForm extends Component
                 ->factoryFitOptions()
                 ->pluck('id')
                 ->toArray();
-
             $this->dealerFitOptions = $this->vehicle
                 ->dealerFitOptions()
                 ->pluck('id')
@@ -246,51 +242,42 @@ class OrderForm extends Component
             $this->factoryFitOptionsArray = $this->vehicle->factoryFitOptions();
             $this->dealerFitOptionsArray = $this->vehicle->dealerFitOptions();
         }
-
         if (isset($this->order)) {
             // Handle Dates coming in so JS can play nice with them.
-
             if ($this->order->due_date) {
                 $del = new DateTime($this->order->due_date);
                 $this->due_date = $del->format('Y-m-d');
             }
-
             if ($this->order->delivery_date) {
                 $del = new DateTime($this->order->delivery_date);
                 $this->delivery_date = $del->format('Y-m-d');
             }
-
             if ($this->order->vehicle->vehicle_registered_on) {
                 $reg = new DateTime(
                     $this->order->vehicle->vehicle_registered_on,
                 );
                 $this->registered_date = $reg->format('Y-m-d');
             }
-
             if ($this->order->invoice->dealer_pay_date) {
                 $dpd = new DateTime($this->order->invoice->dealer_pay_date);
                 $this->dealer_pay_date = $dpd->format('Y-m-d');
             }
-
             if ($this->order->invoice->broker_pay_date) {
                 $dpd = new DateTime($this->order->invoice->broker_pay_date);
                 $this->invoice_broker_paid = $dpd->format('Y-m-d');
             }
-
             if ($this->order->invoice->broker_commission_pay_date) {
                 $dpd = new DateTime(
                     $this->order->invoice->broker_commission_pay_date,
                 );
                 $this->commission_broker_paid = $dpd->format('Y-m-d');
             }
-
             if ($this->order->invoice->finance_commission_pay_date) {
                 $dpd = new DateTime(
                     $this->order->invoice->finance_commission_pay_date,
                 );
                 $this->finance_commission_paid = $dpd->format('Y-m-d');
             }
-
             if ($this->order->invoice->fleet_procure_pay_date) {
                 $date = new DateTime(
                     $this->order->invoice->fleet_procure_pay_date,
@@ -360,6 +347,9 @@ class OrderForm extends Component
                 $this->dealer_invoice_override =
                     0 - $this->order->invoice->invoice_value_from_dealer;
             }
+
+            $this->dealer_invoice_override_allowed =
+                $this->order->invoice->dealer_value_overruled;
 
             $this->order_ref = $this->order->vehicle->ford_order_number;
             $this->broker_ref = $this->order->broker_ref;
@@ -446,13 +436,10 @@ class OrderForm extends Component
         if ($this->orbit_number === '') {
             $this->orbit_number = null;
         }
-
         $this->validate();
-
         if (!isset($this->order)) {
             if (isset($this->newmake)) {
                 $slug = Str::slug($this->newmake);
-
                 $manufacturer = Manufacturer::firstOrCreate(
                     ['slug' => $slug],
                     [
@@ -460,10 +447,8 @@ class OrderForm extends Component
                         'models' => json_encode($this->model),
                     ],
                 );
-
                 $this->make = $manufacturer->id;
             }
-
             if (isset($this->vehicle)) {
                 $vehicle = $this->vehicle;
                 if (isset($this->orbit_number)) {
@@ -480,27 +465,20 @@ class OrderForm extends Component
                 $vehicle = Vehicle::firstOrNew([
                     'orbit_number' => $this->orbit_number,
                 ]);
-
                 if ($vehicle->order) {
                     throw new ErrorException('Vehicle already ordered');
                 }
             }
-
             $this->saveVehicleDetails($vehicle);
-
             if (!isset($this->customer_id) || $this->customer_id === '') {
                 $customer = new Customer();
-
                 $this->saveCustomerDetails($customer);
-
                 $customer = $customer->id;
             } else {
                 $customer = $this->customer_id;
             }
-
             $invoice = new Invoice();
             $this->saveInvoice($invoice);
-
             $order = new Order();
             $order->vehicle_id = $vehicle->id;
             $order->customer_id = $customer;
@@ -516,11 +494,7 @@ class OrderForm extends Component
             $order->fin_number = $this->fin_number;
             $order->deal_number = $this->deal_number;
             $order->save();
-
-            $this->markOrderComplete($vehicle, $order);
-
             $this->setInvoiceValue($order, $invoice);
-
             foreach ($this->attachments as $attachment) {
                 $file = new OrderUpload();
                 $file->file_name = $attachment->store('attachments');
@@ -529,8 +503,7 @@ class OrderForm extends Component
                 $file->file_type = $attachment->getClientOriginalExtension();
                 $file->save();
             }
-
-            $this->successMsg = 'Order Created';
+            session()->flash('message', 'Order Created');
         } else {
             //Update Vehicle
             $vehicle = $this->order->vehicle;
@@ -546,22 +519,34 @@ class OrderForm extends Component
 
             //Update Order
             $order = $this->order;
-            $order->vehicle_id = $vehicle->id;
-            $order->customer_id = $customer->id;
-            $order->broker_id = $this->broker;
-            $order->dealer_id = $this->dealership;
-            $order->comments = $this->comments;
-            $order->broker_ref = $this->broker_ref;
-            $order->due_date = $this->due_date;
-            $order->delivery_date = $this->delivery_date;
-            $order->registration_company_id = $this->registration_company;
-            $order->invoice_company_id = $this->invoice_company;
-            $order->invoice_id = $invoice->id;
-            $order->fin_number = $this->fin_number;
-            $order->deal_number = $this->deal_number;
-            $order->save();
+            $order->update([
+                'vehicle_id' => $vehicle->id,
+                'customer_id' => $customer->id,
+                'broker_id' => $this->broker,
+                'dealer_id' => $this->dealership,
+                'comments' => $this->comments,
+                'broker_ref' => $this->broker_ref,
+                'due_date' => $this->due_date,
+                'delivery_date' => Carbon::parse($this->delivery_date)
+                    ->startOfDay()
+                    ->format('Y-m-d h:i:s'),
+                'registration_company_id' => $this->registration_company,
+                'invoice_company_id' => $this->invoice_company,
+                'invoice_id' => $invoice->id,
+                'fin_number' => $this->fin_number,
+                'deal_number' => $this->deal_number,
+            ]);
 
-            $this->markOrderComplete($vehicle, $order);
+            if ($order->wasChanged('delivery_date')) {
+                if ($order->delivery_date) {
+                    $brokers = User::where('company_id', $this->broker)->get();
+                    foreach ($brokers as $broker) {
+                        $broker->notify(
+                            new DeliveryDateSetNotification($vehicle),
+                        );
+                    }
+                }
+            }
 
             $this->setInvoiceValue($order, $invoice);
 
@@ -574,11 +559,10 @@ class OrderForm extends Component
                 $file->save();
             }
 
-            $this->successMsg = 'Order Updated';
+            session()->flash('message', 'Order Updated');
         }
-
-        $reservation = Reservation::where('vehicle_id', $vehicle->id)->delete();
-        $this->order = $order;
+        Reservation::where('vehicle_id', $vehicle->id)->delete();
+        return redirect(route('order.edit', $order->id));
     }
 
     public function clearCustomerID()
@@ -653,13 +637,6 @@ class OrderForm extends Component
         return view('livewire.order.order-form', $options);
     }
 
-    private function markOrderComplete($vehicle, $order)
-    {
-        if ($vehicle->vehicle_status === '7') {
-            $order->update(['completed_date' => now()]);
-        }
-    }
-
     /**
      * @param Invoice $invoice
      * @return void
@@ -724,36 +701,45 @@ class OrderForm extends Component
      */
     public function saveVehicleDetails(Vehicle $vehicle): void
     {
-        $vehicle->vehicle_status = $this->status;
-        $vehicle->reg = $this->registration;
-        $vehicle->dealer_id = $this->dealership;
-        $vehicle->broker_id = $this->broker;
-        $vehicle->vehicle_registered_on = $this->registered_date;
-        $vehicle->model_year = $this->model_year;
-        $vehicle->ford_order_number = $this->order_ref;
-        $vehicle->make = $this->make;
-        $vehicle->model = $this->model;
-        $vehicle->chassis = $this->chassis;
-        $vehicle->derivative = $this->derivative;
-        $vehicle->engine = $this->engine;
-        $vehicle->transmission = $this->transmission;
-        $vehicle->fuel_type = $this->fuel_type;
-        $vehicle->colour = $this->colour;
-        $vehicle->trim = $this->trim;
-        $vehicle->chassis_prefix = $this->chassis_prefix;
-        $vehicle->type = $this->type;
-        $vehicle->metallic_paint = $this->metallic_paint;
-        $vehicle->list_price = $this->list_price;
-        $vehicle->first_reg_fee = $this->first_reg_fee;
-        $vehicle->rfl_cost = $this->rfl_cost;
-        $vehicle->onward_delivery = $this->onward_delivery;
-        $vehicle->hide_from_broker = $this->hide_from_broker;
-        $vehicle->hide_from_dealer = $this->hide_from_dealer;
-        $vehicle->show_in_ford_pipeline = $this->ford_pipeline;
+        $vehicle->update([
+            'vehicle_status' => $this->status,
+            'reg' => $this->registration,
+            'dealer_id' => $this->dealership,
+            'broker_id' => $this->broker,
+            'vehicle_registered_on' => $this->registered_date,
+            'model_year' => $this->model_year,
+            'ford_order_number' => $this->order_ref,
+            'make' => $this->make,
+            'model' => $this->model,
+            'chassis' => $this->chassis,
+            'derivative' => $this->derivative,
+            'engine' => $this->engine,
+            'transmission' => $this->transmission,
+            'fuel_type' => $this->fuel_type,
+            'colour' => $this->colour,
+            'trim' => $this->trim,
+            'chassis_prefix' => $this->chassis_prefix,
+            'type' => $this->type,
+            'metallic_paint' => $this->metallic_paint,
+            'list_price' => $this->list_price,
+            'first_reg_fee' => $this->first_reg_fee,
+            'rfl_cost' => $this->rfl_cost,
+            'onward_delivery' => $this->onward_delivery,
+            'hide_from_broker' => $this->hide_from_broker,
+            'hide_from_dealer' => $this->hide_from_dealer,
+            'show_in_ford_pipeline' => $this->ford_pipeline,
+        ]);
 
-        //ddd($vehicle);
-
-        $vehicle->save();
+        if ($vehicle->wasChanged('vehicle_status')) {
+            if ($vehicle->vehicle_status === '7') {
+                $this->order->update(['completed_date' => now()]);
+            } elseif ($vehicle->vehicle_status === '1') {
+                $brokers = User::where('company_id', $this->broker)->get();
+                foreach ($brokers as $broker) {
+                    $broker->notify(new VehicleInStockNotification($vehicle));
+                }
+            }
+        }
 
         $fitOptions = array_merge(
             $this->factoryFitOptions,
@@ -770,12 +756,7 @@ class OrderForm extends Component
      */
     public function setInvoiceValue($order, $invoice): void
     {
-        $invoice_value = $order->invoiceDifferenceExVat();
-
-        if (
-            $this->dealer_invoice_override &&
-            $this->dealer_invoice_override !== ''
-        ) {
+        if ($this->dealer_invoice_override_allowed) {
             if ($this->dealer_invoice_override < 0) {
                 $invoice->invoice_value_from_dealer =
                     $this->dealer_invoice_override * -1;
@@ -785,6 +766,7 @@ class OrderForm extends Component
                     $this->dealer_invoice_override;
                 $invoice->invoice_value_from_dealer = null;
             }
+            $invoice->dealer_value_overruled = true;
         } else {
             $invoice_value = $order->invoiceDifferenceExVat();
             if ($invoice_value < 0) {
@@ -794,7 +776,9 @@ class OrderForm extends Component
                 $invoice->invoice_value_to_dealer = $invoice_value;
                 $invoice->invoice_value_from_dealer = null;
             }
+            $invoice->dealer_value_overruled = false;
         }
+
         $invoice->save();
     }
 }

@@ -17,7 +17,8 @@ class EditFitOption extends Component
     public $price;
     public $dealers;
 
-    public function mount(FitOption $fitOption) {
+    public function mount(FitOption $fitOption)
+    {
         $this->fitOption = $fitOption;
         $this->option_name = $fitOption->option_name;
         $this->model = $fitOption->model;
@@ -45,6 +46,7 @@ class EditFitOption extends Component
         $this->fitOption->dealer_id = $this->dealer;
         $this->fitOption->option_price = $this->price;
         $this->fitOption->save();
+        session()->flash('message', 'Fit Option Edited Successfully');
         return redirect(request()->header('Referer'));
     }
 }

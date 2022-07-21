@@ -19,6 +19,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
@@ -26,15 +27,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -45,19 +37,10 @@ class OrderController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param Order $order
+     * @return Application|Factory|View
      */
     public function show(Order $order)
     {
@@ -68,23 +51,11 @@ class OrderController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Order $order
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function edit(Order $order)
     {
         return view('order.edit', ['order' => $order]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param Order $order
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Order $order)
-    {
-        //
     }
 
     /**
@@ -110,7 +81,7 @@ class OrderController extends Controller
     /**
      * Duplicate the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param Order $order
      * @return RedirectResponse
      */
@@ -172,244 +143,7 @@ class OrderController extends Controller
 
     public function showManageDeliveries()
     {
-        return view('order.deliveries', ['status' => [3, 6]]);
-    }
-
-    public function dateAccept(Order $order)
-    {
-        if (Auth::user()->role == 'admin') {
-            $order->update([
-                'admin_accepted' => 1,
-            ]);
-        } elseif (Auth::user()->role == 'dealer') {
-            $order->update([
-                'dealer_accepted' => 1,
-            ]);
-        } else {
-            $order->update([
-                'broker_accepted' => 1,
-            ]);
-        }
-
-        $dealers = User::where('role', 'dealer')
-            ->where('company_id', $order->dealer_id)
-            ->get();
-        $brokers = User::where('role', 'broker')
-            ->where('company_id', $order->dealer_id)
-            ->get();
-        $users = User::where('company_id', 1)
-            ->orWhere('company_id', $order->dealer_id)
-            ->orWhere('company_id', $order->broker_id)
-            ->get();
-
-        if (
-            $order->admin_accepted == 1 &&
-            $order->broker_accepted == 1 &&
-            $order->dealer_accepted == 0
-        ) {
-            // email to dealer to accept delivery time
-            $this->DateAcceptEmail($order->dealer_id, $order);
-
-            $message =
-                'A proposed delivery date for Order #' .
-                $order->id .
-                ' needs your attention';
-            $type = 'vehicle';
-
-            Notification::send(
-                $dealers,
-                new notifications($message, $order->id, $type),
-            );
-        } elseif (
-            $order->admin_accepted == 1 &&
-            $order->broker_accepted == 0 &&
-            $order->dealer_accepted == 1
-        ) {
-            // Email to Broker to accept delivery time
-            $this->DateAcceptEmail($order->broker_id, $order);
-
-            $this->DateAcceptEmail($order->dealer_id, $order);
-
-            $message =
-                'A proposed delivery date for Order #' .
-                $order->id .
-                ' needs your attention';
-            $type = 'vehicle';
-
-            Notification::send(
-                $brokers,
-                new notifications($message, $order->id, $type),
-            );
-        } elseif (
-            $order->admin_accepted == 1 &&
-            $order->broker_accepted == 1 &&
-            $order->dealer_accepted == 1
-        ) {
-            // Email to all parties to say delivery date is confirmed
-
-            $message =
-                'A proposed delivery date for Order #' .
-                $order->id .
-                ' has been accepted by all parties';
-            $type = 'vehicle';
-
-            Notification::send(
-                $users,
-                new notifications($message, $order->id, $type),
-            );
-
-            if (env('MAIL_ENABLE')) {
-                foreach ($users as $user) {
-                    $mail_data = [
-                        'name' => $user->firstname,
-                        'content' =>
-                            'Order #' .
-                            $order->id .
-                            ' all parties have agreed to the proposed delivery date.',
-                        'url' => ENV('APP_URL') . '/orders/view/' . $order->id,
-                        'order_id' => $order->id,
-                        'email' => $user->email,
-                        'name' => $user->firstname . ' ' . $user->lastname,
-                    ];
-
-                    Mail::send('mail', $mail_data, function ($message) use (
-                        $mail_data,
-                    ) {
-                        $message
-                            ->to($mail_data['email'], $mail_data['name'])
-                            ->subject(
-                                'Order #' .
-                                    $mail_data['order_id'] .
-                                    ' \'s delivery date has been approved',
-                            );
-                        $message->from(
-                            ENV('MAIL_FROM_ADDRESS'),
-                            ENV('MAIL_FROM_NAME'),
-                        );
-                    });
-                }
-            }
-        }
-
-        return redirect()
-            ->route('order.show', $order->id)
-            ->with(
-                'successMsg',
-                'You have accepted the proposed delivery date',
-            );
-    }
-
-    public function showDateChange(Order $order)
-    {
-        return view('order.date-change', [
-            'order' => $order,
-        ]);
-    }
-
-    public function storeDateChange(
-        Request $request,
-        Order $order,
-    ): RedirectResponse {
-        $this->validate($request, [
-            'delivery_date' => 'required',
-        ]);
-
-        $oldDealer = $order->dealer_accepted;
-        $oldBroker = $order->broker_accepted;
-
-        $order->delivery_date = Carbon::createFromFormat(
-            'd/m/Y',
-            $request->delivery_date,
-        );
-
-        if (Auth::user()->role == 'admin') {
-            $order->admin_accepted = 1;
-            $order->dealer_accepted = 0;
-            $order->broker_accepted = 0;
-        } elseif (Auth::user()->role == 'dealer') {
-            $order->admin_accepted = 0;
-            $order->dealer_accepted = 1;
-            $order->broker_accepted = 0;
-        } else {
-            $order->admin_accepted = 0;
-            $order->dealer_accepted = 0;
-            $order->broker_accepted = 1;
-        }
-        $order->save();
-
-        $admin = User::where('company_id', '1');
-        $dealers = User::where('role', 'dealer')
-            ->where('company_id', $order->dealer_id)
-            ->get();
-        $brokers = User::where('role', 'broker')
-            ->where('company_id', $order->dealer_id)
-            ->get();
-        $message =
-            'A new delivery date has been proposed for Order #' . $order->id;
-        $type = 'vehicle';
-
-        if (
-            $order->admin_accepted == 0 &&
-            $order->broker_accepted == 1 &&
-            $order->dealer_accepted == 0
-        ) {
-            //email to admin to accept delivery time
-            $this->DateChangeEmail(1, $order);
-            foreach ($admin as $user) {
-                $user->notify(new deliveryDateChanged($order));
-            }
-            //			Notification::send($admin, new notifications($message, $order->id, $type));
-
-            if ($oldDealer == 1) {
-                $this->DateChangeEmail($order->dealer_id, $order);
-                foreach ($dealers as $dealer) {
-                    $dealer->notify(new deliveryDateChanged($order));
-                }
-                //				Notification::send($dealers, new notifications($message, $order->id, $type));
-            }
-        } elseif (
-            $order->admin_accepted == 1 &&
-            $order->broker_accepted == 0 &&
-            $order->dealer_accepted == 0
-        ) {
-            if ($oldDealer == 1) {
-                $this->DateChangeEmail($order->dealer_id, $order);
-                foreach ($dealers as $dealer) {
-                    $dealer->notify(new deliveryDateChanged($order));
-                }
-                //				Notification::send($dealers, new notifications($message, $order->id, $type));
-            } elseif ($oldBroker == 1) {
-                $this->DateChangeEmail($order->broker_id, $order);
-                foreach ($brokers as $broker) {
-                    $broker->notify(new deliveryDateChanged($order));
-                }
-                //				Notification::send($brokers, new notifications($message, $order->id, $type));
-            }
-        } elseif (
-            $order->admin_accepted == 0 &&
-            $order->broker_accepted == 0 &&
-            $order->dealer_accepted == 1
-        ) {
-            $this->DateChangeEmail(1, $order);
-            foreach ($admin as $user) {
-                $user->notify(new deliveryDateChanged($order));
-            }
-            //			Notification::send($admin, new notifications($message, $order->id, $type));
-            if ($oldBroker == 1) {
-                $this->DateChangeEmail($order->broker_id, $order);
-                foreach ($dealers as $dealer) {
-                    $dealer->notify(new deliveryDateChanged($order));
-                }
-                //				Notification::send($dealers, new notifications($message, $order->id, $type));
-            }
-        }
-
-        return redirect()
-            ->route('order.show', $order->id)
-            ->with(
-                'successMsg',
-                'You have successfully change the proposed delivery date',
-            );
+        return view('order.deliveries', ['status' => [3, 5, 6]]);
     }
 
     /**
@@ -558,77 +292,5 @@ class OrderController extends Controller
 
         //return $pdf->stream();
         return $pdf->download('leden-order-' . $order->id . '.pdf');
-    }
-
-    public function DateChangeEmail($company_id, Order $order)
-    {
-        $users = User::where('company_id', $company_id)->get();
-
-        if (env('MAIL_ENABLE')) {
-            foreach ($users as $user) {
-                $mail_data = [
-                    'content' =>
-                        'Order #' .
-                        $order->id .
-                        ' has had the proposed delivery date changed. Please view this order and accept the delivery date.',
-                    'url' => ENV('APP_URL') . '/orders/view/' . $order->id,
-                    'order_id' => $order->id,
-                    'email' => $user->email,
-                    'name' => $user->firstname . ' ' . $user->lastname,
-                ];
-
-                Mail::send('mail', $mail_data, function ($message) use (
-                    $mail_data,
-                ) {
-                    $message
-                        ->to($mail_data['email'], $mail_data['name'])
-                        ->subject(
-                            'The proposed delivery date for Order #' .
-                                $mail_data['order_id'] .
-                                ' has been changed',
-                        );
-                    $message->from(
-                        ENV('MAIL_FROM_ADDRESS'),
-                        ENV('MAIL_FROM_NAME'),
-                    );
-                });
-            }
-        }
-    }
-
-    public function DateAcceptEmail($company_id, Order $order)
-    {
-        $users = User::where('company_id', $company_id)->get();
-
-        if (env('MAIL_ENABLE')) {
-            foreach ($users as $user) {
-                $mail_data = [
-                    'content' =>
-                        'Order #' .
-                        $order->id .
-                        ' has been reserved and a delivery date has been added. Please view this order and accept the delivery date.',
-                    'url' => ENV('APP_URL') . '/orders/view/' . $order->id,
-                    'order_id' => $order->id,
-                    'email' => $user->email,
-                    'name' => $user->firstname . ' ' . $user->lastname,
-                ];
-
-                Mail::send('mail', $mail_data, function ($message) use (
-                    $mail_data,
-                ) {
-                    $message
-                        ->to($mail_data['email'], $mail_data['name'])
-                        ->subject(
-                            'Order #' .
-                                $mail_data['order_id'] .
-                                ' has been reserved',
-                        );
-                    $message->from(
-                        ENV('MAIL_FROM_ADDRESS'),
-                        ENV('MAIL_FROM_NAME'),
-                    );
-                });
-            }
-        }
     }
 }

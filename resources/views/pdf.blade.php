@@ -49,22 +49,19 @@
         <td style="padding:40px 0px 0px 0px;">
             <table cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
-                    <td valign="middle" width="20%">
-                        <img src="{{asset('images/leden-group-ltd.png')}}" width="90%" height="auto" style="display: block;" />
-                    </td>
-                    <td valign="top" width="20%">
+                    <td valign="top" width="25%">
                         <strong>Delivery Details:</strong><br>
                         {!! implode('<br>', $deliveryAddress) !!}
                     </td>
-                    <td valign="top" width="20%">
+                    <td valign="top" width="25%">
                         <strong>Invoice Details:</strong><br>
                         {!! implode('<br>', $invoiceAddress) !!}
                     </td>
-                    <td valign="top" width="20%">
+                    <td valign="top" width="25%">
                         <strong>Registration Details:</strong><br>
                         {!! implode('<br>', $registrationAddress) !!}
                     </td>
-                    <td valign="top" width="20%">
+                    <td valign="top" width="25%">
                         <strong>Dealer Address:</strong><br>
                         {!! implode('<br>', $dealerAddress) !!}
                     </td>
@@ -288,33 +285,57 @@
                                     £{{number_format($order->invoice->invoice_funder_for, '2', '.', ',')}}
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="2" style="padding: 20px 20px 10px 20px;">
-                                    <strong>We will invoice you for the difference</strong>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 20px 20px 10px 20px;">
-                                    inc VAT
-                                </td>
-                                <td style="text-align: right; padding: 20px 20px 10px 20px;">
-                                    £{{number_format($order->invoiceDifferenceIncVat(), '2', '.', ',')}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 20px 20px 10px 20px;">
-                                    exc VAT
-                                </td>
-                                <td style="text-align: right; padding: 20px 20px 10px 20px;">
-                                    £{{number_format($order->invoiceDifferenceExVat(), '2', '.', ',')}}
-                                </td>
-                            </tr>
+                            @if($order->invoice->invoice_value_to_dealer)
+                                <tr>
+                                    <td colspan="2" style="padding: 20px 20px 10px 20px;">
+                                        <strong>We will invoice you for the difference</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 20px 20px 10px 20px;">
+                                        inc VAT
+                                    </td>
+                                    <td style="text-align: right; padding: 20px 20px 10px 20px;">
+                                        £{{number_format($order->invoice->inc_vat_value(), '2')}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 20px 20px 10px 20px;">
+                                        exc VAT
+                                    </td>
+                                    <td style="text-align: right; padding: 20px 20px 10px 20px;">
+                                        £{{number_format($order->invoice->invoice_value_to_dealer, '2')}}
+                                    </td>
+                                </tr>
+                            @elseif($order->invoice->invoice_value_from_dealer)
+                                <tr>
+                                    <td colspan="2" style="padding: 20px 20px 10px 20px;">
+                                        <strong>Invoice from Dealer</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 20px 20px 10px 20px;">
+                                        inc VAT
+                                    </td>
+                                    <td style="text-align: right; padding: 20px 20px 10px 20px;">
+                                        £{{number_format($order->invoice->inc_vat_value(), '2')}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 20px 20px 10px 20px;">
+                                        exc VAT
+                                    </td>
+                                    <td style="text-align: right; padding: 20px 20px 10px 20px;">
+                                        £{{number_format($order->invoice->invoice_value_from_dealer, '2')}}
+                                    </td>
+                                </tr>
+                            @endif
                             <tr>
                                 <td  style="border-top: 1px solid #e3e6f0; padding: 20px 20px 10px 20px;">
                                     Commission to Finance Company
                                 </td>
                                 <td  style="border-top: 1px solid #e3e6f0; text-align: right; padding: 20px 20px 10px 20px;">
-                                    £{{number_format($order->invoice->commission_to_finance_company, '2', '.', ',')}}</td>
+                                    £{{number_format($order->invoice->commission_to_finance_company, '2')}}</td>
                             </tr>
                             <tr>
                                 <td style="padding: 20px 20px 10px 20px;">

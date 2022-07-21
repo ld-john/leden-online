@@ -75,10 +75,10 @@
                             <button class="btn btn-primary" type="submit">Update User</button>
                         </div>
                     </div>
+                </form>
+    @livewire('user-permission-creator', ['user' => $user])
             </div>
-
         </div>
-
     </div>
     <!-- /.container-fluid -->
 @endsection

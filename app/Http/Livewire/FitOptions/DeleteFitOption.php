@@ -26,6 +26,7 @@ class DeleteFitOption extends Component
     public function deleteFitOption(): Redirector|Application|RedirectResponse
     {
         $this->fitOption->delete();
+        session()->flash('message', 'Fit Option Deleted Successfully');
         return redirect(request()->header('Referer'));
     }
 

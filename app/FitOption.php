@@ -20,6 +20,7 @@ use Illuminate\Support\Carbon;
  * @property string $model_year
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property mixed $dealer_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption query()
@@ -40,21 +41,33 @@ class FitOption extends Model
 
     public function vehicles(): BelongsToMany
     {
-        return $this->belongsToMany(Vehicle::class, 'fit_options_vehicle', 'option_id', 'vehicle_id');
+        return $this->belongsToMany(
+            Vehicle::class,
+            'fit_options_vehicle',
+            'option_id',
+            'vehicle_id',
+        );
     }
 
     public function factoryOptionName(): Attribute
     {
         return new Attribute(
-            get: fn ($value, $attributes) => $attributes['option_name'] . '-' . $attributes['model_year'] . 'MY-'. $attributes['model']
+            get: fn($value, $attributes) => $attributes['option_name'] .
+                '-' .
+                $attributes['model_year'] .
+                'MY-' .
+                $attributes['model'],
         );
     }
 
     public function dealerOptionName(): Attribute
     {
         return new Attribute(
-            get: fn ($value, $attributes) => $attributes['option_name'] . '-' . $attributes['model_year'] . 'MY-'. $attributes['model']
+            get: fn($value, $attributes) => $attributes['option_name'] .
+                '-' .
+                $attributes['model_year'] .
+                'MY-' .
+                $attributes['model'],
         );
     }
-
 }

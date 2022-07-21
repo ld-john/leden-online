@@ -1,12 +1,13 @@
 <div>
     <form wire:submit.prevent="orderFormSubmit" method="POST" enctype="multipart/form-data">
         @csrf
-        @if ($successMsg)
+        @if (session()->has('message'))
             <div class="alert alert-success" role="alert">
-                {{$successMsg}}
+                {{session('message')}}
                 <br>
                 <div class="btn-group">
                     <a href="{{ route('order.pdf', $order->id) }}" class="btn btn-secondary">Download Order PDF</a>
+                    <a href="{{ route('order.show', $order->id) }}" class="btn btn-primary">View Order</a>
                 </div>
             </div>
         @endif

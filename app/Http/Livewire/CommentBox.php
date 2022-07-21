@@ -3,22 +3,26 @@
 namespace App\Http\Livewire;
 
 use App\Comment;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class CommentBox extends Component
 {
     public $content;
-    public $order_id;
+    public $commentable_id;
+    public $commentable_type;
     public $comments;
-
-
+    public $private_comments;
+    public $privacy;
 
     public function mount()
     {
         $this->getComments();
     }
-    public function render()
+    public function render(): Factory|View|Application
     {
         return view('livewire.comment-box');
     }
@@ -29,7 +33,9 @@ class CommentBox extends Component
 
         $comment->content = $this->content;
         $comment->user_id = Auth::id();
-        $comment->order_id = $this->order_id;
+        $comment->commentable_id = $this->commentable_id;
+        $comment->commentable_type = $this->commentable_type;
+        $comment->private = $this->privacy;
 
         $comment->save();
 
@@ -38,22 +44,33 @@ class CommentBox extends Component
         $this->content = '';
 
         $this->emit('commentSaved');
-
     }
 
-    public function deleteComment( $id )
+    public function deleteComment($id)
     {
-        $comment = Comment::find( $id );
+        $comment = Comment::find($id);
         $comment->delete();
 
         $this->getComments();
-
     }
 
     public function getComments()
     {
-        $this->comments = Comment::where( 'order_id' , $this->order_id )->orderBy( 'created_at' , 'DESC')->get();
+        $this->comments = Comment::where(
+            'commentable_id',
+            $this->commentable_id,
+        )
+            ->where('commentable_type', $this->commentable_type)
+            ->where('private', 0)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+        $this->private_comments = Comment::where(
+            'commentable_id',
+            $this->commentable_id,
+        )
+            ->where('commentable_type', $this->commentable_type)
+            ->where('private', 1)
+            ->orderBy('created_at', 'DESC')
+            ->get();
     }
-
-
 }

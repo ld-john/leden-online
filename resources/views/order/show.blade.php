@@ -161,17 +161,17 @@
                             </div>
                             <div class="col-md-4">
                                 <p class="font-weight-bold">
-                                @if( isset ($order->vehicle->build_date) && ( $order->vehicle->build_date != '0000-00-00 00:00:00') )
-                                    {{ date('d/m/Y', strtotime($order->vehicle->build_date)) }}
-                                @else
-                                    TBC
-                                @endif
+                                    @if( isset ($order->vehicle->build_date) && ( $order->vehicle->build_date != '0000-00-00 00:00:00') )
+                                        {{ date('d/m/Y', strtotime($order->vehicle->build_date)) }}
+                                    @else
+                                        TBC
+                                    @endif
                                 </p>
                             </div>
                         </div>
                     </div>
-                @if (Auth::user()->role != 'broker')
-                    <!-- Card Header -->
+                    @if (Auth::user()->role != 'broker')
+                        <!-- Card Header -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-l-blue">Vehicle Pricing</h6>
                         </div>
@@ -249,7 +249,7 @@
                                     @include('partials.view-order-cost-section', ['name' => 'Please invoice funder for', 'value' => $order->invoice->invoice_funder_for])
                                     @if ($order->invoice->invoice_value_to_dealer)
                                         <h6 class="font-weight-bold">We will invoice you for the difference</h6>
-                                        @include('partials.view-order-cost-section', ['name' => 'inc VAT', 'value' => $order->invoiceDifferenceIncVat()])
+                                        @include('partials.view-order-cost-section', ['name' => 'inc VAT', 'value' => $order->invoice->inc_vat_value()])
                                         @include('partials.view-order-cost-section', ['name' => 'exc VAT', 'value' => $order->invoice->invoice_value_to_dealer])
                                     @else
                                         <h6 class="font-weight-bold">Invoice from Dealer</h6>
@@ -282,12 +282,12 @@
                                 </div>
                             </div>
                         </div>
-                @endif
+                    @endif
 
 
 
-                @if (Auth::user()->role == 'admin')
-                    <!-- Card Header -->
+                    @if (Auth::user()->role == 'admin')
+                        <!-- Card Header -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-l-blue">Admin Information</h6>
                         </div>
@@ -336,10 +336,10 @@
                                 </div>
                             </div>
                         </div>
-                @endif
+                    @endif
 
 
-                <!-- Card Footer -->
+                    <!-- Card Footer -->
                     <div class="card-footer text-right">
                         <a href="{{ route('pipeline') }}" class="btn btn-secondary">Back</a>
                         @if (Auth::user()->role != 'broker')
@@ -368,16 +368,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="card shadow mt-4">
-                    <!-- Card Header -->
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-l-blue">Comments</h6>
-                    </div>
-
-                    <div class="card-body">
-                        @livewire('comment-box', ['order_id' => $order->id])
-                    </div>
-                </div>
+                @livewire('comment-box', ['commentable_id' => $order->id, 'commentable_type' => 'order'])
             </div>
         </div>
     </div>

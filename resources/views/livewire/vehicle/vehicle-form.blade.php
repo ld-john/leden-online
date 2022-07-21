@@ -453,36 +453,23 @@
                     <div class="col-md-6">
                         <select wire:model="status" class="form-control" name="vehicle_status" id="vehicle_status">
                             <option value="">Please Select Status</option>
-                            <option value="4">
-                                Factory Order
-                            </option>
-                            <option value="1">
-                                In Stock
-                            </option>
+                            <option value="4">Factory Order</option>
                             @if ($registered_date)
                                 <option value="15">In Stock (Registered)</option>
                             @endif
-                            <option value="3">
-                                Ready for Delivery
-                            </option>
-                            <option value="6">
-                                Delivery Booked
-                            </option>
-                            <option value="10">
-                                Europe VHC
-                            </option>
-                            <option value="11">
-                                UK VHC
-                            </option>
-                            <option value="12">
-                                At Converter
-                            </option>
-                            <option value="13">
-                                Awaiting Ship
-                            </option>
-                            <option value="14">
-                                Recall
-                            </option>
+                            <option value="1">In Stock</option>
+                            <option value="3">Ready for Delivery</option>
+                            <option value="5">Awaiting Delivery Confirmation</option>
+                            <option value="6">Delivery Booked</option>
+                            @if ($registered_date && $registered_date < $now)
+                                <option value="7">Completed Orders</option>
+                            @endif
+                            <option value="10">Europe VHC</option>
+                            <option value="11">UK VHC</option>
+                            <option value="12">At Converter</option>
+                            <option value="13">Awaiting Ship</option>
+                            <option value="14">Recall</option>
+                            <option value="16">Damaged/Recalled</option>
                         </select>
                     </div>
                 </div>

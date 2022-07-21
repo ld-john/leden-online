@@ -45,4 +45,16 @@ class Invoice extends Model
     {
         return $this->hasOne(Order::class, 'invoice_id', 'id');
     }
+
+    public function inc_vat_value()
+    {
+        if ($this->invoice_value_to_dealer) {
+            $value = $this->invoice_value_to_dealer * 1.2;
+        } elseif ($this->invoice_value_from_dealer) {
+            $value = $this->invoice_value_from_dealer * 1.2;
+        } else {
+            $value = false;
+        }
+        return $value;
+    }
 }

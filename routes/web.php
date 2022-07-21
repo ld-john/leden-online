@@ -13,7 +13,9 @@
 
 /* Auth routes */
 
+use App\Http\Controllers\DeliveriesController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\VehicleController;
 
 Auth::routes();
@@ -21,114 +23,98 @@ Auth::routes();
 /* Dashboard Controller routes */
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', 'DashboardController@index')->name('dashboard.base');
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-
-    /* Notifications Routes */
-
-    Route::get('/notifications', 'DashboardController@showNotifications')->name(
-        'notifications',
-    );
-    Route::get(
-        '/notifications/delete',
-        'DashboardController@executeDeleteNotifications',
-    )->name('notifications.delete');
-    Route::get(
-        '/notifications/readAll',
-        'DashboardController@readAllNotifications',
-    )->name('notifications.read');
-    Route::get(
-        '/notifications/mark-read/{notification}',
-        'DashboardController@readNotifications',
-    )->name('notifications.mark-read');
-    Route::get(
-        '/notifications/mark-unread/{notification}',
-        'DashboardController@unreadNotifications',
-    )->name('notifications.mark-unread');
+    Route::controller('DashboardController')->group(function () {
+        Route::get('/', 'index')->name('dashboard.base');
+        Route::get('/dashboard', 'index')->name('dashboard');
+        /* Notifications Routes */
+        Route::prefix('notifications')->group(function () {
+            Route::get('/', 'showNotifications')->name('notifications');
+            Route::get('/delete', 'executeDeleteNotifications')->name(
+                'notifications.delete',
+            );
+            Route::get('/readAll', 'readAllNotifications')->name(
+                'notifications.read',
+            );
+            Route::get('/mark-read/{notification}', 'readNotifications')->name(
+                'notifications.mark-read',
+            );
+            Route::get(
+                '/mark-unread/{notification}',
+                'unreadNotifications',
+            )->name('notifications.mark-unread');
+        });
+    });
 
     /* Order Controller Routes */
-    Route::get('/create-order', 'OrderController@create')->name('create_order');
-    Route::get('/order-bank', 'OrderController@showOrderBank')->name(
-        'order_bank',
-    );
-    Route::get('/completed-orders', 'OrderController@completedOrders')->name(
-        'completed_orders',
-    );
-    Route::get(
-        '/manage-deliveries',
-        'OrderController@showManageDeliveries',
-    )->name('manage_deliveries');
 
-    Route::prefix('orders')
-        ->controller(OrderController::class)
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/create-order', 'create')->name('create_order');
+        Route::get('/manage-deliveries', 'showManageDeliveries')->name(
+            'manage_deliveries',
+        );
+        Route::get('/completed-orders', 'completedOrders')->name(
+            'completed_orders',
+        );
+        Route::get('/order-bank', 'showOrderBank')->name('order_bank');
+        Route::prefix('orders')
+            ->name('order.')
+            ->group(function () {
+                Route::get('/view/{order}', 'show')->name('show');
+                Route::get('/duplicate/{order}', 'duplicate')->name(
+                    'duplicate',
+                );
+                Route::get('/edit/{order}', 'edit')->name('edit');
+                Route::get('/{vehicle}', 'showReserveOrder')->name('reserve');
+                Route::get('/pdf/{order}', 'downloadPDF')->name('pdf');
+                Route::get('/delete/{order}', 'destroy')->name('destroy');
+            });
+    });
+
+    Route::prefix('deliveries')
+        ->controller(DeliveriesController::class)
+        ->name('delivery.')
         ->group(function () {
-            Route::get('/view/{order}', 'show')->name('order.show');
-            Route::get('/duplicate/{order}', 'duplicate')->name(
-                'order.duplicate',
-            );
-            Route::get('/edit/{order}', 'edit')->name('order.edit');
-            Route::get('/{vehicle}', 'showReserveOrder')->name('order.reserve');
-            Route::get('/accept-date/{order}', 'dateAccept')->name(
-                'order.date.accept',
-            );
-            Route::get('/change-date/{order}', 'showDateChange')->name(
-                'order.date.change',
-            );
-            Route::post('/change-date/{order}', 'storeDateChange')->name(
-                'order.date.update',
-            );
-            Route::get('/pdf/{order}', 'downloadPDF')->name('order.pdf');
-            Route::get('/delete/{order}', 'destroy')->name('order.destroy');
+            Route::get('create/{order}', 'create')->name('create');
+            Route::get('show/{delivery}', 'show')->name('show');
+            Route::get('accept/{delivery}', 'accept')->name('accept');
+            Route::get('cancel/{delivery}', 'cancel')->name('cancel');
+            Route::get('edit/{delivery}', 'edit')->name('edit');
         });
 
     /* Reservation Controller Routes */
-    Route::get(
-        '/reserve-vehicle/{vehicle}',
-        'ReservationController@create',
-    )->name('reservation.create');
-    Route::get('/reservations', 'ReservationController@index')->name(
-        'reservation.index',
-    );
-    Route::get(
-        '/reservations/{reservation}/extend',
-        'ReservationController@extend',
-    )->name('reservation.extend');
-    Route::get(
-        '/reservations/{user}/toggle',
-        'ReservationController@toggle',
-    )->name('reservation.toggle');
-    Route::get(
-        '/reservations/{vehicle}/admin',
-        'ReservationController@admin_create',
-    )->name('reservation.admin');
+    Route::controller(ReservationController::class)
+        ->name('reservation.')
+        ->group(function () {
+            Route::get('/reserve-vehicle/{vehicle}', 'create')->name('create');
+            Route::get('/reservations', 'index')->name('index');
+            Route::prefix('reservations')->group(function () {
+                Route::get('/{reservation}/extend', 'extend')->name('extend');
+                Route::get('/{user}/toggle', 'toggle')->name('toggle');
+                Route::get('/{vehicle}/admin', 'admin_create')->name('admin');
+            });
+        });
 
     /* Vehicle Controller Routes */
-    Route::get('/create-vehicle', 'VehicleController@create')->name(
-        'create_vehicle',
-    );
-    Route::get('/pipeline', 'VehicleController@showLedenStock')->name(
-        'pipeline',
-    );
-    Route::get(
-        '/ringfenced-stock',
-        'VehicleController@showRingFencedStock',
-    )->name('ring_fenced_stock');
-    Route::post(
-        '/pipeline/delete-selected',
-        'VehicleController@deleteSelected',
-    )->name('pipeline_delete');
-    Route::get('/vehicle/delete/{vehicle}', 'VehicleController@destroy')->name(
-        'vehicle.delete',
-    );
-    Route::get('/ford-pipeline', 'VehicleController@showFordPipeline')->name(
-        'pipeline.ford',
-    );
-    Route::get('/vehicle/view/{vehicle}', 'VehicleController@show')->name(
-        'vehicle.show',
-    );
-    Route::get('/vehicle/edit/{vehicle}', 'VehicleController@edit')->name(
-        'edit_vehicle',
-    );
+    Route::controller('VehicleController')->group(function () {
+        Route::get('/create-vehicle', 'create')->name('create_vehicle');
+        Route::get('/pipeline', 'showLedenStock')->name('pipeline');
+        Route::get('/ringfenced-stock', 'showRingFencedStock')->name(
+            'ring_fenced_stock',
+        );
+        Route::get('/ford-pipeline', 'showFordPipeline')->name('pipeline.ford');
+        Route::prefix('vehicle')
+            ->name('vehicle.')
+            ->group(function () {
+                Route::get('/delete/{vehicle}', 'destroy')->name('delete');
+                Route::get('/view/{vehicle}', 'show')->name('show');
+                Route::get('/edit/{vehicle}', 'edit')->name('edit');
+                Route::get('/recycle-bin', 'recycle')->name('recycle_bin');
+                Route::get('/force-delete/{vehicle}', 'forceDelete')->name(
+                    'force-delete',
+                );
+                Route::get('/restore/{vehicle}', 'restore')->name('restore');
+            });
+    });
     Route::get('/vehicle/foexport/', [
         VehicleController::class,
         'factory_order_export',
@@ -165,59 +151,38 @@ Route::middleware('auth')->group(function () {
         VehicleController::class,
         'in_stock_registered_export',
     ])->name('registered.export');
-    Route::get('/vehicle/recycle-bin', 'VehicleController@recycle')->name(
-        'vehicle.recycle_bin',
-    );
-    Route::get(
-        '/vehicle/force-delete/{vehicle}',
-        'VehicleController@forceDelete',
-    )->name('vehicle.force-delete');
-    Route::get('/vehicle/restore/{vehicle}', 'VehicleController@restore')->name(
-        'vehicle.restore',
-    );
 
     /* ReportingController routes */
-    Route::get('/reporting', 'ReportingController@showReporting')->name(
-        'reporting',
-    );
-    Route::get(
-        '/reporting/monthly-{report}/{year}/{month}',
-        'ReportingController@monthlyDownload',
-    );
-    Route::get(
-        '/reporting/quarterly-{report}/{year}/{quarter}',
-        'ReportingController@quarterlyDownload',
-    );
-    Route::get(
-        '/reporting/weekly-{report}/{year}/{quarter}',
-        'ReportingController@weeklyDownload',
-    );
+    Route::prefix('reporting')
+        ->controller('ReportingController')
+        ->group(function () {
+            Route::get('/', 'showReporting')->name('reporting');
+            Route::get('/monthly-{report}/{year}/{month}', 'monthlyDownload');
+            Route::get(
+                '/quarterly-{report}/{year}/{quarter}',
+                'quarterlyDownload',
+            );
+            Route::get('/weekly-{report}/{year}/{quarter}', 'weeklyDownload');
+        });
 
     /* CSVUploadController routes */
-    Route::get('/csv-upload', 'CSVUploadController@showCsvUpload')->name(
-        'csv_upload',
-    );
-    Route::get('/rf-upload', 'CSVUploadController@showRingFenceUpload')->name(
-        'rf_upload',
-    );
-    Route::get(
-        '/fit-option-upload',
-        'CSVUploadController@showFitOptionUpload',
-    )->name('fit_option_upload');
-    Route::post('/csv-upload', 'CSVUploadController@executeCsvUpload')->name(
-        'csv_upload.import',
-    );
-    Route::post('/rf-upload', 'CSVUploadController@executeRfUpload')->name(
-        'rf_upload.import',
-    );
-    Route::post(
-        '/import_parse',
-        'CSVUploadController@parseFitOptionImport',
-    )->name('import_parse');
-    Route::post(
-        '/import_process',
-        'CSVUploadController@processFitOptionImport',
-    )->name('import_process');
+    Route::controller('CSVUploadController')->group(function () {
+        Route::get('/csv-upload', 'showCsvUpload')->name('csv_upload');
+        Route::get('/rf-upload', 'showRingFenceUpload')->name('rf_upload');
+        Route::get('/fit-option-upload', 'showFitOptionUpload')->name(
+            'fit_option_upload',
+        );
+        Route::post('/csv-upload', 'executeCsvUpload')->name(
+            'csv_upload.import',
+        );
+        Route::post('/rf-upload', 'executeRfUpload')->name('rf_upload.import');
+        Route::post('/import_parse', 'parseFitOptionImport')->name(
+            'import_parse',
+        );
+        Route::post('/import_process', 'processFitOptionImport')->name(
+            'import_process',
+        );
+    });
 
     /* Customer Controller Routes */
     Route::get('/customers', 'CustomerController@index')->name(
@@ -225,55 +190,48 @@ Route::middleware('auth')->group(function () {
     );
 
     /* MessagesController routes */
-    Route::get('/messages', 'MessagesController@showMessages')->name(
-        'messages',
-    );
-    Route::get('/messages/new', 'MessagesController@showNewMessage')->name(
-        'message.new',
-    );
-    Route::post('/messages/new', 'MessagesController@executeNewMessage')->name(
-        'message.send',
-    );
-    Route::get(
-        '/messages/{message_group_id}',
-        'MessagesController@showMessage',
-    )->name('message.view');
-    Route::post(
-        '/messages/{message_group_id}',
-        'MessagesController@executeReplyMessage',
-    )->name('message.reply');
+    Route::controller('MessagesController')
+        ->prefix('messages')
+        ->group(function () {
+            Route::get('/', 'showMessages')->name('messages');
+            Route::name('message.')->group(function () {
+                Route::get('/new', 'showNewMessage')->name('new');
+                Route::post('/new', 'executeNewMessage')->name('send');
+                Route::get('/{message_group_id}', 'showMessage')->name('view');
+                Route::post('/{message_group_id}', 'executeReplyMessage')->name(
+                    'reply',
+                );
+            });
+        });
 
     /* ProfileController routes */
-    Route::get('/profile', 'ProfileController@showProfile')->name('profile');
-    Route::post('/profile', 'ProfileController@executeUpdateProfile')->name(
-        'profile.update',
-    );
-    Route::get('/user-management', 'ProfileController@showUserManager')
-        ->name('user_manager')
-        ->middleware('can:admin');
-    Route::get('/user-management/add', 'ProfileController@showAddUser')->name(
-        'user.add',
-    );
-    Route::post(
-        '/user-management/add',
-        'ProfileController@executeAddUser',
-    )->name('user.create');
-    Route::get('/user-management/edit/{user}', 'ProfileController@showEditUser')
-        ->name('user.edit')
-        ->middleware('can:admin');
-    Route::post(
-        '/user-management/edit/{user}',
-        'ProfileController@storeEditUser',
-    )->name('user.update');
-    Route::get(
-        '/user-management/disable/{user}',
-        'ProfileController@toggleDisabled',
-    )
-        ->name('toggle.user.disabled')
-        ->middleware('can:admin');
-    Route::get('/user-management/delete/{user}', 'ProfileController@delete')
-        ->name('user.delete')
-        ->middleware('can:admin');
+    Route::controller('ProfileController')->group(function () {
+        Route::get('/profile', 'showProfile')->name('profile');
+        Route::post('/profile', 'executeUpdateProfile')->name('profile.update');
+        Route::prefix('user-management')
+            ->name('user.')
+            ->group(function () {
+                Route::get('/add', 'showAddUser')->name('add');
+                Route::post('/add', 'executeAddUser')->name('create');
+                Route::post('/edit/{user}', 'storeEditUser')->name('update');
+            });
+
+        Route::middleware('can:admin')->group(function () {
+            Route::get('/user-management', 'showUserManager')->name(
+                'user_manager',
+            );
+            Route::get('/user-management/edit/{user}', 'showEditUser')->name(
+                'user.edit',
+            );
+            Route::get(
+                '/user-management/disable/{user}',
+                'toggleDisabled',
+            )->name('toggle.user.disabled');
+            Route::get('/user-management/delete/{user}', 'delete')->name(
+                'user.delete',
+            );
+        });
+    });
 
     Route::get('/companies', 'CompanyController@index')
         ->name('company_manager')
@@ -366,4 +324,8 @@ Route::middleware('auth')->group(function () {
     //    Route::get('/link/vehicle-broker-dealer-clean-up', 'OrderController@VehicleBrokerDealerCleanup')->name('test8');
     //    Route::get('/link/invoice-value-clean-up', 'OrderController@invoice_value_cleaner')->name('test9');
     //    Route::get('/link/fit-option-clean-up', 'VehicleController@fitOptionsCleanUp');
+    Route::get(
+        '/link/comment-clean-up',
+        'CommentController@makeCommentsPolymorphic',
+    );
 });

@@ -104,8 +104,9 @@ class CSVUploadController extends Controller
             );
     }
 
-    public function executeCsvUpload(Request $request): bool|RedirectResponse
-    {
+    public function executeCsvUpload(
+        Request $request,
+    ): bool|RedirectResponse|View {
         $file = $request->file('file');
 
         $request->validate([
@@ -250,6 +251,57 @@ class CSVUploadController extends Controller
             return redirect()
                 ->route('csv_upload')
                 ->with('successMsg', 'All vehicles have been updated');
+        } elseif ($request->input('upload_type') === 'ford_test') {
+            foreach ($vehicle_uploads as $ford_report) {
+                $vehicle = Vehicle::where(
+                    'orbit_number',
+                    '=',
+                    $ford_report['ORBITNO'],
+                )->first();
+
+                if ($vehicle) {
+                    if (
+                        $vehicle->vehicle_status === 6 ||
+                        $vehicle->vehicle_status === 7 ||
+                        $vehicle->vehicle_status === 3 ||
+                        $vehicle->vehicle_status === 14 ||
+                        $vehicle->vehicle_status === 15 ||
+                        $vehicle->vehicle_status === 16
+                    ) {
+                        continue;
+                    }
+                    $ford_test[$vehicle->id]['prefix'] = array_shift(
+                        $ford_report,
+                    );
+                    $ford_test[$vehicle->id]['location'] =
+                        $ford_report['LOCATION'];
+                    $status = match ($ford_report['LOCATION']) {
+                        'DELIVERED' => 1,
+                        'VFS-NORTH', 'VFS-SOUTH', 'VFS-SOTON' => 12,
+                        'DBN DOCKS', 'SILV EXP', 'VAL PORT', 'VALENCIA' => 13,
+                        'ANTWERP', 'AUTOPORT', 'NEW FLUSH' => 10,
+                        'DAGTOPS', 'LIV DOCKS', 'LIVTOPS', 'SOTTOPS' => 11,
+                        default => 4,
+                    };
+                    $status = Vehicle::statusMatch($status);
+                    $ford_test[$vehicle->id]['orbit'] = $vehicle->orbit_number;
+                    $ford_test[$vehicle->id]['status'] = $status;
+                    $ford_test[$vehicle->id]['chassis'] = $ford_report['VIN'];
+                    if ($ford_report['PLAN_BUILD_DATE']) {
+                        $ford_test[$vehicle->id][
+                            'build_date'
+                        ] = Carbon::createFromFormat(
+                            'd/m/Y',
+                            $ford_report['PLAN_BUILD_DATE'],
+                        )->format('Y-m-d h:i:s');
+                    } else {
+                        $ford_test[$vehicle->id]['build_date'] = 'TBC';
+                    }
+                }
+            }
+            return view('upload.ford_test', [
+                'ford_test' => $ford_test,
+            ]);
         } else {
             return false;
         }

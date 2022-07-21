@@ -29,14 +29,25 @@
     <div class="form-group row">
         <label for="dealer_invoice_override" class="col-md-3 col-form-label">
             @if($dealer_invoice_override > -1 || !$dealer_invoice_override )
-                Invoice to Dealer Value (£)
+                Invoice to Dealer Value
             @else
-                Invoice from Dealer Value (£)
+                Invoice from Dealer Value
             @endif
         </label>
         <div class="col-md-9">
-            <input wire:model="dealer_invoice_override" type="number" name="dealer_invoice_override" id="dealer_invoice_override" step=".01"
-                   class="form-control" autocomplete="off" />
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">£</span>
+                </div>
+                <input wire:model="dealer_invoice_override" type="number" name="dealer_invoice_override" id="dealer_invoice_override" step=".01"
+                       class="form-control" autocomplete="off" @if(!$dealer_invoice_override_allowed) disabled @endif />
+                <div class="input-group-append">
+                    <span class="input-group-text">Override?</span>
+                    <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for Invoice Value Override" wire:model="dealer_invoice_override_allowed">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     {{-- Invoice from dealer reference --}}

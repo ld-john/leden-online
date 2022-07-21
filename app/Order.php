@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Comments;
 
 /**
  * @property mixed $id
@@ -34,6 +36,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed $updated_at
  * @property mixed $fin_number
  * @property mixed $deal_number
+ * @property mixed $order_ref
+ * @property mixed $broker
+ * @property mixed $delivery
+ * @property mixed $delivery_id;
  */
 class Order extends Model
 {
@@ -75,6 +81,11 @@ class Order extends Model
     public function dealer(): HasOne
     {
         return $this->hasOne(Company::class, 'id', 'dealer_id');
+    }
+
+    public function delivery(): HasOne
+    {
+        return $this->hasOne(Delivery::class, 'id', 'delivery_id');
     }
 
     public function basicCost()
@@ -177,8 +188,8 @@ class Order extends Model
         return $this->invoiceDifferenceIncVat() / 1.2;
     }
 
-    public function comments(): HasMany
+    public function comments(): MorphMany
     {
-        return $this->hasMany(Comments::class, 'order_id', 'id');
+        return $this->morphMany(Comments::class, 'commentable');
     }
 }

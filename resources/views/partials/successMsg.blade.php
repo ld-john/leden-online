@@ -10,3 +10,6 @@
         </div>
     </div>
 @endif
+@if (session()->has('message'))
+    <h5 class="alert alert-success">{{ session('message') }}</h5>
+@endif
