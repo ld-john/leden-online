@@ -138,7 +138,11 @@
                 <div class="form-group row">
                     <label for="funder_confirmation" class="col-md-2 col-form-label">Funder Confirmation</label>
                     <div class="col-md-6">
-                        <input wire:model="funder_confirmation"  type="file" name="funder_confirmation" id="funder_confirmation" />
+                        @if($funder_confirmation)
+                            Funder Confirmation Uploaded - <a class="btn btn-danger" wire:click="clearFunderConfirmation">Clear</a>
+                        @else
+                            <input wire:model="funder_confirmation"  type="file" name="funder_confirmation" id="funder_confirmation" />
+                        @endif
                     </div>
                 </div>
 

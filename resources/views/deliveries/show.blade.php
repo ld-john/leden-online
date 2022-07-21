@@ -2,11 +2,9 @@
     'title' => 'View Delivery',
     'activePage' => 'view-delivery'
     ])
-
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid force-min-height">
-
         <!-- Content Row -->
         <div class="row justify-content-center">
 
@@ -95,10 +93,10 @@
                                 <p>Funder Confirmation</p>
                             </div>
                             <div class="col-md-4">
-                                @if($delivery->funder_confirmation)
-                                    <a href="{{ asset( '/storage/' . $delivery->funder_confirmation) }}" class="btn btn-primary" download>Download</a>
+                                @if(Storage::exists($delivery->funder_confirmation))
+                                    <a href="{{ asset(\Illuminate\Support\Facades\Storage::url($delivery->funder_confirmation)) }}" class="btn btn-primary" download>Download</a>
                                 @else
-                                    <p>Funder Confirmation not uploaded</p>
+                                    <p>Funder Confirmation is not uploaded, or something went wrong</p>
                                 @endif
                             </div>
                         </div>

@@ -5,74 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Delivery.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/DeliveriesController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Delivery/DeliveryForm.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/UserPermissionCreator.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationNotification.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Notifications/DeliveryBookedNotification.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Notifications/DeliveryDateSetNotification.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Notifications/VehicleInStockNotification.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Permission.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_07_13_080230_add_dealer_value_overidden_field_to_invoices.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_07_19_110008_add_delivery_id_to_orders.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_07_19_110313_create_deliveries_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_07_19_151159_change_comments_to_polymorphic_relationship.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_07_19_153913_add_full_address_to_deliveries.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_07_19_163129_add_funder_confirmation_to_deliveries.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_07_21_101930_create_permissions_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_07_21_120421_add_foreign_key_to_delivery_id_on_orders.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_07_21_135310_add_privacy_to_comments.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/deliveries/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/deliveries/edit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/deliveries/show.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/delivery/delivery-form.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/user-permission-creator.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/upload/ford_test.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/leden.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/leden.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Comment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/FitOption.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/FitOption.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/CommentBox.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/CommentBox.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/DeleteFitOption.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/DeleteFitOption.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/EditFitOption.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/EditFitOption.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/FitOptionsEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/FitOptionsEditor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/NewFitOption.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/UserTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/UserTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Invoice.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Invoice.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Vehicle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/comment-box.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/comment-box.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/fit-options/fit-options-editor.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/fit-options/fit-options-editor.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/fit-options/new-fit-option.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/make-editor.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/make-editor.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/notification/notification-panel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/notification/notification-panel.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/notification/notifications-popup.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/notification/notifications-popup.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/delete-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/delete-order.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/deliveries.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/deliveries.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/successMsg.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/successMsg.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pdf.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pdf.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/upload/csv-upload.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/upload/csv-upload.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/users/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Delivery/DeliveryForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Delivery/DeliveryForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryDateSetNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryDateSetNotification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/deliveries/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/deliveries/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/delivery/delivery-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/delivery/delivery-form.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -429,7 +367,7 @@
       <workItem from="1658217682225" duration="31000" />
       <workItem from="1658219892039" duration="24933000" />
       <workItem from="1658393533042" duration="15370000" />
-      <workItem from="1658410753288" duration="5770000" />
+      <workItem from="1658410753288" duration="7292000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -739,7 +677,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657539418693</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Added Delivery Management Through the Website&#10;Added Private Comments">
+      <created>1658416776580</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1658416776580</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -758,7 +703,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Debug - Soft Delete Orders added" />
     <MESSAGE value="Dashboard Updates" />
     <MESSAGE value="Vehicle updates&#10;Tables now have tooltips instead of extended button text" />
     <MESSAGE value="Updates to deleting Vehicles and Orders (Now via Livewire)" />
@@ -783,7 +727,8 @@
     <MESSAGE value="New Fit Option Uploader&#10;Admin Override Reservation updates" />
     <MESSAGE value="Updates" />
     <MESSAGE value="Minor Issue Fixes&#10;Added a page to edit, add and delete models and makes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor Issue Fixes&#10;Added a page to edit, add and delete models and makes" />
+    <MESSAGE value="Added Delivery Management Through the Website&#10;Added Private Comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Delivery Management Through the Website&#10;Added Private Comments" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

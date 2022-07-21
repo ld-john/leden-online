@@ -34,6 +34,8 @@ class DeliveryDateSetNotification extends Notification
                 $this->vehicle->manufacturer->name .
                 ' ' .
                 $this->vehicle->model .
+                ' Orbit Number: ' .
+                $this->vehicle->orbit_number .
                 '. Please fill in the delivery request form to accept or amend this delivery date',
         ];
     }

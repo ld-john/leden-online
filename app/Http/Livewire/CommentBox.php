@@ -16,7 +16,7 @@ class CommentBox extends Component
     public $commentable_type;
     public $comments;
     public $private_comments;
-    public $privacy;
+    public $privacy = false;
 
     public function mount()
     {

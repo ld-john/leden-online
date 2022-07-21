@@ -66,6 +66,7 @@ class DeliveryForm extends Component
             $this->delivery_postcode = $this->delivery->delivery_postcode;
             $this->contact_name = $this->delivery->contact_name;
             $this->contact_number = $this->delivery->contact_number;
+            $this->funder_confirmation = $this->delivery->funder_confirmation;
         } else {
             $this->delivery_address1 = $order->customer->address_1;
             $this->delivery_address2 = $order->customer->address_2;
@@ -80,6 +81,11 @@ class DeliveryForm extends Component
     public function render(): Factory|View|Application
     {
         return view('livewire.delivery.delivery-form');
+    }
+
+    public function clearFunderConfirmation()
+    {
+        $this->funder_confirmation = null;
     }
 
     public function requestBooking()
@@ -102,7 +108,7 @@ class DeliveryForm extends Component
         $delivery->contact_number = $this->contact_number;
         if ($this->funder_confirmation) {
             $delivery->funder_confirmation = $this->funder_confirmation->store(
-                'public.files',
+                '/public/files',
             );
         }
         $delivery->save();
