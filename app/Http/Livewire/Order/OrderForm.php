@@ -519,6 +519,13 @@ class OrderForm extends Component
 
             //Update Order
             $order = $this->order;
+            if ($this->delivery_date) {
+                $delivery_date = Carbon::parse($this->delivery_date)
+                    ->startOfDay()
+                    ->format('Y-m-d h:i:s');
+            } else {
+                $delivery_date = null;
+            }
             $order->update([
                 'vehicle_id' => $vehicle->id,
                 'customer_id' => $customer->id,
@@ -527,9 +534,7 @@ class OrderForm extends Component
                 'comments' => $this->comments,
                 'broker_ref' => $this->broker_ref,
                 'due_date' => $this->due_date,
-                'delivery_date' => Carbon::parse($this->delivery_date)
-                    ->startOfDay()
-                    ->format('Y-m-d h:i:s'),
+                'delivery_date' => $delivery_date,
                 'registration_company_id' => $this->registration_company,
                 'invoice_company_id' => $this->invoice_company,
                 'invoice_id' => $invoice->id,
@@ -643,38 +648,37 @@ class OrderForm extends Component
      */
     public function saveInvoice(Invoice $invoice): void
     {
-        $invoice->finance_commission_invoice_number =
-            $this->invoice_finance_number;
-        $invoice->broker_invoice_number = $this->invoice_broker_number;
-        $invoice->broker_commission_invoice_number =
-            $this->commission_broker_number;
-        $invoice->dealer_discount = $this->dealer_discount;
-        $invoice->manufacturer_discount = $this->manufacturer_discount;
-        $invoice->manufacturer_delivery_cost =
-            $this->manufacturer_delivery_cost;
-        $invoice->onward_delivery = $this->onward_delivery;
-        $invoice->invoice_funder_for = $this->invoice_funder_for;
-        $invoice->invoice_value = $this->invoice_finance;
-        $invoice->invoice_value_to_broker = $this->invoice_value_to_broker;
-        $invoice->commission_to_broker = $this->commission_broker;
-        $invoice->commission_to_finance_company = $this->invoice_finance;
-        $invoice->finance_commission_pay_date = $this->finance_commission_paid;
-        $invoice->broker_commission_pay_date = $this->commission_broker_paid;
-        $invoice->broker_pay_date = $this->invoice_broker_paid;
-        $invoice->dealer_pay_date = $this->dealer_pay_date;
-        $invoice->dealer_invoice_number = $this->dealer_invoice_number;
-        $invoice->fleet_procure_invoice = $this->fleet_procure_invoice;
-        $invoice->fleet_procure_invoice_number = $this->fleet_invoice_number;
-        $invoice->fleet_procure_pay_date = $this->fleet_procure_paid;
-        $invoice->finance_company_bonus_invoice = $this->finance_bonus_invoice;
-        $invoice->finance_company_bonus_invoice_number =
-            $this->finance_company_bonus_invoice_number;
-        $invoice->finance_company_bonus_pay_date =
-            $this->finance_company_bonus_pay_date;
-        $invoice->ford_bonus = $this->ford_bonus_invoice;
-        $invoice->ford_bonus_pay_date = $this->ford_bonus_pay_date;
-
-        $invoice->save();
+        $invoice->update([
+            'finance_commission_invoice_number' =>
+                $this->invoice_finance_number,
+            'broker_invoice_number' => $this->invoice_broker_number,
+            'broker_commission_invoice_number' =>
+                $this->commission_broker_number,
+            'dealer_discount' => $this->dealer_discount,
+            'manufacturer_discount' => $this->manufacturer_discount,
+            'manufacturer_delivery_cost' => $this->manufacturer_delivery_cost,
+            'onward_delivery' => $this->onward_delivery,
+            'invoice_funder_for' => $this->invoice_funder_for,
+            'invoice_value' => $this->invoice_finance,
+            'invoice_value_to_broker' => $this->invoice_value_to_broker,
+            'commission_to_broker' => $this->commission_broker,
+            'commission_to_finance_company' => $this->invoice_finance,
+            'finance_commission_pay_date' => $this->finance_commission_paid,
+            'broker_commission_pay_date' => $this->commission_broker_paid,
+            'broker_pay_date' => $this->invoice_broker_paid,
+            'dealer_pay_date' => $this->dealer_pay_date,
+            'dealer_invoice_number' => $this->dealer_invoice_number,
+            'fleet_procure_invoice' => $this->fleet_procure_invoice,
+            'fleet_procure_invoice_number' => $this->fleet_invoice_number,
+            'fleet_procure_pay_date' => $this->fleet_procure_paid,
+            'finance_company_bonus_invoice' => $this->finance_bonus_invoice,
+            'finance_company_bonus_invoice_number' =>
+                $this->finance_company_bonus_invoice_number,
+            'finance_company_bonus_pay_date' =>
+                $this->finance_company_bonus_pay_date,
+            'ford_bonus' => $this->ford_bonus_invoice,
+            'ford_bonus_pay_date' => $this->ford_bonus_pay_date,
+        ]);
     }
 
     /**
@@ -683,16 +687,16 @@ class OrderForm extends Component
      */
     public function saveCustomerDetails(Customer $customer): void
     {
-        $customer->customer_name = $this->customer_name;
-        $customer->address_1 = $this->delivery_address_1;
-        $customer->address_2 = $this->delivery_address_2;
-        $customer->town = $this->delivery_town;
-        $customer->city = $this->delivery_city;
-        $customer->county = $this->delivery_county;
-        $customer->postcode = $this->delivery_postcode;
-        $customer->phone_number = $this->customer_phone;
-
-        $customer->save();
+        $customer->update([
+            'customer_name' => $this->customer_name,
+            'address_1' => $this->delivery_address_1,
+            'address_2' => $this->delivery_address_2,
+            'town' => $this->delivery_town,
+            'city' => $this->delivery_city,
+            'county' => $this->delivery_county,
+            'postcode' => $this->delivery_postcode,
+            'phone_number' => $this->customer_phone,
+        ]);
     }
 
     /**

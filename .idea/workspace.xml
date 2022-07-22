@@ -5,12 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Dashboard/Broker/InStockOrdersTable.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/dashboard/broker/in-stock-orders-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/leden.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/leden.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/CommentBox.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/CommentBox.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Delivery/DeliveryForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Delivery/DeliveryForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryDateSetNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryDateSetNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/deliveries/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/deliveries/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/delivery/delivery-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/delivery/delivery-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2022_07_19_151159_change_comments_to_polymorphic_relationship.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2022_07_19_151159_change_comments_to_polymorphic_relationship.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/dashboard-broker.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/dashboard-broker.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +161,6 @@
       <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
       <path value="$PROJECT_DIR$/vendor/maximebf/debugbar" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-debugbar" />
-      <path value="$PROJECT_DIR$/vendor/symfony/debug" />
       <path value="$PROJECT_DIR$/vendor/livewire/livewire" />
       <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
       <path value="$PROJECT_DIR$/vendor/maatwebsite/excel" />
@@ -182,6 +189,7 @@
       <path value="$PROJECT_DIR$/vendor/spatie/backtrace" />
       <path value="$PROJECT_DIR$/vendor/spatie/flare-client-php" />
       <path value="$PROJECT_DIR$/vendor/fruitcake/php-cors" />
+      <path value="$PROJECT_DIR$/vendor/nunomaduro/termwind" />
     </include_path>
   </component>
   <component name="ProjectId" id="1yGOd01KlxTowHiLnyYqA6dZo6t" />
@@ -367,7 +375,8 @@
       <workItem from="1658217682225" duration="31000" />
       <workItem from="1658219892039" duration="24933000" />
       <workItem from="1658393533042" duration="15370000" />
-      <workItem from="1658410753288" duration="7292000" />
+      <workItem from="1658410753288" duration="8390000" />
+      <workItem from="1658476941535" duration="7182000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -684,7 +693,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658416776580</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Tweaks to the Comments system and the File Upload for Funder Confirmation">
+      <created>1658418181816</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1658418181816</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -703,7 +719,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Dashboard Updates" />
     <MESSAGE value="Vehicle updates&#10;Tables now have tooltips instead of extended button text" />
     <MESSAGE value="Updates to deleting Vehicles and Orders (Now via Livewire)" />
     <MESSAGE value="Fix Date issues&#10;Move Order Ref to Vehicle as Ford Order Number" />
@@ -728,7 +743,8 @@
     <MESSAGE value="Updates" />
     <MESSAGE value="Minor Issue Fixes&#10;Added a page to edit, add and delete models and makes" />
     <MESSAGE value="Added Delivery Management Through the Website&#10;Added Private Comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Delivery Management Through the Website&#10;Added Private Comments" />
+    <MESSAGE value="Tweaks to the Comments system and the File Upload for Funder Confirmation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tweaks to the Comments system and the File Upload for Funder Confirmation" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

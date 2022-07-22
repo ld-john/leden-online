@@ -124,6 +124,11 @@
                                     <a data-toggle="tooltip" title="Request Delivery" href="{{ route('delivery.create', $order->id) }}" class="btn btn-primary"><i class="fa-solid fa-truck"></i></a>
                                 @endif
                             @endcan
+                            @can('broker')
+                                @if($order->delivery_date && $order->delivery_date !== '0000-00-00 00:00:00' && $order->vehicle->vehicle_status === 1)
+                                    <a data-toggle="tooltip" title="Request Delivery" href="{{ route('delivery.create', $order->id) }}" class="btn btn-primary"><i class="fa-solid fa-truck"></i></a>
+                                @endif
+                            @endcan
                         </div>
                     </td>
                 </tr>

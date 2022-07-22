@@ -8,6 +8,8 @@ use App\FitOption;
 use App\Http\Requests\CsvImportRequest;
 use App\Imports\FitOptionImport;
 use App\Manufacturer;
+use App\Notifications\VehicleInStockNotification;
+use App\User;
 use App\Vehicle;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -231,6 +233,20 @@ class CSVUploadController extends Controller
                     ]);
 
                     $order = $vehicle->order;
+
+                    if ($vehicle->wasChanged('vehicle_status')) {
+                        if ($vehicle->vehicle_status === '1') {
+                            $brokers = User::where(
+                                'company_id',
+                                $order->broker,
+                            )->get();
+                            foreach ($brokers as $broker) {
+                                $broker->notify(
+                                    new VehicleInStockNotification($vehicle),
+                                );
+                            }
+                        }
+                    }
 
                     if ($order) {
                         if ($ford_report['ETA_DATE']) {

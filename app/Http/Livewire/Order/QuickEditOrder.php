@@ -2,7 +2,10 @@
 
 namespace App\Http\Livewire\Order;
 
+use App\Notifications\DeliveryDateSetNotification;
+use App\Notifications\VehicleInStockNotification;
 use App\Order;
+use App\User;
 use App\Vehicle;
 use DateTime;
 use Exception;
@@ -21,6 +24,7 @@ class QuickEditOrder extends Component
     public $order_number;
     public $build_date;
     public $order_date;
+    public $delivery_date;
     public $registered_date;
     public $view;
     public $now;
@@ -75,6 +79,13 @@ class QuickEditOrder extends Component
             $del = new DateTime($order->vehicle->build_date);
             $this->build_date = $del->format('Y-m-d');
         }
+        if (
+            $order->delivery_date &&
+            $order->delivery_date != '0000-00-00 00:00:00'
+        ) {
+            $del = new DateTime($order->delivery_date);
+            $this->delivery_date = $del->format('Y-m-d');
+        }
         if ($order->due_date && $order->due_date != '0000-00-00 00:00:00') {
             $del = new DateTime($order->due_date);
             $this->due_date = $del->format('Y-m-d');
@@ -90,19 +101,44 @@ class QuickEditOrder extends Component
 
         $this->validate();
 
-        $this->vehicle->reg = $this->registration;
-        $this->vehicle->vehicle_status = $this->vehicleStatus;
-        $this->vehicle->orbit_number = $this->orbit_number;
-        $this->vehicle->ford_order_number = $this->order_number;
-        $this->vehicle->build_date = $this->build_date;
-        $this->vehicle->vehicle_registered_on = $this->registered_date;
-        $this->vehicle->save();
-
+        $this->vehicle->update([
+            'reg' => $this->registration,
+            'vehicle_status' => $this->vehicleStatus,
+            'orbit_number' => $this->orbit_number,
+            'build_date' => $this->build_date,
+            'vehicle_registered_on' => $this->registered_date,
+        ]);
         $order = $this->order;
 
-        $order->due_date = $this->due_date;
-        $order->created_at = $this->order_date;
-        $order->save();
+        if ($this->vehicle->wasChanged('vehicle_status')) {
+            if ($this->vehicle->vehicle_status === '7') {
+                $this->order->update(['completed_date' => now()]);
+            } elseif ($this->vehicle->vehicle_status === '1') {
+                $brokers = User::where('company_id', $order->broker)->get();
+                foreach ($brokers as $broker) {
+                    $broker->notify(
+                        new VehicleInStockNotification($this->vehicle),
+                    );
+                }
+            }
+        }
+
+        $order->update([
+            'due_date' => $this->due_date,
+            'delivery_date' => $this->delivery_date,
+            'created_at' => $this->order_date,
+        ]);
+
+        if ($order->wasChanged('delivery_date')) {
+            if ($order->delivery_date) {
+                $brokers = User::where('company_id', $order->broker)->get();
+                foreach ($brokers as $broker) {
+                    $broker->notify(
+                        new DeliveryDateSetNotification($this->vehicle),
+                    );
+                }
+            }
+        }
 
         return $this->redirect(route($this->return));
     }

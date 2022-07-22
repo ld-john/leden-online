@@ -25,9 +25,9 @@
                     <!-- Card Body -->
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered">
                                 <thead>
-                                <tr>
+                                <tr class="blue-background text-white">
                                     <th>Leden ID</th>
                                     <th>Make</th>
                                     <th>Model</th>
@@ -55,6 +55,19 @@
                     </div>
                 </div>
             </div>
+            <!-- Orders in Stock -->
+            <div class="col-lg-12">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-l-blue">In Stock Orders</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        @livewire('dashboard.broker.in-stock-orders-table')
+                    </div>
+                </div>
+            </div>
 
         </div>
 
@@ -76,35 +89,3 @@
     <!-- /.container-fluid -->
 
 @endsection
-
-@push('custom-scripts')
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/fixedheader/3.1.8/js/dataTables.fixedHeader.min.js"></script>
-    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
-
-
-    <script>
-        $(function () {
-
-            $('#dataTable thead tr').clone(true).appendTo( '#dataTable thead' );
-            $('#dataTable thead tr:eq(1) th').each( function (i) {
-                var title = $(this).text();
-                $(this).html( '<input type="text" class="colSearch" data-colName="'+title+'" placeholder="Search '+title+'" />' );
-                $(this).parent().addClass('searchContainer');
-                $( 'input', this ).on( 'keyup change', function () {
-                    if ( table.column(i).search() !== this.value ) {
-                        table
-                            .column(i)
-                            .search( this.value )
-                            .draw();
-                    }
-                } );
-            } );
-
-            var table = $('#dataTable').DataTable({
-                orderCellsTop: true,
-            });
-        });
-
-    </script>
-@endpush

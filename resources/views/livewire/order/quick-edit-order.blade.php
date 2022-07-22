@@ -18,69 +18,58 @@
                 </div>
                 <div class="modal-body">
                     @if($view === 'order')
-                        <p class="mb-0 mt-2">Order number</p>
+                        <label for="order_number" class="mb-0 mt-2">Order number</label>
                         <input wire:model="order_number" type="text" name="order_number" id="order_number" class="form-control"
                                autocomplete="off"
                         />
-                        <p class="mb-0 mt-2">Registration</p>
+                        <label for="registration" class="mb-0 mt-2">Registration</label>
                         <input wire:model="registration" type="text" name="registration" id="registration" class="form-control"
                                autocomplete="off"
                         />
-                        <p class="mb-0 mt-2">Orbit Number</p>
+                        <label for="orbit_number" class="mb-0 mt-2">Orbit Number</label>
                         <input wire:model="orbit_number" type="text" name="orbit_number" id="orbit_number" class="form-control"
                                autocomplete="off"
                         />
-                        <p class="mb-0 mt-2">Due Date</p>
+                        <label for="due_date" class="mb-0 mt-2">Due Date</label>
                         <input wire:model="due_date" type="date" name="due_date" id="due_date" class="form-control"
                                autocomplete="off"
                         />
-                        <p class="mb-0 mt-2">Planned Build Date</p>
+                        @if($vehicleStatus === 1)
+                            <label for="delivery_date" class="mb-0 mt-2">Delivery Date</label>
+                            <input wire:model="delivery_date" type="date" name="delivery_date" class="form-control" autocomplete="off">
+                        @endif
+                        <label for="build_date" class="mb-0 mt-2">Planned Build Date</label>
                         <input wire:model="build_date" type="date" name="build_date" id="build_date" class="form-control"
                                autocomplete="off" />
-                        <p class="mb-0 mt-2">Order Date</p>
+                        <label for="order_date" class="mb-0 mt-2">Order Date</label>
                         <input wire:model="order_date" type="date" name="order_date" id="order_date" class="form-control"
                                autocomplete="off" />
                     @endif
                     @if($view === 'delivery')
-                        <p class="mb-0 mt-2">Registration Date</p>
+                        <label for="registration_date" class="mb-0 mt-2">Registration Date</label>
                         <input wire:model="registered_date" type="date" name="registration_date" id="registration_date" class="form-control"
                                autocomplete="off" />
                     @endif
-                    <p class="mb-0 mt-2">Status</p>
+                    <label for="vehicle_status" class="mb-0 mt-2">Status</label>
                     <select wire:model="vehicleStatus" class="form-control" name="vehicle_status" id="vehicle_status">
                         <option value="">Please Select Status</option>
-                        <option value="4">
-                            Factory Order
-                        </option>
-                        <option value="1">
-                            In Stock
-                        </option>
+                        <option value="4">Factory Order</option>
                         @if ($registered_date)
                             <option value="15">In Stock (Registered)</option>
                         @endif
-                        <option value="3">
-                            Ready for Delivery
-                        </option>
-                        <option value="6">
-                            Delivery Booked
-                        </option>
-                        @if ($registered_date && $registered_date <= $now)
-                            <option value="7">
-                                Completed Orders
-                            </option>
+                        <option value="1">In Stock</option>
+                        <option value="3">Ready for Delivery</option>
+                        <option value="5">Awaiting Delivery Confirmation</option>
+                        <option value="6">Delivery Booked</option>
+                        @if ($registered_date && $registered_date < $now)
+                            <option value="7">Completed Orders</option>
                         @endif
-                        <option value="10">
-                            Europe VHC
-                        </option>
-                        <option value="11">
-                            UK VHC
-                        </option>
-                        <option value="12">
-                            At Converter
-                        </option>
-                        <option value="13">
-                            Awaiting Ship
-                        </option>
+                        <option value="10">Europe VHC</option>
+                        <option value="11">UK VHC</option>
+                        <option value="12">At Converter</option>
+                        <option value="13">Awaiting Ship</option>
+                        <option value="14">Recall</option>
+                        <option value="16">Damaged/Recalled</option>
                     </select>
                 </div>
                 @if($errors->count())

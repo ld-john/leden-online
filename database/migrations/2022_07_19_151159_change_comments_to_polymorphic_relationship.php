@@ -13,7 +13,7 @@ class ChangeCommentsToPolymorphicRelationship extends Migration
             $table
                 ->string('commentable_type')
                 ->nullable()
-                ->after('commentable_id');
+                ->after('order_id');
         });
     }
 

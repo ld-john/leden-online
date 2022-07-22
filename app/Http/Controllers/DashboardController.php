@@ -28,6 +28,7 @@ class DashboardController extends Controller
     /**
      * Show the application dashboard.
      *
+     * @param Request $request
      * @return Renderable
      */
     public function index(Request $request): Renderable
@@ -61,8 +62,8 @@ class DashboardController extends Controller
                 'completed_orders' => $completed->count(),
             ]);
         } else {
-            $data = Vehicle::select('id', 'make', 'model', 'reg', 'type')
-                ->where('vehicle_status', 1)
+            $data = Vehicle::where('vehicle_status', 1)
+                ->select(['id', 'make', 'model', 'reg', 'type'])
                 ->with('manufacturer:id,name')
                 ->where('show_offer', true)
                 ->get();
