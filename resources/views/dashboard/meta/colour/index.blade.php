@@ -15,7 +15,7 @@
 
                 @include('partials.successMsg')
 
-                <livewire:meta-editor :metatype="'Colour'" />
+                <livewire:meta-editor :metatype="'colour'" />
 
             </div>
 

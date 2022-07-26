@@ -14,6 +14,7 @@ use App\OrderUpload;
 use App\Reservation;
 use App\User;
 use App\Vehicle;
+use App\VehicleMeta;
 use App\VehicleMeta\Colour;
 use App\VehicleMeta\Derivative;
 use App\VehicleMeta\Engine;
@@ -21,13 +22,13 @@ use App\VehicleMeta\Fuel;
 use App\VehicleMeta\Transmission;
 use App\VehicleMeta\Trim;
 use App\VehicleMeta\Type;
+use App\VehicleModel;
 use Carbon\Carbon;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use DateTime;
@@ -42,14 +43,6 @@ class OrderForm extends Component
     {
         return [];
     }
-    public bool $trimInput = true;
-    public bool $colourInput = true;
-    public bool $fuelInput = true;
-    public bool $transmissionInput = true;
-    public bool $engineInput = true;
-    public bool $derivativeInput = true;
-    public bool $modelInput = true;
-    public bool $makeInput = true;
     public bool $showAdditionalInformation = false;
     public bool $showDeliveryInformation = false;
     public bool $showInvoicingInformation = false;
@@ -57,7 +50,7 @@ class OrderForm extends Component
     public bool $showCompanyInfo = false;
     public bool $showDealerFitOptions = false;
     public bool $showFactoryFitOptions = false;
-    public bool $showVehicleInfo = false;
+    public bool $showVehicleInfo = true;
     public bool $showCustomerInfo = true;
     public $vehicle;
     public $order;
@@ -65,7 +58,6 @@ class OrderForm extends Component
     public $customer_id;
     public $customer_name;
     public $make;
-    public $newmake;
     public $model;
     public $orbit_number;
     public $type;
@@ -195,7 +187,6 @@ class OrderForm extends Component
     public function mount()
     {
         $this->now = date('Y-m-d');
-        $newCustomer = $this->newCustomer;
 
         if (isset($this->vehicle)) {
             if ($this->vehicle->vehicle_registered_on) {
@@ -204,7 +195,9 @@ class OrderForm extends Component
             }
 
             $this->make = $this->vehicle->make;
-            $this->model = $this->vehicle->model;
+            $this->model = $this->vehicle->VehicleModel
+                ::where('name', $this->vehicle->model)
+                ->first()->id;
             $this->orbit_number = $this->vehicle->orbit_number;
             $this->type = $this->vehicle->type;
             $this->order_ref = $this->vehicle->ford_order_number;
@@ -359,7 +352,10 @@ class OrderForm extends Component
             $this->dealership = $this->order->dealer_id;
             $this->broker = $this->order->broker_id;
             $this->make = $this->order->vehicle->make;
-            $this->model = $this->order->vehicle->model;
+            $this->model = VehicleModel::where(
+                'name',
+                $this->order->vehicle->model,
+            )->first()->id;
             $this->orbit_number = $this->order->vehicle->orbit_number;
             $this->type = $this->order->vehicle->type;
             $this->registration = $this->order->vehicle->reg;
@@ -398,6 +394,22 @@ class OrderForm extends Component
         }
     }
 
+    public function updatedMake()
+    {
+        $this->model = null;
+    }
+
+    public function updatedModel()
+    {
+        $this->type = null;
+        $this->derivative = null;
+        $this->engine = null;
+        $this->transmission = null;
+        $this->fuel_type = null;
+        $this->colour = null;
+        $this->trim = null;
+    }
+
     public function updatedFactoryFitOptions()
     {
         $this->factoryFitOptionsArray = FitOption::find(
@@ -415,14 +427,6 @@ class OrderForm extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function updatednewMake($value)
-    {
-        if ($value != '') {
-            $this->make = null;
-            $this->modelInput = false;
-        }
-    }
-
     public function removeAttachment($key)
     {
         unset($this->attachments[$key]);
@@ -438,17 +442,6 @@ class OrderForm extends Component
         }
         $this->validate();
         if (!isset($this->order)) {
-            if (isset($this->newmake)) {
-                $slug = Str::slug($this->newmake);
-                $manufacturer = Manufacturer::firstOrCreate(
-                    ['slug' => $slug],
-                    [
-                        'name' => ucwords($this->newmake),
-                        'models' => json_encode($this->model),
-                    ],
-                );
-                $this->make = $manufacturer->id;
-            }
             if (isset($this->vehicle)) {
                 $vehicle = $this->vehicle;
                 if (isset($this->orbit_number)) {
@@ -590,14 +583,68 @@ class OrderForm extends Component
                 })
                 ->paginate(5),
             'manufacturers' => Manufacturer::all()->keyBy('id'),
-            'types' => Type::all(),
-            'derivatives' => Derivative::all(),
-            'engines' => Engine::all(),
-            'transmissions' => Transmission::all(),
-            'fuel_types' => Fuel::all(),
-            'colours' => Colour::all(),
-            'trims' => Trim::all(),
-
+            'vehicle_models' => VehicleModel::where(
+                'manufacturer_id',
+                $this->make,
+            )
+                ->orderBy('name')
+                ->get(),
+            'types' => VehicleMeta::where('type', 'type')
+                ->whereRelation(
+                    'vehicle_model',
+                    'vehicle_model_id',
+                    '=',
+                    $this->model,
+                )
+                ->get(),
+            'derivatives' => VehicleMeta::where('type', 'derivative')
+                ->whereRelation(
+                    'vehicle_model',
+                    'vehicle_model_id',
+                    '=',
+                    $this->model,
+                )
+                ->get(),
+            'engines' => VehicleMeta::where('type', 'engine')
+                ->whereRelation(
+                    'vehicle_model',
+                    'vehicle_model_id',
+                    '=',
+                    $this->model,
+                )
+                ->get(),
+            'transmissions' => VehicleMeta::where('type', 'transmission')
+                ->whereRelation(
+                    'vehicle_model',
+                    'vehicle_model_id',
+                    '=',
+                    $this->model,
+                )
+                ->get(),
+            'fuel_types' => VehicleMeta::where('type', 'fuel')
+                ->whereRelation(
+                    'vehicle_model',
+                    'vehicle_model_id',
+                    '=',
+                    $this->model,
+                )
+                ->get(),
+            'colours' => VehicleMeta::where('type', 'colour')
+                ->whereRelation(
+                    'vehicle_model',
+                    'vehicle_model_id',
+                    '=',
+                    $this->model,
+                )
+                ->get(),
+            'trims' => VehicleMeta::where('type', 'trim')
+                ->whereRelation(
+                    'vehicle_model',
+                    'vehicle_model_id',
+                    '=',
+                    $this->model,
+                )
+                ->get(),
             'brokers' => $companies->where('company_type', 'broker'),
             'dealers' => $companies->where('company_type', 'dealer'),
             'registration_companies' => $companies->where(
@@ -714,7 +761,7 @@ class OrderForm extends Component
             'model_year' => $this->model_year,
             'ford_order_number' => $this->order_ref,
             'make' => $this->make,
-            'model' => $this->model,
+            'model' => VehicleModel::where('id', $this->model)->first()->name,
             'chassis' => $this->chassis,
             'derivative' => $this->derivative,
             'engine' => $this->engine,

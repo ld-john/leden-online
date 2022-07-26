@@ -12,8 +12,8 @@
     </div>
     @if($make->models)
         <div class="ml-4">
-        @foreach(json_decode($make->models) as $model)
-            <livewire:edit-model-name :model="$model" :make="$make" :loop="$loop->index" :wire:key="$loop->index"/>
+        @foreach($vehicle_models as $model)
+            <livewire:edit-model-name :model="$model" :wire:key="$loop->index"/>
         @endforeach
         </div>
     @endif

@@ -15,19 +15,10 @@
 
                 @include('partials.successMsg')
 
-                <livewire:meta-editor :metatype="'Engine'" />
-
+                <livewire:meta-editor :metatype="'engine'" />
             </div>
-
         </div>
-
     </div>
-
-
     <!-- /.container-fluid -->
 
 @endsection
-
-@push('custom-scripts')
-
-@endpush

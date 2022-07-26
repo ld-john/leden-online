@@ -253,58 +253,41 @@ Route::middleware('auth')->group(function () {
      * Added 04.05.2021 - By Link
      */
 
-    Route::prefix('manage')
+    Route::prefix('manage/vehiclemeta')
         ->name('meta.')
         ->group(function () {
-            // Vehicle\Colour
-            Route::get(
-                '/vehiclemeta/colour',
-                'Vehicle\ColourController@index',
-            )->name('colour.index');
-            // Vehicle\Derivative
-            Route::get(
-                '/vehiclemeta/derivative',
-                'Vehicle\DerivativeController@index',
-            )->name('derivative.index');
-            // Vehicle\Engine
-            Route::get(
-                '/vehiclemeta/engine',
-                'Vehicle\EngineController@index',
-            )->name('engine.index');
-            // Vehicle\Fuel
-            Route::get(
-                '/vehiclemeta/fuel',
-                'Vehicle\FuelController@index',
-            )->name('fuel.index');
-            // Vehicle\Transmission
-            Route::get(
-                '/vehiclemeta/transmission',
-                'Vehicle\TransmissionController@index',
-            )->name('transmission.index');
-            // Vehicle\Trim
-            Route::get(
-                '/vehiclemeta/trim',
-                'Vehicle\TrimController@index',
-            )->name('trim.index');
-            // Vehicle\Type
-            Route::get(
-                '/vehiclemeta/type',
-                'Vehicle\TypeController@index',
-            )->name('type.index');
-            // Factory Fit Options
-            Route::get(
-                '/vehiclemeta/factoryfit',
-                'FitOptionsController@factoryFitIndex',
-            )->name('factoryfit.index');
-            // Dealer Fit Options
-            Route::get(
-                '/vehiclemeta/dealerfit',
-                'FitOptionsController@dealerFitIndex',
-            )->name('dealerfit.index');
-            Route::get(
-                '/vehiclemeta/make',
-                'Vehicle\MakeController@index',
-            )->name('make.index');
+            Route::controller('VehicleMetaController')->group(function () {
+                // Colour
+                Route::get('colour', 'colourIndex')->name('colour.index');
+                // Derivative
+                Route::get('derivative', 'derivativeIndex')->name(
+                    'derivative.index',
+                );
+                // Engine
+                Route::get('engine', 'engineIndex')->name('engine.index');
+                // Fuel
+                Route::get('fuel', 'fuelIndex')->name('fuel.index');
+                // Transmission
+                Route::get('transmission', 'transmissionIndex')->name(
+                    'transmission.index',
+                );
+                // Trim
+                Route::get('trim', 'trimIndex')->name('trim.index');
+                // Type
+                Route::get('type', 'typeIndex')->name('type.index');
+                // Make
+                Route::get('make', 'makeIndex')->name('make.index');
+            });
+            Route::controller('FitOptionsController')->group(function () {
+                // Factory Fit Options
+                Route::get('factoryfit', 'factoryFitIndex')->name(
+                    'factoryfit.index',
+                );
+                // Dealer Fit Options
+                Route::get('dealerfit', 'dealerFitIndex')->name(
+                    'dealerfit.index',
+                );
+            });
         });
 
     /*
@@ -328,4 +311,14 @@ Route::middleware('auth')->group(function () {
         '/link/comment-clean-up',
         'CommentController@makeCommentsPolymorphic',
     );
+    Route::get(
+        '/link/vehicle-model-clean-up',
+        'ManufacturerController@vehicle_model_clean_up',
+    );
+    Route::get(
+        '/link/fit-options-clean-up',
+        'FitOptionsController@fitOptionsClean',
+    );
+    Route::get('/link/meta-clean-up', 'VehicleMetaController@clean');
+    Route::get('/link/meta-add-on', 'VehicleMetaController@addon');
 });

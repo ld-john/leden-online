@@ -1,7 +1,7 @@
 <div class="form-group row">
     <div class="col-md-4">
         <div><strong>Model:</strong></div>
-        <input type="text" disabled wire:model="model" class="form-control">
+            <input type="text" disabled value="@if($model){{ \App\VehicleModel::where('id', $model)->first()?->name }} @endif" class="form-control">
     </div>
     <div class="col-md-4">
         <div><strong>Dealer:</strong></div>

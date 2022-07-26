@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Manufacturer;
+use App\VehicleModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -34,15 +35,12 @@ class MakeEditor extends Component
 
     public function newModel()
     {
-        $make = Manufacturer::where('id', $this->newModelMake)->first();
-        if ($make->models) {
-            $models = json_decode($make->models);
-            $models[] = $this->newModelName;
-            $make->models = json_encode($models);
-        } else {
-            $make->models = json_encode([$this->newModelName]);
-        }
-        $make->save();
+        $vehicle_model = new VehicleModel();
+        $vehicle_model->name = $this->newModelName;
+        $vehicle_model->slug = Str::slug($this->newModelName);
+        $vehicle_model->manufacturer_id = $this->newModelMake;
+        $vehicle_model->save();
+
         session()->flash('message', 'Model Added Successfully');
         $this->resetInput();
         return redirect(route('meta.make.index'));

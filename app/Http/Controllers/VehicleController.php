@@ -29,7 +29,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class VehicleController extends Controller
 {
-
     /**
      * Show the form for creating a new resource.
      *
@@ -51,13 +50,19 @@ class VehicleController extends Controller
         $user = Auth::user();
         $reservation_allowed = $user->reservation_allowed;
         if ($reservation_allowed) {
-            $old_reservations = Reservation::where('customer_id', $user->id)->where('vehicle_id', $vehicle->id)->withTrashed()->get();
-            if( $old_reservations->count() > 0 ) {
+            $old_reservations = Reservation::where('customer_id', $user->id)
+                ->where('vehicle_id', $vehicle->id)
+                ->withTrashed()
+                ->get();
+            if ($old_reservations->count() > 0) {
                 $reservation_allowed = 0;
             }
         }
 
-        return (view('vehicles.show', ['vehicle' => $vehicle, 'reservation_allowed' => $reservation_allowed]));
+        return view('vehicles.show', [
+            'vehicle' => $vehicle,
+            'reservation_allowed' => $reservation_allowed,
+        ]);
     }
 
     /**
@@ -80,21 +85,45 @@ class VehicleController extends Controller
     public function destroy(Vehicle $vehicle)
     {
         Vehicle::destroy($vehicle->id);
-        return redirect()->route('pipeline')->with('successMsg', 'Vehicle #' . $vehicle->id . ' deleted successfully - ' . $vehicle->niceName() );
+        return redirect()
+            ->route('pipeline')
+            ->with(
+                'successMsg',
+                'Vehicle #' .
+                    $vehicle->id .
+                    ' deleted successfully - ' .
+                    $vehicle->niceName(),
+            );
     }
 
     public function showFordPipeline()
     {
-        return view('vehicles.index', ['ringfenced' => false, 'fordpipeline' =>true, 'title' => 'Ford Pipeline', 'active_page'=> 'ford-pipeline']);
+        return view('vehicles.index', [
+            'ringfenced' => false,
+            'fordpipeline' => true,
+            'title' => 'Ford Pipeline',
+            'active_page' => 'ford-pipeline',
+        ]);
     }
 
     public function showLedenStock()
-    {        return view('vehicles.index', ['ringfenced' => false, 'fordpipeline' => false, 'title' => 'Leden Stock', 'active_page'=> 'pipeline']);
+    {
+        return view('vehicles.index', [
+            'ringfenced' => false,
+            'fordpipeline' => false,
+            'title' => 'Leden Stock',
+            'active_page' => 'pipeline',
+        ]);
     }
 
     public function showRingFencedStock()
     {
-        return view('vehicles.index', ['ringfenced'=> true, 'fordpipeline' => false, 'title' => 'Ring Fenced Stock', 'active_page'=> 'ring_fenced_stock']);
+        return view('vehicles.index', [
+            'ringfenced' => true,
+            'fordpipeline' => false,
+            'title' => 'Ring Fenced Stock',
+            'active_page' => 'ring_fenced_stock',
+        ]);
     }
 
     /**
@@ -109,94 +138,145 @@ class VehicleController extends Controller
 
         $date = Carbon::now()->format('Y-m-d');
 
-        return Excel::download(new DashboardExports($vehicles), 'factory-orders-' . $date . '.xlsx');
+        return Excel::download(
+            new DashboardExports($vehicles),
+            'factory-orders-' . $date . '.xlsx',
+        );
     }
 
     public function europe_vhc_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 10)->with('manufacturer:id,name')->get();
+        $vehicles = Vehicle::where('vehicle_status', 10)
+            ->with('manufacturer:id,name')
+            ->get();
 
         $date = Carbon::now()->format('Y-m-d');
 
-        return Excel::download(new DashboardExports($vehicles), 'europe-vhc-orders-' . $date . '.xlsx');
+        return Excel::download(
+            new DashboardExports($vehicles),
+            'europe-vhc-orders-' . $date . '.xlsx',
+        );
     }
     public function uk_vhc_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 11)->with('manufacturer:id,name')->get();
+        $vehicles = Vehicle::where('vehicle_status', 11)
+            ->with('manufacturer:id,name')
+            ->get();
 
         $date = Carbon::now()->format('Y-m-d');
 
-        return Excel::download(new DashboardExports($vehicles), 'uk-vhc-orders-' . $date . '.xlsx');
+        return Excel::download(
+            new DashboardExports($vehicles),
+            'uk-vhc-orders-' . $date . '.xlsx',
+        );
     }
     public function in_stock_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 1)->with('manufacturer:id,name')->get();
+        $vehicles = Vehicle::where('vehicle_status', 1)
+            ->with('manufacturer:id,name')
+            ->get();
 
         $date = Carbon::now()->format('Y-m-d');
 
-        return Excel::download(new DashboardExports($vehicles), 'in-stock-orders-' . $date . '.xlsx');
+        return Excel::download(
+            new DashboardExports($vehicles),
+            'in-stock-orders-' . $date . '.xlsx',
+        );
     }
 
     public function ready_for_delivery_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 3)->with('manufacturer:id,name')->get();
+        $vehicles = Vehicle::where('vehicle_status', 3)
+            ->with('manufacturer:id,name')
+            ->get();
 
         $date = Carbon::now()->format('Y-m-d');
 
-        return Excel::download(new DashboardExports($vehicles), 'ready-for-delivery-orders-' . $date . '.xlsx');
+        return Excel::download(
+            new DashboardExports($vehicles),
+            'ready-for-delivery-orders-' . $date . '.xlsx',
+        );
     }
     public function delivery_booked_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 6)->with('manufacturer:id,name')->get();
+        $vehicles = Vehicle::where('vehicle_status', 6)
+            ->with('manufacturer:id,name')
+            ->get();
 
         $date = Carbon::now()->format('Y-m-d');
 
-        return Excel::download(new DashboardExports($vehicles), 'delivery-booked-orders-' . $date . '.xlsx');
+        return Excel::download(
+            new DashboardExports($vehicles),
+            'delivery-booked-orders-' . $date . '.xlsx',
+        );
     }
     public function awaiting_ship_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 13)->with('manufacturer:id,name')->get();
+        $vehicles = Vehicle::where('vehicle_status', 13)
+            ->with('manufacturer:id,name')
+            ->get();
 
         $date = Carbon::now()->format('Y-m_d');
 
-        return Excel::download(new DashboardExports($vehicles), 'awaiting-ship-orders-' . $date . '.xlsx');
+        return Excel::download(
+            new DashboardExports($vehicles),
+            'awaiting-ship-orders-' . $date . '.xlsx',
+        );
     }
     public function at_converter_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 12)->with('manufacturer:id,name')->get();
+        $vehicles = Vehicle::where('vehicle_status', 12)
+            ->with('manufacturer:id,name')
+            ->get();
 
         $date = Carbon::now()->format('Y-m_d');
 
-        return Excel::download(new DashboardExports($vehicles), 'awaiting-ship-orders-' . $date . '.xlsx');
+        return Excel::download(
+            new DashboardExports($vehicles),
+            'awaiting-ship-orders-' . $date . '.xlsx',
+        );
     }
 
-	public function in_stock_registered_export(): BinaryFileResponse
-	{
-		$vehicles = Vehicle::where('vehicle_status', 15)->with('manufacturer:id,name')->get();
+    public function in_stock_registered_export(): BinaryFileResponse
+    {
+        $vehicles = Vehicle::where('vehicle_status', 15)
+            ->with('manufacturer:id,name')
+            ->get();
 
-		$date = Carbon::now()->format('Y-m_d');
+        $date = Carbon::now()->format('Y-m_d');
 
-		return Excel::download(new DashboardExports($vehicles), 'in-stock-registered-' . $date . '.xlsx');
-	}
+        return Excel::download(
+            new DashboardExports($vehicles),
+            'in-stock-registered-' . $date . '.xlsx',
+        );
+    }
 
     public function recycle()
     {
-        $vehicles = Vehicle::onlyTrashed()->latest()->paginate(10);
+        $vehicles = Vehicle::onlyTrashed()
+            ->latest()
+            ->paginate(10);
 
-        return view('vehicles.deleted', ['title' => 'Recycle Bin', 'active_page' => 'vehicle-recycle-bin','vehicles' => $vehicles]);
+        return view('vehicles.deleted', [
+            'title' => 'Recycle Bin',
+            'active_page' => 'vehicle-recycle-bin',
+            'vehicles' => $vehicles,
+        ]);
     }
 
     public function forceDelete($vehicle): RedirectResponse
     {
-        Vehicle::withTrashed()->where('id', $vehicle)->forceDelete();
+        Vehicle::withTrashed()
+            ->where('id', $vehicle)
+            ->forceDelete();
         return redirect()->route('vehicle.recycle_bin');
     }
 
     public function restore($vehicle): RedirectResponse
     {
-        Vehicle::withTrashed()->where('id', $vehicle)->restore();
+        Vehicle::withTrashed()
+            ->where('id', $vehicle)
+            ->restore();
         return redirect()->route('vehicle.recycle_bin');
     }
-
-
 }

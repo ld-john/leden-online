@@ -15,19 +15,13 @@
 
                 @include('partials.successMsg')
 
-                <livewire:meta-editor :metatype="'Derivative'" />
+                <livewire:meta-editor :metatype="'derivative'" />
 
             </div>
 
         </div>
 
     </div>
-
-
     <!-- /.container-fluid -->
-
 @endsection
 
-@push('custom-scripts')
-
-@endpush

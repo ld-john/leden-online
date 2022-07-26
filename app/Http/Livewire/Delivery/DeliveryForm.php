@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Delivery;
 
 use App\Delivery;
+use App\Notifications\DeliveryAwaitingConfirmationEmailNotification;
 use App\Notifications\DeliveryAwaitingConfirmationNotification;
 use App\Order;
 use App\Permission;
@@ -14,6 +15,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Notification;
 
 class DeliveryForm extends Component
 {
@@ -37,6 +39,9 @@ class DeliveryForm extends Component
     public $contact_name;
     public $contact_number;
     public $funder_confirmation;
+    protected $rules = [
+        'funder_confirmation' => 'nullable|mimes:jpeg,jpg,pdf,doc,docx',
+    ];
 
     /**
      * @throws Exception
@@ -90,6 +95,7 @@ class DeliveryForm extends Component
 
     public function requestBooking()
     {
+        $this->validate();
         $order = $this->order;
         if ($this->delivery) {
             $delivery = $this->delivery;
@@ -125,6 +131,9 @@ class DeliveryForm extends Component
         foreach ($notify_user as $user) {
             $user->notify(new DeliveryAwaitingConfirmationNotification($order));
         }
+        Notification::route('mail', 'deliveries@leden.co.uk')->notify(
+            new DeliveryAwaitingConfirmationEmailNotification($order),
+        );
         session()->flash('message', 'Delivery Booked - Awaiting Confirmation');
         return redirect(route('manage_deliveries'));
     }

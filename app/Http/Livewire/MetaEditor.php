@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\VehicleMeta;
+use App\VehicleModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,80 +16,60 @@ class MetaEditor extends Component
 {
     public $metatype;
     public $metadata;
-    public $newname;
-
-    protected $namespace = '\\App\\VehicleMeta\\';
-
-    protected $rules = [
-        'metadata.*.name' => 'required',
-    ];
+    public $new_name;
+    public $editModel = false;
+    public $edit_meta_name;
+    public $edit_meta_models;
+    public $models;
+    public $edit_meta_id = null;
 
     public function mount()
     {
-        $items = $this->namespace . $this->metatype;
-        $this->metadata = $items::all();
+        $this->metadata = VehicleMeta::where('type', $this->metatype)->get();
+        $this->models = VehicleModel::orderBy('name')->get();
     }
 
-    public function new(): Redirector|Application|RedirectResponse
+    public function newVehicleMeta()
     {
-        $model = $this->namespace . $this->metatype;
-
-        $meta = new $model();
-
-        $meta->name = $this->newname;
+        $meta = new VehicleMeta();
+        $meta->name = $this->new_name;
+        $meta->type = $this->metatype;
         $meta->save();
-
-        session()->flash(
-            'successMsg',
-            Str::plural($this->metatype) .
-                ' entry : "' .
-                $meta->name .
-                '" [id: ' .
-                $meta->id .
-                '] added',
-        );
-        return redirect(
-            route('meta.' . strtolower($this->metatype) . '.index'),
-        );
     }
 
-    public function removeEntry(
-        $id,
-        $name,
-    ): Redirector|Application|RedirectResponse {
-        $model = $this->namespace . $this->metatype;
-
-        $model::destroy($id);
-
-        session()->flash(
-            'successMsg',
-            Str::plural($this->metatype) .
-                ' entry : "' .
-                $name .
-                '" [id: ' .
-                $id .
-                '] deleted',
-        );
-        return redirect(
-            route('meta.' . strtolower($this->metatype) . '.index'),
-        );
-    }
-
-    public function save(): Redirector|Application|RedirectResponse
+    public function showEditMetaModal(VehicleMeta $meta)
     {
-        $this->validate();
+        $this->edit_meta_name = $meta->name;
+        $this->edit_meta_models = $meta->vehicle_model->pluck('id')->toArray();
+        $this->edit_meta_id = $meta->id;
+        $this->editModel = true;
+    }
 
-        foreach ($this->metadata as $meta) {
-            $meta->update();
-        }
+    public function hideModal()
+    {
+        $this->editModel = false;
+    }
 
+    public function saveMeta(VehicleMeta $meta)
+    {
+        $meta->name = $this->edit_meta_name;
+        $meta->vehicle_model()->sync($this->edit_meta_models);
         session()->flash(
-            'successMsg',
-            Str::plural($this->metatype) . ' updated!',
+            'message',
+            ucfirst($this->metatype) . ' Edited Successfully',
         );
-        return redirect(
-            route('meta.' . strtolower($this->metatype) . '.index'),
+        $this->hideModal();
+        return redirect(route('meta.' . $this->metatype . '.index'));
+    }
+
+    public function delete(VehicleMeta $meta)
+    {
+        $meta->delete();
+        session()->flash(
+            'message',
+            ucfirst($this->metatype) . ' Deleted Successfully',
         );
+        return redirect(route('meta.' . $this->metatype . '.index'));
     }
 
     public function render(): Factory|View|Application

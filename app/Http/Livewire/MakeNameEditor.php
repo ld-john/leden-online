@@ -3,21 +3,32 @@
 namespace App\Http\Livewire;
 
 use App\Manufacturer;
+use App\VehicleModel;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class MakeNameEditor extends Component
 {
     public $make;
     public $makeName;
+    public $vehicle_models;
     public $deleteModalShow = false;
     public $editModalShow = false;
 
     public function mount()
     {
         $this->makeName = $this->make->name;
+        $this->vehicle_models = VehicleModel::where(
+            'manufacturer_id',
+            $this->make->id,
+        )
+            ->orderBy('name')
+            ->get();
     }
 
-    public function render()
+    public function render(): Factory|View|Application
     {
         return view('livewire.make-name-editor');
     }

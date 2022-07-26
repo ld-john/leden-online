@@ -34,9 +34,16 @@ use Illuminate\Support\Carbon;
  */
 class FitOption extends Model
 {
+    protected $guarded = [];
+
     public function dealer(): HasOne
     {
         return $this->hasOne(Company::class, 'id', 'dealer_id');
+    }
+
+    public function vehicle_model(): HasOne
+    {
+        return $this->hasOne(VehicleModel::class, 'id', 'model');
     }
 
     public function vehicles(): BelongsToMany

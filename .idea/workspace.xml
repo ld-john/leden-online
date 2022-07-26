@@ -4,21 +4,65 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Dashboard/Broker/InStockOrdersTable.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/dashboard/broker/in-stock-orders-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/leden.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/leden.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Tweaks to the Delivery Booking form to allow Brokers to see it&#10;Broker Dashboard now features an In Stock Orders View.">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleMetaController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationEmailNotification.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/VehicleMeta.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/VehicleModel.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_07_22_115646_create_vehicle_models_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_07_25_093612_create_vehicle_meta_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_07_25_095904_remove_old_tables.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/FitOption.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/FitOption.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FitOptionsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FitOptionsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ManufacturerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ManufacturerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Vehicle/BodyController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Vehicle/ColourController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Vehicle/DerivativeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Vehicle/EngineController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Vehicle/FuelController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Vehicle/MakeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Vehicle/TransmissionController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Vehicle/TrimController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Vehicle/TypeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Delivery/DeliveryForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Delivery/DeliveryForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/EditModelName.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/EditModelName.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/FitOptionsEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/FitOptionsEditor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/MakeEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/MakeEditor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/MakeNameEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/MakeNameEditor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/MetaEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/MetaEditor.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2022_07_19_151159_change_comments_to_polymorphic_relationship.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2022_07_19_151159_change_comments_to_polymorphic_relationship.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/dashboard-broker.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/dashboard-broker.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Manufacturer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Manufacturer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/VehicleMeta/Body.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/VehicleMeta/Colour.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/VehicleMeta/Derivative.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/VehicleMeta/Engine.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/VehicleMeta/Fuel.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/VehicleMeta/Transmission.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/VehicleMeta/Trim.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/VehicleMeta/Type.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/meta/body/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/meta/colour/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/meta/colour/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/meta/derivative/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/meta/derivative/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/meta/engine/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/meta/engine/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/meta/fuel/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/meta/fuel/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/meta/transmission/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/meta/transmission/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/meta/trim/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/meta/trim/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/meta/type/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/meta/type/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/deliveries/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/deliveries/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/edit-model-name.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/edit-model-name.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/fit-options/fit-options-editor.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/fit-options/fit-options-editor.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/make-name-editor.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/make-name-editor.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/meta-editor.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/meta-editor.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/user-permission-creator.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/user-permission-creator.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/dealer-fit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/dealer-fit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/factory-fit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/factory-fit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,11 +271,11 @@
       <recent name="C:\Users\John Gotobed\OneDrive - Link Digital\Desktop" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\leden\resources\views\livewire\fit-options" />
       <recent name="C:\wamp64\www\leden\storage\app\public" />
       <recent name="C:\wamp64\www\leden\public\user-uploads\csv-uploads" />
       <recent name="C:\wamp64\www\leden\resources\views" />
       <recent name="C:\wamp64\www\leden\resources\views\upload" />
-      <recent name="C:\wamp64\www\leden\resources\views\vehicles" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -376,7 +420,9 @@
       <workItem from="1658219892039" duration="24933000" />
       <workItem from="1658393533042" duration="15370000" />
       <workItem from="1658410753288" duration="8390000" />
-      <workItem from="1658476941535" duration="7182000" />
+      <workItem from="1658476941535" duration="15991000" />
+      <workItem from="1658495863585" duration="9777000" />
+      <workItem from="1658655846579" duration="21623000" />
     </task>
     <task id="LOCAL-00002" summary="Comments Styling">
       <created>1634293476285</created>
@@ -700,7 +746,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658418181816</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Tweaks to the Delivery Booking form to allow Brokers to see it&#10;Broker Dashboard now features an In Stock Orders View.">
+      <created>1658485152263</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1658485152263</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -719,7 +772,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Vehicle updates&#10;Tables now have tooltips instead of extended button text" />
     <MESSAGE value="Updates to deleting Vehicles and Orders (Now via Livewire)" />
     <MESSAGE value="Fix Date issues&#10;Move Order Ref to Vehicle as Ford Order Number" />
     <MESSAGE value="Fixing some issues with having moved the Order Number and Orbit number" />
@@ -744,7 +796,8 @@
     <MESSAGE value="Minor Issue Fixes&#10;Added a page to edit, add and delete models and makes" />
     <MESSAGE value="Added Delivery Management Through the Website&#10;Added Private Comments" />
     <MESSAGE value="Tweaks to the Comments system and the File Upload for Funder Confirmation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tweaks to the Comments system and the File Upload for Funder Confirmation" />
+    <MESSAGE value="Tweaks to the Delivery Booking form to allow Brokers to see it&#10;Broker Dashboard now features an In Stock Orders View." />
+    <option name="LAST_COMMIT_MESSAGE" value="Tweaks to the Delivery Booking form to allow Brokers to see it&#10;Broker Dashboard now features an In Stock Orders View." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

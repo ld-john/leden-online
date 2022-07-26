@@ -93,10 +93,14 @@
                                 <p>Funder Confirmation</p>
                             </div>
                             <div class="col-md-4">
-                                @if(Storage::exists($delivery->funder_confirmation))
-                                    <a href="{{ asset(\Illuminate\Support\Facades\Storage::url($delivery->funder_confirmation)) }}" class="btn btn-primary" download>Download</a>
+                                @if($delivery->funder_confirmation)
+                                    @if(Storage::exists($delivery->funder_confirmation))
+                                        <a href="{{ asset(\Illuminate\Support\Facades\Storage::url($delivery->funder_confirmation)) }}" class="btn btn-primary" download>Download</a>
+
+                                    @endif
                                 @else
                                     <p>Funder Confirmation is not uploaded, or something went wrong</p>
+
                                 @endif
                             </div>
                         </div>

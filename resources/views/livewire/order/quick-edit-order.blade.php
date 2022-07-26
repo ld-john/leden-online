@@ -30,20 +30,22 @@
                         <input wire:model="orbit_number" type="text" name="orbit_number" id="orbit_number" class="form-control"
                                autocomplete="off"
                         />
+                        <label for="order_date" class="mb-0 mt-2">Order Date</label>
+                        <input wire:model="order_date" type="date" name="order_date" id="order_date" class="form-control"
+                               autocomplete="off" />
+                        <label for="build_date" class="mb-0 mt-2">Planned Build Date</label>
+                        <input wire:model="build_date" type="date" name="build_date" id="build_date" class="form-control"
+                               autocomplete="off" />
                         <label for="due_date" class="mb-0 mt-2">Due Date</label>
                         <input wire:model="due_date" type="date" name="due_date" id="due_date" class="form-control"
                                autocomplete="off"
                         />
                         @if($vehicleStatus === 1)
-                            <label for="delivery_date" class="mb-0 mt-2">Delivery Date</label>
+                            <label for="delivery_date" class="mb-0 mt-2">Proposed Delivery Date</label>
                             <input wire:model="delivery_date" type="date" name="delivery_date" class="form-control" autocomplete="off">
                         @endif
-                        <label for="build_date" class="mb-0 mt-2">Planned Build Date</label>
-                        <input wire:model="build_date" type="date" name="build_date" id="build_date" class="form-control"
-                               autocomplete="off" />
-                        <label for="order_date" class="mb-0 mt-2">Order Date</label>
-                        <input wire:model="order_date" type="date" name="order_date" id="order_date" class="form-control"
-                               autocomplete="off" />
+
+
                     @endif
                     @if($view === 'delivery')
                         <label for="registration_date" class="mb-0 mt-2">Registration Date</label>

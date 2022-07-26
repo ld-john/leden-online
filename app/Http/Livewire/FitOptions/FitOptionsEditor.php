@@ -4,6 +4,7 @@ namespace App\Http\Livewire\FitOptions;
 
 use App\Company;
 use App\FitOption;
+use App\VehicleModel;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -42,6 +43,7 @@ class FitOptionsEditor extends Component
     public function render()
     {
         return view('livewire.fit-options.fit-options-editor', [
+            'vehicle_models' => VehicleModel::orderBy('name')->get(),
             'fitOptions' => FitOption::where('option_type', $this->fitType)
                 ->when($this->option_name, function ($query) {
                     $query->where(

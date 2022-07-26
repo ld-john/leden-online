@@ -7,7 +7,7 @@
                     {{$successMsg}}
                 </div>
             @endif
-        <!-- Vehicle Information -->
+            <!-- Vehicle Information -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-l-blue">Car Information</h6>
             </div>
@@ -16,101 +16,52 @@
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_make"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Make</label>
                     <div class="col-md-6">
-                        @if ( $makeInput )
-                            <div class="input-group mb-3">
-                                @error('make')
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectMake"><i class="fa fa-exclamation-triangle"></i></label>
-                                </div>
-                                @enderror
-                                <select wire:model="make" class="custom-select" id="inputGroupSelectMake">
-                                    <option selected>Choose...</option>
-                                    @foreach ( $manufacturers as $manufacturer )
-                                        <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
-                                    @endforeach
-                                </select>
+                        <div class="input-group mb-3">
+                            @error('make')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectMake"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
-                        @else
-                            <input type="text"
-                                   name="vehicle_make"
-                                   id="vehicle_make"
-                                   class="form-control mb-3"
-                                   autocomplete="off"
-                                   @unless ( is_null( $make ) )
-                                   value="{{$manufacturers[$make]['name']}}"
-                                   @endunless
-                                   wire:model.lazy="newmake"
-                            />
-
-                        @endIf
-
+                            @enderror
+                            <select wire:model="make" class="custom-select" id="inputGroupSelectMake">
+                                <option selected>Choose...</option>
+                                @foreach ( $manufacturers as $manufacturer )
+                                    <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
 
                     <div class="col-md-2">
-                        <button class="btn btn-secondary switch-inputs"
-                                type="button"
-                                id="makeSwitch"
-                                wire:click.prevent="$set('makeInput' , {{!$makeInput}})"
+                        <a class="btn btn-secondary switch-inputs"
+                           href="{{ route('meta.make.index') }}"
+                           data-toggle="tooltip"
+                           title="Add a new Make or Model"
                         >
-                            @if ( $makeInput )
-                                <i class="fa fa-terminal"></i>
-                            @else
-                                <i class="fa fa-list-alt"></i>
-                            @endif
-                        </button>
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
                     </div>
 
                 </div>
                 {{-- Model (Required) --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_model">
-                        <i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Vehicle Model
+                        <i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>
+                        Vehicle Model
                     </label>
                     <div class="col-md-6">
-                        @if ( $modelInput )
-                            <div class="input-group mb-3">
-                                @error('model')
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
-                                </div>
-                                @enderror
-                                <select class="form-control value-change" @unless ( !is_null( $make ) ) disabled @endunless field-parent="vehicle_model" wire:model="model" id="inputGroupSelectModel">
-                                    @unless ( is_null( $make ) )
-                                        <option value="" selected>Choose...</option>
-                                        @foreach(json_decode($manufacturers[$make]['models']) as $option)
-                                            <option value="{{$option}}">{{$option}}</option>
-                                        @endforeach
-                                    @endunless
-                                </select>
+                        <div class="input-group mb-3">
+                            @error('model')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
-                        @else
-                            <div class="input-group mb-3">
-                                @error('model')
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text bg-danger text-white" for="inputGroupModelText"><i class="fa fa-exclamation-triangle"></i></label>
-                                </div>
-                                @enderror
-                                <input wire:model="model"
-                                       type="text"
-                                       name="vehicle_model"
-                                       id="inputGroupModelText"
-                                       class="form-control"
-                                />
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected"
-                                type="button"
-                                id="modelSwitch"
-                                wire:click.prevent="$set('modelInput' , {{!$modelInput}})"
-                        >
-                            @if ( $modelInput )
-                                <i class="fa fa-terminal"></i>
-                            @else
-                                <i class="fa fa-list-alt"></i>
-                            @endif
-                        </button>
+                            @enderror
+                            <select class="custom-select" @if(count($vehicle_models) === 0) disabled @endif field-parent="vehicle_model" wire:model="model" id="inputGroupSelectModel">
+                                <option value="" selected>Choose...</option>
+                                @foreach($vehicle_models as $vehicle_model)
+                                    <option value="{{$vehicle_model->id}}">{{ $vehicle_model->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
                 {{-- Orbit Number (Unique ID) --}}
@@ -147,7 +98,7 @@
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectType"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select wire:model="type" class="custom-select" id="inputGroupSelectType">
+                            <select @if(count($types) === 0) disabled @endif wire:model="type" class="custom-select" id="inputGroupSelectType">
                                 <option selected>Choose...</option>
                                 @foreach ($types as $type)
                                     <option value="{{$type->name}}">{{$type->name}}</option>
@@ -166,260 +117,170 @@
                 {{-- Derivative (Required) --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_derivative"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Derivative</label>
-                    @if ( $derivativeInput )
-                        <div class="col-md-6">
-                            <div class="input-group mb-3">
-                                @error('derivative')
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectDerivatives"><i class="fa fa-exclamation-triangle"></i></label>
-                                </div>
-                                @enderror
-
-                                <select wire:model="derivative" class="custom-select" id="inputGroupSelectDerivatives">
-                                    <option selected>Choose...</option>
-                                    @foreach ($derivatives as $vehicle_derivative)
-                                        <option value="{{ $vehicle_derivative->name }}">{{ $vehicle_derivative->name }}</option>
-                                    @endforeach
-                                </select>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            @error('derivative')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectDerivatives"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
+                            @enderror
+                            <select wire:model="derivative" @if(count($derivatives) === 0) disabled @endif class="custom-select" id="inputGroupSelectDerivatives">
+                                <option selected>Choose...</option>
+                                @foreach ($derivatives as $vehicle_derivative)
+                                    <option value="{{ $vehicle_derivative->name }}">{{ $vehicle_derivative->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    @else
-                        <div class="col-md-6 mb-3">
-                            <input wire:model="derivative"
-                                   type="text"
-                                   name="vehicle_derivative"
-                                   id="vehicle_derivative"
-                                   class="form-control"
-                                   autocomplete="off" />
-                        </div>
-                    @endif
+                    </div>
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected"
-                                type="button"
-                                id="derivative-switch"
-                                wire:click.prevent="$set('derivativeInput' , {{!$derivativeInput}})"
+                        <a class="btn btn-secondary remove-selected"
+                           data-toggle="tooltip"
+                           title="Add or Edit Derivatives"
+                           href="{{ route('meta.derivative.index') }}"
                         >
-                            @if ( $derivativeInput )
-                                <i class="fa fa-terminal"></i>
-                            @else
-                                <i class="fa fa-list-alt"></i>
-                            @endif
-                        </button>
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
                     </div>
                 </div>
                 {{-- Engine (Required) --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_engine"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Engine</label>
-                    @if ( $engineInput )
-                        <div class="col-md-6">
-                            <div class="input-group mb-3">
-                                @error('engine')
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectEngine"><i class="fa fa-exclamation-triangle"></i></label>
-                                </div>
-                                @enderror
-                                <select wire:model="engine" class="custom-select" id="inputGroupSelectEngine">
-                                    <option selected>Choose...</option>
-                                    @foreach ($engines as $vehicle_engine)
-                                        <option value="{{ $vehicle_engine->name }}">{{ $vehicle_engine->name }}</option>
-                                    @endforeach
-                                </select>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            @error('engine')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectEngine"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
+                            @enderror
+                            <select wire:model="engine" @if(count($engines) === 0) disabled @endif class="custom-select" id="inputGroupSelectEngine">
+                                <option selected>Choose...</option>
+                                @foreach ($engines as $vehicle_engine)
+                                    <option value="{{ $vehicle_engine->name }}">{{ $vehicle_engine->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    @else
-                        <div class="col-md-6 mb-3">
-                            <input wire:model="engine"
-                                   type="text"
-                                   name="vehicle_engine"
-                                   id="vehicle_engine"
-                                   class="form-control"
-                                   autocomplete="off" />
-                        </div>
-                    @endif
+                    </div>
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected"
-                                type="button"
-                                id="engine-switch"
-                                wire:click.prevent="$set('engineInput' , {{!$engineInput}})"
+                        <a class="btn btn-secondary remove-selected"
+                           data-toggle="tooltip"
+                           title="Add or Edit Engines"
+                           href="{{ route('meta.engine.index') }}"
                         >
-                            @if ( $engineInput )
-                                <i class="fa fa-terminal"></i>
-                            @else
-                                <i class="fa fa-list-alt"></i>
-                            @endif
-                        </button>
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
                     </div>
                 </div>
                 {{-- Transmission (Required) --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_trans"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Transmission</label>
-                    @if ( $transmissionInput )
-                        <div class="col-md-6">
-                            <div class="input-group mb-3">
-                                @error('transmission')
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectTransmission"><i class="fa fa-exclamation-triangle"></i></label>
-                                </div>
-                                @enderror
-                                <select wire:model="transmission" class="custom-select" id="inputGroupSelectTransmission">
-                                    <option selected>Choose...</option>
-                                    @foreach ($transmissions as $vehicle_trans)
-                                        <option value="{{ $vehicle_trans->name }}">{{ $vehicle_trans->name }}</option>
-                                    @endforeach
-                                </select>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            @error('transmission')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectTransmission"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
+                            @enderror
+                            <select wire:model="transmission" @if(count($transmissions) === 0) disabled @endif class="custom-select" id="inputGroupSelectTransmission">
+                                <option selected>Choose...</option>
+                                @foreach ($transmissions as $vehicle_trans)
+                                    <option value="{{ $vehicle_trans->name }}">{{ $vehicle_trans->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    @else
-                        <div class="col-md-6 mb-3">
-                            <input wire:model="transmission"
-                                   type="text"
-                                   name="vehicle_trans"
-                                   id="vehicle_trans"
-                                   class="form-control"
-                                   autocomplete="off" />
-                        </div>
-                    @endif
+                    </div>
+
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected"
-                                type="button"
-                                id="transmission-switch"
-                                wire:click.prevent="$set('transmissionInput' , {{!$transmissionInput}})"
+                        <a class="btn btn-secondary remove-selected"
+                           data-toggle="tooltip"
+                           title="Add or Edit Transmission"
+                           href="{{ route('meta.transmission.index') }}"
                         >
-                            @if ( $transmissionInput )
-                                <i class="fa fa-terminal"></i>
-                            @else
-                                <i class="fa fa-list-alt"></i>
-                            @endif
-                        </button>
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
                     </div>
                 </div>
                 {{-- Fuel Type --}}
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_trans"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Fuel Type</label>
-                    @if ( $fuelInput )
-                        <div class="col-md-6">
-                            <div class="input-group mb-3">
-                                @error('fuel_type')
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
-                                </div>
-                                @enderror
-                                <select wire:model="fuel_type" class="custom-select" id="inputGroupSelectFuel">
-                                    <option selected>Choose...</option>
-                                    @foreach ($fuel_types as $vehicle_fuel_type)
-                                        <option value="{{ $vehicle_fuel_type->name }}">{{ $vehicle_fuel_type->name }}</option>
-                                    @endforeach
-                                </select>
+                    <label class="col-md-2 col-form-label" for="vehicle_fuel"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Fuel Type</label>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            @error('fuel_type')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
+                            @enderror
+                            <select wire:model="fuel_type" @if(count($fuel_types) === 0) disabled @endif class="custom-select" id="inputGroupSelectFuel">
+                                <option selected>Choose...</option>
+                                @foreach ($fuel_types as $vehicle_fuel_type)
+                                    <option value="{{ $vehicle_fuel_type->name }}">{{ $vehicle_fuel_type->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    @else
-                        <div class="col-md-6 mb-3">
-                            <input wire:model="fuel_type"
-                                   type="text"
-                                   name="vehicle_fuel"
-                                   id="vehicle_fuel"
-                                   class="form-control"
-                                   autocomplete="off" />
-                        </div>
-                    @endif
+                    </div>
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected"
-                                type="button"
-                                id="fuel-switch"
-                                wire:click.prevent="$set('fuelInput' , {{!$fuelInput}})"
+                        <a class="btn btn-secondary remove-selected"
+                           data-toggle="tooltip"
+                           title="Add or Edit Fuel"
+                           href="{{ route('meta.fuel.index') }}"
                         >
-                            @if ( $fuelInput )
-                                <i class="fa fa-terminal"></i>
-                            @else
-                                <i class="fa fa-list-alt"></i>
-                            @endif
-                        </button>
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
                     </div>
                 </div>
                 {{-- Colour --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_colour"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Colour</label>
-                    @if ( $colourInput )
-                        <div class="col-md-6">
-                            <div class="input-group mb-3">
-                                @error('colour')
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
-                                </div>
-                                @enderror
-                                <select wire:model="colour" class="custom-select" id="inputGroupSelectColour">
-                                    <option value="">Please Select</option>
-                                    @foreach ($colours as $vehicle_colour)
-                                        <option value="{{ $vehicle_colour->name }}">{{ $vehicle_colour->name }}</option>
-                                    @endforeach
-                                </select>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            @error('colour')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
+                            @enderror
+                            <select wire:model="colour" @if(count($colours) === 0) disabled @endif class="custom-select" id="inputGroupSelectColour">
+                                <option selected>Choose...</option>
+                                @foreach ($colours as $vehicle_colour)
+                                    <option value="{{ $vehicle_colour->name }}">{{ $vehicle_colour->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    @else
-                        <div class="col-md-6 mb-3">
-                            <input wire:model="colour"
-                                   type="text"
-                                   name="vehicle_colour"
-                                   id="vehicle_colour"
-                                   class="form-control"
-                                   autocomplete="off" />
-                        </div>
-                    @endif
+                    </div>
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected"
-                                type="button"
-                                id="colour-switch"
-                                wire:click.prevent="$set('colourInput' , {{!$colourInput}})"
+                        <a class="btn btn-secondary remove-selected"
+                           data-toggle="tooltip"
+                           title="Add or Edit Colours"
+                           href="{{ route('meta.colour.index') }}"
                         >
-                            @if ( $colourInput )
-                                <i class="fa fa-terminal"></i>
-                            @else
-                                <i class="fa fa-list-alt"></i>
-                            @endif
-                        </button>
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
                     </div>
                 </div>
                 {{-- Trim --}}
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_trim"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Trim</label>
-                    @if ( $trimInput )
-                        <div class="col-md-6">
-                            <div class="input-group mb-3">
-                                @error('trim')
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
-                                </div>
-                                @enderror
-                                <select wire:model="trim" class="custom-select" id="inputGroupSelectTrim">
-                                    <option value="">Please Select</option>
-                                    @foreach ($trims as $vehicle_trim)
-                                        <option value="{{ $vehicle_trim->name }}">{{ $vehicle_trim->name }}</option>
-                                    @endforeach
-                                </select>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            @error('trim')
+                            <div class="input-group-prepend">
+                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
+                            @enderror
+                            <select wire:model="trim" @if(count($trims) === 0) disabled @endif class="custom-select" id="inputGroupSelectTrim">
+                                <option selected>Choose...</option>
+                                @foreach ($trims as $vehicle_trim)
+                                    <option value="{{ $vehicle_trim->name }}">{{ $vehicle_trim->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    @else
-                        <div class="col-md-6 mb-3">
-                            <input wire:model="trim"
-                                   type="text"
-                                   name="vehicle_trim"
-                                   id="vehicle_trim"
-                                   class="form-control"
-                                   autocomplete="off" />
-                        </div>
-                    @endif
+                    </div>
                     <div class="col-md-2">
-                        <button class="btn btn-secondary remove-selected"
-                                type="button"
-                                id="trim-switch"
-                                wire:click.prevent="$set('trimInput' , {{!$trimInput}})"
+                        <a class="btn btn-secondary remove-selected"
+                           data-toggle="tooltip"
+                           title="Add or Edit Trim"
+                           href="{{ route('meta.trim.index') }}"
                         >
-                            @if ( $trimInput )
-                                <i class="fa fa-terminal"></i>
-                            @else
-                                <i class="fa fa-list-alt"></i>
-                            @endif
-                        </button>
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -625,10 +486,5 @@
                 <button class="btn btn-primary" type="submit">Save Vehicle</button>
             </div>
         </div>
-        {{--</div>--}}
     </form>
 </div>
-
-@push('custom-scripts')
-
-@endpush
