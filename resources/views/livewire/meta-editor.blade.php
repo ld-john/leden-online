@@ -79,12 +79,14 @@
                            autocomplete="off"
                     />
                     <label for="meta_models" class="mb-0 mt-2">Associated Models</label>
+                    <div class="card p-2" style="max-height: 400px; overflow: scroll">
                         @foreach($models as $model)
-                        <div class="form-check">
-                            <input wire:model="edit_meta_models" type="checkbox" class="form-check-input" value="{{ $model->id }}" id="modelCheck{{$loop->index}}">
-                            <label for="modelCheck{{$loop->index}}" class="form-check-label">{{ $model->name }}</label>
-                        </div>
+                            <div class="form-check">
+                                <input wire:model="edit_meta_models" type="checkbox" class="form-check-input" value="{{ $model->id }}" id="modelCheck{{$loop->index}}">
+                                <label for="modelCheck{{$loop->index}}" class="form-check-label">{{ $model->name }}</label>
+                            </div>
                         @endforeach
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click="hideModal">Close</button>

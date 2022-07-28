@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Vehicle;
 use App\VehicleMeta;
 use App\VehicleModel;
-use Illuminate\Http\Request;
 
 class VehicleMetaController extends Controller
 {
