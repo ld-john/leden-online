@@ -13,6 +13,8 @@ class VehicleHasBeenReserved extends Notification
 {
     use Queueable;
 
+    public Reservation $reservation;
+
     /**
      * Create a new notification instance.
      *
@@ -29,7 +31,7 @@ class VehicleHasBeenReserved extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via(mixed $notifiable): array
     {
         return ['database'];
     }
@@ -38,14 +40,22 @@ class VehicleHasBeenReserved extends Notification
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail(mixed $notifiable): MailMessage
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->greeting('Hello!')
-            ->line('You have successfully placed a reservation on Vehicle #' . $this->reservation->vehicle_id)
-            ->line('Please place an order with Leden\'s offices before ' . Carbon::parse($this->reservation->expiry_date)->format('d/m/Y'));
+            ->line(
+                'You have successfully placed a reservation on Vehicle #' .
+                    $this->reservation->vehicle_id,
+            )
+            ->line(
+                'Please place an order with Leden\'s offices before ' .
+                    Carbon::parse($this->reservation->expiry_date)->format(
+                        'd/m/Y',
+                    ),
+            );
     }
 
     /**
@@ -54,12 +64,21 @@ class VehicleHasBeenReserved extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray(mixed $notifiable): array
     {
         return [
             'reservation' => $this->reservation->id,
             'type' => 'vehicle',
-            'message' => $this->reservation->customer->firstname . ' ' . $this->reservation->customer->lastname . ' from ' . $this->reservation->company->company_name . '  has placed an order on Vehicle #' . $this->reservation->vehicle_id . '; Reservation Expires on ' . Carbon::parse($this->reservation->expiry_date)->format('d/m/Y')
+            'message' =>
+                $this->reservation->customer->firstname .
+                ' ' .
+                $this->reservation->customer->lastname .
+                ' from ' .
+                $this->reservation->company->company_name .
+                '  has placed an order on Vehicle #' .
+                $this->reservation->vehicle_id .
+                '; Reservation Expires on ' .
+                Carbon::parse($this->reservation->expiry_date)->format('d/m/Y'),
         ];
     }
 }

@@ -4,7 +4,7 @@
     <div class="col-md-6">
         <div class="input-group mb-3">
         @error('dealership')
-        <div class="input-group-prepend">
+        <div class="input-group-text">
             <label class="input-group-text bg-danger text-white" for="inputGroupSelectDealership"><i class="fa fa-exclamation-triangle"></i></label>
         </div>
         @enderror
@@ -62,11 +62,11 @@
 
         <div class="input-group mb-3">
             @error('broker')
-            <div class="input-group-prepend">
+            <div class="input-group-text">
                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectBroker"><i class="fa fa-exclamation-triangle"></i></label>
             </div>
             @enderror
-            <select wire:model="broker" class="custom-select" id="inputGroupSelectBroker">
+            <select wire:model="broker" class="form-select" id="inputGroupSelectBroker">
                 <option selected>Choose...</option>
 
                 @if ( $brokers )

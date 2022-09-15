@@ -2,7 +2,11 @@
 
 namespace App;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Message
@@ -13,27 +17,26 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $recipient_id
  * @property string|null $recipient_read_at
  * @property int $message_group_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Message newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Message newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Message query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Message whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Message whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Message whereMessage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Message whereMessageGroupId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Message whereRecipientId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Message whereRecipientReadAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Message whereSenderId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Message whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|Message newModelQuery()
+ * @method static Builder|Message newQuery()
+ * @method static Builder|Message query()
+ * @method static Builder|Message whereCreatedAt($value)
+ * @method static Builder|Message whereId($value)
+ * @method static Builder|Message whereMessage($value)
+ * @method static Builder|Message whereMessageGroupId($value)
+ * @method static Builder|Message whereRecipientId($value)
+ * @method static Builder|Message whereRecipientReadAt($value)
+ * @method static Builder|Message whereSenderId($value)
+ * @method static Builder|Message whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Message extends Model
 {
-
     /**
      * The table associated with this model
-     * 
+     *
      * @var string
      */
     protected $table = 'message';
@@ -43,7 +46,15 @@ class Message extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'message', 'sender_id', 'recipient_id', 'recipient_read_at', 'message_group_id', 'order_id', 'created_at', 'updated_at',
-    ];
+    protected $guarded = [];
+
+    public function sender(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'sender_id');
+    }
+
+    public function recipient(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'recipient_id');
+    }
 }

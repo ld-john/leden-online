@@ -4,8 +4,8 @@
             <h2>Add New Make </h2>
             <form wire:submit.prevent="newMake">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Make:</span>
+                    <div class="input-group-text">
+                        Make:
                     </div>
                     <input
                             type="text"
@@ -13,14 +13,13 @@
                             wire:model="newMakeName"
 
                     >
-                    <div class="input-group-append">
-                        <button
-                                class="btn btn-primary"
-                                type="submit"
-                        >
-                            <i class="fa fa-plus"></i> Add
-                        </button>
-                    </div>
+                    <button
+                            class="btn btn-primary"
+                            type="submit"
+                    >
+                        <i class="fa fa-plus"></i> Add
+                    </button>
+
                 </div>
             </form>
         </div>
@@ -28,10 +27,9 @@
             <h2>Add New Model</h2>
             <form wire:submit.prevent="newModel">
                 <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">Make</label>
+                    <div class="input-group-text">Make
                     </div>
-                    <select wire:model="newModelMake" class="custom-select" id="inputGroupSelect01">
+                    <select wire:model="newModelMake" class="form-select" id="inputGroupSelect01">
                         <option selected>Choose...</option>
                         @foreach($makes as $make)
                             <option value="{{ $make->id }}">{{ $make->name }}</option>
@@ -39,8 +37,7 @@
                     </select>
                 </div>
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Model:</span>
+                    <div class="input-group-text">Model:
                     </div>
                     <input
                             type="text"
@@ -48,14 +45,7 @@
                             wire:model="newModelName"
 
                     >
-                    <div class="input-group-append">
-                        <button
-                                class="btn btn-primary"
-                                type="submit"
-                        >
-                            <i class="fa fa-plus"></i> Add
-                        </button>
-                    </div>
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i> Add</button>
                 </div>
 
             </form>

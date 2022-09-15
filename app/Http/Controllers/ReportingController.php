@@ -11,10 +11,10 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Carbon\Carbon;
 use Dashboard;
-use DB;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use LaravelIdea\Helper\App\_IH_Order_C;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportingController extends Controller
@@ -24,12 +24,13 @@ class ReportingController extends Controller
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
-    public function showReporting() {
-
+    public function showReporting()
+    {
         $weekly_sales = $this->getRecordsByWeek();
         $monthly_sales = $this->getRecordsByMonth();
         $quarterly_sales = $this->getRecordsByQuarter();
@@ -63,7 +64,6 @@ class ReportingController extends Controller
 
     public function getRecordsByMonth(): Collection
     {
-
         $months = $this->monthNames();
 
         $month_array = [];
@@ -79,7 +79,6 @@ class ReportingController extends Controller
 
     public function getRecordsByWeek(): Collection
     {
-
         $weeks = $this->weekNumbers();
 
         $week_array = [];
@@ -88,25 +87,31 @@ class ReportingController extends Controller
             $dates = $this->getStartAndEndDate($week['week'], $week['year']);
             $data = Order::whereBetween('created_at', $dates)->get();
             $week['data'] = count($data);
-            $week['label'] = 'week ' . $week['week'] .' ' . $week['year'];
+            $week['label'] = 'week ' . $week['week'] . ' ' . $week['year'];
             $week_array[] = $week;
         }
 
         return collect($week_array);
     }
 
+    /**
+     * @throws Exception
+     */
     public function getRecordsByQuarter(): Collection
     {
-
         $quarters = $this->quarters();
 
         $quarter_array = [];
 
         foreach ($quarters as $quarter) {
-            $dates = $this->get_dates_of_quarter($quarter['quarter'], $quarter['year']);
+            $dates = $this->get_dates_of_quarter(
+                $quarter['quarter'],
+                $quarter['year'],
+            );
             $data = Order::whereBetween('created_at', $dates)->get();
             $quarter['data'] = count($data);
-            $quarter['label'] = 'Q' . $quarter['quarter'] .' ' . $quarter['year'];
+            $quarter['label'] =
+                'Q' . $quarter['quarter'] . ' ' . $quarter['year'];
             $quarter_array[] = $quarter;
         }
 
@@ -115,13 +120,14 @@ class ReportingController extends Controller
 
     public function getRegisteredByMonth(): Collection
     {
-
         $months = $this->monthNames();
 
         $month_array = [];
 
         foreach ($months as $month) {
-            $data = Vehicle::whereMonth('vehicle_registered_on', '=', $month)->whereYear('vehicle_registered_on', '=', $month['year'])->get();
+            $data = Vehicle::whereMonth('vehicle_registered_on', '=', $month)
+                ->whereYear('vehicle_registered_on', '=', $month['year'])
+                ->get();
             $month['data'] = count($data);
             $month_array[] = $month;
         }
@@ -137,15 +143,21 @@ class ReportingController extends Controller
 
         foreach ($weeks as $week) {
             $dates = $this->getStartAndEndDate($week['week'], $week['year']);
-            $data = Vehicle::whereBetween('vehicle_registered_on', $dates)->get();
+            $data = Vehicle::whereBetween(
+                'vehicle_registered_on',
+                $dates,
+            )->get();
             $week['data'] = count($data);
-            $week['label'] = 'week ' . $week['week'] .' ' . $week['year'];
+            $week['label'] = 'week ' . $week['week'] . ' ' . $week['year'];
             $week_array[] = $week;
         }
 
         return collect($week_array);
     }
 
+    /**
+     * @throws Exception
+     */
     public function getRegisteredByQuarter(): Collection
     {
         $quarters = $this->quarters();
@@ -153,10 +165,17 @@ class ReportingController extends Controller
         $quarter_array = [];
 
         foreach ($quarters as $quarter) {
-            $dates = $this->get_dates_of_quarter($quarter['quarter'], $quarter['year']);
-            $data = Vehicle::whereBetween('vehicle_registered_on', $dates)->get();
+            $dates = $this->get_dates_of_quarter(
+                $quarter['quarter'],
+                $quarter['year'],
+            );
+            $data = Vehicle::whereBetween(
+                'vehicle_registered_on',
+                $dates,
+            )->get();
             $quarter['data'] = count($data);
-            $quarter['label'] = 'Q' . $quarter['quarter'] .' ' . $quarter['year'];
+            $quarter['label'] =
+                'Q' . $quarter['quarter'] . ' ' . $quarter['year'];
             $quarter_array[] = $quarter;
         }
 
@@ -188,13 +207,16 @@ class ReportingController extends Controller
             $dates = $this->getStartAndEndDate($week['week'], $week['year']);
             $data = Order::whereBetween('completed_date', $dates)->get();
             $week['data'] = count($data);
-            $week['label'] = 'week ' . $week['week'] .' ' . $week['year'];
+            $week['label'] = 'week ' . $week['week'] . ' ' . $week['year'];
             $week_array[] = $week;
         }
 
         return collect($week_array);
     }
 
+    /**
+     * @throws Exception
+     */
     public function getCompletedByQuarter(): Collection
     {
         $quarters = $this->quarters();
@@ -202,10 +224,14 @@ class ReportingController extends Controller
         $quarter_array = [];
 
         foreach ($quarters as $quarter) {
-            $dates = $this->get_dates_of_quarter($quarter['quarter'], $quarter['year']);
+            $dates = $this->get_dates_of_quarter(
+                $quarter['quarter'],
+                $quarter['year'],
+            );
             $data = Order::whereBetween('completed_date', $dates)->get();
             $quarter['data'] = count($data);
-            $quarter['label'] = 'Q' . $quarter['quarter'] .' ' . $quarter['year'];
+            $quarter['label'] =
+                'Q' . $quarter['quarter'] . ' ' . $quarter['year'];
             $quarter_array[] = $quarter;
         }
 
@@ -214,11 +240,12 @@ class ReportingController extends Controller
 
     public function monthNames(): array
     {
-        $period = now()->subMonths(5)->monthsUntil(now());
+        $period = now()
+            ->subMonths(5)
+            ->monthsUntil(now());
 
         $data = [];
-        foreach ($period as $date)
-        {
+        foreach ($period as $date) {
             $data[] = [
                 'month' => $date->month,
                 'month_label' => $date->monthName,
@@ -231,11 +258,12 @@ class ReportingController extends Controller
 
     public function weekNumbers(): array
     {
-        $period = now()->subWeeks(5)->weeksUntil(now());
+        $period = now()
+            ->subWeeks(5)
+            ->weeksUntil(now());
 
         $data = [];
-        foreach ($period as $date)
-        {
+        foreach ($period as $date) {
             $data[] = [
                 'week' => $date->weekOfYear,
                 'year' => $date->year,
@@ -247,13 +275,14 @@ class ReportingController extends Controller
 
     public function quarters(): array
     {
-        $period = now()->subMonths(12)->monthsUntil(now(),3);
+        $period = now()
+            ->subMonths(12)
+            ->monthsUntil(now(), 3);
 
         $data = [];
-        foreach ($period as $date)
-        {
+        foreach ($period as $date) {
             $data[] = [
-                'quarter' => ceil($date->month/3),
+                'quarter' => ceil($date->month / 3),
                 'year' => $date->year,
             ];
         }
@@ -266,21 +295,34 @@ class ReportingController extends Controller
     /**
      * @throws Exception
      */
-    public function get_dates_of_quarter($quarter = 'current', $year = null, $format = null): array
-    {
-        if ( !is_int($year) ) {
-            $year = (new DateTime)->format('Y');
+    public function get_dates_of_quarter(
+        $quarter = 'current',
+        $year = null,
+        $format = null,
+    ): array {
+        if (!is_int($year)) {
+            $year = (new DateTime())->format('Y');
         }
-        $current_quarter = ceil((new DateTime)->format('n') / 3);
-        $quarter = (!is_int($quarter) || $quarter < 1 || $quarter > 4) ? $current_quarter : $quarter;
+        $current_quarter = ceil((new DateTime())->format('n') / 3);
+        $quarter =
+            !is_int($quarter) || $quarter < 1 || $quarter > 4
+                ? $current_quarter
+                : $quarter;
 
-        $start = new DateTime($year.'-'.(3*$quarter-2).'-1 00:00:00');
-        $end = new DateTime($year.'-'.(3*$quarter).'-'.($quarter == 1 || $quarter == 4 ? 31 : 30) .' 23:59:59');
+        $start = new DateTime($year . '-' . (3 * $quarter - 2) . '-1 00:00:00');
+        $end = new DateTime(
+            $year .
+                '-' .
+                3 * $quarter .
+                '-' .
+                ($quarter == 1 || $quarter == 4 ? 31 : 30) .
+                ' 23:59:59',
+        );
 
-        return array(
+        return [
             'start' => $format ? $start->format($format) : $start,
             'end' => $format ? $end->format($format) : $end,
-        );
+        ];
     }
 
     public function getStartAndEndDate($week, $year): array
@@ -302,14 +344,14 @@ class ReportingController extends Controller
                 ->with('vehicle:id,make,orbit_number,model')
                 ->with('vehicle.manufacturer:id,name')
                 ->get();
-        } elseif($type === 'registered') {
+        } elseif ($type === 'registered') {
             $query = 'vehicle_registered_on';
             $vehicle = Vehicle::whereYear($query, '=', $year)
                 ->whereMonth($query, '=', $month)
                 ->select('id')
                 ->get();
 
-            $data = Order::whereIn('vehicle_id', $vehicle )->get();
+            $data = Order::whereIn('vehicle_id', $vehicle)->get();
         } else {
             $data = Order::whereYear('completed_date', '=', $year)
                 ->whereMonth('completed_date', '=', $month)
@@ -318,18 +360,25 @@ class ReportingController extends Controller
                 ->get();
         }
 
-        return Excel::download(new DashboardExports( $data, $type ), 'monthly-' . $type . '-' . $month . '-'. $year .'.xlsx');
-
+        return Excel::download(
+            new DashboardExports($data, $type),
+            'monthly-' . $type . '-' . $month . '-' . $year . '.xlsx',
+        );
     }
 
+    /**
+     * @throws Exception
+     */
     public function quarterlyDownload($type, $year, $quarter)
     {
         $dates = $this->get_dates_of_quarter(intval($quarter), intval($year));
 
         $data = $this->returnDataForReports($type, $dates);
 
-        return Excel::download(new DashboardExports( $data, $type ), 'quarterly-' . $type . '-' . $quarter . '-'. $year .'.xlsx');
-
+        return Excel::download(
+            new DashboardExports($data, $type),
+            'quarterly-' . $type . '-' . $quarter . '-' . $year . '.xlsx',
+        );
     }
 
     public function weeklyDownload($type, $year, $week)
@@ -338,14 +387,16 @@ class ReportingController extends Controller
 
         $data = $this->returnDataForReports($type, $dates);
 
-        return Excel::download(new DashboardExports( $data, $type ), 'weekly-' . $type . '-week-' . $week . '-'. $year .'.xlsx');
-
+        return Excel::download(
+            new DashboardExports($data, $type),
+            'weekly-' . $type . '-week-' . $week . '-' . $year . '.xlsx',
+        );
     }
 
     /**
      * @param $type
      * @param array $dates
-     * @return Application|Factory|View
+     * @return Builder[]|\Illuminate\Database\Eloquent\Collection|_IH_Order_C|\LaravelIdea\Helper\App\_IH_Order_QB[]|Order[]
      */
     public function returnDataForReports($type, array $dates)
     {
@@ -370,6 +421,5 @@ class ReportingController extends Controller
         }
 
         return $data;
-
     }
 }

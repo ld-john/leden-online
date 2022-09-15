@@ -195,9 +195,10 @@ class OrderForm extends Component
             }
 
             $this->make = $this->vehicle->make;
-            $this->model = $this->vehicle->VehicleModel
-                ::where('name', $this->vehicle->model)
-                ->first()->id;
+            $this->model = VehicleModel::where(
+                'name',
+                $this->vehicle->model,
+            )->first()?->id;
             $this->orbit_number = $this->vehicle->orbit_number;
             $this->type = $this->vehicle->type;
             $this->order_ref = $this->vehicle->ford_order_number;
@@ -453,7 +454,7 @@ class OrderForm extends Component
                 !isset($this->orbit_number) ||
                 $this->orbit_number === ''
             ) {
-                $vehicle = new Vehicle();
+                $vehicle = Vehicle::create();
             } else {
                 $vehicle = Vehicle::firstOrNew([
                     'orbit_number' => $this->orbit_number,
@@ -464,15 +465,15 @@ class OrderForm extends Component
             }
             $this->saveVehicleDetails($vehicle);
             if (!isset($this->customer_id) || $this->customer_id === '') {
-                $customer = new Customer();
+                $customer = Customer::create();
                 $this->saveCustomerDetails($customer);
                 $customer = $customer->id;
             } else {
                 $customer = $this->customer_id;
             }
-            $invoice = new Invoice();
+            $invoice = Invoice::create();
             $this->saveInvoice($invoice);
-            $order = new Order();
+            $order = Order::create();
             $order->vehicle_id = $vehicle->id;
             $order->customer_id = $customer;
             $order->broker_id = $this->broker;
@@ -496,7 +497,10 @@ class OrderForm extends Component
                 $file->file_type = $attachment->getClientOriginalExtension();
                 $file->save();
             }
-            session()->flash('message', 'Order Created');
+            notify()->success(
+                'Order was created successfully',
+                'Order Created',
+            );
         } else {
             //Update Vehicle
             $vehicle = $this->order->vehicle;
@@ -556,8 +560,10 @@ class OrderForm extends Component
                 $file->file_type = $attachment->getClientOriginalExtension();
                 $file->save();
             }
-
-            session()->flash('message', 'Order Updated');
+            notify()->success(
+                'Order was updated successfully',
+                'Order Updated',
+            );
         }
         Reservation::where('vehicle_id', $vehicle->id)->delete();
         return redirect(route('order.edit', $order->id));
@@ -695,6 +701,8 @@ class OrderForm extends Component
      */
     public function saveInvoice(Invoice $invoice): void
     {
+        $invoice->finance_commission_invoice_number =
+            $this->invoice_finance_number;
         $invoice->update([
             'finance_commission_invoice_number' =>
                 $this->invoice_finance_number,

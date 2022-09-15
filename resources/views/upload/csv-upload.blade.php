@@ -45,7 +45,7 @@
                     <option value="delete">Delete Vehicles</option>
                   </select>
                   @error('upload_type')
-                  <div class="input-group-prepend">
+                  <div class="input-group-text">
                     <div class="alert alert-danger my-3">{!! $message !!} </div>
                   </div>
                   @enderror
@@ -58,9 +58,9 @@
                 </label>
                 <div class="col-md-6">
 
-                  <input type="file" accept=".csv" name="file" id="file" />
+                  <input class="form-control" type="file" accept=".csv" name="file" id="file" />
                   @error('file')
-                  <div class="input-group-prepend">
+                  <div class="input-group-text">
                     <div class="alert alert-danger my-3">{!! $message !!} </div>
                   </div>
                   @enderror
@@ -75,7 +75,7 @@
                     <option value="1">Yes</option>
                   </select>
                   @error('show_in_ford_pipeline')
-                  <div class="input-group-prepend">
+                  <div class="input-group-text">
                     <div class="alert alert-danger my-3">{!! $message !!} </div>
                   </div>
                   @enderror

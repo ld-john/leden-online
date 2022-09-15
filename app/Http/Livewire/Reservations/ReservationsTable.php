@@ -5,6 +5,9 @@ namespace App\Http\Livewire\Reservations;
 use App\Notifications\ReservationDeleted;
 use App\Reservation;
 use App\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -31,15 +34,17 @@ class ReservationsTable extends Component
     {
         $vehicle = $reservation->vehicle();
         $vehicle->update([
-            'broker_id' => $reservation->broker_id
+            'broker_id' => $reservation->broker_id,
         ]);
-        return $this->redirect(route('order.reserve', $reservation->vehicle_id));
+        return $this->redirect(
+            route('order.reserve', $reservation->vehicle_id),
+        );
     }
 
     public function deleteReservation(Reservation $reservation)
     {
         $reservation->update([
-            'status' => 'deleted'
+            'status' => 'deleted',
         ]);
         $admin = User::where('company_id', '7')->get();
         $reservation->delete();
@@ -49,21 +54,23 @@ class ReservationsTable extends Component
         }
     }
 
-    public function render()
+    public function render(): Factory|View|Application
     {
-        if (\Auth::user()->role === 'admin')
+        if (\Auth::user()->role === 'admin') {
             $reservations = Reservation::query()
                 ->when($this->hideDeleted, function ($q) {
                     $q->withTrashed();
                 })
                 ->latest()
                 ->paginate($this->paginate);
-        else {
+        } else {
             $reservations = Reservation::query()
                 ->where('broker_id', Auth::user()->company_id)
                 ->latest()
                 ->paginate($this->paginate);
         }
-        return view('livewire.reservations.reservations-table', ['reservations' => $reservations]);
+        return view('livewire.reservations.reservations-table', [
+            'reservations' => $reservations,
+        ]);
     }
 }

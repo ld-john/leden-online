@@ -15,6 +15,7 @@
   <title>Leden | {{ $title }}</title>
 
   <!-- Styles -->
+  @notifyCss
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/bootstrap-select.css') }}" rel="stylesheet">
   <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet">
@@ -40,7 +41,11 @@
       <!-- Main Content -->
       <div id="content">
         @include('partials.top_bar')
-        @yield('content')
+
+        <div class="content-container">
+          <x:notify-messages />
+          @yield('content')
+        </div>
       </div>
     </div>
     <!-- End of Content Wrapper -->
@@ -57,6 +62,7 @@
   <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
   <script src="{{ asset('js/jquery-easing/jquery.easing.min.js') }}"></script>
   <script src="{{ asset('js/Chart.min.js') }}"></script>
+  @notifyJs
   <livewire:scripts />
 
   <!-- Custom scripts for all pages-->

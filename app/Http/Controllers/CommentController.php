@@ -7,13 +7,4 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function makeCommentsPolymorphic()
-    {
-        $comments = Comment::all();
-        foreach ($comments as $comment) {
-            $comment->update([
-                'commentable_type' => 'order',
-            ]);
-        }
-    }
 }

@@ -215,6 +215,9 @@
                 </ul>
             </div>
         @endcan
+        @can('admin')
+            <li class="nav-item @if($activePage == 'manage-updates') active @endif"><a class="nav-link" href="{{ route('updates.create') }}"><i class="fa-solid fa-newspaper"></i> Manage News and Promos</a></li>
+        @endcan
     </ul>
 
 </div>

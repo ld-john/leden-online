@@ -85,15 +85,14 @@ class VehicleController extends Controller
     public function destroy(Vehicle $vehicle)
     {
         Vehicle::destroy($vehicle->id);
-        return redirect()
-            ->route('pipeline')
-            ->with(
-                'successMsg',
-                'Vehicle #' .
-                    $vehicle->id .
-                    ' deleted successfully - ' .
-                    $vehicle->niceName(),
-            );
+        notify()->success(
+            'Vehicle #' .
+                $vehicle->id .
+                ' deleted successfully - ' .
+                $vehicle->niceName(),
+            'Vehicle Deleted',
+        );
+        return redirect()->route('pipeline');
     }
 
     public function showFordPipeline()
@@ -127,8 +126,6 @@ class VehicleController extends Controller
     }
 
     /**
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
-     * @throws Exception
      */
     public function factory_order_export(): BinaryFileResponse
     {

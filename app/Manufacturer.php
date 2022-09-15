@@ -19,6 +19,6 @@ class Manufacturer extends Model
 
     public function vehicle_models(): HasMany
     {
-        return $this->hasMany(VehicleModel::class);
+        return $this->hasMany(VehicleModel::class, 'manufacturer_id', 'id');
     }
 }

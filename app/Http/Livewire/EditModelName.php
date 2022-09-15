@@ -30,14 +30,14 @@ class EditModelName extends Component
             'name' => $this->modelName,
             'slug' => Str::slug($this->modelName),
         ]);
-        session()->flash('message', 'Model Updated Successfully');
+        notify()->success('Model Updated Successfully', 'Model Updated');
         return redirect(route('meta.make.index'));
     }
 
     public function deleteModel()
     {
         $this->model->delete();
-        session()->flash('message', 'Model Deleted Successfully');
+        notify()->success('Model was deleted successfully', 'Model Deleted');
         return redirect(route('meta.make.index'));
     }
 }

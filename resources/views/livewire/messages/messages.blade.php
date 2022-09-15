@@ -5,34 +5,39 @@
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                          <h6 class="m-0 font-weight-bold text-l-blue">All Messages</h6>
                     </div>
-                    <div class="px-4 py-5 messages-box bg-white">
-                         <!-- Sender Message-->
-                         <div class="media w-50 mb-3">
-                              <div class="media-body ml-3">
-                                   <div class="bg-light rounded py-2 px-3 mb-2">
-                                        <p class="text-small mb-0 text-muted">Test which is a new approach all solutions</p>
+                    <div class="px-4 py-5 messages-box bg-white" id="messages">
+                         @forelse($this->messages as $message)
+                              @if($message->sender_id === Auth::user()->id)
+                                   <!-- Sender Message-->
+                                   <div class="media w-50 mb-3">
+                                        <div class="media-body ms-3">
+                                             <div class="bg-light rounded py-2 px-3 mb-2">
+                                                  <p class="text-small mb-0 text-muted">{{$message->message}}</p>
+                                             </div>
+                                             <p class="small text-muted">{{ \Carbon\Carbon::parse($message->created_at)->format('g:i A | M d') }}</p>
+                                        </div>
                                    </div>
-                                   <p class="small text-muted">12:00 PM | Aug 13</p>
-                              </div>
-                         </div>
-
-                         <!-- Receiver Message-->
-                         <div class="media w-50 ml-auto mb-3">
-                              <div class="media-body">
-                                   <div class="bg-primary rounded py-2 px-3 mb-2">
-                                        <p class="text-small mb-0 text-white">Test which is a new approach to have all solutions</p>
+                              @else
+                                   <!-- Receiver Message-->
+                                   <div class="media w-50 ms-auto mb-3">
+                                        <div class="media-body">
+                                             <div class="bg-primary rounded py-2 px-3 mb-2">
+                                                  <p class="text-small mb-0 text-white">{{$message->message}}</p>
+                                             </div>
+                                             <p class="small text-muted">{{ \Carbon\Carbon::parse($message->created_at)->format('g:i A | M d') }}</p>
+                                        </div>
                                    </div>
-                                   <p class="small text-muted">12:00 PM | Aug 13</p>
-                              </div>
-                         </div>
-
+                              @endif
+                         @empty
+                              No Messages found
+                         @endforelse
                     </div>
                     <!-- Typing area -->
-                    <form action="#" class="bg-light">
+                    <form class="bg-light">
                          <div class="input-group">
-                              <input type="text" placeholder="Type a message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
-                              <div class="input-group-append">
-                                   <button id="button-addon2" type="submit" class="btn btn-link"> <i class="fa-solid fa-paper-plane"></i></button>
+                              <input wire:model.lazy="messageContent" type="text" placeholder="Type a message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+                              <div class="input-group-text">
+                                   <button wire:click.prevent="sendMessage" id="button-addon2" type="submit" class="btn btn-link"> <i class="fa-solid fa-paper-plane"></i></button>
                               </div>
                          </div>
                     </form>
@@ -46,17 +51,7 @@
                     <div class="contact-box">
                          <div class="list-group rounded-0">
                               @forelse($this->contacts as $contact)
-                                   <a class="list-group-item list-group-item-action rounded-0">
-                                        <div class="media">
-                                             <div class="media-body">
-                                                  <div class="d-flex align-items-center justify-content-between mb-1">
-                                                       <h6 class="mb-0">{{ $contact->firstname }} {{ $contact->lastname }}</h6>
-                                                       <small class="small font-weight-bold">25 Dec</small>
-                                                  </div>
-                                                  <p class="font-italic text-muted mb-0 text-small">consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                                             </div>
-                                        </div>
-                                   </a>
+                                   <livewire:messages.contact :user="$contact['id']" :active-contact="$activeContact" key="{{ 'child-component-' . now() . $contact['id'] }}" />
                               @empty
                               @endforelse
                          </div>

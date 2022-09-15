@@ -5,6 +5,9 @@ namespace App\Http\Livewire\FitOptions;
 use App\Company;
 use App\FitOption;
 use App\VehicleModel;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -40,7 +43,7 @@ class FitOptionsEditor extends Component
         $this->dealers = Company::where('company_type', 'dealer')->get();
     }
 
-    public function render()
+    public function render(): Factory|View|Application
     {
         return view('livewire.fit-options.fit-options-editor', [
             'vehicle_models' => VehicleModel::orderBy('name')->get(),
@@ -78,9 +81,9 @@ class FitOptionsEditor extends Component
         $option->option_price = $this->price;
         $option->option_type = $this->fitType;
         $option->save();
-        session()->flash(
-            'message',
+        notify()->success(
             'New ' . ucfirst($this->fitType) . ' Fit Option Created',
+            'Fit Option Created Successfully',
         );
         return redirect(request()->header('Referer'));
     }

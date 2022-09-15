@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
 
 /**
  * @property mixed|string $expiry_date
@@ -32,31 +31,40 @@ class Reservation extends Model
         $date = Carbon::now();
         $tomorrow = Carbon::now()->addWeekday(1);
         $admin = User::where('company_id', '7')->get();
-        $expiringActive = Reservation::where('expiry_date', '<=', $date)->where('status', 'active')->get();
-        $message = new Message;
+        $expiringActive = Reservation::where('expiry_date', '<=', $date)
+            ->where('status', 'active')
+            ->get();
+        $message = new Message();
         $message->message = 'CheckExpiry has run';
         $message->save();
         foreach ($expiringActive as $item) {
             $item->update([
                 'expiry_date' => $tomorrow,
-                'status' => 'deadline_approaching'
+                'status' => 'deadline_approaching',
             ]);
             $item->customer->notify(new ReservationExpiryApproaching($item));
         }
-        $expiryExtended = Reservation::where('expiry_date', '<=', $date)->where('status', 'extended')->get();
+        $expiryExtended = Reservation::where('expiry_date', '<=', $date)
+            ->where('status', 'extended')
+            ->get();
         foreach ($expiryExtended as $item) {
             $item->update([
-               'expiry_date' => $tomorrow,
-               'status' => 'extended_deadline_approaching'
+                'expiry_date' => $tomorrow,
+                'status' => 'extended_deadline_approaching',
             ]);
             $item->customer->notify(new ReservationExpiryApproaching($item));
         }
-        $expiryDeadline = Reservation::where('expiry_date', '<=', $date)->where(function($q) {
-            $q->where('status', 'deadline_approaching')->orWhere('status', 'extended_deadline_approaching');
-        })->get();
+        $expiryDeadline = Reservation::where('expiry_date', '<=', $date)
+            ->where(function ($q) {
+                $q->where('status', 'deadline_approaching')->orWhere(
+                    'status',
+                    'extended_deadline_approaching',
+                );
+            })
+            ->get();
         foreach ($expiryDeadline as $item) {
             $item->update([
-                'status' => 'lapsed'
+                'status' => 'lapsed',
             ]);
             $item->delete();
             $item->customer->notify(new ReservationDeleted($item));

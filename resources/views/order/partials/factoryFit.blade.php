@@ -1,6 +1,6 @@
 <div class="form-group row">
     <div class="col-md-5">
-        <select wire:model.lazy="factory_fit_options" class="custom-select" multiple>
+        <select wire:model.lazy="factory_fit_options" class="form-select" multiple>
             @foreach ($factory_options as $factory_option)
 
                 <option data-cost="{{ $factory_option->option_price }}" value="{{ $factory_option->id }}" >{{ $factory_option->option_name }} -

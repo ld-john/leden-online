@@ -49,7 +49,7 @@ class EditFitOption extends Component
         $this->fitOption->dealer_id = $this->dealer;
         $this->fitOption->option_price = $this->price;
         $this->fitOption->save();
-        session()->flash('message', 'Fit Option Edited Successfully');
+        notify()->success('Fit Option Edited Successfully');
         return redirect(request()->header('Referer'));
     }
 }

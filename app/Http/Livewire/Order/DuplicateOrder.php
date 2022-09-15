@@ -5,6 +5,9 @@ namespace App\Http\Livewire\Order;
 use App\Invoice;
 use App\Order;
 use App\Vehicle;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class DuplicateOrder extends Component
@@ -13,7 +16,8 @@ class DuplicateOrder extends Component
     public $modalShow = false;
     public $duplicateQty;
 
-    public function mount(Order $order) {
+    public function mount(Order $order)
+    {
         $this->order = $order;
     }
 
@@ -22,7 +26,7 @@ class DuplicateOrder extends Component
         $this->modalShow = !$this->modalShow;
     }
 
-    public function render()
+    public function render(): Factory|View|Application
     {
         return view('livewire.order.duplicate-order');
     }
@@ -32,13 +36,13 @@ class DuplicateOrder extends Component
         $vehicle = Vehicle::where('id', $this->order->vehicle_id)->first();
         $invoice = Invoice::where('id', $this->order->invoice_id)->first();
 
-        for ($i = 1; $i <= $this->duplicateQty; $i++)
-        {
+        for ($i = 1; $i <= $this->duplicateQty; $i++) {
             $newCar = $vehicle->replicate();
             $newCar->chassis = null;
             $newCar->reg = null;
             $newCar->orbit_number = null;
-            $newCar->ford_order_number = $vehicle->ford_order_number . '-copy-'. $i;
+            $newCar->ford_order_number =
+                $vehicle->ford_order_number . '-copy-' . $i;
             $newCar->save();
             $newInvoice = $invoice->replicate();
             $newInvoice->save();
@@ -48,6 +52,7 @@ class DuplicateOrder extends Component
             $newOrder->broker_ref = null;
             $newOrder->save();
         }
-        return redirect()->route('order_bank')->with('successMsg', 'Order successfully duplicated');
+        notify()->success('Order successfully duplicated', 'Order Duplicated');
+        return redirect()->route('order_bank');
     }
 }

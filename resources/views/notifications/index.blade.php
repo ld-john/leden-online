@@ -17,7 +17,7 @@
                     @if (count($all_notifications) > 0)
                         <div class="col-md-12 justify-content-end d-flex mb-2">
                             <a class="btn btn-sm btn-warning shadow-sm" href="{{ route('notifications.read') }}"><i class="fa-solid fa-eye"></i> Mark all as read</a>
-                            <a href="{{ route('notifications.delete') }}" class="ml-2 btn btn-sm btn-danger shadow-sm"><i class="fa-solid fa-trash-can fa-sm text-white-50"></i> Delete Notifications</a>
+                            <a href="{{ route('notifications.delete') }}" class="ms-2 btn btn-sm btn-danger shadow-sm"><i class="fa-solid fa-trash-can fa-sm text-white-50"></i> Delete Notifications</a>
                         </div>
                     @endif
                 </div>

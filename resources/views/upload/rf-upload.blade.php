@@ -41,9 +41,9 @@
                                 </label>
                                 <div class="col-md-6">
 
-                                    <input type="file" accept=".csv" name="file" id="file" />
+                                    <input class="form-control" type="file" accept=".csv" name="file" id="file" />
                                     @error('file')
-                                    <div class="input-group-prepend">
+                                    <div class="input-group-text">
                                         <div class="alert alert-danger my-3">{!! $message !!} </div>
                                     </div>
                                     @enderror
@@ -59,7 +59,7 @@
                                         @endforeach
                                     </select>
                                     @error('broker')
-                                    <div class="input-group-prepend">
+                                    <div class="input-group-text">
                                         <div class="alert alert-danger my-3">{!! $message !!} </div>
                                     </div>
                                     @enderror

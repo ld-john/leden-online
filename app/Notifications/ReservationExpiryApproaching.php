@@ -16,7 +16,7 @@ class ReservationExpiryApproaching extends Notification
     /**
      * @var Reservation
      */
-    private $reservation;
+    private Reservation $reservation;
 
     /**
      * Create a new notification instance.
@@ -34,7 +34,7 @@ class ReservationExpiryApproaching extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['database'];
     }
@@ -43,14 +43,14 @@ class ReservationExpiryApproaching extends Notification
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail(mixed $notifiable): MailMessage
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        return (new MailMessage())
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -59,12 +59,16 @@ class ReservationExpiryApproaching extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray(mixed $notifiable): array
     {
         return [
             'reservation' => $this->reservation->id,
             'type' => 'vehicle',
-            'message' => 'Your Reservation on Vehicle #' . $this->reservation->vehicle_id . ' is expiring soon, Please place an order with Leden\'s office by ' . Carbon::parse($this->reservation->expiry_date)->format('d/m/Y')
+            'message' =>
+                'Your Reservation on Vehicle #' .
+                $this->reservation->vehicle_id .
+                ' is expiring soon, Please place an order with Leden\'s office by ' .
+                Carbon::parse($this->reservation->expiry_date)->format('d/m/Y'),
         ];
     }
 }

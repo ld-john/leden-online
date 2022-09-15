@@ -58,6 +58,22 @@ class User extends Authenticatable
         return $this->belongsToMany(Permission::class);
     }
 
+    public function unreadMessagesCount(): int
+    {
+        $messages = Message::where('recipient_id', $this->id)
+            ->where('recipient_read_at', null)
+            ->get();
+        return count($messages);
+    }
+
+    public function recentMessages()
+    {
+        return Message::where('recipient_id', $this->id)
+            ->take(4)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+    }
+
     public function abilities(): string
     {
         return $this->role;

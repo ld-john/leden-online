@@ -4,10 +4,6 @@
   gap: 16px;
 }
 
-.container-fluid {
-  padding-top: 100px;
-}
-
 .footer-contents {
   display: flex;
   justify-content: space-between;
@@ -35,7 +31,6 @@
 }
 
 .btn {
-  margin-bottom: 2px;
   &.btn-sm {
     display: inline-block;
   }
@@ -100,4 +95,63 @@
 .contact-box {
   height: 510px;
   overflow-y: scroll;
+}
+
+.news-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  .title {
+    padding: 10px 24px;
+    background: $primary;
+    color: white;
+    font-weight: bold;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+  ul {
+    display: flex;
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    position: absolute;
+    animation: newsScroll 24s infinite linear;
+    li {
+      padding: 0 24px;
+      border-right: 1px solid $primary;
+      white-space: nowrap;
+      &:last-of-type {
+        border-right: 0;
+      }
+    }
+  }
+}
+
+@keyframes newsScroll {
+  from {
+    transform: translateX(100%);
+  }
+  to  {
+    transform: translateX(-100%);
+  }
+}
+
+.dropdown-menu-right {
+  right: 0;
+}
+
+.content-container {
+  padding-top: 100px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.notify {
+  top: 70px!important;
 }

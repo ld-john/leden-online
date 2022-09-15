@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Updates;
 use App\Vehicle;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
@@ -28,10 +29,9 @@ class DashboardController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @param Request $request
      * @return Renderable
      */
-    public function index(Request $request): Renderable
+    public function index(): Renderable
     {
         $factory_order = $this->GetVehicleByStatus(4, Auth::user()->role);
         $euro_vhc = $this->GetVehicleByStatus(10, Auth::user()->role);
@@ -68,7 +68,17 @@ class DashboardController extends Controller
                 ->where('show_offer', true)
                 ->get();
 
+            $updates = Updates::where('dashboard', '=', 'broker')
+                ->where('update_type', '=', 'update')
+                ->get();
+
+            $banners = Updates::where('dashboard', '=', 'broker')
+                ->where('update_type', '=', 'promo')
+                ->get();
+
             return view('dashboard.dashboard-broker', [
+                'updates' => $updates,
+                'banners' => $banners,
                 'data' => $data,
                 'live_orders' => $live_orders,
                 'in_stock' => $in_stock->count(),

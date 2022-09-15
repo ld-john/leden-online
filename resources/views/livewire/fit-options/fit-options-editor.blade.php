@@ -6,18 +6,18 @@
     @endif
     <h3>Add New {{ ucfirst($fitType) }} Fit Option</h3>
     <div class="d-flex justify-content-between">
-        <div class="form-group mr-2 w-100">
+        <div class="form-group me-2 w-100">
             <label for="option_name">Option Name</label>
             <div class="input-group">
                 @error('option_name')
-                <div class="input-group-prepend">
+                <div class="input-group-text">
                     <label class="input-group-text bg-danger text-white" for="option_name"><i class="fa fa-exclamation-triangle"></i></label>
                 </div>
                 @enderror
                 <input type="text" class="form-control" id="option_name" wire:model="option_name">
             </div>
         </div>
-        <div class="form-group mr-2 w-100">
+        <div class="form-group me-2 w-100">
             <label for="model">Model</label>
             <div class="input-group">
                 <select name="model" id="" class="form-control">
@@ -28,11 +28,11 @@
             </div>
 
         </div>
-        <div class="form-group mr-2 w-100">
+        <div class="form-group me-2 w-100">
             <label for="model_year">Model Year</label>
             <div class="input-group">
                 @error('model_year')
-                <div class="input-group-prepend">
+                <div class="input-group-text">
                     <label class="input-group-text bg-danger text-white" for="model_year_input"><i class="fa fa-exclamation-triangle"></i></label>
                 </div>
                 @enderror
@@ -40,7 +40,7 @@
             </div>
         </div>
         @if($fitType === 'dealer')
-            <div class="form-group mr-2 w-100">
+            <div class="form-group me-2 w-100">
                 <label for="dealer">Dealer</label>
                 <select name="dealer" id="dealer" wire:model="dealer" class="form-control">
                     <option value=""></option>
@@ -50,11 +50,11 @@
                 </select>
             </div>
         @endif
-        <div class="form-group mr-2 w-100">
+        <div class="form-group me-2 w-100">
             <label for="price">Price</label>
             <div class="input-group">
                 @error('price')
-                <div class="input-group-prepend">
+                <div class="input-group-text">
                     <label class="input-group-text bg-danger text-white" for="price"><i class="fa fa-exclamation-triangle"></i></label>
                 </div>
                 @enderror

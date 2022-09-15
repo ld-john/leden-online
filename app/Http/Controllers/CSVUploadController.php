@@ -11,6 +11,7 @@ use App\Manufacturer;
 use App\Notifications\VehicleInStockNotification;
 use App\User;
 use App\Vehicle;
+use App\VehicleModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -36,7 +37,7 @@ class CSVUploadController extends Controller
     public function showRingFenceUpload(): Factory|View|Application
     {
         return view('upload.rf-upload', [
-            'brokers' => Company::orderBy('company_name', 'asc')
+            'brokers' => Company::orderBy('company_name')
                 ->where('company_type', 'broker')
                 ->get(),
         ]);
@@ -98,12 +99,11 @@ class CSVUploadController extends Controller
 
             Vehicle::updateOrInsert($upload[0], $upload[1]);
         }
-        return redirect()
-            ->route('ring_fenced_stock')
-            ->with(
-                'successMsg',
-                'Your vehicles have been added to the system. You can edit any extra information below.',
-            );
+        notify()->success(
+            'Your vehicles have been added to the system. You can edit any extra information below.',
+            'Import Successful',
+        );
+        return redirect()->route('ring_fenced_stock');
     }
 
     public function executeCsvUpload(
@@ -157,21 +157,14 @@ class CSVUploadController extends Controller
 
                 Vehicle::insert($values[$i]);
             }
-
+            notify()->success(
+                'Your orders have been added to the system. You can edit any extra information below.',
+                'Import Successful',
+            );
             if ($request->show_in_ford_pipeline === '0') {
-                return redirect()
-                    ->route('pipeline')
-                    ->with(
-                        'successMsg',
-                        'Your orders have been added to the system. You can edit any extra information below.',
-                    );
+                return redirect()->route('pipeline');
             } else {
-                return redirect()
-                    ->route('pipeline.ford')
-                    ->with(
-                        'successMsg',
-                        'Your orders have been added to the system. You can edit any extra information below.',
-                    );
+                return redirect()->route('pipeline.ford');
             }
         } elseif ($request->input('upload_type') === 'delete') {
             foreach ($vehicle_uploads as $delete_order) {
@@ -179,13 +172,11 @@ class CSVUploadController extends Controller
                     ->where('vehicle_status', 1)
                     ->delete();
             }
-
-            return redirect()
-                ->route('pipeline')
-                ->with(
-                    'successMsg',
-                    'All vehicles still in stock have been deleted',
-                );
+            notify()->success(
+                'All vehicles still in stock have been deleted',
+                'Import Deletion successful',
+            );
+            return redirect()->route('pipeline');
         } elseif ($request->input('upload_type') === 'ford_create') {
             foreach ($vehicle_uploads as $ford_report) {
                 $vehicle = Vehicle::where(
@@ -264,9 +255,11 @@ class CSVUploadController extends Controller
                     }
                 }
             }
-            return redirect()
-                ->route('csv_upload')
-                ->with('successMsg', 'All vehicles have been updated');
+            notify()->success(
+                'All vehicles have been updated',
+                'Import Update Successfull',
+            );
+            return redirect()->route('csv_upload');
         } elseif ($request->input('upload_type') === 'ford_test') {
             foreach ($vehicle_uploads as $ford_report) {
                 $vehicle = Vehicle::where(
@@ -393,6 +386,15 @@ class CSVUploadController extends Controller
                 $fitOption->$field = $row[$request->fields[$field]];
             }
             $fitOption->save();
+            if ($fitOption->model) {
+                $model = VehicleModel::where(
+                    'name',
+                    $fitOption->model,
+                )->first();
+                $fitOption->update([
+                    'model' => $model->id,
+                ]);
+            }
         }
         return redirect()->route('meta.factoryfit.index');
     }

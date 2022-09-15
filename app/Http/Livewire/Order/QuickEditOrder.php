@@ -9,6 +9,9 @@ use App\User;
 use App\Vehicle;
 use DateTime;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Date;
 use Livewire\Component;
 
@@ -139,11 +142,11 @@ class QuickEditOrder extends Component
                 }
             }
         }
-
+        notify()->success('Order was updated successfully', 'Order Updated');
         return $this->redirect(route($this->return));
     }
 
-    public function render()
+    public function render(): Factory|View|Application
     {
         return view('livewire.order.quick-edit-order');
     }

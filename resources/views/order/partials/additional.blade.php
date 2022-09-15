@@ -6,6 +6,7 @@
         @for($i = 0; $i < $fields; $i++)
             <input wire:model="attachments"
                    type="file"
+                   class="form-control"
                    accept=".pdf, application/pdf, image/png, .png, image/jpg, .jpg, image/jpeg, .jpeg, .doc, .docx, application/msword"
                    name="file"
                    id="file"/>

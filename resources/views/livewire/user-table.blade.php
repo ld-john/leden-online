@@ -11,7 +11,7 @@
                entries
           </div>
           <div>
-               <a class="btn btn-success" href="{{ route('user.add') }}"><i class="fa-solid fa-user mr-4"></i> Add New User</a>
+               <a class="btn btn-success" href="{{ route('user.add') }}"><i class="fa-solid fa-user me-4"></i> Add New User</a>
           </div>
      </div>
      <table class="table table-bordered">

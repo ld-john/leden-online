@@ -27,7 +27,10 @@ class DeliveriesController extends Controller
         foreach ($brokers as $broker) {
             $broker->notify(new DeliveryBookedNotification($delivery));
         }
-        session()->flash('message', 'Delivery Booked');
+        notify()->success(
+            'Delivery was booked successfully',
+            'Delivery Booked',
+        );
         return redirect(route('manage_deliveries'));
     }
     public function cancel(Delivery $delivery)
@@ -37,7 +40,10 @@ class DeliveriesController extends Controller
         $vehicle->update([
             'vehicle_status' => 1,
         ]);
-        session()->flash('message', 'Delivery Cancelled');
+        notify()->success(
+            'Delivery was cancelled successfully',
+            'Delivery Cancelled',
+        );
         return redirect(route('pipeline'));
     }
     public function edit(Delivery $delivery)

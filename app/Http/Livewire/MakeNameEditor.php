@@ -40,7 +40,7 @@ class MakeNameEditor extends Component
     {
         $this->make->name = $this->makeName;
         $this->make->save();
-        session()->flash('message', 'Make Updated Successfully');
+        notify()->success('Make updated successfully', 'Make Updated');
         return redirect(route('meta.make.index'));
     }
     public function deleteMake()
@@ -58,7 +58,7 @@ class MakeNameEditor extends Component
     public function destroyMake()
     {
         Manufacturer::destroy($this->make->id);
-        session()->flash('message', 'Make Removed Successful');
+        notify()->success('Make Removed Successfully', 'Make Removed');
         return redirect(route('meta.make.index'));
     }
 }

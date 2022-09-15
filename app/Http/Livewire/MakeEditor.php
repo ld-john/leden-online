@@ -28,7 +28,7 @@ class MakeEditor extends Component
             'name' => $this->newMakeName,
             'slug' => Str::slug($this->newMakeName),
         ]);
-        session()->flash('message', 'Make Added Successfully');
+        notify()->success('Make added successfully', 'Make Added');
         $this->resetInput();
         return redirect(route('meta.make.index'));
     }
@@ -40,8 +40,7 @@ class MakeEditor extends Component
         $vehicle_model->slug = Str::slug($this->newModelName);
         $vehicle_model->manufacturer_id = $this->newModelMake;
         $vehicle_model->save();
-
-        session()->flash('message', 'Model Added Successfully');
+        notify()->success('Model Added Successfully', 'Model Added');
         $this->resetInput();
         return redirect(route('meta.make.index'));
     }

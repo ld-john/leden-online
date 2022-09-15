@@ -16,6 +16,7 @@
 use App\Http\Controllers\DeliveriesController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\UpdatesController;
 use App\Http\Controllers\VehicleController;
 
 Auth::routes();
@@ -307,18 +308,29 @@ Route::middleware('auth')->group(function () {
     //    Route::get('/link/vehicle-broker-dealer-clean-up', 'OrderController@VehicleBrokerDealerCleanup')->name('test8');
     //    Route::get('/link/invoice-value-clean-up', 'OrderController@invoice_value_cleaner')->name('test9');
     //    Route::get('/link/fit-option-clean-up', 'VehicleController@fitOptionsCleanUp');
-    Route::get(
-        '/link/comment-clean-up',
-        'CommentController@makeCommentsPolymorphic',
-    );
-    Route::get(
-        '/link/vehicle-model-clean-up',
-        'ManufacturerController@vehicle_model_clean_up',
-    );
-    Route::get(
-        '/link/fit-options-clean-up',
-        'FitOptionsController@fitOptionsClean',
-    );
-    Route::get('/link/meta-clean-up', 'VehicleMetaController@clean');
-    Route::get('/link/meta-add-on', 'VehicleMetaController@addon');
+    //    Route::get(
+    //        '/link/comment-clean-up',
+    //        'CommentController@makeCommentsPolymorphic',
+    //    );
+    //    Route::get(
+    //        '/link/vehicle-model-clean-up',
+    //        'ManufacturerController@vehicle_model_clean_up',
+    //    );
+    //    Route::get(
+    //        '/link/fit-options-clean-up',
+    //        'FitOptionsController@fitOptionsClean',
+    //    );
+    //    Route::get('/link/meta-clean-up', 'VehicleMetaController@clean');
+    //    Route::get('/link/meta-add-on', 'VehicleMetaController@addon');
+
+    /*
+     * News Updates Controller
+     */
+
+    Route::controller(UpdatesController::class)
+        ->name('updates.')
+        ->prefix('updates')
+        ->group(function () {
+            Route::get('create', 'create')->name('create');
+        });
 });

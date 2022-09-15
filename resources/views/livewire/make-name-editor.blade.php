@@ -1,20 +1,16 @@
 <div>
     <div class="input-group mb-2">
-        <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary" type="button" wire:click.prevent="saveMakeModal()"><i class="fa-solid fa-floppy-disk"></i></button>
-        </div>
+        <button class="btn btn-outline-secondary" type="button" wire:click.prevent="saveMakeModal()"><i class="fa-solid fa-floppy-disk"></i></button>
         <input type="text" class="form-control" wire:model="makeName">
         @if(!$make->vehicles()->exists())
-            <div class="input-group-append">
-                <button class="btn btn-outline-danger" type="button" wire:click="deleteMake()" ><i class="fa-solid fa-trash"></i></button>
-            </div>
+            <button class="btn btn-outline-danger" type="button" wire:click="deleteMake()" ><i class="fa-solid fa-trash"></i></button>
         @endif
     </div>
-    @if($make->models)
-        <div class="ml-4">
-        @foreach($vehicle_models as $model)
-            <livewire:edit-model-name :model="$model" :wire:key="$loop->index"/>
-        @endforeach
+    @if($vehicle_models)
+        <div class="ms-4">
+            @foreach($vehicle_models as $model)
+                <livewire:edit-model-name :model="$model" :wire:key="$loop->index"/>
+            @endforeach
         </div>
     @endif
     <div class="modal @if($editModalShow) show @endif">

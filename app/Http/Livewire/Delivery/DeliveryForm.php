@@ -134,7 +134,10 @@ class DeliveryForm extends Component
         Notification::route('mail', 'deliveries@leden.co.uk')->notify(
             new DeliveryAwaitingConfirmationEmailNotification($order),
         );
-        session()->flash('message', 'Delivery Booked - Awaiting Confirmation');
+        notify()->success(
+            'Delivery Booked - Awaiting Confirmation',
+            'Delivery Booked',
+        );
         return redirect(route('manage_deliveries'));
     }
 

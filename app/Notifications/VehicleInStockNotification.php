@@ -14,12 +14,12 @@ class VehicleInStockNotification extends Notification
         $this->vehicle = $vehicle;
     }
 
-    public function via($notifiable): array
+    public function via(): array
     {
         return ['database'];
     }
 
-    public function toArray($notifiable): array
+    public function toArray(): array
     {
         return [
             'vehicle' => $this->vehicle->id,

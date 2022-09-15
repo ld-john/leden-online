@@ -18,11 +18,11 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('make')
-                            <div class="input-group-prepend">
+                            <div class="input-group-text">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectMake"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select wire:model="make" class="custom-select" id="inputGroupSelectMake">
+                            <select wire:model="make" class="form-select" id="inputGroupSelectMake">
                                 <option selected>Choose...</option>
                                 @foreach ( $manufacturers as $manufacturer )
                                     <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
@@ -51,11 +51,11 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('model')
-                            <div class="input-group-prepend">
+                            <div class="input-group-text">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select class="custom-select" @if(count($vehicle_models) === 0) disabled @endif field-parent="vehicle_model" wire:model="model" id="inputGroupSelectModel">
+                            <select class="form-select" @if(count($vehicle_models) === 0) disabled @endif field-parent="vehicle_model" wire:model="model" id="inputGroupSelectModel">
                                 <option value="" selected>Choose...</option>
                                 @foreach($vehicle_models as $vehicle_model)
                                     <option value="{{$vehicle_model->id}}">{{ $vehicle_model->name }}</option>
@@ -69,7 +69,7 @@
                     <label for="orbit_number" class="col-md-2 col-form-label">Orbit Number</label>
                     <div class="col-md-6">
                         @error('orbit_number')
-                        <div class="input-group-prepend">
+                        <div class="input-group-text">
                             <label for="inputGroupOrbitNumberText" class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
                         </div>
                         @enderror
@@ -81,7 +81,7 @@
                     <label for="order_ref" class="col-md-2 col-form-label">Order Ref</label>
                     <div class="col-md-6">
                         @error('order_ref')
-                        <div class="input-group-prepend">
+                        <div class="input-group-text">
                             <label for="inputGroupOrbitNumberText" class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
                         </div>
                         @enderror
@@ -94,11 +94,11 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('type')
-                            <div class="input-group-prepend">
+                            <div class="input-group-text">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectType"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select @if(count($types) === 0) disabled @endif wire:model="type" class="custom-select" id="inputGroupSelectType">
+                            <select @if(count($types) === 0) disabled @endif wire:model="type" class="form-select" id="inputGroupSelectType">
                                 <option selected>Choose...</option>
                                 @foreach ($types as $type)
                                     <option value="{{$type->name}}">{{$type->name}}</option>
@@ -120,11 +120,11 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('derivative')
-                            <div class="input-group-prepend">
+                            <div class="input-group-text">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectDerivatives"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select wire:model="derivative" @if(count($derivatives) === 0) disabled @endif class="custom-select" id="inputGroupSelectDerivatives">
+                            <select wire:model="derivative" @if(count($derivatives) === 0) disabled @endif class="form-select" id="inputGroupSelectDerivatives">
                                 <option selected>Choose...</option>
                                 @foreach ($derivatives as $vehicle_derivative)
                                     <option value="{{ $vehicle_derivative->name }}">{{ $vehicle_derivative->name }}</option>
@@ -148,11 +148,11 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('engine')
-                            <div class="input-group-prepend">
+                            <div class="input-group-text">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectEngine"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select wire:model="engine" @if(count($engines) === 0) disabled @endif class="custom-select" id="inputGroupSelectEngine">
+                            <select wire:model="engine" @if(count($engines) === 0) disabled @endif class="form-select" id="inputGroupSelectEngine">
                                 <option selected>Choose...</option>
                                 @foreach ($engines as $vehicle_engine)
                                     <option value="{{ $vehicle_engine->name }}">{{ $vehicle_engine->name }}</option>
@@ -176,11 +176,11 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('transmission')
-                            <div class="input-group-prepend">
+                            <div class="input-group-text">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectTransmission"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select wire:model="transmission" @if(count($transmissions) === 0) disabled @endif class="custom-select" id="inputGroupSelectTransmission">
+                            <select wire:model="transmission" @if(count($transmissions) === 0) disabled @endif class="form-select" id="inputGroupSelectTransmission">
                                 <option selected>Choose...</option>
                                 @foreach ($transmissions as $vehicle_trans)
                                     <option value="{{ $vehicle_trans->name }}">{{ $vehicle_trans->name }}</option>
@@ -205,11 +205,11 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('fuel_type')
-                            <div class="input-group-prepend">
+                            <div class="input-group-text">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select wire:model="fuel_type" @if(count($fuel_types) === 0) disabled @endif class="custom-select" id="inputGroupSelectFuel">
+                            <select wire:model="fuel_type" @if(count($fuel_types) === 0) disabled @endif class="form-select" id="inputGroupSelectFuel">
                                 <option selected>Choose...</option>
                                 @foreach ($fuel_types as $vehicle_fuel_type)
                                     <option value="{{ $vehicle_fuel_type->name }}">{{ $vehicle_fuel_type->name }}</option>
@@ -233,11 +233,11 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('colour')
-                            <div class="input-group-prepend">
+                            <div class="input-group-text">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select wire:model="colour" @if(count($colours) === 0) disabled @endif class="custom-select" id="inputGroupSelectColour">
+                            <select wire:model="colour" @if(count($colours) === 0) disabled @endif class="form-select" id="inputGroupSelectColour">
                                 <option selected>Choose...</option>
                                 @foreach ($colours as $vehicle_colour)
                                     <option value="{{ $vehicle_colour->name }}">{{ $vehicle_colour->name }}</option>
@@ -261,11 +261,11 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('trim')
-                            <div class="input-group-prepend">
+                            <div class="input-group-text">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
                             </div>
                             @enderror
-                            <select wire:model="trim" @if(count($trims) === 0) disabled @endif class="custom-select" id="inputGroupSelectTrim">
+                            <select wire:model="trim" @if(count($trims) === 0) disabled @endif class="form-select" id="inputGroupSelectTrim">
                                 <option selected>Choose...</option>
                                 @foreach ($trims as $vehicle_trim)
                                     <option value="{{ $vehicle_trim->name }}">{{ $vehicle_trim->name }}</option>

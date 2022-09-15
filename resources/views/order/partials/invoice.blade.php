@@ -36,16 +36,14 @@
         </label>
         <div class="col-md-9">
             <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">£</span>
+                <div class="input-group-text">
+                    £
                 </div>
                 <input wire:model="dealer_invoice_override" type="number" name="dealer_invoice_override" id="dealer_invoice_override" step=".01"
                        class="form-control" autocomplete="off" @if(!$dealer_invoice_override_allowed) disabled @endif />
-                <div class="input-group-append">
-                    <span class="input-group-text">Override?</span>
-                    <div class="input-group-text">
-                        <input type="checkbox" aria-label="Checkbox for Invoice Value Override" wire:model="dealer_invoice_override_allowed">
-                    </div>
+                <div class="input-group-text">
+                    <span class="form-check-label me-2">Override?</span>
+                    <input type="checkbox" class="form-check" aria-label="Checkbox for Invoice Value Override" wire:model="dealer_invoice_override_allowed">
                 </div>
             </div>
         </div>

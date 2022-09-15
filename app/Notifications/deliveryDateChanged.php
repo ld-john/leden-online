@@ -18,7 +18,6 @@ class deliveryDateChanged extends Notification
      */
     public function __construct($order)
     {
-
     }
 
     /**
@@ -36,14 +35,14 @@ class deliveryDateChanged extends Notification
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail(mixed $notifiable): MailMessage
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        return (new MailMessage())
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -55,7 +54,7 @@ class deliveryDateChanged extends Notification
     public function toArray($notifiable)
     {
         return [
-            'order_id' => $this->order->id
+            'order_id' => $this->order->id,
         ];
     }
 }

@@ -66,6 +66,13 @@ select option:disabled {
   border: 0;
 }
 
+.btn-primary {
+  color: white;
+  &:hover {
+    color: white!important;
+  }
+}
+
 /* Login Screen */
 .login {
   background: url('/images/mustang-medium.jpg') no-repeat bottom right;

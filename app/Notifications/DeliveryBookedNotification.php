@@ -31,7 +31,7 @@ class DeliveryBookedNotification extends Notification
                 $this->delivery->order->vehicle->model .
                 ' Orbit Number: ' .
                 $this->delivery->order->vehicle->orbit_number .
-                ' has been booked for the following' .
+                ' has been booked for the following ' .
                 Carbon::parse($this->delivery->delivery_date)->format('d/m/Y'),
         ];
     }

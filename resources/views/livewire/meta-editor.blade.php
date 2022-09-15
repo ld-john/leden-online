@@ -4,7 +4,7 @@
         <h2>Add New {{ ucfirst($metatype) }} </h2>
         <form wire:submit.prevent="new">
             <div class="input-group">
-                <div class="input-group-prepend">
+                <div class="input-group-text">
                     <span class="input-group-text">{{ ucfirst($metatype) }} name:</span>
                 </div>
                 <input
@@ -13,7 +13,7 @@
                         wire:model="new_name"
 
                 >
-                <div class="input-group-append">
+                <div class="input-group-text">
                     <button class="btn btn-primary"
                             type="submit"
                             wire:click.prevent="newVehicleMeta()"

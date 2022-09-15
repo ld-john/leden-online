@@ -54,10 +54,7 @@ class MetaEditor extends Component
     {
         $meta->name = $this->edit_meta_name;
         $meta->vehicle_model()->sync($this->edit_meta_models);
-        session()->flash(
-            'message',
-            ucfirst($this->metatype) . ' Edited Successfully',
-        );
+        notify()->success(ucfirst($this->metatype) . ' Edited Successfully');
         $this->hideModal();
         return redirect(route('meta.' . $this->metatype . '.index'));
     }
@@ -65,9 +62,9 @@ class MetaEditor extends Component
     public function delete(VehicleMeta $meta)
     {
         $meta->delete();
-        session()->flash(
-            'message',
+        notify()->success(
             ucfirst($this->metatype) . ' Deleted Successfully',
+            ucfirst($this->metatype) . 'Deleted',
         );
         return redirect(route('meta.' . $this->metatype . '.index'));
     }

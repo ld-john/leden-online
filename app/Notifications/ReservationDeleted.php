@@ -47,10 +47,10 @@ class ReservationDeleted extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        return (new MailMessage())
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -59,12 +59,15 @@ class ReservationDeleted extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray(mixed $notifiable): array
     {
         return [
             'reservation' => $this->reservation->id,
             'type' => 'vehicle',
-            'message' => 'Reservation on Vehicle #' . $this->reservation->vehicle_id . ' has expired.'
+            'message' =>
+                'Reservation on Vehicle #' .
+                $this->reservation->vehicle_id .
+                ' has expired.',
         ];
     }
 }

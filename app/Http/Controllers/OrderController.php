@@ -67,15 +67,14 @@ class OrderController extends Controller
     public function destroy(Order $order): RedirectResponse
     {
         Order::destroy($order->id);
-        return redirect()
-            ->route('order_bank')
-            ->with(
-                'successMsg',
-                'Order #' .
-                    $order->id .
-                    ' deleted successfully - ' .
-                    $order->vehicle->niceName(),
-            );
+        notify()->success(
+            'Order #' .
+                $order->id .
+                ' deleted successfully - ' .
+                $order->vehicle->niceName(),
+            'Order Deleted',
+        );
+        return redirect()->route('order_bank');
     }
 
     /**
@@ -107,9 +106,8 @@ class OrderController extends Controller
             $newOrder->broker_ref = null;
             $newOrder->save();
         }
-        return redirect()
-            ->route('order_bank')
-            ->with('successMsg', 'Order successfully duplicated');
+        notify()->success('Order successfully duplicated', 'Order Duplicated');
+        return redirect()->route('order_bank');
     }
 
     public function showReserveOrder(Vehicle $vehicle): Factory|View|Application

@@ -97,11 +97,11 @@ class VehicleForm extends Component
     ];
 
     /**
-     * @throws Exception
-     * @var mixed
+     * @return void
+     *@throws Exception
      */
 
-    public function mount()
+    public function mount(): void
     {
         if (isset($this->vehicle)) {
             $this->make = $this->vehicle->make ?: null;
@@ -226,9 +226,15 @@ class VehicleForm extends Component
         $vehicle->fitOptions()->sync($fitOptions);
 
         if ($this->vehicle) {
-            $this->successMsg = 'Vehicle Edited';
+            notify()->success(
+                'Vehicle was updated successfully',
+                'Vehicle Updated',
+            );
         } else {
-            $this->successMsg = 'Vehicle Created';
+            notify()->success(
+                'Vehicle was created successfully',
+                'Vehicle Created',
+            );
         }
 
         $this->markOrderComplete($vehicle, $vehicle->order());

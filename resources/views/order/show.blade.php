@@ -19,7 +19,7 @@
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-l-blue">Vehicle Details</h6>
                         <div class="d-flex align-items-center">
-                            <strong>Vehicle Status:</strong> <span class="badge badge-primary ml-3"> {{ $order->vehicle->status() }}</span>
+                            <strong>Vehicle Status:</strong> <span class="badge badge-primary ms-3"> {{ $order->vehicle->status() }}</span>
                         </div>
                     </div>
                     <!-- Card Body -->

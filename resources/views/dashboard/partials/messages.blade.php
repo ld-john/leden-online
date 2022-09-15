@@ -6,13 +6,14 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            @if (UserMessages::getAllUnreadMessages(Auth::user()->id)->count() > 0)
-                @foreach (UserMessages::getUnreadMessages(6, Auth::user()->id) as $show_message)
-                    <a href="{{ route('message.view', $show_message->message_group_id) }}" class="notification">
-                        <div class="row">
+            @if (Auth::user()->unreadMessagesCount() > 0)
+                @foreach (Auth::user()->recentMessages() as $show_message)
+                    <a href="{{ route('messages') }}" class="notification text-dark ">
+                        <div class="row border-bottom border-primary py-2">
                             <div class="col-md-12">
-                                <div class="small text-gray-500">{{ date('l jS F Y \a\t g:ia', strtotime($show_message->created_at)) }}</div>
-                                <span class="@if ($show_message->read_at == null) font-weight-bold @endif ">{{ $show_message->subject }}</span>
+                                <small class="small font-weight-bold ">{{ \Carbon\Carbon::parse($show_message->created_at)->format('d M') }}</small>
+                                <div class="@if ($show_message->recipient_read_at === null) font-weight-bold @endif ">{{ $show_message->message }}</div>
+                                <h6 class="mb-0">{{ $show_message->sender->firstname }} {{ $show_message->sender->lastname }}</h6>
                             </div>
                         </div>
                     </a>

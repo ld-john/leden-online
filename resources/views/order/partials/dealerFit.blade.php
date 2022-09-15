@@ -1,6 +1,6 @@
 <div class="form-group row">
     <div class="col-md-5">
-        <select wire:model.lazy="dealer_fit_options" class="custom-select" multiple>
+        <select wire:model.lazy="dealer_fit_options" class="form-select" multiple>
             @foreach ($dealer_options as $dealer_option)
                 <option data-cost="{{ $dealer_option->option_price }}" value="{{ $dealer_option->id }}">
                     {{ $dealer_option->option_name }} - &pound;{{ $dealer_option->option_price }}

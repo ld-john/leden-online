@@ -11,7 +11,7 @@
                entries
           </div>
           <div>
-               <a class="btn btn-success" href="{{ route('company.add') }}"><i class="fa-solid fa-users mr-4"></i> Add New Company</a>
+               <a class="btn btn-success" href="{{ route('company.add') }}"><i class="fa-solid fa-users me-4"></i> Add New Company</a>
           </div>
      </div>
      <table class="table table-bordered">
@@ -73,7 +73,11 @@
                          </ul>
 
                     </td>
-                    <td><a href="/companies/edit/{{$company->id}}" class="edit btn btn-warning" data-toggle="tooltip" title="Edit Company Profile"><i class="fas fa-edit"></i></a></td>
+                    <td>
+                         <a href="/companies/edit/{{$company->id}}" class="edit btn btn-warning" data-toggle="tooltip" title="Edit Company Profile">
+                              <i class="fas fa-edit"></i>
+                         </a>
+                    </td>
                </tr>
           @empty
                <tr>

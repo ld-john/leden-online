@@ -16,7 +16,9 @@
             <thead>
             <tr class="blue-background text-white">
                 <th>Leden ID</th>
-                <td>Orbit Number</td>
+                <th>Orbit Number</th>
+                <th>Broker Ref</th>
+                <th>Customer</th>
                 <th>Make</th>
                 <th>Model</th>
                 <th>Delivery Date</th>
@@ -28,6 +30,8 @@
                 <tr>
                     <td>{{ $order->id ?? '--' }}
                     <td>{{ $order->vehicle->orbit_number ?? '--'}}</td>
+                    <td>{{ $order->broker_ref ?? '--' }}</td>
+                    <td>{{ $order->customer->name() }}</td>
                     <td>{{ $order->vehicle->manufacturer->name ?? '--' }}</td>
                     <td>{{ $order->vehicle->model ?? '--' }}</td>
                     @if ( empty( $order->delivery_date) || $order->delivery_date == '0000-00-00 00:00:00')

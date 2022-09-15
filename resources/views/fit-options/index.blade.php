@@ -37,9 +37,9 @@
                                     <small>Allowed file types - CSV<br>Max file size - 1MB</small>
                                 </label>
                                 <div class="col-md-6">
-                                    <input type="file" accept=".csv" name="csv_file" id="file" />
+                                    <input type="file" class="form-control" accept=".csv" name="csv_file" id="file" />
                                     @error('file')
-                                    <div class="input-group-prepend">
+                                    <div class="input-group-text">
                                         <div class="alert alert-danger my-3">{!! $message !!} </div>
                                     </div>
                                     @enderror

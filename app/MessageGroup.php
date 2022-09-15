@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\MessageGroup
@@ -11,25 +13,24 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $subject
  * @property int|null $order_id
  * @property string $last_message_sent
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\MessageGroup newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\MessageGroup newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\MessageGroup query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\MessageGroup whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\MessageGroup whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\MessageGroup whereLastMessageSent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\MessageGroup whereOrderId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\MessageGroup whereSubject($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\MessageGroup whereUpdatedAt($value)
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|MessageGroup newModelQuery()
+ * @method static Builder|MessageGroup newQuery()
+ * @method static Builder|MessageGroup query()
+ * @method static Builder|MessageGroup whereCreatedAt($value)
+ * @method static Builder|MessageGroup whereId($value)
+ * @method static Builder|MessageGroup whereLastMessageSent($value)
+ * @method static Builder|MessageGroup whereOrderId($value)
+ * @method static Builder|MessageGroup whereSubject($value)
+ * @method static Builder|MessageGroup whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class MessageGroup extends Model
 {
-
     /**
      * The table associated with this model
-     * 
+     *
      * @var string
      */
     protected $table = 'message_group';
@@ -40,6 +41,9 @@ class MessageGroup extends Model
      * @var array
      */
     protected $fillable = [
-        'subject', 'last_message_sent', 'created_at', 'updated_at',
+        'subject',
+        'last_message_sent',
+        'created_at',
+        'updated_at',
     ];
 }
