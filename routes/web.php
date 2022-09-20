@@ -103,9 +103,8 @@ Route::middleware('auth')->group(function () {
             'ring_fenced_stock',
         );
         Route::get('/ford-pipeline', 'showFordPipeline')->name('pipeline.ford');
-        Route::prefix('vehicle')
-            ->name('vehicle.')
-            ->group(function () {
+        Route::prefix('vehicle')->group(function () {
+            Route::name('vehicle.')->group(function () {
                 Route::get('/delete/{vehicle}', 'destroy')->name('delete');
                 Route::get('/view/{vehicle}', 'show')->name('show');
                 Route::get('/edit/{vehicle}', 'edit')->name('edit');
@@ -114,44 +113,38 @@ Route::middleware('auth')->group(function () {
                     'force-delete',
                 );
                 Route::get('/restore/{vehicle}', 'restore')->name('restore');
+                Route::get('/search/', 'searchVehicles')->name('search');
             });
+            Route::name('export.')->group(function () {
+                Route::get('/foexport/', 'factory_order_export')->name(
+                    'factory_order',
+                );
+                Route::get('/eurovhcexport/', 'europe_vhc_export')->name(
+                    'europe_vhc',
+                );
+                Route::get('/ukvhcexport/', 'uk_vhc_export')->name('uk_vhc');
+                Route::get('/instockexport/', 'in_stock_export')->name(
+                    'in_stock',
+                );
+                Route::get(
+                    '/readyfordeliveryexport/',
+                    'ready_for_delivery_export',
+                )->name('ready_for_delivery');
+                Route::get('/deliverybooked/', 'delivery_booked_export')->name(
+                    'delivery_booked',
+                );
+                Route::get('/awaitingship/', 'awaiting_ship_export')->name(
+                    'awaiting_ship',
+                );
+                Route::get('/atconverter/', 'at_converter_export')->name(
+                    'at_converter',
+                );
+                Route::get('/registered/', 'in_stock_registered_export')->name(
+                    'registered',
+                );
+            });
+        });
     });
-    Route::get('/vehicle/foexport/', [
-        VehicleController::class,
-        'factory_order_export',
-    ])->name('factory_order.export');
-    Route::get('/vehicle/eurovhcexport/', [
-        VehicleController::class,
-        'europe_vhc_export',
-    ])->name('europe_vhc_export.export');
-    Route::get('/vehicle/ukvhcexport/', [
-        VehicleController::class,
-        'uk_vhc_export',
-    ])->name('uk_vhc_export.export');
-    Route::get('/vehicle/instockexport/', [
-        VehicleController::class,
-        'in_stock_export',
-    ])->name('in_stock_export.export');
-    Route::get('/vehicle/readyfordeliveryexport/', [
-        VehicleController::class,
-        'ready_for_delivery_export',
-    ])->name('readyfordeliveryexport.export');
-    Route::get('/vehicle/deliverybooked/', [
-        VehicleController::class,
-        'delivery_booked_export',
-    ])->name('deliverybooked.export');
-    Route::get('/vehicle/awaitingship/', [
-        VehicleController::class,
-        'awaiting_ship_export',
-    ])->name('awaitingship.export');
-    Route::get('/vehicle/atconverter/', [
-        VehicleController::class,
-        'at_converter_export',
-    ])->name('atconverter.export');
-    Route::get('/vehicle/registered/', [
-        VehicleController::class,
-        'in_stock_registered_export',
-    ])->name('registered.export');
 
     /* ReportingController routes */
     Route::prefix('reporting')

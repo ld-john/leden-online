@@ -5,7 +5,7 @@
 
 @section('content')
     <!-- Begin Page Content -->
-    <div class="container-fluid force-min-height">
+    <div class="container-xxl">
 
         <!-- Content Row -->
         <div class="row">
@@ -28,37 +28,56 @@
                         <div class="chart-area pb-3">
                             <canvas id="runReport"></canvas>
                         </div>
-                        @if($factory_order)
-                            <a class="btn btn-primary btn-sm" href="{{route('factory_order.export')}}">Download Factory Orders</a>
-                        @endif
-                        @if($europe_vhc)
-                            <a class="btn btn-primary btn-sm" href="{{route('europe_vhc_export.export')}}">Download Europe VHC</a>
-                        @endif
-                        @if($uk_vhc)
-                            <a class="btn btn-primary btn-sm" href="{{route('uk_vhc_export.export')}}">Download UK VHC</a>
-                        @endif
-                        @if($in_stock)
-                            <a class="btn btn-primary btn-sm" href="{{route('in_stock_export.export')}}">Download In Stock Orders</a>
-                        @endif
-                        @if($ready_for_delivery)
-                            <a class="btn btn-primary btn-sm" href="{{route('readyfordeliveryexport.export')}}">Download Ready for Delivery</a>
-                        @endif
-                        @if($delivery_booked)
-                            <a class="btn btn-primary btn-sm" href="{{route('deliverybooked.export')}}">Download Delivery Booked</a>
-                        @endif
-                        @if($awaiting_ship)
-                            <a class="btn btn-primary btn-sm" href="{{route('awaitingship.export')}}">Download Awaiting Ship</a>
-                        @endif
-                        @if($at_converter)
-                            <a class="btn btn-primary btn-sm" href="{{route('atconverter.export')}}">Download At Converter</a>
-                        @endif
-                        @if($registered)
-                            <a class="btn btn-primary btn-sm" href="{{route('registered.export')}}">Download In Stock (Registered)</a>
-                        @endif
+                        <div class="row g-1 row-cols-4">
+                            @if($factory_order)
+                                <div class="col col-3">
+                                    <a class="btn btn-primary w-100 h-100 btn-sm" href="{{route('export.factory_order')}}">Download Factory Orders</a>
+                                </div>
+                            @endif
+                            @if($europe_vhc)
+                                <div class="col col-3">
+                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.europe_vhc')}}">Download Europe VHC</a>
+                                </div>
+                            @endif
+                            @if($uk_vhc)
+                                <div class="col col-3">
+                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.uk_vhc')}}">Download UK VHC</a>
+                                </div>
+                            @endif
+                            @if($in_stock)
+                                <div class="col col-3">
+                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.in_stock')}}">Download In Stock Orders</a>
+                                </div>
+                            @endif
+                            @if($ready_for_delivery)
+                                <div class="col col-3">
+                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.ready_for_delivery')}}">Download Ready for Delivery</a>
+                                </div>
+                            @endif
+                            @if($delivery_booked)
+                                <div class="col col-3">
+                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.delivery_booked')}}">Download Delivery Booked</a>
+                                </div>
+                            @endif
+                            @if($awaiting_ship)
+                                <div class="col col-3">
+                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.awaiting_ship')}}">Download Awaiting Ship</a>
+                                </div>
+                            @endif
+                            @if($at_converter)
+                                <div class="col col-3">
+                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.at_converter')}}">Download At Converter</a>
+                                </div>
+                            @endif
+                            @if($registered)
+                                <div class="col col-3">
+                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.registered')}}">Download In Stock (Registered)</a>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
-
             <!-- Notifications -->
             @include('dashboard.partials.notifications')
         </div>

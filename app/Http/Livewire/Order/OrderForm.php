@@ -789,6 +789,12 @@ class OrderForm extends Component
             'show_in_ford_pipeline' => $this->ford_pipeline,
         ]);
 
+        if ($this->orbit_number !== $vehicle->orbit_number) {
+            $vehicle->update([
+                'orbit_number' => $this->orbit_number,
+            ]);
+        }
+
         if ($vehicle->wasChanged('vehicle_status')) {
             if ($vehicle->vehicle_status === '7') {
                 $this->order->update(['completed_date' => now()]);

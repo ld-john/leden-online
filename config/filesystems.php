@@ -15,6 +15,7 @@ return [
     'default' => env('FILESYSTEM_DRIVER', 'local'),
     'links' => [
         public_path('banners') => storage_path('app/banners'),
+        public_path('images') => storage_path('app/images'),
     ],
 
     /*

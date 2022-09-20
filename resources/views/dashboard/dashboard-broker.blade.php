@@ -5,7 +5,7 @@
 
 @section('content')
     <!-- Begin Page Content -->
-    <div class="container-fluid force-min-height">
+    <div class="container-xxl">
         <!-- Content Row -->
         <div class="row">
             @include('dashboard.partials.boxes')

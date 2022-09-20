@@ -125,7 +125,7 @@ class OrderController extends Controller
             'title' => 'Order Bank',
             'active_page' => 'order-bank',
             'route' => 'order_bank',
-            'status' => [1, 4, 10, 11, 12, 13, 14, 15],
+            'status' => [1, 4, 10, 11, 12, 13, 14, 15, 16],
         ]);
     }
 

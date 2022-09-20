@@ -3,15 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Exports\DashboardExports;
-use App\Exports\DeliveryBookedExport;
-use App\Exports\EuropeVHCExports;
-use App\Exports\FactoryOrderExports;
-use App\Exports\InStockExports;
-use App\Exports\ReadyForDeliveryExports;
-use App\Exports\UKVHCExports;
-use App\Invoice;
-use App\Order;
-use App\OrderLegacy;
 
 use App\Reservation;
 use App\Vehicle;
@@ -21,10 +12,8 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class VehicleController extends Controller
@@ -275,5 +264,10 @@ class VehicleController extends Controller
             ->where('id', $vehicle)
             ->restore();
         return redirect()->route('vehicle.recycle_bin');
+    }
+
+    public function searchVehicles()
+    {
+        return view('vehicles.search');
     }
 }

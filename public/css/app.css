@@ -12136,8 +12136,8 @@ table.dataTable {
 }
 
 .icon-circle {
-  height: 55px;
-  width: 55px;
+  height: 45px;
+  width: 45px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -12228,7 +12228,19 @@ table.dataTable {
 }
 
 .notify {
-  top: 70px !important;
+  z-index: 20000;
+  position: fixed;
+}
+
+.font-weight-bold {
+  font-weight: 700;
+}
+
+.img-profile {
+  width: 40px;
+  height: 40px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .multi-select-container {

@@ -1,12 +1,11 @@
 <!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light blue-background topbar mb-4 fixed-top shadow">
+<nav class="navbar navbar-expand navbar-light blue-background topbar shadow">
     <div class="container-fluid">
-        <!-- Sidebar Toggle (Topbar) -->
-        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle me-3">
-            <i class="fa fa-bars"></i>
-        </button>
         <!-- Topbar Navbar -->
-        <ul class="navbar-nav ms-auto align-items-center">
+        <a class="navbar-brand" href="/">
+            <img src="{{ asset('images/leden-group-ltd-white.png') }}" alt="Leden Logo" width="250px">
+        </a>
+        <ul class="navbar-nav align-items-center">
             <!-- Nav Item - Alerts -->
             @livewire('notification.notifications-popup')
             <!-- Nav Item - Messages -->
@@ -53,7 +52,12 @@
             <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle d-flex align-items-center btn btn-outline-primary text-white" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="me-2 small">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
-                    <img class="img-profile rounded-circle mx-1" src="{{ asset('images/profile.png') }}" alt="profile">
+                    @if(Auth::user()->avatar)
+                        <img class="img-profile rounded-circle mx-1" src="{{ asset( Auth::user()->avatar ) }}" alt="profile">
+                    @else
+                        <img class="img-profile rounded-circle mx-1" src="{{ asset('images/profile.png') }}" alt="profile">
+                    @endif
+
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -71,6 +75,224 @@
                     </form>
                 </div>
             </li>
+        </ul>
+    </div>
+</nav>
+<nav class="navbar navbar-light navbar-expand shadow bg-light mb-4">
+    <div class="container-fluid justify-content-center">
+        <ul class="navbar-nav">
+            <li class="nav-item @if ($activePage == 'dashboard') active @endif">
+                <a class="nav-link" href="{{ route('dashboard') }}">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            @can('admin')
+                <li class="nav-item @if ($activePage == 'create-order') active @endif">
+                    <a class="nav-link" href="{{ route('create_order') }}">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Create Order</span>
+                    </a>
+                </li>
+            @endcan
+            @can('admin')
+                <li class="nav-item @if ($activePage == 'create-vehicle') active @endif">
+                    <a class="nav-link" href="{{ route('create_vehicle') }}">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Create Vehicle</span>
+                    </a>
+                </li>
+            @endcan
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span>Orders</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('reservation.index') }}">
+                            <i class="fa-solid fa-bookmark"></i>
+                            <span>Reservations</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('order_bank') }}">
+                            <i class="fa-solid fa-piggy-bank"></i>
+                            <span>Order Bank</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('manage_deliveries') }}">
+                            <i class="fa-solid fa-truck"></i>
+                            <span>Manage Deliveries</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('completed_orders') }}">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                            <span>Completed Orders</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @can('admin')
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span>Stock</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('pipeline') }}">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                                <span>Leden Stock</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('ring_fenced_stock') }}">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                                <span>Ring fenced Stock</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('pipeline.ford') }}">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                                <span>Ford Stock and Pipeline</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
+            @can('broker')
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span>Stock</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('pipeline') }}">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                                <span>Leden Stock</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('ring_fenced_stock') }}">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                                <span>Ring fenced Stock</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('pipeline.ford') }}">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                                <span>Ford Stock and Pipeline</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
+            @can('admin')
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Uploads
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('csv_upload') }}">
+                                <i class="fa-solid fa-file-csv"></i>
+                                <span>CSV Upload</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('rf_upload') }}">
+                                <i class="fa-solid fa-file-csv"></i>
+                                <span>Ring Fenced Stock CSV Upload</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('fit_option_upload') }}">
+                                <i class="fa-solid fa-file-csv"></i>
+                                <span>Fit Options CSV Upload</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
+            @can('admin')
+                <li class="nav-item @if ($activePage == 'report-track') active @endif">
+                    <a class="nav-link" href="{{ route('reporting') }}">
+                        <i class="fa-solid fa-chart-bar"></i>
+                        <span>Report/Track Status</span>
+                    </a>
+                </li>
+            @endcan
+            <li class="nav-item @if ($activePage == 'messages') active @endif">
+                <a class="nav-link" href="{{ route('messages') }}">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>Messages</span>
+                </a>
+            </li>
+            @can('admin')
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Listings
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('user_manager') }}">
+                                <i class="fa-solid fa-users"></i>
+                                <span>User Listing</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('company_manager') }}">
+                                <i class="fa-solid fa-users"></i>
+                                <span>Company Listings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('customer.index') }}">
+                                <i class="fa-solid fa-user-group"></i>
+                                <span>Customers</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
+            @can('admin')
+                <li class="nav-item @if($activePage=== 'vehicle-recycle-bin') active @endif">
+                    <a href="{{ route('vehicle.recycle_bin') }}" class="nav-link">
+                        <i class="fa-solid fa-trash"></i>
+                        <span>Vehicle Recycle Bin</span>
+                    </a>
+                </li>
+            @endcan
+            @can('admin')
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Meta Management
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('meta.make.index') }}">Make</a>
+                            <a class="dropdown-item" href="{{ route('meta.factoryfit.index') }}">Factory Fit Options</a>
+                            <a class="dropdown-item" href="{{ route('meta.dealerfit.index') }}">Dealer Fit Options</a>
+                            <a class="dropdown-item" href="{{ route('meta.colour.index') }}">Colours</a>
+                            <a class="dropdown-item" href="{{ route('meta.derivative.index') }}">Derivatives</a>
+                            <a class="dropdown-item" href="{{ route('meta.engine.index') }}">Engines</a>
+                            <a class="dropdown-item" href="{{ route('meta.fuel.index') }}">Fuel Types</a>
+                            <a class="dropdown-item" href="{{ route('meta.transmission.index') }}">Transmissions</a>
+                            <a class="dropdown-item" href="{{ route('meta.trim.index') }}">Trims</a>
+                            <a class="dropdown-item" href="{{ route('meta.type.index') }}">Types</a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
+            @can('admin')
+                <li class="nav-item @if($activePage == 'manage-updates') active @endif">
+                    <a class="nav-link" href="{{ route('updates.create') }}">
+                        <i class="fa-solid fa-newspaper"></i>
+                        Manage Promos
+                    </a>
+                </li>
+            @endcan
         </ul>
     </div>
 </nav>

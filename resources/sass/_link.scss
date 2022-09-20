@@ -70,8 +70,8 @@
 }
 
 .icon-circle {
-  height: 55px;
-  width: 55px;
+  height: 45px;
+  width: 45px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -153,5 +153,16 @@
 }
 
 .notify {
-  top: 70px!important;
+  z-index: 20000;
+  position: fixed;
+}
+
+.font-weight-bold {
+  font-weight: 700;
+}
+
+.img-profile {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
 }

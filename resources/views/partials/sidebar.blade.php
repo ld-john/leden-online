@@ -27,15 +27,21 @@
                 </a>
             </li>
         @endcan
+        @can('admin')
+            <li class="nav-item @if ($activePage == 'search-vehicle') active @endif">
+                <a class="nav-link" href="{{ route('vehicle.search') }}">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Search</span>
+                </a>
+            </li>
+        @endcan
         <li class="nav-item @if ($activePage == 'order-bank' || $activePage == 'deliveries' || $activePage == 'completed-orders' ) active @endif">
             <a class="nav-link" data-toggle="collapse" href="#collapseOrders" role="button" aria-expanded="false" aria-controls="collapseCSVUploads">
                 <i class="fa-solid fa-chevron-down"></i>
                 <span>Orders</span>
             </a>
         </li>
-
         <div class="collapse" id="collapseOrders">
-
             <li class="nav-item @if ($activePage == 'reservations') active @endif">
                 <a class="nav-link" href="{{ route('reservation.index') }}">
                     <i class="fa-solid fa-bookmark"></i>
@@ -216,7 +222,12 @@
             </div>
         @endcan
         @can('admin')
-            <li class="nav-item @if($activePage == 'manage-updates') active @endif"><a class="nav-link" href="{{ route('updates.create') }}"><i class="fa-solid fa-newspaper"></i> Manage News and Promos</a></li>
+            <li class="nav-item @if($activePage == 'manage-updates') active @endif">
+                <a class="nav-link" href="{{ route('updates.create') }}">
+                    <i class="fa-solid fa-newspaper"></i>
+                    Manage News and Promos
+                </a>
+            </li>
         @endcan
     </ul>
 

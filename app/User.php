@@ -25,6 +25,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $notifications_count
  * @property boolean $reservation_allowed
  * @property mixed $canPerform
+ * @property string $avatar
  */
 class User extends Authenticatable
 {

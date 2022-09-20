@@ -6,7 +6,7 @@
             <a href="{{ route('notifications') }}" class="btn btn-primary">View all notifications</a>
         </div>
         <!-- Card Body -->
-        <div class="card-body">
+        <div class="card-body p-0">
             @livewire('notification.notification-panel')
         </div>
     </div>

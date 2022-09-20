@@ -177,25 +177,4 @@ class MessagesController extends Controller
             'recipients' => $recipients,
         ]);
     }
-
-    public function executeReplyMessage(Request $request)
-    {
-        Message::insert([
-            'message' => $request->input('message'),
-            'sender_id' => Auth::user()->id,
-            'recipient_id' => $request->input('recipient_id'),
-            'message_group_id' => $request->route('message_group_id'),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        MessageGroup::where('id', $request->route('message_group_id'))->update([
-            'last_message_sent' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        return redirect()
-            ->route('messages')
-            ->with('successMsg', 'You\'ve replied to the message');
-    }
 }

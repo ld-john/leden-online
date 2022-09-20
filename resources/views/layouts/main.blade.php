@@ -31,54 +31,45 @@
 
 <body id="page-top">
 
-  <!-- Page Wrapper -->
-  <div id="wrapper">
 
-    <!-- Sidebar -->
-    @include('partials.sidebar')
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-      <!-- Main Content -->
-      <div id="content">
-        @include('partials.top_bar')
-
-        <div class="content-container">
-          <x:notify-messages />
-          @yield('content')
-        </div>
-      </div>
-    </div>
-    <!-- End of Content Wrapper -->
-
+<!-- Content Wrapper -->
+<div id="content-wrapper">
+  <!-- Main Content -->
+  <div id="content">
+    @include('partials.top_bar')
+    <x:notify-messages />
+    @yield('content')
   </div>
-  <!-- End of Page Wrapper -->
+</div>
+<!-- End of Content Wrapper -->
+<!-- End of Page Wrapper -->
 
-  @include('partials.footer')
+@include('partials.footer')
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
-  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('js/bootstrap-select.js') }}"></script>
-  <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
-  <script src="{{ asset('js/jquery-easing/jquery.easing.min.js') }}"></script>
-  <script src="{{ asset('js/Chart.min.js') }}"></script>
-  @notifyJs
-  <livewire:scripts />
+<!-- Bootstrap core JavaScript-->
+<script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="{{ asset('js/bootstrap-select.js') }}"></script>
+<script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('js/jquery-easing/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('js/Chart.min.js') }}"></script>
+@notifyJs
+<livewire:scripts />
 
-  <!-- Custom scripts for all pages-->
-  <script src="{{ asset('js/dashboard.js') }}"></script>
-  @stack('custom-scripts')
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-  <script>
-    // In your Javascript (external .js resource or <script> tag)
-    $(document).ready(function() {
-      $('.customer_select').select2({
-        placeholder: "Select existing Customer",
-        allowClear: true
-      });
-      $('.select2').select2({});
+<!-- Custom scripts for all pages-->
+<script src="{{ asset('js/dashboard.js') }}"></script>
+@stack('custom-scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  // In your Javascript (external .js resource or <script> tag)
+  $(document).ready(function() {
+    $('.customer_select').select2({
+      placeholder: "Select existing Customer",
+      allowClear: true
     });
-  </script>
+    $('.select2').select2({});
+  });
+</script>
 
 </body>
 
