@@ -73,14 +73,13 @@ class OrderTable extends Component
                 'dealer_id',
                 'customer_id',
                 'order_ref',
-                'due_date',
                 'delivery_date',
                 'delivery_id',
                 'broker_ref',
                 'updated_at',
             )
             ->with([
-                'vehicle:id,model,ford_order_number,build_date,derivative,reg,vehicle_status,orbit_number,vehicle_registered_on',
+                'vehicle:id,model,ford_order_number,build_date,due_date,derivative,reg,vehicle_status,orbit_number,vehicle_registered_on',
                 'customer:id,customer_name',
                 'broker:id,company_name',
                 'dealer:id,company_name',

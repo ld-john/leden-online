@@ -1,4 +1,4 @@
-<div>
+<div class="mb-4">
     <form wire:submit.prevent="orderFormSubmit" method="POST" enctype="multipart/form-data">
         @csrf
         @if (session()->has('message'))
@@ -22,162 +22,206 @@
             </div>
         @endif
 
-        <div id="mainOrderForm">
-
-            {{-- Customer --}}
-            <div class="card mb-3">
-                <div class="card-header" id="headingCustomer">
-                    <h5 class="mb-0">
-                        <button type="button" wire:click="$set('showCustomerInfo' , {{!$showCustomerInfo}})" class="btn btn-link" data-toggle="collapse" data-target="#collapseCustomer" aria-expanded="true" aria-controls="collapseCustomer">
-                            Customer Information
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapseCustomer" class="collapse @if( $showCustomerInfo ) show @endif" aria-labelledby="headingCustomer">
-                    <div class="card-body">
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingCustomer">
+                    <button
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseCustomer"
+                            aria-expanded="true"
+                            aria-controls="collapseCustomer"
+                    >
+                        Customer Information
+                    </button>
+                </h2>
+                <div
+                        id="collapseCustomer"
+                        class="accordion-collapse collapse show"
+                        aria-labelledby="headingCustomer"
+                >
+                    <div class="accordion-body">
                         @include('order.partials.customer')
                     </div>
                 </div>
             </div>
-
-            {{-- Company Details --}}
-            <div class="card mb-3">
-                <div class="card-header" id="headingCompany">
-                    <h5 class="mb-0">
-                        <button type="button" class="btn btn-link" wire:click="$set('showCompanyInfo' , {{!$showCompanyInfo}})" data-toggle="collapse" data-target="#collapseCompany" aria-expanded="true" aria-controls="collapseCompany">
-                            Company
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapseCompany" class="collapse @if( $showCompanyInfo ) show @endif" aria-labelledby="headingCompany">
-                    <div class="card-body">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingCompany">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCompany" aria-expanded="false" aria-controls="collapseCompany">
+                        Company
+                    </button>
+                </h2>
+                <div id="collapseCompany" class="accordion-collapse collapse" aria-labelledby="headingCompany">
+                    <div class="accordion-body">
                         @include('order.partials.company')
                     </div>
                 </div>
             </div>
-
-            {{-- Vehicle --}}
-            <div class="card mb-3">
-                <div class="card-header" id="headingVehicle">
-                    <h5 class="mb-0">
-                        <button type="button" class="btn btn-link" wire:click="$set('showVehicleInfo' , {{!$showVehicleInfo}})" data-toggle="collapse" data-target="#collapseVehicle" aria-expanded="true" aria-controls="collapseVehicle">
-                            Vehicle Information
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapseVehicle" class="collapse @if( $showVehicleInfo ) show @endif" aria-labelledby="headingVehicle">
-                    <div class="card-body">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingVehicle">
+                    <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseVehicle"
+                            aria-expanded="true"
+                            aria-controls="collapseVehicle"
+                    >
+                        Vehicle Information
+                    </button>
+                </h2>
+                <div
+                        id="collapseVehicle"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingVehicle"
+                >
+                    <div class="accordion-body">
                         @include('order.partials.vehicle')
                     </div>
                 </div>
             </div>
-
-            {{-- Factory Fit --}}
-            <div class="card mb-3">
-                <div class="card-header" id="headingFactoryFit">
-                    <h5 class="mb-0">
-                        <button type="button" class="btn btn-link" wire:click="$set('showFactoryFitOptions' , {{!$showFactoryFitOptions}})" data-toggle="collapse" data-target="#collapseFactoryFit" aria-expanded="true" aria-controls="collapseFactoryFit">
-                            Factory Fit Options
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapseFactoryFit" class="collapse @if( $showFactoryFitOptions ) show @endif" aria-labelledby="headingFactoryFit">
-                    <div class="card-body">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFactoryFit">
+                    <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseFactoryFit"
+                            aria-expanded="true"
+                            aria-controls="collapseFactoryFit"
+                    >
+                        Factory Fit Options
+                    </button>
+                </h2>
+                <div
+                        id="collapseFactoryFit"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingFactoryFit"
+                >
+                    <div class="accordion-body">
                         @include('partials.factory-fit')
                     </div>
                 </div>
             </div>
-
-            {{-- Dealer Fit --}}
-            <div class="card mb-3">
-                <div class="card-header" id="headingDealerFit">
-                    <h5 class="mb-0">
-                        <button type="button" class="btn btn-link" wire:click="$set('showDealerFitOptions' , {{!$showDealerFitOptions}})" data-toggle="collapse" data-target="#collapseDealerFit" aria-expanded="true" aria-controls="collapseDealerFit">
-                            Dealer Fit
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapseDealerFit" class="collapse @if( $showDealerFitOptions ) show @endif" aria-labelledby="headingDealerFit" >
-                    <div class="card-body">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingDealerFit">
+                    <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseDealerFit"
+                            aria-expanded="true"
+                            aria-controls="collapseDealerFit"
+                    >
+                        Dealer Fit
+                    </button>
+                </h2>
+                <div
+                        id="collapseDealerFit"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingDealerFit"
+                >
+                    <div class="accordion-body">
                         @include('partials.dealer-fit')
                     </div>
                 </div>
             </div>
-
-            {{-- Cost Breakdown --}}
-            <div class="card mb-3">
-                <div class="card-header" id="headingCost">
-                    <h5 class="mb-0">
-                        <button type="button" class="btn btn-link" wire:click="$set('showCostBreakdown' , {{!$showCostBreakdown}})" data-toggle="collapse @if( $showCostBreakdown ) show @endif" data-target="#collapseCost" aria-expanded="true" aria-controls="collapseCost">
-                            Cost Breakdown
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapseCost" class="collapse @if( $showCostBreakdown ) show @endif" aria-labelledby="headingCost">
-                    <div class="card-body">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingCost">
+                    <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseCost"
+                            aria-expanded="true"
+                            aria-controls="collapseCost"
+                    >
+                        Cost Breakdown
+                    </button>
+                </h2>
+                <div
+                        id="collapseCost"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingCost"
+                >
+                    <div class="accordion-body">
                         @include('order.partials.cost')
                     </div>
                 </div>
             </div>
-
-            {{-- Invoice --}}
-            <div class="card mb-3">
-                <div class="card-header" id="headingInvoice">
-                    <h5 class="mb-0">
-                        <button type="button" class="btn btn-link" wire:click="$set('showInvoicingInformation' , {{!$showInvoicingInformation}})" data-toggle="collapse" data-target="#collapseInvoice" aria-expanded="true" aria-controls="collapseInvoice">
-                            Invoicing Information
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapseInvoice" class="collapse @if( $showInvoicingInformation ) show @endif" aria-labelledby="headingInvoice">
-                    <div class="card-body">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingInvoice">
+                    <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseInvoice"
+                            aria-expanded="true"
+                            aria-controls="collapseInvoice"
+                    >
+                        Invoicing Information
+                    </button>
+                </h2>
+                <div
+                        id="collapseInvoice"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingInvoice"
+                >
+                    <div class="accordion-body">
                         @include('order.partials.invoice')
                     </div>
                 </div>
             </div>
-
-
-            {{-- Delivery --}}
-            <div class="card mb-3">
-                <div class="card-header" id="headingInvoice">
-                    <h5 class="mb-0">
-                        <button type="button" class="btn btn-link" wire:click="$set('showDeliveryInformation' , {{!$showDeliveryInformation}})" data-toggle="collapse" data-target="#collapseDelivery" aria-expanded="true" aria-controls="collapseDelivery">
-                            Delivery Information
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapseDelivery" class="collapse @if( $showDeliveryInformation ) show @endif" aria-labelledby="headingInvoice">
-                    <div class="card-body">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingDelivery">
+                    <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseDelivery"
+                            aria-expanded="true"
+                            aria-controls="collapseDelivery"
+                    >
+                        Delivery Information
+                    </button>
+                </h2>
+                <div
+                        id="collapseDelivery"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingDelivery"
+                >
+                    <div class="accordion-body">
                         @include('order.partials.delivery')
                     </div>
                 </div>
             </div>
-
-            {{-- Additonal --}}
-            <div class="card mb-3">
-                <div class="card-header" id="headingDelivery">
-                    <h5 class="mb-0">
-                        <button type="button" class="btn btn-link" wire:click="$set('showAdditionalInformation' , {{!$showAdditionalInformation}})" data-toggle="collapse" data-target="#collapseAdditional" aria-expanded="true" aria-controls="collapseAdditional">
-                            Additional Information
-                        </button>
-                    </h5>
-                </div>
-                <div id="collapseAdditional" class="collapse @if( $showAdditionalInformation ) show @endif" aria-labelledby="headingAdditional">
-                    <div class="card-body">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingAdditional">
+                    <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseAdditional"
+                            aria-expanded="true"
+                            aria-controls="collapseAdditional"
+                    >
+                        Additional Information
+                    </button>
+                </h2>
+                <div
+                        id="collapseAdditional"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingAdditional"
+                >
+                    <div class="accordion-body">
                         @include('order.partials.additional')
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card-footer text-right">
+
+        <div class="mt-4 text-right">
             <button class="btn btn-primary" id="goButton" type="submit">Save Order</button>
         </div>
     </form>

@@ -1,30 +1,24 @@
 <div>
-    {{-- Because she competes with no one, no one can compete with her. --}}
-    <div class="col-5 mb-5">
+    <div class="container-xxl mb-4">
         <h2>Add New {{ ucfirst($metatype) }} </h2>
         <form wire:submit.prevent="new">
             <div class="input-group">
-                <div class="input-group-text">
-                    <span class="input-group-text">{{ ucfirst($metatype) }} name:</span>
-                </div>
+                <span class="input-group-text">{{ ucfirst($metatype) }} name:</span>
+
                 <input
                         type="text"
                         class="form-control"
                         wire:model="new_name"
 
                 >
-                <div class="input-group-text">
-                    <button class="btn btn-primary"
-                            type="submit"
-                            wire:click.prevent="newVehicleMeta()"
-                    >
-                        <i class="fa fa-plus"></i> Add
-                    </button>
-                </div>
+                <button class="btn btn-primary"
+                        type="submit"
+                        wire:click.prevent="newVehicleMeta()"
+                >
+                    <i class="fa fa-plus"></i> Add
+                </button>
             </div>
         </form>
-
-
     </div>
 
     <div class="col-12">
@@ -43,12 +37,12 @@
                         <td>
                             {{ $name->name }}
                         </td>
-                        <td>
-                            <ul>
+                        <td class="p-0">
+                            <ul class="list-group list-group-flush">
                                 @forelse( $name->vehicle_model as $model)
-                                    <li>{{$model->name}}</li>
+                                    <li class="list-group-item flex-fill">{{$model->name}}</li>
                                 @empty
-                                    <li>No vehicle associated with this {{ ucfirst($metatype) }}</li>
+                                    <li class="list-group-item flex-fill">No vehicle associated with this {{ ucfirst($metatype) }}</li>
                                 @endforelse
                             </ul>
                         </td>

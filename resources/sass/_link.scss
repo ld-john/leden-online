@@ -97,6 +97,12 @@
   overflow-y: scroll;
 }
 
+.messages-box,
+.contact-box {
+  height: 510px;
+  overflow-y: scroll;
+}
+
 .news-container {
   display: flex;
   flex-direction: row;
@@ -165,4 +171,8 @@
   width: 40px;
   height: 40px;
   object-fit: cover;
+}
+
+#content-wrapper {
+  min-height: calc(100vh - 55px);
 }

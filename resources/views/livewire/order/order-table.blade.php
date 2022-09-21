@@ -97,10 +97,10 @@
                     @else
                         <td>{{ \Carbon\Carbon::parse($order->vehicle->build_date ?? '')->format( 'd/m/Y' )}}</td>
                     @endif
-                    @if ( empty( $order->due_date) || $order->due_date == '0000-00-00 00:00:00')
+                    @if ( empty( $order->vehicle->due_date) || $order->vehicle->due_date == '0000-00-00 00:00:00')
                         <td></td>
                     @else
-                        <td>{{ \Carbon\Carbon::parse($order->due_date ?? '')->format( 'd/m/Y' )}}</td>
+                        <td>{{ \Carbon\Carbon::parse($order->vehicle->due_date )->format( 'd/m/Y' )}}</td>
                     @endif
 
                     <td>{{ $order->vehicle->status() }}</td>

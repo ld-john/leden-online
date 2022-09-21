@@ -216,11 +216,22 @@ class CSVUploadController extends Controller
                         )->format('Y-m-d h:i:s');
                     }
 
+                    if ($ford_report['ETA_DATE']) {
+                        $due_date = Carbon::createFromFormat(
+                                'd/m/Y',
+                                $ford_report['ETA_DATE'],
+                            )->format('Y-m-d h:i:s');
+                    } else {
+                        $due_date = null;
+                    }
+
+
                     $vehicle->update([
                         'chassis' => $ford_report['VIN'],
                         'chassis_prefix' => $prefix,
                         'vehicle_status' => $location,
                         'build_date' => $build_date,
+                        'due_date' => $due_date
                     ]);
 
                     $order = $vehicle->order;
@@ -236,21 +247,6 @@ class CSVUploadController extends Controller
                                     new VehicleInStockNotification($vehicle),
                                 );
                             }
-                        }
-                    }
-
-                    if ($order) {
-                        if ($ford_report['ETA_DATE']) {
-                            $order->update([
-                                'due_date' => Carbon::createFromFormat(
-                                    'd/m/Y',
-                                    $ford_report['ETA_DATE'],
-                                )->format('Y-m-d h:i:s'),
-                            ]);
-                        } else {
-                            $order->update([
-                                'due_date' => null,
-                            ]);
                         }
                     }
                 }

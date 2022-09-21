@@ -12163,6 +12163,12 @@ table.dataTable {
   overflow-y: scroll;
 }
 
+.messages-box,
+.contact-box {
+  height: 510px;
+  overflow-y: scroll;
+}
+
 .news-container {
   display: flex;
   flex-direction: row;
@@ -12241,6 +12247,10 @@ table.dataTable {
   height: 40px;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+#content-wrapper {
+  min-height: calc(100vh - 55px);
 }
 
 .multi-select-container {

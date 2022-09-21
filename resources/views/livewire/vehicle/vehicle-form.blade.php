@@ -18,9 +18,7 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('make')
-                            <div class="input-group-text">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectMake"><i class="fa fa-exclamation-triangle"></i></label>
-                            </div>
+                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectMake"><i class="fa fa-exclamation-triangle"></i></label>
                             @enderror
                             <select wire:model="make" class="form-select" id="inputGroupSelectMake">
                                 <option selected>Choose...</option>
@@ -51,9 +49,7 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('model')
-                            <div class="input-group-text">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
-                            </div>
+                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
                             @enderror
                             <select class="form-select" @if(count($vehicle_models) === 0) disabled @endif field-parent="vehicle_model" wire:model="model" id="inputGroupSelectModel">
                                 <option value="" selected>Choose...</option>
@@ -69,9 +65,7 @@
                     <label for="orbit_number" class="col-md-2 col-form-label">Orbit Number</label>
                     <div class="col-md-6">
                         @error('orbit_number')
-                        <div class="input-group-text">
                             <label for="inputGroupOrbitNumberText" class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
-                        </div>
                         @enderror
                         <input wire:model="orbit_number" type="text" name="orbit_number" id="orbit_number" class="form-control" autocomplete="off" />
                     </div>
@@ -81,9 +75,7 @@
                     <label for="order_ref" class="col-md-2 col-form-label">Order Ref</label>
                     <div class="col-md-6">
                         @error('order_ref')
-                        <div class="input-group-text">
-                            <label for="inputGroupOrbitNumberText" class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
-                        </div>
+                        <label class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
                         @enderror
                         <input wire:model="order_ref" type="text" name="order_ref" id="order_ref" class="form-control" autocomplete="off" />
                     </div>
@@ -94,9 +86,7 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('type')
-                            <div class="input-group-text">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectType"><i class="fa fa-exclamation-triangle"></i></label>
-                            </div>
+                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectType"><i class="fa fa-exclamation-triangle"></i></label>
                             @enderror
                             <select @if(count($types) === 0) disabled @endif wire:model="type" class="form-select" id="inputGroupSelectType">
                                 <option selected>Choose...</option>
@@ -120,9 +110,7 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('derivative')
-                            <div class="input-group-text">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectDerivatives"><i class="fa fa-exclamation-triangle"></i></label>
-                            </div>
+                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectDerivatives"><i class="fa fa-exclamation-triangle"></i></label>
                             @enderror
                             <select wire:model="derivative" @if(count($derivatives) === 0) disabled @endif class="form-select" id="inputGroupSelectDerivatives">
                                 <option selected>Choose...</option>
@@ -148,9 +136,7 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('engine')
-                            <div class="input-group-text">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectEngine"><i class="fa fa-exclamation-triangle"></i></label>
-                            </div>
                             @enderror
                             <select wire:model="engine" @if(count($engines) === 0) disabled @endif class="form-select" id="inputGroupSelectEngine">
                                 <option selected>Choose...</option>
@@ -176,9 +162,7 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('transmission')
-                            <div class="input-group-text">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectTransmission"><i class="fa fa-exclamation-triangle"></i></label>
-                            </div>
                             @enderror
                             <select wire:model="transmission" @if(count($transmissions) === 0) disabled @endif class="form-select" id="inputGroupSelectTransmission">
                                 <option selected>Choose...</option>
@@ -205,9 +189,7 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('fuel_type')
-                            <div class="input-group-text">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
-                            </div>
+                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
                             @enderror
                             <select wire:model="fuel_type" @if(count($fuel_types) === 0) disabled @endif class="form-select" id="inputGroupSelectFuel">
                                 <option selected>Choose...</option>
@@ -233,9 +215,7 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('colour')
-                            <div class="input-group-text">
                                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
-                            </div>
                             @enderror
                             <select wire:model="colour" @if(count($colours) === 0) disabled @endif class="form-select" id="inputGroupSelectColour">
                                 <option selected>Choose...</option>
@@ -261,9 +241,7 @@
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             @error('trim')
-                            <div class="input-group-text">
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
-                            </div>
+                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
                             @enderror
                             <select wire:model="trim" @if(count($trims) === 0) disabled @endif class="form-select" id="inputGroupSelectTrim">
                                 <option selected>Choose...</option>
@@ -312,26 +290,32 @@
                     <label class="col-md-2 col-form-label" for="vehicle_status">Vehicle Status <small
                                 class="text-danger">(required)</small></label>
                     <div class="col-md-6">
-                        <select wire:model="status" class="form-control" name="vehicle_status" id="vehicle_status">
-                            <option value="">Please Select Status</option>
-                            <option value="4">Factory Order</option>
-                            @if ($registered_date)
-                                <option value="15">In Stock (Registered)</option>
-                            @endif
-                            <option value="1">In Stock</option>
-                            <option value="3">Ready for Delivery</option>
-                            <option value="5">Awaiting Delivery Confirmation</option>
-                            <option value="6">Delivery Booked</option>
-                            @if ($registered_date && $registered_date < $now)
-                                <option value="7">Completed Orders</option>
-                            @endif
-                            <option value="10">Europe VHC</option>
-                            <option value="11">UK VHC</option>
-                            <option value="12">At Converter</option>
-                            <option value="13">Awaiting Ship</option>
-                            <option value="14">Recall</option>
-                            <option value="16">Damaged/Recalled</option>
-                        </select>
+                        <div class="input-group">
+                            @error('status')
+                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
+                            @enderror
+                            <select wire:model="status" class="form-control" name="vehicle_status" id="vehicle_status">
+                                <option value="">Please Select Status</option>
+                                <option value="4">Factory Order</option>
+                                @if ($registered_date)
+                                    <option value="15">In Stock (Registered)</option>
+                                @endif
+                                <option value="1">In Stock</option>
+                                <option value="3">Ready for Delivery</option>
+                                <option value="5">Awaiting Delivery Confirmation</option>
+                                <option value="6">Delivery Booked</option>
+                                @if ($registered_date && $registered_date < $now)
+                                    <option value="7">Completed Orders</option>
+                                @endif
+                                <option value="10">Europe VHC</option>
+                                <option value="11">UK VHC</option>
+                                <option value="12">At Converter</option>
+                                <option value="13">Awaiting Ship</option>
+                                <option value="14">Recall</option>
+                                <option value="16">Damaged/Recalled</option>
+                            </select>
+                        </div>
+
                     </div>
                 </div>
                 @if(Auth()->user()->role != 'broker')
@@ -348,12 +332,41 @@
                     <label class="col-md-2 col-form-label" for="vehicle_registered_on">Vehicle
                         Registered</label>
                     <div class="col-md-6">
-                        <input type="date"
-                               name="vehicle_registered_on"
-                               class="form-control"
-                               autocomplete="off"
-                               wire:model="registered_date"
-                        />
+                        <div class="input-group">
+                            @error('registered_date')
+                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
+                            @enderror
+                            <input type="date"
+                                   name="vehicle_registered_on"
+                                   class="form-control"
+                                   autocomplete="off"
+                                   wire:model="registered_date"
+                                   id="vehicle_registered_on"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="build_date" class="col-md-2 col-form-label">Proposed Build Date</label>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            @error('build_date')
+                            <label class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
+                            @enderror
+                            <input type="date" name="build_date" id="build_date" autocomplete="off" wire:model="build_date" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="due_date" class="col-md-2 col-form-label">Due Date</label>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            @error('due_date')
+                            <label class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
+                            @enderror
+                            <input type="date" name="due_date" id="due_date" autocomplete="off" wire:model="due_date" class="form-control">
+                        </div>
+
                     </div>
                 </div>
                 <div class="form-group row">

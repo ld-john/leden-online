@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Customer;
 
 use App\Customer;
-use Cassandra\Custom;
 use Livewire\Component;
 
 class QuickEditCustomer extends Component
@@ -17,7 +16,6 @@ class QuickEditCustomer extends Component
     public $county;
     public $postcode;
     public $phone_number;
-    public $modalShow = false;
     protected $rules = array(
         'customer_name' => 'required',
         'address_1' => 'required',
@@ -37,11 +35,6 @@ class QuickEditCustomer extends Component
         $this->phone_number = $customer->phone_number;
     }
 
-    public function toggleEditModal()
-    {
-        $this->modalShow = !$this->modalShow;
-    }
-
     public function saveCustomer()
     {
         $customer = $this->customer;
@@ -55,7 +48,6 @@ class QuickEditCustomer extends Component
            'postcode' => $this->postcode,
            'phone_number' => $this->phone_number,
         ]);
-        $this->modalShow = false;
     }
 
     public function render()

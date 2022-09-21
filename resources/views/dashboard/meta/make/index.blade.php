@@ -5,23 +5,21 @@
 
 @section('content')
     <!-- Begin Page Content -->
-    <div class="container-fluid force-min-height">
+    <div class="container-xxl force-min-height">
 
         <!-- Content Row -->
         <div class="row justify-content-center">
 
-            <div class="col-lg-12">
-                <h1 class="h3 mb-4 text-gray-800">Manage Make</h1>
+            <h1 class="h3 mb-4 text-gray-800">Manage Make</h1>
 
-                @include('partials.successMsg')
+            @include('partials.successMsg')
 
-                <livewire:make-editor />
-
-            </div>
+            <livewire:make-editor />
 
         </div>
 
     </div>
+
 
 
     <!-- /.container-fluid -->

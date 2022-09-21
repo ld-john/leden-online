@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Maatwebsite\Excel\Excel;
-use PhpOffice\PhpSpreadsheet\Writer\Exception;
 
 /**
  * @property mixed $vehicle_status
@@ -24,6 +22,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Exception;
  * @property mixed $list_price
  * @property mixed $metallic_paint
  * @property mixed $type
+ * @property mixed $due_date
  * @property mixed $chassis_prefix
  * @property false|mixed|string|null $factory_fit_options
  * @property false|mixed|string|null $dealer_fit_options

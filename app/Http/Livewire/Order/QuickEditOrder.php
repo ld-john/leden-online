@@ -19,7 +19,6 @@ class QuickEditOrder extends Component
 {
     public $order;
     public $vehicle;
-    public $modalShow = false;
     public $vehicleStatus;
     public $due_date;
     public $orbit_number;
@@ -38,11 +37,6 @@ class QuickEditOrder extends Component
         'due_date' => 'nullable|date',
         'build_date' => 'nullable|date',
     ];
-
-    public function toggleEditModal()
-    {
-        $this->modalShow = !$this->modalShow;
-    }
 
     /**
      * @throws Exception
@@ -89,8 +83,8 @@ class QuickEditOrder extends Component
             $del = new DateTime($order->delivery_date);
             $this->delivery_date = $del->format('Y-m-d');
         }
-        if ($order->due_date && $order->due_date != '0000-00-00 00:00:00') {
-            $del = new DateTime($order->due_date);
+        if ($order->vehicle->due_date && $order->vehicle->due_date != '0000-00-00 00:00:00') {
+            $del = new DateTime($order->vehicle->due_date);
             $this->due_date = $del->format('Y-m-d');
         }
         $this->vehicleStatus = $vehicle->vehicle_status;
@@ -109,6 +103,7 @@ class QuickEditOrder extends Component
             'vehicle_status' => $this->vehicleStatus,
             'orbit_number' => $this->orbit_number,
             'build_date' => $this->build_date,
+            'due_date' => $this->due_date,
             'vehicle_registered_on' => $this->registered_date,
         ]);
         $order = $this->order;
@@ -127,7 +122,6 @@ class QuickEditOrder extends Component
         }
 
         $order->update([
-            'due_date' => $this->due_date,
             'delivery_date' => $this->delivery_date,
             'created_at' => $this->order_date,
         ]);

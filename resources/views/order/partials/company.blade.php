@@ -4,9 +4,7 @@
     <div class="col-md-6">
         <div class="input-group mb-3">
         @error('dealership')
-        <div class="input-group-text">
             <label class="input-group-text bg-danger text-white" for="inputGroupSelectDealership"><i class="fa fa-exclamation-triangle"></i></label>
-        </div>
         @enderror
         <select wire:model="dealership" name="dealership" id="inputGroupSelectDealership" class="form-control">
             <option value="">Select Dealership</option>
@@ -62,9 +60,7 @@
 
         <div class="input-group mb-3">
             @error('broker')
-            <div class="input-group-text">
                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectBroker"><i class="fa fa-exclamation-triangle"></i></label>
-            </div>
             @enderror
             <select wire:model="broker" class="form-select" id="inputGroupSelectBroker">
                 <option selected>Choose...</option>
@@ -92,6 +88,12 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="order_ref"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Order Ref</label>
     <div class="col-md-6">
-        <input wire:model="order_ref" type="text" name="order_ref" id="order_ref" class="form-control" autocomplete="off" />
+        <div class="input-group">
+            @error('order_ref')
+            <label class="input-group-text bg-danger text-white" for="inputGroupSelectBroker"><i class="fa fa-exclamation-triangle"></i></label>
+            @enderror
+            <input wire:model="order_ref" type="text" name="order_ref" id="order_ref" class="form-control" autocomplete="off" />
+        </div>
+
     </div>
 </div>

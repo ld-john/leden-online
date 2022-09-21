@@ -1,68 +1,65 @@
 <div>
-    @if (session()->has('message'))
-        <div class="alert alert-success" role="alert">
-            {{session('message')}}
-        </div>
-    @endif
-    <h3>Add New {{ ucfirst($fitType) }} Fit Option</h3>
-    <div class="d-flex justify-content-between">
-        <div class="form-group me-2 w-100">
-            <label for="option_name">Option Name</label>
-            <div class="input-group">
-                @error('option_name')
-                <div class="input-group-text">
-                    <label class="input-group-text bg-danger text-white" for="option_name"><i class="fa fa-exclamation-triangle"></i></label>
-                </div>
-                @enderror
-                <input type="text" class="form-control" id="option_name" wire:model="option_name">
-            </div>
-        </div>
-        <div class="form-group me-2 w-100">
-            <label for="model">Model</label>
-            <div class="input-group">
-                <select name="model" id="" class="form-control">
-                    @foreach($vehicle_models as $vehicle_model)
-                        <option value="{{ $vehicle_model->id }}">{{ $vehicle_model->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-        </div>
-        <div class="form-group me-2 w-100">
-            <label for="model_year">Model Year</label>
-            <div class="input-group">
-                @error('model_year')
-                <div class="input-group-text">
-                    <label class="input-group-text bg-danger text-white" for="model_year_input"><i class="fa fa-exclamation-triangle"></i></label>
-                </div>
-                @enderror
-                <input type="text" class="form-control model_year" id="model_year_input" wire:model="model_year" onchange="this.dispatchEvent(new InputEvent('input'))">
-            </div>
-        </div>
-        @if($fitType === 'dealer')
+    <div class="container-xxl">
+        <h3>Add New {{ ucfirst($fitType) }} Fit Option</h3>
+        <div class="d-flex justify-content-between">
             <div class="form-group me-2 w-100">
-                <label for="dealer">Dealer</label>
-                <select name="dealer" id="dealer" wire:model="dealer" class="form-control">
-                    <option value=""></option>
-                    @foreach($dealers as $option)
-                        <option value="{{ $option->id }}">{{ $option->company_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        @endif
-        <div class="form-group me-2 w-100">
-            <label for="price">Price</label>
-            <div class="input-group">
-                @error('price')
-                <div class="input-group-text">
-                    <label class="input-group-text bg-danger text-white" for="price"><i class="fa fa-exclamation-triangle"></i></label>
+                <label for="option_name">Option Name</label>
+                <div class="input-group">
+                    @error('option_name')
+                    <div class="input-group-text">
+                        <label class="input-group-text bg-danger text-white" for="option_name"><i class="fa fa-exclamation-triangle"></i></label>
+                    </div>
+                    @enderror
+                    <input type="text" class="form-control" id="option_name" wire:model="option_name">
                 </div>
-                @enderror
-                <input type="text" class="form-control" id="price" wire:model="price">
             </div>
+            <div class="form-group me-2 w-100">
+                <label for="model">Model</label>
+                <div class="input-group">
+                    <select name="model" id="" class="form-control">
+                        @foreach($vehicle_models as $vehicle_model)
+                            <option value="{{ $vehicle_model->id }}">{{ $vehicle_model->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
+            </div>
+            <div class="form-group me-2 w-100">
+                <label for="model_year">Model Year</label>
+                <div class="input-group">
+                    @error('model_year')
+                    <div class="input-group-text">
+                        <label class="input-group-text bg-danger text-white" for="model_year_input"><i class="fa fa-exclamation-triangle"></i></label>
+                    </div>
+                    @enderror
+                    <input type="text" class="form-control model_year" id="model_year_input" wire:model="model_year" onchange="this.dispatchEvent(new InputEvent('input'))">
+                </div>
+            </div>
+            @if($fitType === 'dealer')
+                <div class="form-group me-2 w-100">
+                    <label for="dealer">Dealer</label>
+                    <select name="dealer" id="dealer" wire:model="dealer" class="form-control">
+                        <option value=""></option>
+                        @foreach($dealers as $option)
+                            <option value="{{ $option->id }}">{{ $option->company_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+            <div class="form-group me-2 w-100">
+                <label for="price">Price</label>
+                <div class="input-group">
+                    @error('price')
+                    <div class="input-group-text">
+                        <label class="input-group-text bg-danger text-white" for="price"><i class="fa fa-exclamation-triangle"></i></label>
+                    </div>
+                    @enderror
+                    <input type="text" class="form-control" id="price" wire:model="price">
+                </div>
+
+            </div>
+            <button wire:click="addNewOption" type="button" class="btn btn-primary w-25">Add New Fit Option</button>
         </div>
-        <button wire:click="addNewOption" type="button" class="btn btn-primary w-25">Add New Fit Option</button>
     </div>
     <div class="d-flex justify-content-between align-items-center">
         <div class="w-25 p-3 d-flex align-items-center">

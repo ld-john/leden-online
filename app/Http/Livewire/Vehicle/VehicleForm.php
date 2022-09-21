@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -47,6 +48,8 @@ class VehicleForm extends Component
     public $status;
     public $model_year;
     public $registered_date;
+    public $due_date;
+    public $build_date;
     public $ford_pipeline = '0';
     public $factoryFitOptions = []; // Vehicle -> JSON of IDs to fit_options
     public $dealerFitOptions = []; // Vehicle
@@ -80,6 +83,8 @@ class VehicleForm extends Component
         'trim' => 'required',
         'status' => 'required',
         'registered_date' => 'nullable|date',
+        'build_date' => 'nullable|date',
+        'due_date' => 'nullable|date',
     ];
 
     protected $messages = [
@@ -113,6 +118,14 @@ class VehicleForm extends Component
             if ($this->vehicle->vehicle_registered_on) {
                 $reg = new DateTime($this->vehicle->vehicle_registered_on);
                 $this->registered_date = $reg->format('Y-m-d');
+            }
+            if ($this->vehicle->build_date) {
+                $bd = new DateTime($this->vehicle->build_date);
+                $this->build_date = $bd->format('Y-m-d');
+            }
+            if ($this->vehicle->due_date) {
+                $dd = new DateTime($this->vehicle->due_date);
+                $this->due_date = $dd->format('Y-m-d');
             }
 
             $this->type = $this->vehicle->type;
@@ -166,6 +179,13 @@ class VehicleForm extends Component
     {
         $this->validate();
 
+        $this->validate([
+           'orbit_number' => [
+               'nullable',
+               Rule::unique('vehicle')->ignore($this->vehicle->id)
+           ]
+        ]);
+
         if ($this->orbit_number === '') {
             $this->orbit_number = null;
         }
@@ -210,6 +230,8 @@ class VehicleForm extends Component
         $vehicle->first_reg_fee = $this->first_reg_fee;
         $vehicle->rfl_cost = $this->rfl_cost;
         $vehicle->onward_delivery = $this->onward_delivery;
+        $vehicle->build_date = $this->build_date;
+        $vehicle->due_date = $this->due_date;
         $vehicle->vehicle_registered_on = $this->registered_date;
         $vehicle->hide_from_broker = $this->hide_from_broker;
         $vehicle->hide_from_dealer = $this->hide_from_dealer;

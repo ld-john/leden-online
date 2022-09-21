@@ -11,7 +11,7 @@
             entries
         </div>
     </div>
-    <table class="table table-bordered">
+    <table class="table table-hover table-bordered">
         <thead>
         <tr class="blue-background text-white">
             <th>ID</th>
@@ -26,6 +26,7 @@
             <th>Type</th>
             <th>Chassis</th>
             <th>Registration</th>
+            <th>Due Date</th>
             <th>Planned Build Date</th>
             <th>Dealership</th>
             @if($ringfenced)
@@ -67,6 +68,10 @@
             </th>
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchRegistration" type="text" class="form-control" placeholder="Search Registration">
+            </th>
+            <th class="p-1">
+                <input wire:model.debounce:500ms="searchDueDate" class="form-control" placeholder="Search Due Date" type="text">
+
             </th>
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchBuildDate" type="text" class="form-control" placeholder="Search Planned Build Date">
@@ -115,6 +120,11 @@
                 <td>{{ $vehicle->type }}</td>
                 <td>{{ $vehicle->chassis }}</td>
                 <td>{{ $vehicle->reg }}</td>
+                @if(empty($vehicle->due_date || $vehicle->due_date == '0000-00-00 00:00:00'))
+                    <td></td>
+                @else
+                    <td>{{ \Carbon\Carbon::parse($vehicle->due_date)->format('d/m/Y') }}</td>
+                @endif
                 @if ( empty( $vehicle->build_date) || $vehicle->build_date == '0000-00-00 00:00:00')
                     <td></td>
                 @else

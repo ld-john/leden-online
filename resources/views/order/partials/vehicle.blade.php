@@ -4,9 +4,7 @@
     <div class="col-md-6">
         <div class="input-group mb-3">
             @error('make')
-            <div class="input-group-text">
-                <label class="input-group-text bg-danger text-white" for="inputGroupSelectMake"><i class="fa fa-exclamation-triangle"></i></label>
-            </div>
+            <label class="input-group-text bg-danger text-white" for="inputGroupSelectMake"><i class="fa fa-exclamation-triangle"></i></label>
             @enderror
             <select wire:model="make" class="form-select" id="inputGroupSelectMake">
                 <option selected>Choose...</option>
@@ -32,9 +30,7 @@
     <div class="col-md-6">
         <div class="input-group mb-3">
             @error('model')
-            <div class="input-group-text">
-                <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
-            </div>
+            <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
             @enderror
             <select class="form-control value-change" @if(count($vehicle_models) === 0) disabled @endif field-parent="vehicle_model" wire:model="model" id="inputGroupSelectModel">
                 <option value="" selected>Choose...</option>
@@ -64,9 +60,7 @@
     <div class="col-md-6">
         <div class="input-group mb-3">
             @error('type')
-            <div class="input-group-text">
-                <label class="input-group-text bg-danger text-white" for="inputGroupSelectType"><i class="fa fa-exclamation-triangle"></i></label>
-            </div>
+            <label class="input-group-text bg-danger text-white" for="inputGroupSelectType"><i class="fa fa-exclamation-triangle"></i></label>
             @enderror
             <select wire:model="type" @if(count($types) === 0) disabled @endif class="form-select" id="inputGroupSelectType">
                 <option selected>Choose...</option>
@@ -90,9 +84,7 @@
         <div class="col-md-6">
             <div class="input-group mb-3">
                 @error('derivative')
-                <div class="input-group-text">
-                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectDerivatives"><i class="fa fa-exclamation-triangle"></i></label>
-                </div>
+                <label class="input-group-text bg-danger text-white" for="inputGroupSelectDerivatives"><i class="fa fa-exclamation-triangle"></i></label>
                 @enderror
 
                 <select wire:model="derivative" @if(count($derivatives) === 0) disabled @endif class="form-select" id="inputGroupSelectDerivatives">
@@ -119,9 +111,7 @@
         <div class="col-md-6">
             <div class="input-group mb-3">
                 @error('engine')
-                <div class="input-group-text">
-                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectEngine"><i class="fa fa-exclamation-triangle"></i></label>
-                </div>
+                <label class="input-group-text bg-danger text-white" for="inputGroupSelectEngine"><i class="fa fa-exclamation-triangle"></i></label>
                 @enderror
                 <select wire:model="engine" @if(count($engines) === 0) disabled @endif class="form-select" id="inputGroupSelectEngine">
                     <option selected>Choose...</option>
@@ -147,9 +137,7 @@
         <div class="col-md-6">
             <div class="input-group mb-3">
                 @error('transmission')
-                <div class="input-group-text">
-                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectTransmission"><i class="fa fa-exclamation-triangle"></i></label>
-                </div>
+                <label class="input-group-text bg-danger text-white" for="inputGroupSelectTransmission"><i class="fa fa-exclamation-triangle"></i></label>
                 @enderror
                 <select wire:model="transmission" @if(count($transmissions) === 0) disabled @endif class="form-select" id="inputGroupSelectTransmission">
                     <option selected>Choose...</option>
@@ -175,9 +163,7 @@
         <div class="col-md-6">
             <div class="input-group mb-3">
                 @error('fuel_type')
-                <div class="input-group-text">
-                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
-                </div>
+                <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
                 @enderror
                 <select wire:model="fuel_type" @if(count($fuel_types) === 0) disabled @endif class="form-select" id="inputGroupSelectFuel">
                     <option selected>Choose...</option>
@@ -203,9 +189,7 @@
         <div class="col-md-6">
             <div class="input-group mb-3">
                 @error('colour')
-                <div class="input-group-text">
-                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
-                </div>
+                <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
                 @enderror
                 <select wire:model="colour" @if(count($colours) === 0) disabled @endif class="form-select" id="inputGroupSelectColour">
                     <option selected >Choose...</option>
@@ -231,9 +215,7 @@
         <div class="col-md-6">
             <div class="input-group mb-3">
                 @error('trim')
-                <div class="input-group-text">
-                    <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
-                </div>
+                <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
                 @enderror
                 <select wire:model="trim" @if(count($trims) === 0) disabled @endif class="form-select" id="inputGroupSelectTrim">
                     <option selected>Choose...</option>
@@ -275,9 +257,7 @@
     <div class="col-md-6">
         <div class="input-group">
             @error('status')
-            <div class="input-group-text">
-                <label class="input-group-text bg-danger text-white" for="inputGroupSelectStatus"><i class="fa fa-exclamation-triangle"></i></label>
-            </div>
+            <label class="input-group-text bg-danger text-white" for="inputGroupSelectStatus"><i class="fa fa-exclamation-triangle"></i></label>
             @enderror
             <select wire:model="status" class="form-select" name="vehicle_status" id="inputGroupSelectStatus">
                 <option value="">Please Select Status</option>
@@ -306,7 +286,17 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="due_date">Due Date to Dealer</label>
     <div class="col-md-6">
-        <input wire:model="due_date" type="date" name="due_date" class="form-control"
+        <input wire:model="due_date" type="date" name="due_date" id="due_date" class="form-control"
+               autocomplete="off"
+               onchange="this.dispatchEvent(new InputEvent('input'))"
+        />
+    </div>
+</div>
+{{-- Build Date --}}
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="build_date">Proposed Build Date</label>
+    <div class="col-md-6">
+        <input wire:model="build_date" type="date" name="build_date" id="build_date" class="form-control"
                autocomplete="off"
                onchange="this.dispatchEvent(new InputEvent('input'))"
         />

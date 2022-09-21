@@ -74,7 +74,8 @@ class OrderForm extends Component
     public $chassis_prefix;
     public $chassis;
     public $status;
-    public $due_date; // Order
+    public $build_date; //Vehicle
+    public $due_date; // Vehicle
     public $delivery_date; // Order
     public $model_year;
     public $registered_date;
@@ -153,6 +154,7 @@ class OrderForm extends Component
         'dealership' => 'required',
         'order_ref' => 'required',
         'delivery_date' => 'nullable|date',
+        'build_date' => 'nullable|date',
         'due_date' => 'nullable|date',
         'registered_date' => 'nullable|date',
         'dealer_pay_date' => 'nullable|date',
@@ -192,6 +194,14 @@ class OrderForm extends Component
             if ($this->vehicle->vehicle_registered_on) {
                 $reg = new DateTime($this->vehicle->vehicle_registered_on);
                 $this->registered_date = $reg->format('Y-m-d');
+            }
+            if ($this->vehicle->due_date) {
+                $del = new DateTime($this->vehicle->due_date);
+                $this->due_date = $del->format('Y-m-d');
+            }
+            if ($this->vehicle->build_date) {
+                $bd = new DateTime($this->vehicle->build_date);
+                $this->build_date = $bd->format('Y-m-d');
             }
 
             $this->make = $this->vehicle->make;
@@ -238,10 +248,6 @@ class OrderForm extends Component
         }
         if (isset($this->order)) {
             // Handle Dates coming in so JS can play nice with them.
-            if ($this->order->due_date) {
-                $del = new DateTime($this->order->due_date);
-                $this->due_date = $del->format('Y-m-d');
-            }
             if ($this->order->delivery_date) {
                 $del = new DateTime($this->order->delivery_date);
                 $this->delivery_date = $del->format('Y-m-d');
@@ -480,7 +486,6 @@ class OrderForm extends Component
             $order->dealer_id = $this->dealership;
             $order->comments = $this->comments;
             $order->broker_ref = $this->broker_ref;
-            $order->due_date = $this->due_date;
             $order->delivery_date = $this->delivery_date;
             $order->registration_company_id = $this->registration_company;
             $order->invoice_company_id = $this->invoice_company;
@@ -766,6 +771,8 @@ class OrderForm extends Component
             'dealer_id' => $this->dealership,
             'broker_id' => $this->broker,
             'vehicle_registered_on' => $this->registered_date,
+            'due_date' => $this->due_date,
+            'build_date' => $this->build_date,
             'model_year' => $this->model_year,
             'ford_order_number' => $this->order_ref,
             'make' => $this->make,

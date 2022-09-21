@@ -34,6 +34,7 @@ class VehicleTable extends Component
     public $searchType;
     public $searchChassis;
     public $searchRegistration;
+    public $searchDueDate;
     public $searchBuildDate;
     public $searchDealer;
     public $searchBroker;
@@ -54,8 +55,7 @@ class VehicleTable extends Component
 
     public function render()
     {
-        $data = Vehicle::select('id', 'orbit_number', 'ford_order_number', 'make', 'model', 'derivative', 'reg', 'engine','transmission','ring_fenced_stock', 'vehicle_status', 'colour', 'type','chassis', 'dealer_fit_options', 'dealer_id','broker_id', 'build_date', 'factory_fit_options', 'updated_at')
-            ->with('manufacturer:id,name')
+        $data = Vehicle::with('manufacturer:id,name')
             ->with('order:id,vehicle_id')
             ->when($this->role === 'broker', function ($query) {
                 $query->where('hide_from_broker', false);
@@ -69,7 +69,7 @@ class VehicleTable extends Component
             ->where('ring_fenced_stock', $this->ringfenced)
             ->where('show_in_ford_pipeline', $this->fordpipeline)
             ->doesntHave('reservation')
-            ->doesntHave('order', 'and')
+            ->doesntHave('order')
             ->when($this->searchStatus, function ($query) {
                 $query->where('vehicle_status', $this->searchStatus);
             })
@@ -105,6 +105,9 @@ class VehicleTable extends Component
             ->when($this->searchRegistration, function ($query) {
                 $query->where('reg', 'like', '%'.$this->searchRegistration.'%');
             })
+            ->when($this->searchDueDate, function ($query) {
+                $query->where('due_date', 'like', '%'. $this->searchDueDate.'%');
+            })
             ->when($this->searchBuildDate, function ($query) {
                 $query->where('build_date', 'like', '%'.$this->searchBuildDate.'%');
             })
@@ -120,9 +123,7 @@ class VehicleTable extends Component
             })
             ->paginate($this->paginate);
 
-        $status = Vehicle::select('id', 'orbit_number', 'ford_order_number', 'make', 'model', 'derivative', 'reg', 'engine', 'vehicle_status', 'colour', 'type', 'dealer_fit_options', 'factory_fit_options')
-            ->with('order:id,vehicle_id')
-            ->where('ring_fenced_stock', $this->ringfenced)
+        $status = Vehicle::where('ring_fenced_stock', $this->ringfenced)
             ->where('show_in_ford_pipeline', $this->fordpipeline)
             ->doesntHave('order')
             ->get();

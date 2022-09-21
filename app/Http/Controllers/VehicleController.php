@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\DashboardExports;
 
+use App\Order;
 use App\Reservation;
 use App\Vehicle;
 
@@ -269,5 +270,23 @@ class VehicleController extends Controller
     public function searchVehicles()
     {
         return view('vehicles.search');
+    }
+
+    public function DueDateCleanup(){
+        Order::chunk('100', function ($orders){
+            foreach ($orders as $order) {
+                if ($order->due_date) {
+                    $vehicle = $order->vehicle;
+                    var_dump($vehicle);
+                    if ($vehicle) {
+                        $vehicle->update([
+                            'due_date' => $order->due_date
+                        ]);
+                    }
+                }
+//                var_dump('done');
+            }
+        });
+
     }
 }
