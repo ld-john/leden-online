@@ -40,6 +40,7 @@
                         id="collapseCustomer"
                         class="accordion-collapse collapse show"
                         aria-labelledby="headingCustomer"
+                        wire:ignore.self
                 >
                     <div class="accordion-body">
                         @include('order.partials.customer')
@@ -52,7 +53,7 @@
                         Company
                     </button>
                 </h2>
-                <div id="collapseCompany" class="accordion-collapse collapse" aria-labelledby="headingCompany">
+                <div id="collapseCompany" class="accordion-collapse collapse" aria-labelledby="headingCompany" wire:ignore.self>
                     <div class="accordion-body">
                         @include('order.partials.company')
                     </div>
@@ -75,6 +76,7 @@
                         id="collapseVehicle"
                         class="accordion-collapse collapse"
                         aria-labelledby="headingVehicle"
+                        wire:ignore.self
                 >
                     <div class="accordion-body">
                         @include('order.partials.vehicle')
@@ -98,6 +100,7 @@
                         id="collapseFactoryFit"
                         class="accordion-collapse collapse"
                         aria-labelledby="headingFactoryFit"
+                        wire:ignore.self
                 >
                     <div class="accordion-body">
                         @include('partials.factory-fit')
@@ -121,6 +124,7 @@
                         id="collapseDealerFit"
                         class="accordion-collapse collapse"
                         aria-labelledby="headingDealerFit"
+                        wire:ignore.self
                 >
                     <div class="accordion-body">
                         @include('partials.dealer-fit')
@@ -144,6 +148,7 @@
                         id="collapseCost"
                         class="accordion-collapse collapse"
                         aria-labelledby="headingCost"
+                        wire:ignore.self
                 >
                     <div class="accordion-body">
                         @include('order.partials.cost')
@@ -167,6 +172,7 @@
                         id="collapseInvoice"
                         class="accordion-collapse collapse"
                         aria-labelledby="headingInvoice"
+                        wire:ignore.self
                 >
                     <div class="accordion-body">
                         @include('order.partials.invoice')
@@ -190,6 +196,7 @@
                         id="collapseDelivery"
                         class="accordion-collapse collapse"
                         aria-labelledby="headingDelivery"
+                        wire:ignore.self
                 >
                     <div class="accordion-body">
                         @include('order.partials.delivery')
@@ -213,6 +220,7 @@
                         id="collapseAdditional"
                         class="accordion-collapse collapse"
                         aria-labelledby="headingAdditional"
+                        wire:ignore.self
                 >
                     <div class="accordion-body">
                         @include('order.partials.additional')

@@ -331,8 +331,7 @@
                name="vehicle_registered_on"
                class="form-control"
                autocomplete="off"
-               wire:model="registered_date"
-               onchange="this.dispatchEvent(new InputEvent('input'))"
+               wire:model.debounce:500ms="registered_date"
         />
     </div>
 </div>

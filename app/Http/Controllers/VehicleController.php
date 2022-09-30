@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\DashboardExports;
+use App\Exports\RegisteredExports;
 
 use App\Order;
 use App\Reservation;
@@ -126,7 +126,7 @@ class VehicleController extends Controller
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new RegisteredExports($vehicles),
             'factory-orders-' . $date . '.xlsx',
         );
     }
@@ -140,7 +140,7 @@ class VehicleController extends Controller
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new RegisteredExports($vehicles),
             'europe-vhc-orders-' . $date . '.xlsx',
         );
     }
@@ -153,7 +153,7 @@ class VehicleController extends Controller
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new RegisteredExports($vehicles),
             'uk-vhc-orders-' . $date . '.xlsx',
         );
     }
@@ -166,7 +166,7 @@ class VehicleController extends Controller
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new RegisteredExports($vehicles),
             'in-stock-orders-' . $date . '.xlsx',
         );
     }
@@ -180,7 +180,7 @@ class VehicleController extends Controller
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new RegisteredExports($vehicles),
             'ready-for-delivery-orders-' . $date . '.xlsx',
         );
     }
@@ -193,7 +193,7 @@ class VehicleController extends Controller
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new RegisteredExports($vehicles),
             'delivery-booked-orders-' . $date . '.xlsx',
         );
     }
@@ -206,7 +206,7 @@ class VehicleController extends Controller
         $date = Carbon::now()->format('Y-m_d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new RegisteredExports($vehicles),
             'awaiting-ship-orders-' . $date . '.xlsx',
         );
     }
@@ -219,7 +219,7 @@ class VehicleController extends Controller
         $date = Carbon::now()->format('Y-m_d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new RegisteredExports($vehicles),
             'awaiting-ship-orders-' . $date . '.xlsx',
         );
     }
@@ -233,7 +233,7 @@ class VehicleController extends Controller
         $date = Carbon::now()->format('Y-m_d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new RegisteredExports($vehicles),
             'in-stock-registered-' . $date . '.xlsx',
         );
     }
@@ -272,21 +272,41 @@ class VehicleController extends Controller
         return view('vehicles.search');
     }
 
-    public function DueDateCleanup(){
-        Order::chunk('100', function ($orders){
+    public function DueDateCleanup()
+    {
+        Order::chunk('100', function ($orders) {
             foreach ($orders as $order) {
                 if ($order->due_date) {
                     $vehicle = $order->vehicle;
-                    var_dump($vehicle);
+                    //                    var_dump($vehicle);
                     if ($vehicle) {
                         $vehicle->update([
-                            'due_date' => $order->due_date
+                            'due_date' => $order->due_date,
                         ]);
                     }
                 }
-//                var_dump('done');
+                var_dump('done');
             }
         });
-
+    }
+    public function reg_date_cleanup()
+    {
+        Vehicle::chunk('100', function ($vehicles) {
+            foreach ($vehicles as $vehicle) {
+                $order = $vehicle->order;
+                if ($vehicle->vehicle_registered_on) {
+                    $vehicle->update([
+                        'vehicle_reg_date' => $vehicle->vehicle_registered_on,
+                    ]);
+                } else {
+                    if ($order && $order->delivery_date) {
+                        $vehicle->update([
+                            'vehicle_reg_date' => $order->delivery_date,
+                        ]);
+                    }
+                }
+                var_dump('done');
+            }
+        });
     }
 }

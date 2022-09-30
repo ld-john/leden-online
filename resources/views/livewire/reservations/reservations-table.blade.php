@@ -7,7 +7,6 @@
                     <option value='25'>25</option>
                     <option value='50'>50</option>
                     <option value='100'>100</option>
-
                </select>
                entries
           </div>
@@ -24,6 +23,7 @@
           <thead>
           <tr class="blue-background text-white">
                <th>Reservation #</th>
+               <th>Ford Order Number</th>
                <th>Customer</th>
                <th>Broker</th>
                <th>Vehicle</th>
@@ -39,6 +39,7 @@
                <th class="p-1"></th>
                <th class="p-1"></th>
                <th class="p-1"></th>
+               <th class="p-1"></th>
           </tr>
           </thead>
           <tbody>
@@ -47,8 +48,9 @@
                     <td>
                          {{ $reservation->id }}
                     </td>
+                    <td>{{ $reservation->vehicle->ford_order_number }}</td>
                     <td>
-                         {{ $reservation->customer->firstname }} {{ $reservation->customer->lastname }}
+                         {{ $reservation->customer->full_name }}
                     </td>
                     <td>
                          {{ $reservation->company->company_name }}

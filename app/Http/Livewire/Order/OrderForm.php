@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Order;
 use App\Company;
 use App\Customer;
 use App\FitOption;
+use App\Http\Controllers\OrderController;
 use App\Invoice;
 use App\Manufacturer;
 use App\Notifications\DeliveryDateSetNotification;
@@ -15,13 +16,6 @@ use App\Reservation;
 use App\User;
 use App\Vehicle;
 use App\VehicleMeta;
-use App\VehicleMeta\Colour;
-use App\VehicleMeta\Derivative;
-use App\VehicleMeta\Engine;
-use App\VehicleMeta\Fuel;
-use App\VehicleMeta\Transmission;
-use App\VehicleMeta\Trim;
-use App\VehicleMeta\Type;
 use App\VehicleModel;
 use Carbon\Carbon;
 use ErrorException;
@@ -570,6 +564,7 @@ class OrderForm extends Component
                 'Order Updated',
             );
         }
+        OrderController::setProvisionalRegDate($vehicle);
         Reservation::where('vehicle_id', $vehicle->id)->delete();
         return redirect(route('order.edit', $order->id));
     }
@@ -581,10 +576,10 @@ class OrderForm extends Component
 
     public function render(): Factory|View|Application
     {
-        $companies = Company::orderBy('company_name', 'asc')->get();
+        $companies = Company::orderBy('company_name')->get();
 
         $options = [
-            'customers' => Customer::orderBy('customer_name', 'asc')
+            'customers' => Customer::orderBy('customer_name')
                 ->when($this->customer_name, function ($query) {
                     $query->where(
                         'customer_name',

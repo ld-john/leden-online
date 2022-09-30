@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed|string $type
  * @property mixed $vehicle_model
  * @property mixed $id
+ * @method static where(string $string, string $string1)
  */
 class VehicleMeta extends Model
 {

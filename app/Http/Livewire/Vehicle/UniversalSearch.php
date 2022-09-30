@@ -28,6 +28,14 @@ class UniversalSearch extends Component
     public $searchBroker;
     public $searchDealer;
     public $searchCustomer;
+    public $searchType;
+    public $searchDetails;
+    public $searchChassisPrefix;
+    public $searchChassis;
+    public $searchRegistration;
+    public $searchBuildDate;
+    public $searchDueDate;
+    public $searchBrokerRef;
 
     public function render()
     {
@@ -60,8 +68,66 @@ class UniversalSearch extends Component
                     '%' . $this->searchFordOrderNumber . '%',
                 );
             })
+            ->when($this->searchType, function ($query) {
+                $query->where('type', $this->searchType);
+            })
             ->when($this->searchStatus, function ($query) {
                 $query->where('vehicle_status', $this->searchStatus);
+            })
+            ->when($this->searchDetails, function ($query) {
+                $query
+                    ->where('colour', 'like', '%' . $this->searchDetails . '%')
+                    ->orWhere(
+                        'derivative',
+                        'like',
+                        '%' . $this->searchDetails . '%',
+                    )
+                    ->orWhere(
+                        'engine',
+                        'like',
+                        '%' . $this->searchDetails . '%',
+                    )
+                    ->orWhere(
+                        'transmission',
+                        'like',
+                        '%' . $this->searchDetails . '%',
+                    );
+            })
+            ->when($this->searchChassisPrefix, function ($query) {
+                $query->where(
+                    'chassis_prefix',
+                    'like',
+                    '%' . $this->searchChassisPrefix . '%',
+                );
+            })
+            ->when($this->searchChassis, function ($query) {
+                $query->where(
+                    'chassis',
+                    'like',
+                    '%' . $this->searchChassis . '%',
+                );
+            })
+            ->when($this->searchRegistration, function ($query) {
+                $query->where(
+                    'reg',
+                    'like',
+                    '%' . $this->searchRegistration . '%',
+                );
+            })
+            ->when($this->searchBuildDate, function ($query) {
+                $query->where('build_date', $this->searchBuildDate);
+            })
+            ->when($this->searchDueDate, function ($query) {
+                $query->where('due_date', $this->searchDueDate);
+            })
+            ->when($this->searchBrokerRef, function ($query) {
+                $query->whereHas('order', function ($query) {
+                    $query->where(
+                        'broker_ref',
+                        'like',
+                        '%' . $this->searchBrokerRef . '%',
+                    );
+                });
             })
             ->when($this->searchOrder, function ($query) {
                 $query->whereHas('order', function ($query) {
@@ -99,13 +165,20 @@ class UniversalSearch extends Component
             })
             ->paginate($this->paginate);
         $status = Vehicle::all();
+        $type = $status->map
+            ->only(['type'])
+            ->sort()
+            ->flatten()
+            ->unique();
         $status = $status->map
             ->only(['vehicle_status'])
+            ->sort()
             ->flatten()
             ->unique();
         return view('livewire.vehicle.universal-search', [
             'vehicles' => $data,
             'status' => $status,
+            'type' => $type,
         ]);
     }
 }

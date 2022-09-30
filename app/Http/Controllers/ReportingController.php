@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Exports\FactoryOrderExports;
-use App\Exports\DashboardExports;
+use App\Exports\RegisteredExports;
 use App\Order;
 use App\Vehicle;
+use Carbon\Carbon;
 use DateTime;
 use Exception;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Dashboard;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use LaravelIdea\Helper\App\_IH_Order_C;
+use LaravelIdea\Helper\App\_IH_Order_QB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportingController extends Controller
@@ -29,6 +28,9 @@ class ReportingController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * @throws Exception
+     */
     public function showReporting()
     {
         $weekly_sales = $this->getRecordsByWeek();
@@ -41,7 +43,7 @@ class ReportingController extends Controller
         $weekly_completed = $this->getCompletedByWeekly();
         $quarterly_completed = $this->getCompletedByQuarter();
 
-        return view('reporting.index', [
+        return view('reporting.reporting', [
             'in_stock' => Dashboard::GetOrdersByVehicleStatus(1),
             'orders_placed' => Dashboard::GetOrdersByVehicleStatus(2),
             'ready_for_delivery' => Dashboard::GetOrdersByVehicleStatus(3),
@@ -59,6 +61,8 @@ class ReportingController extends Controller
             'quarterly_sales' => $quarterly_sales,
             'quarterly_registered' => $quarterly_registered,
             'quarterly_completed' => $quarterly_completed,
+            'months' => $this->registeredMonths(),
+            'quarters' => $this->registeredQuarters(),
         ]);
     }
 
@@ -238,6 +242,47 @@ class ReportingController extends Controller
         return collect($quarter_array);
     }
 
+    public function registeredQuarters()
+    {
+        $start_date = $this->registeredMonths()[0];
+        $start = Carbon::createFromFormat('F Y', $start_date)->monthsUntil(
+            now(),
+            3,
+        );
+        $data = [];
+        foreach ($start as $date) {
+            $data[] = [
+                'quarter' => ceil($date->month / 3),
+                'year' => $date->year,
+            ];
+        }
+        return $data;
+    }
+
+    public function registeredMonths()
+    {
+        $data = Vehicle::where(function ($query) {
+            $query
+                ->where('vehicle_status', '7')
+                ->orWhere('vehicle_status', '6')
+                ->orWhere('vehicle_status', '15');
+        })->get();
+        return $data
+            ->pluck('vehicle_reg_date')
+            ->map(function ($item) {
+                return Carbon::parse($item)->format('Y m');
+            })
+            ->sort()
+            ->filter(function ($value) {
+                return $value !== '-0001 11';
+            })
+            ->map(function ($item) {
+                return Carbon::createFromFormat('Y m', $item)->format('F Y');
+            })
+            ->unique()
+            ->flatten();
+    }
+
     public function monthNames(): array
     {
         $period = now()
@@ -304,11 +349,40 @@ class ReportingController extends Controller
             $year = (new DateTime())->format('Y');
         }
         $current_quarter = ceil((new DateTime())->format('n') / 3);
-        $quarter =
-            !is_int($quarter) || $quarter < 1 || $quarter > 4
-                ? $current_quarter
-                : $quarter;
+        switch (strtolower($quarter)) {
+            case 'this':
+            case 'current':
+                $quarter = ceil((new DateTime())->format('n') / 3);
+                break;
 
+            case 'previous':
+                $year = (new DateTime())->format('Y');
+                if ($current_quarter == 1) {
+                    $quarter = 4;
+                    $year--;
+                } else {
+                    $quarter = $current_quarter - 1;
+                }
+                break;
+
+            case 'first':
+                $quarter = 1;
+                break;
+
+            case 'last':
+                $quarter = 4;
+                break;
+
+            default:
+                $quarter =
+                    !is_int($quarter) || $quarter < 1 || $quarter > 4
+                        ? $current_quarter
+                        : $quarter;
+                break;
+        }
+        if ($quarter === 'this') {
+            $quarter = ceil((new DateTime())->format('n') / 3);
+        }
         $start = new DateTime($year . '-' . (3 * $quarter - 2) . '-1 00:00:00');
         $end = new DateTime(
             $year .
@@ -335,68 +409,10 @@ class ReportingController extends Controller
         return $ret;
     }
 
-    public function monthlyDownload($type, $year, $month)
-    {
-        if ($type === 'placed') {
-            $query = 'created_at';
-            $data = Order::whereYear($query, '=', $year)
-                ->whereMonth($query, '=', $month)
-                ->with('vehicle:id,make,orbit_number,model')
-                ->with('vehicle.manufacturer:id,name')
-                ->get();
-        } elseif ($type === 'registered') {
-            $query = 'vehicle_registered_on';
-            $vehicle = Vehicle::whereYear($query, '=', $year)
-                ->whereMonth($query, '=', $month)
-                ->select('id')
-                ->get();
-
-            $data = Order::whereIn('vehicle_id', $vehicle)->get();
-        } else {
-            $data = Order::whereYear('completed_date', '=', $year)
-                ->whereMonth('completed_date', '=', $month)
-                ->with('vehicle:id,make,orbit_number,model')
-                ->with('vehicle.manufacturer:id,name')
-                ->get();
-        }
-
-        return Excel::download(
-            new DashboardExports($data, $type),
-            'monthly-' . $type . '-' . $month . '-' . $year . '.xlsx',
-        );
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function quarterlyDownload($type, $year, $quarter)
-    {
-        $dates = $this->get_dates_of_quarter(intval($quarter), intval($year));
-
-        $data = $this->returnDataForReports($type, $dates);
-
-        return Excel::download(
-            new DashboardExports($data, $type),
-            'quarterly-' . $type . '-' . $quarter . '-' . $year . '.xlsx',
-        );
-    }
-
-    public function weeklyDownload($type, $year, $week)
-    {
-        $dates = $this->getStartAndEndDate($week, $year);
-
-        $data = $this->returnDataForReports($type, $dates);
-
-        return Excel::download(
-            new DashboardExports($data, $type),
-            'weekly-' . $type . '-week-' . $week . '-' . $year . '.xlsx',
-        );
-    }
-
     /**
      * @param $type
      * @param array $dates
-     * @return Builder[]|\Illuminate\Database\Eloquent\Collection|_IH_Order_C|\LaravelIdea\Helper\App\_IH_Order_QB[]|Order[]
+     * @return Builder[]|\Illuminate\Database\Eloquent\Collection|_IH_Order_C|_IH_Order_QB[]|Order[]
      */
     public function returnDataForReports($type, array $dates)
     {
@@ -419,7 +435,55 @@ class ReportingController extends Controller
                 ->with('vehicle.manufacturer:id,name')
                 ->get();
         }
-
         return $data;
+    }
+    public function index()
+    {
+        return view('reporting.index');
+    }
+    public function registeredMonth($month, $year)
+    {
+        $vehicles = Vehicle::where(function ($query) {
+            $query
+                ->where('vehicle_status', '7')
+                ->orWhere('vehicle_status', '6')
+                ->orWhere('vehicle_status', '15');
+        })
+            ->where(function ($query) use ($month, $year) {
+                $query
+                    ->whereMonth('vehicle_reg_date', $month)
+                    ->whereYear('vehicle_reg_date', $year);
+            })
+            ->get();
+        return Excel::download(
+            new RegisteredExports($vehicles),
+            'monthly-registered-' . $month . '-' . $year . '.xls',
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function registeredQuarter($quarter, $year)
+    {
+        $quarter = intval($quarter);
+        $year = intval($year);
+
+        $dates = $this->get_dates_of_quarter($quarter, $year);
+
+        $vehicles = Vehicle::where(function ($query) {
+            $query
+                ->where('vehicle_status', '7')
+                ->orWhere('vehicle_status', '6')
+                ->orWhere('vehicle_status', '15');
+        })
+            ->whereBetween('vehicle_reg_date', $dates)
+            ->orderBy('vehicle_reg_date')
+            ->get();
+
+        return Excel::download(
+            new RegisteredExports($vehicles),
+            'quarterly-registered-' . $quarter . '-' . $year . '.xls',
+        );
     }
 }

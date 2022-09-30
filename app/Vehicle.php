@@ -113,6 +113,60 @@ class Vehicle extends Model
         return $this->statusMatch($this->vehicle_status);
     }
 
+    public function websiteLocation(): array
+    {
+        $data = [
+            'location' => 'Unknown',
+            'route' => null,
+            'status' => 'danger',
+        ];
+        if (!$this->order) {
+            $data['status'] = 'warning';
+            if ($this->ring_fenced_stock) {
+                $data['location'] = 'Ring-fenced Stock';
+                $data['route'] = 'ring_fenced_stock';
+            } else {
+                $data['location'] = 'Leden Stock';
+                $data['route'] = 'pipeline';
+            }
+        } else {
+            $data['status'] = 'primary';
+            if (
+                $this->vehicle_status === 1 ||
+                $this->vehicle_status === 4 ||
+                $this->vehicle_status === 10 ||
+                $this->vehicle_status === 11 ||
+                $this->vehicle_status === 12 ||
+                $this->vehicle_status === 13 ||
+                $this->vehicle_status === 14 ||
+                $this->vehicle_status === 15 ||
+                $this->vehicle_status === 16
+            ) {
+                $data['location'] = 'Order Bank';
+                $data['route'] = 'order_bank';
+            } elseif ($this->vehicle_status === 7) {
+                $data['location'] = 'Completed Orders';
+                $data['route'] = 'completed_orders';
+            } elseif (
+                $this->vehicle_status === 3 ||
+                $this->vehicle_status === 5 ||
+                $this->vehicle_status === 6
+            ) {
+                $data['location'] = 'Manage Deliveries';
+                $data['route'] = 'manage_deliveries';
+            }
+        }
+
+        return $data;
+    }
+
+    public function simplified_type()
+    {
+        $type = $this->type;
+        $type = explode(' ', $type);
+        return $type[0];
+    }
+
     public static function statusMatch($value): string
     {
         return match ($value) {

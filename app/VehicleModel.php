@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property mixed|string $slug
  * @property int|mixed $manufacturer_id
  * @property mixed|null $id
+ * @method static where(string $string, $model)
  */
 class VehicleModel extends Model
 {

@@ -4,17 +4,13 @@
     ])
 
 @section('content')
-    <div class="container-fluid force-min-height">
+    <div class="container-fluid">
 
         <!-- Content Row -->
-        <div class="row justify-content-center">
 
-            <div class="col-lg-10">
-                <h1 class="h3 mb-4 text-gray-800">Search Vehicles</h1>
-                <div class="card shadow mb-4">
-                    @livewire('vehicle.universal-search')
-                </div>
+            <h1 class="h3 mb-4 text-gray-800">Leden Universal Search</h1>
+            <div class="card shadow mb-4">
+                @livewire('vehicle.universal-search')
             </div>
         </div>
-    </div>
 @endsection

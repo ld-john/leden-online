@@ -151,11 +151,20 @@ Route::middleware('auth')->group(function () {
         ->controller('ReportingController')
         ->group(function () {
             Route::get('/', 'showReporting')->name('reporting');
+            Route::get('/new', 'index')->name('new-reporting');
             Route::get('/monthly-{report}/{year}/{month}', 'monthlyDownload');
             Route::get(
                 '/quarterly-{report}/{year}/{quarter}',
                 'quarterlyDownload',
             );
+            Route::get(
+                '/registeredMonthly/{month}/{year}',
+                'registeredMonth',
+            )->name('monthly-registered');
+            Route::get(
+                '/registeredQuarterly/{quarter}/{year}',
+                'registeredQuarter',
+            )->name('quarter-registered');
             Route::get('/weekly-{report}/{year}/{quarter}', 'weeklyDownload');
         });
 
@@ -291,6 +300,7 @@ Route::middleware('auth')->group(function () {
      */
 
     Route::get('/link/due-date-clean-up', 'VehicleController@DueDateCleanup');
+    Route::get('/link/reg-date-clean-up', 'VehicleController@reg_date_cleanup');
 
     //    Route::get('/link/test/4', 'OrderController@dataTest')->name('test4');
     //    Route::get('/link/test/', 'VehicleController@getVehicleMeta')->name('test');

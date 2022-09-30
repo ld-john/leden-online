@@ -2,16 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
 use App\Invoice;
-use App\Notifications\deliveryDateChanged;
-use App\Notifications\notifications;
 use App\Order;
-use App\OrderLegacy;
-use App\User;
 use App\Vehicle;
-use Barryvdh\DomPDF\PDF;
-use Carbon\Carbon;
 use DateTime;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -19,14 +12,30 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
-use Yajra\DataTables\Facades\DataTables;
 
 class OrderController extends Controller
 {
+    public static function setProvisionalRegDate(Vehicle $vehicle)
+    {
+        if (
+            empty($vehicle->vehicle_registered_on) ||
+            $vehicle->vehicle_registered_on === '0000-00-00 00:00:00'
+        ) {
+            if (
+                !empty($vehicle->order->delivery_date) ||
+                $vehicle->order->delivery_date !== '0000-00-00 00:00:00'
+            ) {
+                $vehicle->update([
+                    'vehicle_reg_date' => $vehicle->order->delivery_date,
+                ]);
+            }
+        } else {
+            $vehicle->update([
+                'vehicle_reg_date' => $vehicle->vehicle_registered_on,
+            ]);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

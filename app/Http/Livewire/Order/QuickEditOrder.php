@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Order;
 
+use App\Http\Controllers\OrderController;
 use App\Notifications\DeliveryDateSetNotification;
 use App\Notifications\VehicleInStockNotification;
 use App\Order;
@@ -12,7 +13,6 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Date;
 use Livewire\Component;
 
 class QuickEditOrder extends Component
@@ -83,7 +83,10 @@ class QuickEditOrder extends Component
             $del = new DateTime($order->delivery_date);
             $this->delivery_date = $del->format('Y-m-d');
         }
-        if ($order->vehicle->due_date && $order->vehicle->due_date != '0000-00-00 00:00:00') {
+        if (
+            $order->vehicle->due_date &&
+            $order->vehicle->due_date != '0000-00-00 00:00:00'
+        ) {
             $del = new DateTime($order->vehicle->due_date);
             $this->due_date = $del->format('Y-m-d');
         }
@@ -102,6 +105,7 @@ class QuickEditOrder extends Component
             'reg' => $this->registration,
             'vehicle_status' => $this->vehicleStatus,
             'orbit_number' => $this->orbit_number,
+            'ford_order_number' => $this->order_number,
             'build_date' => $this->build_date,
             'due_date' => $this->due_date,
             'vehicle_registered_on' => $this->registered_date,
@@ -136,6 +140,7 @@ class QuickEditOrder extends Component
                 }
             }
         }
+        OrderController::setProvisionalRegDate($this->vehicle);
         notify()->success('Order was updated successfully', 'Order Updated');
         return $this->redirect(route($this->return));
     }

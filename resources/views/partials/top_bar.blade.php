@@ -216,11 +216,24 @@
                 </li>
             @endcan
             @can('admin')
-                <li class="nav-item @if ($activePage == 'report-track') active @endif">
-                    <a class="nav-link" href="{{ route('reporting') }}">
-                        <i class="fa-solid fa-chart-bar"></i>
-                        <span>Report/Track Status</span>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Reporting
                     </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('vehicle.search') }}">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <span>Universal Search</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('reporting') }}">
+                                <i class="fa-solid fa-chart-bar"></i>
+                                <span>Report/Track Status</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             @endcan
             <li class="nav-item @if ($activePage == 'messages') active @endif">

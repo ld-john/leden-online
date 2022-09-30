@@ -8,7 +8,7 @@
         <i class="fa-solid fa-pencil"></i>
     </button>
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-{{$order->id}}" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-{{$order->id}}" aria-labelledby="offcanvasExampleLabel" wire:ignore.self>
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Quick Edit Order - {{ $order->id }}</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
