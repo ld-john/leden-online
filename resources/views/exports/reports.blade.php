@@ -3,6 +3,7 @@
     <tr>
         <th>Customer</th>
         <th>Delivery Date</th>
+        <th>Registration Date</th>
         <th>Reg Month</th>
         <th>Chassis</th>
         <th>Registration</th>
@@ -39,6 +40,11 @@
                 <td></td>
             @else
                 <td>{{ \Carbon\Carbon::parse($vehicle->order?->delivery_date ?? '')->format( 'd/m/Y' )}}</td>
+            @endif
+            @if ( empty( $vehicle->vehicle_registered_on) || $vehicle->vehicle_registered_on == '0000-00-00 00:00:00')
+                <td></td>
+            @else
+                <td>{{ \Carbon\Carbon::parse($vehicle->vehicle_registered_on)->format( 'd/m/Y' ) }}</td>
             @endif
             @if ( empty( $vehicle->vehicle_registered_on) || $vehicle->vehicle_registered_on == '0000-00-00 00:00:00')
                 @if( empty( $vehicle->order?->delivery_date) || $vehicle->order?->delivery_date == '0000-00-00 00:00:00')

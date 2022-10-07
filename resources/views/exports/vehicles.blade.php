@@ -1,5 +1,3 @@
-
-
 <table>
     <thead>
     <tr>
@@ -18,7 +16,6 @@
     </thead>
     <tbody>
     @foreach($vehicles as $vehicle)
-
         <tr>
             <td>{{ $vehicle->order->id ?? '' }}</td>
             <td>

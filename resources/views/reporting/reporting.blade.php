@@ -17,7 +17,7 @@
                 <h5>Registered - Month</h5>
                 <div class="row">
                     @foreach($months as $month)
-                        <div class="col col-1">
+                        <div class="col col-1 mb-4">
                             <a href="{{ route('monthly-registered', [\Carbon\Carbon::parse($month)->format('m'), \Carbon\Carbon::parse($month)->format('Y')]) }}" class="btn btn-primary btn-sm h-100 w-full">{{ $month }}</a>
                         </div>
                     @endforeach
@@ -161,169 +161,10 @@
                 @endforeach
             </div>
         </div>
-        {{--        <div class="row">--}}
-
-
-        {{--            <!-- Weekly Registered -->--}}
-        {{--            <div class="col-lg-4">--}}
-        {{--                <div class="card shadow mb-4">--}}
-        {{--                    <!-- Card Header - Dropdown -->--}}
-        {{--                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">--}}
-        {{--                        <h6 class="m-0 font-weight-bold text-l-blue">Weekly <small>(Registered Vehicles - Last 6 weeks)</small></h6>--}}
-        {{--                    </div>--}}
-        {{--                    <!-- Card Body -->--}}
-        {{--                    <div class="card-body">--}}
-        {{--                        <div class="chart-area">--}}
-        {{--                            <canvas id="weeklyRegistered"></canvas>--}}
-        {{--                        </div>--}}
-
-        {{--                    </div>--}}
-        {{--                </div>--}}
-        {{--            </div>--}}
-
-        {{--            <!-- Monthly Registered -->--}}
-        {{--            <div class="col-lg-4">--}}
-        {{--                <div class="card shadow mb-4">--}}
-        {{--                    <!-- Card Header - Dropdown -->--}}
-        {{--                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">--}}
-        {{--                        <h6 class="m-0 font-weight-bold text-l-blue">Monthly <small>(Registered Vehicles - Last 6 months)</small>--}}
-        {{--                        </h6>--}}
-        {{--                    </div>--}}
-        {{--                    <!-- Card Body -->--}}
-        {{--                    <div class="card-body">--}}
-        {{--                        <div class="chart-area">--}}
-        {{--                            <canvas id="monthRegistered" style="height: 400px"></canvas>--}}
-        {{--                        </div>--}}
-
-        {{--                        @foreach($monthly_registered as $monthly)--}}
-        {{--                            <a href="/reporting/monthly-registered/{{$monthly['year']}}/{{$monthly['month']}}" class="btn btn-primary btn-sm">{{$monthly['month_label']}} {{$monthly['year']}}</a>--}}
-        {{--                        @endforeach--}}
-        {{--                    </div>--}}
-        {{--                </div>--}}
-        {{--            </div>--}}
-
-        {{--            <!-- Quarterly Registered -->--}}
-        {{--            <div class="col-lg-4">--}}
-        {{--                <div class="card shadow mb-4">--}}
-        {{--                    <!-- Card Header - Dropdown -->--}}
-        {{--                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">--}}
-        {{--                        <h6 class="m-0 font-weight-bold text-l-blue">Quarterly <small>(Registered Vehicles - Last 4 Quarters)</small></h6>--}}
-        {{--                    </div>--}}
-        {{--                    <!-- Card Body -->--}}
-        {{--                    <div class="card-body">--}}
-        {{--                        <div class="chart-area">--}}
-        {{--                            <canvas id="quarterlyRegistered"></canvas>--}}
-        {{--                        </div>--}}
-
-
-        {{--                    </div>--}}
-        {{--                </div>--}}
-        {{--            </div>--}}
-        {{--        </div>--}}
-        {{--        <div class="row">--}}
-
-        {{--            <!-- Weekly Completed -->--}}
-        {{--            <div class="col-lg-4">--}}
-        {{--                <div class="card shadow mb-4">--}}
-        {{--                    <!-- Card Header - Dropdown -->--}}
-        {{--                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">--}}
-        {{--                        <h6 class="m-0 font-weight-bold text-l-blue">Weekly <small>(Completed Vehicles - Last 6 weeks)</small></h6>--}}
-        {{--                    </div>--}}
-        {{--                    <!-- Card Body -->--}}
-        {{--                    <div class="card-body">--}}
-        {{--                        <div class="chart-area">--}}
-        {{--                            <canvas id="weeklyCompleted"></canvas>--}}
-        {{--                        </div>--}}
-
-
-
-        {{--                    </div>--}}
-        {{--                </div>--}}
-        {{--            </div>--}}
-
-        {{--            <!-- Monthly Completed -->--}}
-        {{--            <div class="col-lg-4">--}}
-        {{--                <div class="card shadow mb-4">--}}
-        {{--                    <!-- Card Header - Dropdown -->--}}
-        {{--                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">--}}
-        {{--                        <h6 class="m-0 font-weight-bold text-l-blue">Monthly <small>(Completed Vehicles - Last 6 months)</small>--}}
-        {{--                        </h6>--}}
-        {{--                    </div>--}}
-        {{--                    <!-- Card Body -->--}}
-        {{--                    <div class="card-body">--}}
-        {{--                        <div class="chart-area">--}}
-        {{--                            <canvas id="monthCompleted"></canvas>--}}
-        {{--                        </div>--}}
-
-        {{--                        @foreach($monthly_completed as $monthly)--}}
-        {{--                            <a href="/reporting/monthly-completed/{{$monthly['year']}}/{{$monthly['month']}}" class="btn btn-primary btn-sm">{{$monthly['month_label']}} {{$monthly['year']}}</a>--}}
-        {{--                        @endforeach--}}
-        {{--                    </div>--}}
-        {{--                </div>--}}
-        {{--            </div>--}}
-
-        {{--            <!-- Quarterly Completed -->--}}
-        {{--            <div class="col-lg-4">--}}
-        {{--                <div class="card shadow mb-4">--}}
-        {{--                    <!-- Card Header - Dropdown -->--}}
-        {{--                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">--}}
-        {{--                        <h6 class="m-0 font-weight-bold text-l-blue">Quarterly <small>(Completed Vehicles - Last 4 Quarters)</small></h6>--}}
-        {{--                    </div>--}}
-        {{--                    <!-- Card Body -->--}}
-        {{--                    <div class="card-body">--}}
-        {{--                        <div class="chart-area">--}}
-        {{--                            <canvas id="quarterlyCompleted"></canvas>--}}
-        {{--                        </div>--}}
-
-
-        {{--                    </div>--}}
-        {{--                </div>--}}
-        {{--            </div>--}}
-        {{--        </div>--}}
-        <!-- /.container-fluid -->
-
         @endsection
 
         @push('custom-scripts')
             <script>
-                // Pie Chart Example
-                const ctx = document.getElementById("runReport");
-                const runReport = new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: [
-                            "Orders Placed - {{ $orders_placed }}",
-                            "Ready For Delivery - {{ $ready_for_delivery }}",
-                            "Factory Order - {{ $factory_order }}",
-                            "Delivery Booked - {{ $delivered }}",
-                            "Completed - {{ $completed_orders }}",
-                            "Europe VHC - {{ $europe_vhc }}",
-                            "UK VHC - {{ $uk_vhc }}"
-                        ],
-                        datasets: [{
-                            backgroundColor: [
-                                "#004c6d",
-                                "#255e7e",
-                                "#3d708f",
-                                "#5383a1",
-                                "#6996b3",
-                                "#7faac6",
-                                "#94bed9",
-                            ],
-                            data: [{{ $orders_placed }}, {{ $ready_for_delivery }}, {{ $factory_order }}, {{ $delivered }}, {{ $completed_orders }}, {{ $europe_vhc }}, {{ $uk_vhc }}]
-                        }]
-                    },
-                    options: {
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: true,
-                                position: 'right',
-                            }
-                        }
-                    },
-                });
-
                 const month_sales = document.getElementById('monthSales');
                 const month_sales_chart = new Chart(month_sales, {
                     type: 'bar',

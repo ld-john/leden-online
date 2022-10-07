@@ -1,6 +1,6 @@
 <div>
     @if( count($vehicle->factoryFitOptions()) >= 1)
-        <button class="btn btn-primary" wire:click="toggleModal()">Yes <span class="badge badge-light">{{ count($vehicle->factoryFitOptions()) }}</span></button>
+        <button class="btn btn-primary" wire:click="toggleModal()">Yes <span class="badge bg-light text-dark">{{ count($vehicle->factoryFitOptions()) }}</span></button>
     @else
         No
     @endif

@@ -1,6 +1,6 @@
 <div>
 
-     <li class="nav-item dropdown no-arrow mx-1">
+     <li class="nav-item dropdown no-arrow mx-3">
           <button
                   type="button"
                   class="btn btn-outline-primary text-white position-relative nav-link dropdown-toggle"

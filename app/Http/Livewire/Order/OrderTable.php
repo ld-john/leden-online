@@ -38,6 +38,10 @@ class OrderTable extends Component
     public $brokerID;
     public $dealerID;
     public $now;
+    public $filterMissingOrbitNumber;
+    public $filterBuildDate;
+    public $filterDueDate;
+    public $filterDeliveryDate;
 
     public function mount($status, $view)
     {
@@ -203,7 +207,25 @@ class OrderTable extends Component
                     );
                 });
             })
-            ->orderBy('created_at', 'asc')
+            ->when($this->filterMissingOrbitNumber, function ($query) {
+                $query->whereHas('vehicle', function ($query) {
+                    $query->whereNull('orbit_number');
+                });
+            })
+            ->when($this->filterBuildDate, function ($query) {
+                $query->whereHas('vehicle', function ($query) {
+                    $query->whereNotNull('build_date');
+                });
+            })
+            ->when($this->filterDueDate, function ($query) {
+                $query->whereHas('vehicle', function ($query) {
+                    $query->whereNotNull('due_date');
+                });
+            })
+            ->when($this->filterDeliveryDate, function ($query) {
+                $query->whereNotNull('delivery_date');
+            })
+            ->orderBy('created_at')
             ->paginate($this->paginate);
 
         return view('livewire.order.order-table', ['orders' => $orders]);

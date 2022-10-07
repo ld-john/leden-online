@@ -17,7 +17,6 @@ use App\Http\Controllers\DeliveriesController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UpdatesController;
-use App\Http\Controllers\VehicleController;
 
 Auth::routes();
 
@@ -299,8 +298,8 @@ Route::middleware('auth')->group(function () {
      *
      */
 
-    Route::get('/link/due-date-clean-up', 'VehicleController@DueDateCleanup');
-    Route::get('/link/reg-date-clean-up', 'VehicleController@reg_date_cleanup');
+    //Route::get('/link/due-date-clean-up', 'VehicleController@DueDateCleanup');
+    //Route::get('/link/reg-date-clean-up', 'VehicleController@reg_date_cleanup');
 
     //    Route::get('/link/test/4', 'OrderController@dataTest')->name('test4');
     //    Route::get('/link/test/', 'VehicleController@getVehicleMeta')->name('test');

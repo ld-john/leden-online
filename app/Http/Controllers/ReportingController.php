@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\FactoryOrderExports;
+use App\Exports\UniversalExport;
 use App\Exports\RegisteredExports;
 use App\Order;
 use App\Vehicle;
@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use LaravelIdea\Helper\App\_IH_Order_C;
 use LaravelIdea\Helper\App\_IH_Order_QB;
+use LaravelIdea\Helper\App\_IH_Vehicle_C;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportingController extends Controller
@@ -88,7 +89,7 @@ class ReportingController extends Controller
         $week_array = [];
 
         foreach ($weeks as $week) {
-            $dates = $this->getStartAndEndDate($week['week'], $week['year']);
+            $dates = $this->getStartAndEndDate($week['year'], $week['week']);
             $data = Order::whereBetween('created_at', $dates)->get();
             $week['data'] = count($data);
             $week['label'] = 'week ' . $week['week'] . ' ' . $week['year'];
@@ -146,7 +147,7 @@ class ReportingController extends Controller
         $week_array = [];
 
         foreach ($weeks as $week) {
-            $dates = $this->getStartAndEndDate($week['week'], $week['year']);
+            $dates = $this->getStartAndEndDate($week['year'], $week['week']);
             $data = Vehicle::whereBetween(
                 'vehicle_registered_on',
                 $dates,
@@ -208,7 +209,7 @@ class ReportingController extends Controller
         $week_array = [];
 
         foreach ($weeks as $week) {
-            $dates = $this->getStartAndEndDate($week['week'], $week['year']);
+            $dates = $this->getStartAndEndDate($week['year'], $week['week']);
             $data = Order::whereBetween('completed_date', $dates)->get();
             $week['data'] = count($data);
             $week['label'] = 'week ' . $week['week'] . ' ' . $week['year'];
@@ -327,7 +328,7 @@ class ReportingController extends Controller
         $data = [];
         foreach ($period as $date) {
             $data[] = [
-                'quarter' => ceil($date->month / 3),
+                'quarter' => intval(ceil($date->month / 3)),
                 'year' => $date->year,
             ];
         }
@@ -399,41 +400,51 @@ class ReportingController extends Controller
         ];
     }
 
-    public function getStartAndEndDate($week, $year): array
-    {
-        $dto = new DateTime();
-        $dto->setISODate($year, $week);
-        $ret['week_start'] = $dto->format('Y-m-d');
-        $dto->modify('+6 days');
-        $ret['week_end'] = $dto->format('Y-m-d');
-        return $ret;
+    /**
+     * @throws Exception
+     */
+    public function getStartAndEndDate(
+        $year,
+        $period,
+        $type = 'week',
+    ): array|null {
+        if ($type === 'week') {
+            $dto = Carbon::now();
+            $dto->setISODate($year, $period);
+            $ret['week_start'] = $dto->startOfWeek()->format('Y-m-d');
+            $ret['week_end'] = $dto->endOfWeek()->format('Y-m-d');
+            return $ret;
+        } elseif ($type === 'month') {
+            $dto = Carbon::createFromFormat('m Y', $period . ' ' . $year);
+            $ret['month_start'] = $dto->startOfMonth()->format('Y-m-d');
+            $ret['month_end'] = $dto->endOfMonth()->format('Y-m-d');
+            return $ret;
+        } elseif ($type === 'quarter') {
+            return $this->get_dates_of_quarter(intval($period), intval($year));
+        }
+        return null;
     }
 
     /**
      * @param $type
      * @param array $dates
-     * @return Builder[]|\Illuminate\Database\Eloquent\Collection|_IH_Order_C|_IH_Order_QB[]|Order[]
+     * @return _IH_Vehicle_C|Builder[]|\Illuminate\Database\Eloquent\Collection|Vehicle[]
      */
     public function returnDataForReports($type, array $dates)
     {
         if ($type === 'placed') {
-            $query = 'created_at';
-            $data = Order::whereBetween($query, $dates)
-                ->with('vehicle:id,make,orbit_number,model')
-                ->with('vehicle.manufacturer:id,name')
-                ->get();
+            $data = Vehicle::whereHas('order', function ($query) use ($dates) {
+                $query->whereBetween('created_at', $dates);
+            })->get();
         } elseif ($type === 'registered') {
-            $query = 'vehicle_registered_on';
-            $vehicle = Vehicle::whereBetween($query, $dates)
-                ->select('id')
-                ->get();
-
-            $data = Order::whereIn('vehicle_id', $vehicle)->get();
+            $data = Vehicle::whereBetween(
+                'vehicle_registered_on',
+                $dates,
+            )->get();
         } else {
-            $data = Order::whereBetween('completed_date', $dates)
-                ->with('vehicle:id,make,orbit_number,model')
-                ->with('vehicle.manufacturer:id,name')
-                ->get();
+            $data = Vehicle::whereHas('order', function ($query) use ($dates) {
+                $query->whereBetween('completed_date', $dates);
+            })->get();
         }
         return $data;
     }
@@ -458,6 +469,45 @@ class ReportingController extends Controller
         return Excel::download(
             new RegisteredExports($vehicles),
             'monthly-registered-' . $month . '-' . $year . '.xls',
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function weeklyDownload($report, $year, $week)
+    {
+        $dates = $this->getStartAndEndDate($year, $week);
+        $data = $this->returnDataForReports($report, $dates);
+        return Excel::download(
+            new UniversalExport($data),
+            'weekly-' . $report . '-week-' . $week . '-' . $year . '.xls',
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function monthlyDownload($report, $year, $month)
+    {
+        $dates = $this->getStartAndEndDate($year, $month, 'month');
+        $data = $this->returnDataForReports($report, $dates);
+        return Excel::download(
+            new UniversalExport($data),
+            'monthly-' . $report . '-month-' . $month . '-' . $year . '.xls',
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function quarterlyDownload($report, $year, $quarter)
+    {
+        $dates = $this->getStartAndEndDate($year, $quarter, 'quarter');
+        $data = $this->returnDataForReports($report, $dates);
+        return Excel::download(
+            new UniversalExport($data),
+            'quarterly-' . $report . '-Q' . $quarter . '-' . $year . '.xls',
         );
     }
 

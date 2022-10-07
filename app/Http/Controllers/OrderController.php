@@ -22,11 +22,11 @@ class OrderController extends Controller
             $vehicle->vehicle_registered_on === '0000-00-00 00:00:00'
         ) {
             if (
-                !empty($vehicle->order->delivery_date) ||
-                $vehicle->order->delivery_date !== '0000-00-00 00:00:00'
+                !empty($vehicle->order?->delivery_date) ||
+                $vehicle->order?->delivery_date !== '0000-00-00 00:00:00'
             ) {
                 $vehicle->update([
-                    'vehicle_reg_date' => $vehicle->order->delivery_date,
+                    'vehicle_reg_date' => $vehicle->order?->delivery_date,
                 ]);
             }
         } else {

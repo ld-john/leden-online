@@ -6,7 +6,7 @@ use App\Vehicle;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
-class DashboardExports implements FromView
+class UniversalExport implements FromView
 {
     protected $vehicles;
 
@@ -20,7 +20,7 @@ class DashboardExports implements FromView
 
     public function view(): View
     {
-        return view('exports.vehicles', [
+        return view('exports.universal', [
             'vehicles' => $this->vehicles,
         ]);
     }

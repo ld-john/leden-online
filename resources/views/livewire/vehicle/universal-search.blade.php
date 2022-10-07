@@ -10,6 +10,17 @@
             </select>
             Vehicles
         </div>
+        <div>
+            <a wire:click="downloadCurrentData" class="btn btn-success text-white">Download Current View</a>
+            <div class="form-check form-switch">
+                <label for="deliveriesBookedFilter" class="form-check-label">Include Deliveries Booked</label>
+                <input wire:model="deliveriesBookedFilter" type="checkbox" id="deliveriesBookedFilter" class="form-check-input" role="switch">
+            </div>
+            <div class="form-check form-switch">
+                <label for="completedOrdersFilter" class="form-check-label">Include Completed Orders</label>
+                <input wire:model="completedOrdersFilter" type="checkbox" id="completedOrdersFilter" class="form-check-input" role="switch">
+            </div>
+        </div>
     </div>
     <table class="table table-bordered">
         <thead>

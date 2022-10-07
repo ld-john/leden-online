@@ -19,11 +19,11 @@
                 <h6 class="m-0 font-weight-bold text-l-blue">Vehicle Details</h6>
                 <div>
                     @if ($order->vehicle_status == 1)
-                    <strong>Vehicle Status:</strong> <span class="badge badge-success">Available</span>
+                    <strong>Vehicle Status:</strong> <span class="badge bg-success">Available</span>
                     @elseif ($order->vehicle_status == 2)
-                    <strong>Vehicle Status:</strong> <span class="badge badge-warning">Reserved</span>
+                    <strong>Vehicle Status:</strong> <span class="badge bg-warning">Reserved</span>
                     @elseif ($order->vehicle_status == 3 || $order->vehicle_status == 4 || $order->vehicle_status == 6)
-                    <strong>Vehicle Status:</strong> <span class="badge badge-info">
+                    <strong>Vehicle Status:</strong> <span class="badge bg-info">
                         @if ($order->vehicle_status == 3)
                             Ready for delivery
                         @elseif ($order->vehicle_status == 4)
@@ -33,9 +33,9 @@
                         @endif
                     </span>
                     @elseif ($order->vehicle_status == 7)
-                    <strong>Vehicle Status:</strong> <span class="badge badge-secondary">Completed Order</span>
+                    <strong>Vehicle Status:</strong> <span class="badge bg-secondary">Completed Order</span>
                     @else
-                    <strong>Vehicle Status:</strong> <span class="badge badge-secondary">Status Unavailable</span>
+                    <strong>Vehicle Status:</strong> <span class="badge bg-secondary">Status Unavailable</span>
                     @endif
                 </div>
             </div>

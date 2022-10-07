@@ -25,11 +25,11 @@
                                 </div>
                                 <div class="col-md-4 text-right">
                                     @if ($message->role == 'admin')
-                                        <span class="badge badge-danger">Admin</span>
+                                        <span class="badge bg-danger">Admin</span>
                                     @elseif ($message->role == 'Dealer')
-                                        <span class="badge badge-info">Dealer</span>
+                                        <span class="badge bg-info">Dealer</span>
                                     @else
-                                        <span class="badge badge-secondary">Broker</span>
+                                        <span class="badge bg-secondary">Broker</span>
                                     @endif
                                 </div>
                             </div>

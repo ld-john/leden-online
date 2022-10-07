@@ -85,6 +85,7 @@ class VehicleForm extends Component
         'registered_date' => 'nullable|date',
         'build_date' => 'nullable|date',
         'due_date' => 'nullable|date',
+        'dealership' => 'required',
     ];
 
     protected $messages = [
@@ -99,6 +100,7 @@ class VehicleForm extends Component
         'colour.required' => 'No <strong>Colour</strong> selected',
         'trim.required' => 'No <strong>Vehicle Trim</strong> selected',
         'status.required' => 'No <strong>Order Status</strong> selected',
+        'dealership.required' => 'No <strong>Dealership</strong> selected',
     ];
 
     /**
@@ -179,13 +181,6 @@ class VehicleForm extends Component
     {
         $this->validate();
 
-        $this->validate([
-           'orbit_number' => [
-               'nullable',
-               Rule::unique('vehicle')->ignore($this->vehicle->id)
-           ]
-        ]);
-
         if ($this->orbit_number === '') {
             $this->orbit_number = null;
         }
@@ -260,6 +255,8 @@ class VehicleForm extends Component
         }
 
         $this->markOrderComplete($vehicle, $vehicle->order());
+
+        return redirect(route('vehicle.show', $vehicle->id));
     }
 
     private function markOrderComplete($vehicle, $order)

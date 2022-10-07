@@ -1,17 +1,11 @@
 <div class="mb-4">
+    @if($order)
+        <div class="btn-group mb-4">
+            <a href="{{ route('order.pdf', $order->id) }}" class="btn btn-secondary">Download Order PDF</a>
+            <a href="{{ route('order.show', $order->id) }}" class="btn btn-primary">View Order</a>
+        </div>
+    @endif
     <form wire:submit.prevent="orderFormSubmit" method="POST" enctype="multipart/form-data">
-        @csrf
-        @if (session()->has('message'))
-            <div class="alert alert-success" role="alert">
-                {{session('message')}}
-                <br>
-                <div class="btn-group">
-                    <a href="{{ route('order.pdf', $order->id) }}" class="btn btn-secondary">Download Order PDF</a>
-                    <a href="{{ route('order.show', $order->id) }}" class="btn btn-primary">View Order</a>
-                </div>
-            </div>
-        @endif
-
         @if($errors->count())
             <div class="alert alert-danger alert-dismissible fade show m-5">
                 <h4 class="alert-heading"><i class="fa fa-exclamation-triangle"></i> There are some issues.</h4>

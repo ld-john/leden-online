@@ -14,7 +14,13 @@
     <table class="table table-hover table-bordered">
         <thead>
         <tr class="blue-background text-white">
-            <th>ID</th>
+            <th>
+                <label for="orbitNumberMissing" class="form-check-label small">Filter Missing Orbit Numbers</label>
+                <div class="form-check form-switch">
+                    <input wire:model="filterMissingOrbitNumber" type="checkbox" id="orbitNumberMissing" class="form-check-input" role="switch">
+                </div>
+                ID
+            </th>
             <th>Make</th>
             <th>Model</th>
             <th>Ford Order Number</th>
@@ -26,8 +32,8 @@
             <th>Type</th>
             <th>Chassis</th>
             <th>Registration</th>
-            <th>Due Date</th>
             <th>Planned Build Date</th>
+            <th>Due Date</th>
             <th>Dealership</th>
             @if($ringfenced)
                 <th>Broker</th>
@@ -37,7 +43,9 @@
             <th>Action</th>
         </tr>
         <tr class="bg-light">
-            <th></th>
+            <th class="p-1">
+                <input wire:model="searchID" type="text" class="form-control" placeholder="Search ID">
+            </th>
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchMake" type="text" class="form-control" placeholder="Search Make">
             </th>
@@ -70,11 +78,11 @@
                 <input wire:model.debounce:500ms="searchRegistration" type="text" class="form-control" placeholder="Search Registration">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchDueDate" class="form-control" placeholder="Search Due Date" type="text">
-
+                <input wire:model.debounce:500ms="searchBuildDate" type="date" class="form-control" placeholder="Search Planned Build Date">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchBuildDate" type="text" class="form-control" placeholder="Search Planned Build Date">
+                <input wire:model.debounce:500ms="searchDueDate" class="form-control" placeholder="Search Due Date" type="date">
+
             </th>
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchDealer" type="text" class="form-control" placeholder="Search Dealer">
@@ -85,7 +93,7 @@
             </th>
             @endif
             <th class="p-1">
-                <select wire:model="searchStatus" name="status" id="status" class="form-control">
+                <select wire:model="searchStatus" name="status" id="status" class="form-select">
                     <option value="">Select Status</option>
                     @foreach($status as $item)
                         <option value="{{ $item }}">
@@ -120,15 +128,16 @@
                 <td>{{ $vehicle->type }}</td>
                 <td>{{ $vehicle->chassis }}</td>
                 <td>{{ $vehicle->reg }}</td>
-                @if(empty($vehicle->due_date || $vehicle->due_date == '0000-00-00 00:00:00'))
-                    <td></td>
-                @else
-                    <td>{{ \Carbon\Carbon::parse($vehicle->due_date)->format('d/m/Y') }}</td>
-                @endif
+
                 @if ( empty( $vehicle->build_date) || $vehicle->build_date == '0000-00-00 00:00:00')
                     <td></td>
                 @else
                     <td>{{ \Carbon\Carbon::parse($vehicle->build_date ?? '')->format( 'd/m/Y' )}}</td>
+                @endif
+                @if(empty($vehicle->due_date || $vehicle->due_date == '0000-00-00 00:00:00'))
+                    <td></td>
+                @else
+                    <td>{{ \Carbon\Carbon::parse($vehicle->due_date)->format('d/m/Y') }}</td>
                 @endif
                 <td>
                     @if ($vehicle->dealer)

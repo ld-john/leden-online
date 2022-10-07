@@ -9,7 +9,6 @@ use Livewire\WithPagination;
 
 class VehicleTable extends Component
 {
-
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
@@ -40,6 +39,8 @@ class VehicleTable extends Component
     public $searchBroker;
     public $searchTransmission;
     public $role;
+    public $filterMissingOrbitNumber;
+    public $searchID;
 
     public function mount($ringfenced, $fordpipeline)
     {
@@ -60,7 +61,9 @@ class VehicleTable extends Component
             ->when($this->role === 'broker', function ($query) {
                 $query->where('hide_from_broker', false);
             })
-            ->when($this->role === 'broker' && $this->ringfenced, function ($query) {
+            ->when($this->role === 'broker' && $this->ringfenced, function (
+                $query,
+            ) {
                 $query->where('broker_id', Auth::user()->company->id);
             })
             ->when($this->role === 'dealer', function ($query) {
@@ -74,52 +77,112 @@ class VehicleTable extends Component
                 $query->where('vehicle_status', $this->searchStatus);
             })
             ->when($this->searchMake, function ($query) {
-                $query->whereHas('manufacturer',function ($query) {
-                    $query->where('name', 'like', '%'.$this->searchMake.'%');
+                $query->whereHas('manufacturer', function ($query) {
+                    $query->where(
+                        'name',
+                        'like',
+                        '%' . $this->searchMake . '%',
+                    );
                 });
             })
             ->when($this->searchModel, function ($query) {
-                $query->where('model', 'like', '%'.$this->searchModel.'%');
+                $query->where('model', 'like', '%' . $this->searchModel . '%');
             })
             ->when($this->searchTransmission, function ($query) {
-                $query->where('transmission', 'like', '%'.$this->searchTransmission.'%');
+                $query->where(
+                    'transmission',
+                    'like',
+                    '%' . $this->searchTransmission . '%',
+                );
             })
             ->when($this->searchOrderNumber, function ($query) {
-                $query->where('ford_order_number', 'like', '%'.$this->searchOrderNumber.'%');
+                $query->where(
+                    'ford_order_number',
+                    'like',
+                    '%' . $this->searchOrderNumber . '%',
+                );
             })
             ->when($this->searchDerivative, function ($query) {
-                $query->where('derivative', 'like', '%'.$this->searchDerivative.'%');
+                $query->where(
+                    'derivative',
+                    'like',
+                    '%' . $this->searchDerivative . '%',
+                );
             })
             ->when($this->searchEngine, function ($query) {
-                $query->where('engine', 'like', '%'.$this->searchEngine.'%');
+                $query->where(
+                    'engine',
+                    'like',
+                    '%' . $this->searchEngine . '%',
+                );
             })
             ->when($this->searchColour, function ($query) {
-                $query->where('colour', 'like', '%'.$this->searchColour.'%');
+                $query->where(
+                    'colour',
+                    'like',
+                    '%' . $this->searchColour . '%',
+                );
             })
             ->when($this->searchType, function ($query) {
-                $query->where('type', 'like', '%'.$this->searchType.'%');
+                $query->where('type', 'like', '%' . $this->searchType . '%');
             })
             ->when($this->searchChassis, function ($query) {
-                $query->where('derivative', 'like', '%'.$this->searchChassis.'%');
+                $query->where(
+                    'derivative',
+                    'like',
+                    '%' . $this->searchChassis . '%',
+                );
             })
             ->when($this->searchRegistration, function ($query) {
-                $query->where('reg', 'like', '%'.$this->searchRegistration.'%');
+                $query->where(
+                    'reg',
+                    'like',
+                    '%' . $this->searchRegistration . '%',
+                );
             })
             ->when($this->searchDueDate, function ($query) {
-                $query->where('due_date', 'like', '%'. $this->searchDueDate.'%');
+                $query->where(
+                    'due_date',
+                    'like',
+                    '%' . $this->searchDueDate . '%',
+                );
             })
             ->when($this->searchBuildDate, function ($query) {
-                $query->where('build_date', 'like', '%'.$this->searchBuildDate.'%');
+                $query->where(
+                    'build_date',
+                    'like',
+                    '%' . $this->searchBuildDate . '%',
+                );
             })
             ->when($this->searchDealer, function ($query) {
-                $query->whereHas('dealer',function ($query) {
-                    $query->where('company_name', 'like', '%'.$this->searchDealer.'%');
+                $query->whereHas('dealer', function ($query) {
+                    $query->where(
+                        'company_name',
+                        'like',
+                        '%' . $this->searchDealer . '%',
+                    );
                 });
             })
             ->when($this->searchBroker, function ($query) {
-                $query->whereHas('broker', function($query) {
-                   $query->where('company_name', 'like', '%'.$this->searchBroker.'%');
+                $query->whereHas('broker', function ($query) {
+                    $query->where(
+                        'company_name',
+                        'like',
+                        '%' . $this->searchBroker . '%',
+                    );
                 });
+            })
+            ->when($this->searchID, function ($query) {
+                $query
+                    ->where('id', 'like', '%' . $this->searchID . '%')
+                    ->orWhere(
+                        'orbit_number',
+                        'like',
+                        '%' . $this->searchID . '%',
+                    );
+            })
+            ->when($this->filterMissingOrbitNumber, function ($query) {
+                $query->whereNull('orbit_number');
             })
             ->paginate($this->paginate);
 
@@ -127,8 +190,14 @@ class VehicleTable extends Component
             ->where('show_in_ford_pipeline', $this->fordpipeline)
             ->doesntHave('order')
             ->get();
-        $status = $status->map->only(['vehicle_status'])->flatten()->unique();
+        $status = $status->map
+            ->only(['vehicle_status'])
+            ->flatten()
+            ->unique();
 
-        return view('livewire.vehicle.vehicle-table', ['vehicles' => $data, 'status' => $status]);
+        return view('livewire.vehicle.vehicle-table', [
+            'vehicles' => $data,
+            'status' => $status,
+        ]);
     }
 }
