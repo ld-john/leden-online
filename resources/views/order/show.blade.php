@@ -369,6 +369,7 @@
                     </div>
                 </div>
                 @livewire('comment-box', ['commentable_id' => $order->id, 'commentable_type' => 'order'])
+                @livewire('show-comment-box', ['commentable_id' => $order->vehicle->id, 'commentable_type' => 'vehicle'])
             </div>
         </div>
     </div>

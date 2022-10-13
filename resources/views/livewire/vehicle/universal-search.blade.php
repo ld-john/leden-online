@@ -36,8 +36,20 @@
             <th>Chassis Prefix</th>
             <th>Chassis</th>
             <th>Registration</th>
-            <th>Planned Build</th>
-            <th>Due Date</th>
+            <th>
+                <label for="BuildDateFilter" class="form-check-label small">Filter Build Date</label>
+                <div class="form-check form-switch">
+                    <input wire:model="filterBuildDate" type="checkbox" id="BuildDateFilter" class="form-check-input" role="switch">
+                </div>
+                Planned Build Date
+            </th>
+            <th>
+                <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>
+                <div class="form-check form-switch">
+                    <input wire:model="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input" role="switch">
+                </div>
+                Due Date
+            </th>
             <th>Status</th>
             <th>Broker</th>
             <th>Broker Reference</th>

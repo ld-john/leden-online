@@ -115,19 +115,27 @@ $('.remove-selected').click(function () {
 //   autoclose: true,
 // });
 //
-// $.fn.datepicker.dates['qtrs'] = {
-//   days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-//   daysShort: ["Sun", "Moon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-//   daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-//   months: [".00", ".25", ".50", ".75", "", "", "", "", "", "", "", ""],
-//   monthsShort: [".00", ".25", ".50", ".75", "", "", "", "", "", "", "", ""],
-//   today: "Today",
-//   clear: "Clear",
-//   format: "dd/mm/yyyy",
-//   titleFormat: "MM yyyy",
-//   /* Leverages same syntax as 'format' */
-//   weekStart: 0
-// };
+$.fn.datepicker.dates['qtrs'] = {
+  days: [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ],
+  daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  daysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+  months: ['.00', '.25', '.50', '.75', '', '', '', '', '', '', '', ''],
+  monthsShort: ['.00', '.25', '.50', '.75', '', '', '', '', '', '', '', ''],
+  today: 'Today',
+  clear: 'Clear',
+  format: 'dd/mm/yyyy',
+  titleFormat: 'MM yyyy',
+  /* Leverages same syntax as 'format' */
+  weekStart: 0,
+};
 
 $('#model_year')
   .datepicker({
@@ -136,7 +144,7 @@ $('#model_year')
     autoclose: true,
     language: 'qtrs',
   })
-  .on('click', function (event) {
+  .on('click', function () {
     $('.month').each(function (index, element) {
       if (index > 3) $(element).remove();
     });
@@ -149,7 +157,7 @@ $('.model_year')
     autoclose: true,
     language: 'qtrs',
   })
-  .on('click', function (event) {
+  .on('click', function () {
     $('.month').each(function (index, element) {
       if (index > 3) $(element).remove();
     });

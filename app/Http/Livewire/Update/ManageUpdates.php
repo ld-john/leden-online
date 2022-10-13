@@ -23,6 +23,8 @@ class ManageUpdates extends Component
     public $type = 'update';
     public $heading;
     public $image;
+    public $editID;
+    public $editImage;
 
     public function mount()
     {
@@ -52,6 +54,37 @@ class ManageUpdates extends Component
         $update->save();
         notify()->success('News Update Created Successfully', 'Update Created');
         return redirect(request()->header('Referer'));
+    }
+
+    public function storeEdit()
+    {
+        $update = Updates::where('id', '=', $this->editID)->first();
+        $update->update([
+            'header' => $this->heading,
+            'update_text' => $this->text,
+        ]);
+        if ($this->image) {
+            $validate = $this->validate([
+                'image' => 'image|nullable|dimensions:height=500,width=1600',
+            ]);
+            $validate['image'] = $this->image->store('banners');
+            $update->update([
+                'image' => $validate['image'],
+            ]);
+        }
+        $this->editID = null;
+        notify()->success('Update Edited Successfully', 'Edit Successful');
+        return redirect(request()->header('Referer'));
+    }
+
+    public function editUpdate($id)
+    {
+        $update = Updates::where('id', '=', $id)->first();
+        $this->editID = $update->id;
+        $this->type = $update->update_type;
+        $this->text = $update->update_text;
+        $this->heading = $update->header;
+        $this->editImage = $update->image;
     }
 
     public function saveBanner()

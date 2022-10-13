@@ -40,6 +40,8 @@ class VehicleTable extends Component
     public $searchTransmission;
     public $role;
     public $filterMissingOrbitNumber;
+    public $filterDueDate;
+    public $filterBuildDate;
     public $searchID;
 
     public function mount($ringfenced, $fordpipeline)
@@ -183,6 +185,12 @@ class VehicleTable extends Component
             })
             ->when($this->filterMissingOrbitNumber, function ($query) {
                 $query->whereNull('orbit_number');
+            })
+            ->when($this->filterBuildDate, function ($query) {
+                $query->whereNotNull('build_date');
+            })
+            ->when($this->filterDueDate, function ($query) {
+                $query->whereNotNull('due_date');
             })
             ->paginate($this->paginate);
 

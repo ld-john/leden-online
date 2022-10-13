@@ -45,14 +45,16 @@
                 </div>
             </div>
         @empty
-            <div class="card-header">
-                <h5 class="my-4 card-title mx-3">There are no comments yet.</h5>
+            <div class="card my-4 mx-3">
+                <div class="card-header">
+                    <h5 class="card-title m-0">There are no comments on {{ ucwords($commentable_type) }} #{{ $commentable_id }}</h5>
+                </div>
             </div>
         @endforelse
         @can('admin')
             @forelse($private_comments as $comment)
-                <div class="card my-4 mx-3">
-                    <div class="card-header text-white bg-dark d-flex flex-row">
+                <div class="card text-white bg-dark my-4 mx-3">
+                    <div class="card-header  d-flex flex-row">
                         <div class="comment-meta flex-grow-1">
                             <h5 class="card-title">{{ $comment->user->firstname }} {{$comment->user->lastname}}</h5>
                             @if ( $comment->user->company )
@@ -71,13 +73,15 @@
                     <div class="card-body">
                         <p class="card-text">{!!  $comment->content !!}</p>
                     </div>
-                    <div class="card-footer text-white bg-dark">
+                    <div class="card-footer">
                         {{ $comment->created_at->diffForHumans() }} ({{$comment->created_at->format('d/m/Y')}})
                     </div>
                 </div>
             @empty
-                <div class="card-header">
-                    <h5 class="my-4 card-title mx-3">There are no private comments yet.</h5>
+                <div class="card text-white bg-dark mx-3 my-4">
+                    <div class="card-header">
+                        <h5 class="card-title m-0">There are no private comments on {{ ucwords($commentable_type) }} #{{ $commentable_id }}</h5>
+                    </div>
                 </div>
             @endforelse
         @endcan

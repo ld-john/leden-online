@@ -16,11 +16,13 @@
             <thead>
             <tr class="blue-background text-white">
                 <th>Leden ID</th>
-                <th>Orbit Number</th>
                 <th>Broker Ref</th>
                 <th>Customer</th>
                 <th>Make</th>
                 <th>Model</th>
+                <th>Chassis Prefix</th>
+                <th>Chassis</th>
+                <th>Registration Number</th>
                 <th>Delivery Date</th>
                 <th>Action</th>
             </tr>
@@ -28,12 +30,14 @@
             <tbody>
             @foreach( $orders as $order )
                 <tr>
-                    <td>{{ $order->id ?? '--' }}
-                    <td>{{ $order->vehicle->orbit_number ?? '--'}}</td>
+                    <td>{{ $order->id ?? '--' }}<br> <strong>Orbit Number:</strong> {{ $order->vehicle->orbit_number ?? '--'}}</td>
                     <td>{{ $order->broker_ref ?? '--' }}</td>
                     <td>{{ $order->customer->name() }}</td>
                     <td>{{ $order->vehicle->manufacturer->name ?? '--' }}</td>
                     <td>{{ $order->vehicle->model ?? '--' }}</td>
+                    <td>{{ $order->vehicle->chassis_prefix }}</td>
+                    <td>{{ $order->vehicle->chassis }}</td>
+                    <td>{{ $order->vehicle->reg }}</td>
                     @if ( empty( $order->delivery_date) || $order->delivery_date == '0000-00-00 00:00:00')
                         <td></td>
                     @else

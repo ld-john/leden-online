@@ -14,5 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Updates extends Model
 {
+    protected $guarded = [];
     use SoftDeletes;
 }

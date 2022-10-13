@@ -14,6 +14,7 @@
 /* Auth routes */
 
 use App\Http\Controllers\DeliveriesController;
+use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UpdatesController;
@@ -334,6 +335,13 @@ Route::middleware('auth')->group(function () {
     Route::controller(UpdatesController::class)
         ->name('updates.')
         ->prefix('updates')
+        ->group(function () {
+            Route::get('create', 'create')->name('create');
+        });
+
+    Route::controller(LocationsController::class)
+        ->name('locations.')
+        ->prefix('locations')
         ->group(function () {
             Route::get('create', 'create')->name('create');
         });

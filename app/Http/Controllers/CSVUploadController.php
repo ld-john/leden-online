@@ -7,6 +7,7 @@ use App\CsvData;
 use App\FitOption;
 use App\Http\Requests\CsvImportRequest;
 use App\Imports\FitOptionImport;
+use App\Location;
 use App\Manufacturer;
 use App\Notifications\VehicleInStockNotification;
 use App\User;
@@ -90,6 +91,7 @@ class CSVUploadController extends Controller
             $upload[1]['colour'] = $vehicle_upload['colour'];
             $upload[1]['type'] = $vehicle_upload['type'];
             $upload[1]['chassis'] = $vehicle_upload['chassis'];
+            $upload[1]['transmission'] = $vehicle_upload['transmission'];
             $upload[1]['reg'] = $vehicle_upload['registration'];
             $upload[1]['ring_fenced_stock'] = 1;
             $upload[1]['broker_id'] = $broker;
@@ -198,14 +200,17 @@ class CSVUploadController extends Controller
 
                     $prefix = array_shift($ford_report);
 
-                    $location = match ($ford_report['LOCATION']) {
-                        'DELIVERED' => 1,
-                        'VFS-NORTH', 'VFS-SOUTH', 'VFS-SOTON' => 12,
-                        'DBN DOCKS', 'SILV EXP', 'VAL PORT', 'VALENCIA' => 13,
-                        'ANTWERP', 'AUTOPORT', 'NEW FLUSH' => 10,
-                        'DAGTOPS', 'LIV DOCKS', 'LIVTOPS', 'SOTTOPS' => 11,
-                        default => 4,
-                    };
+                    $location = Location::where(
+                        'location',
+                        '=',
+                        $ford_report['LOCATION'],
+                    )->first();
+
+                    if ($location) {
+                        $location = intval($location->status);
+                    } else {
+                        $location = 4;
+                    }
 
                     $build_date = null;
 
@@ -218,34 +223,36 @@ class CSVUploadController extends Controller
 
                     if ($ford_report['ETA_DATE']) {
                         $due_date = Carbon::createFromFormat(
-                                'd/m/Y',
-                                $ford_report['ETA_DATE'],
-                            )->format('Y-m-d h:i:s');
+                            'd/m/Y',
+                            $ford_report['ETA_DATE'],
+                        )->format('Y-m-d h:i:s');
                     } else {
                         $due_date = null;
                     }
-
 
                     $vehicle->update([
                         'chassis' => $ford_report['VIN'],
                         'chassis_prefix' => $prefix,
                         'vehicle_status' => $location,
                         'build_date' => $build_date,
-                        'due_date' => $due_date
+                        'due_date' => $due_date,
                     ]);
 
                     $order = $vehicle->order;
-
-                    if ($vehicle->wasChanged('vehicle_status')) {
-                        if ($vehicle->vehicle_status === '1') {
-                            $brokers = User::where(
-                                'company_id',
-                                $order->broker,
-                            )->get();
-                            foreach ($brokers as $broker) {
-                                $broker->notify(
-                                    new VehicleInStockNotification($vehicle),
-                                );
+                    if ($order) {
+                        if ($vehicle->wasChanged('vehicle_status')) {
+                            if ($vehicle->vehicle_status === '1') {
+                                $brokers = User::where(
+                                    'company_id',
+                                    $order->broker,
+                                )->get();
+                                foreach ($brokers as $broker) {
+                                    $broker->notify(
+                                        new VehicleInStockNotification(
+                                            $vehicle,
+                                        ),
+                                    );
+                                }
                             }
                         }
                     }
@@ -253,7 +260,7 @@ class CSVUploadController extends Controller
             }
             notify()->success(
                 'All vehicles have been updated',
-                'Import Update Successfull',
+                'Import Update Successfully',
             );
             return redirect()->route('csv_upload');
         } elseif ($request->input('upload_type') === 'ford_test') {

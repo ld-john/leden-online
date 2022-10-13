@@ -195,6 +195,12 @@
                             </a>
                         </li>
                         <li>
+                            <a class="dropdown-item" href="{{ route('locations.create') }}">
+                                <i class="fa-solid fa-location-pin"></i>
+                                <span>Manage Ford Report Locations</span>
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" href="{{ route('rf_upload') }}">
                                 <i class="fa-solid fa-file-csv"></i>
                                 <span>Ring Fenced Stock CSV Upload</span>

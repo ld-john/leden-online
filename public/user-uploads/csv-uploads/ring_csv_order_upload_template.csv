@@ -1,2 +1,1 @@
-orbit_number,ford_order_number,make,model,derivative,engine,colour,type,chassis,registration,status
-,,,,,,,,,,
+orbit_number,ford_order_number,make,model,derivative,engine,colour,type,chassis,registration,transmission,status

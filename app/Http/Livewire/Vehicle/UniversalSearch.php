@@ -43,6 +43,8 @@ class UniversalSearch extends Component
     public $searchBuildDate;
     public $searchDueDate;
     public $searchBrokerRef;
+    public $filterDueDate;
+    public $filterBuildDate;
     protected $vehicles;
     public $status;
     public $type;
@@ -215,6 +217,12 @@ class UniversalSearch extends Component
                         '%' . $this->searchDealer . '%',
                     );
                 });
+            })
+            ->when($this->filterBuildDate, function ($query) {
+                $query->whereNotNull('build_date');
+            })
+            ->when($this->filterDueDate, function ($query) {
+                $query->whereNotNull('due_date');
             })
             ->when($this->searchCustomer, function ($query) {
                 $query->whereHas('order', function ($query) {
