@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Finance;
 
-use App\Finance\Term;
 use App\Http\Controllers\Controller;
+use App\Models\Finance\Term;
 use Illuminate\Http\Request;
 
 class TermsController extends Controller
@@ -21,7 +21,7 @@ class TermsController extends Controller
     {
     }
 
-    public function show(Term $term)
+    public function show(\App\Models\Finance\Term $term)
     {
     }
 
@@ -29,11 +29,11 @@ class TermsController extends Controller
     {
     }
 
-    public function update(Request $request, Term $term)
+    public function update(Request $request, \App\Models\Finance\Term $term)
     {
     }
 
-    public function destroy(Term $term)
+    public function destroy(\App\Models\Finance\Term $term)
     {
     }
 }

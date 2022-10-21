@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Finance;
 
-use App\Finance\Maintenance;
 use App\Http\Controllers\Controller;
+use App\Models\Finance\Maintenance;
 use Illuminate\Http\Request;
 
 class MaintenancesController extends Controller
@@ -25,7 +25,7 @@ class MaintenancesController extends Controller
     {
     }
 
-    public function edit(Maintenance $maintenance)
+    public function edit(\App\Models\Finance\Maintenance $maintenance)
     {
     }
 

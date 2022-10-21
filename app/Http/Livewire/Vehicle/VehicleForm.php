@@ -2,18 +2,17 @@
 
 namespace App\Http\Livewire\Vehicle;
 
-use App\Company;
-use App\FitOption;
-use App\Manufacturer;
-use App\Vehicle;
-use App\VehicleMeta;
-use App\VehicleModel;
+use App\Models\Company;
+use App\Models\FitOption;
+use App\Models\Manufacturer;
+use App\Models\Vehicle;
+use App\Models\VehicleMeta;
+use App\Models\VehicleModel;
 use DateTime;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\WithPagination;

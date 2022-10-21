@@ -2,11 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\FitOption;
-use App\VehicleModel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-
 class FitOptionsController extends Controller
 {
     public function factoryFitIndex()

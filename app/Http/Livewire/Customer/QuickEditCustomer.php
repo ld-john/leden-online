@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Customer;
 
-use App\Customer;
+use App\Models\Customer;
 use Livewire\Component;
 
 class QuickEditCustomer extends Component

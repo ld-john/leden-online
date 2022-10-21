@@ -17,7 +17,8 @@
             <th>
                 <label for="orbitNumberMissing" class="form-check-label small">Filter Missing Orbit Numbers</label>
                 <div class="form-check form-switch">
-                    <input wire:model="filterMissingOrbitNumber" type="checkbox" id="orbitNumberMissing" class="form-check-input" role="switch">
+                    <input wire:model="filterMissingOrbitNumber" type="checkbox" id="orbitNumberMissing"
+                           class="form-check-input" role="switch">
                 </div>
                 ID
             </th>
@@ -35,14 +36,16 @@
             <th>
                 <label for="BuildDateFilter" class="form-check-label small">Filter Build Date</label>
                 <div class="form-check form-switch">
-                    <input wire:model="filterBuildDate" type="checkbox" id="BuildDateFilter" class="form-check-input" role="switch">
+                    <input wire:model="filterBuildDate" type="checkbox" id="BuildDateFilter" class="form-check-input"
+                           role="switch">
                 </div>
                 Planned Build Date
             </th>
             <th>
                 <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>
                 <div class="form-check form-switch">
-                    <input wire:model="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input" role="switch">
+                    <input wire:model="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
+                           role="switch">
                 </div>
                 Due Date
             </th>
@@ -59,57 +62,71 @@
                 <input wire:model="searchID" type="text" class="form-control" placeholder="Search ID">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchMake" type="text" class="form-control" placeholder="Search Make">
+                <input wire:model.debounce:500ms="searchMake" type="text" class="form-control"
+                       placeholder="Search Make">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchModel" type="text" class="form-control" placeholder="Search Model">
+                <input wire:model.debounce:500ms="searchModel" type="text" class="form-control"
+                       placeholder="Search Model">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchOrderNumber" type="text" class="form-control" placeholder="Search Ford Order Number">
+                <input wire:model.debounce:500ms="searchOrderNumber" type="text" class="form-control"
+                       placeholder="Search Ford Order Number">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchDerivative" type="text" class="form-control" placeholder="Search Derivative">
+                <input wire:model.debounce:500ms="searchDerivative" type="text" class="form-control"
+                       placeholder="Search Derivative">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchEngine" type="text" class="form-control" placeholder="Search Engine">
+                <input wire:model.debounce:500ms="searchEngine" type="text" class="form-control"
+                       placeholder="Search Engine">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchTransmission" type="text" class="form-control" placeholder="Search Transmission">
+                <input wire:model.debounce:500ms="searchTransmission" type="text" class="form-control"
+                       placeholder="Search Transmission">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchColour" type="text" class="form-control" placeholder="Search Colour">
+                <input wire:model.debounce:500ms="searchColour" type="text" class="form-control"
+                       placeholder="Search Colour">
             </th>
             <th></th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchType" type="text" class="form-control" placeholder="Search Type">
+                <input wire:model.debounce:500ms="searchType" type="text" class="form-control"
+                       placeholder="Search Type">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchChassis" type="text" class="form-control" placeholder="Search Chassis">
+                <input wire:model.debounce:500ms="searchChassis" type="text" class="form-control"
+                       placeholder="Search Chassis">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchRegistration" type="text" class="form-control" placeholder="Search Registration">
+                <input wire:model.debounce:500ms="searchRegistration" type="text" class="form-control"
+                       placeholder="Search Registration">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchBuildDate" type="date" class="form-control" placeholder="Search Planned Build Date">
+                <input wire:model.debounce:500ms="searchBuildDate" type="date" class="form-control"
+                       placeholder="Search Planned Build Date">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchDueDate" class="form-control" placeholder="Search Due Date" type="date">
+                <input wire:model.debounce:500ms="searchDueDate" class="form-control" placeholder="Search Due Date"
+                       type="date">
 
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchDealer" type="text" class="form-control" placeholder="Search Dealer">
+                <input wire:model.debounce:500ms="searchDealer" type="text" class="form-control"
+                       placeholder="Search Dealer">
             </th>
             @if($ringfenced)
-            <th class="p-1">
-                <input wire:model.debounce:500ms="searchBroker" type="text" class="form-control" placeholder="Search Broker">
-            </th>
+                <th class="p-1">
+                    <input wire:model.debounce:500ms="searchBroker" type="text" class="form-control"
+                           placeholder="Search Broker">
+                </th>
             @endif
             <th class="p-1">
                 <select wire:model="searchStatus" name="status" id="status" class="form-select">
                     <option value="">Select Status</option>
                     @foreach($status as $item)
                         <option value="{{ $item }}">
-                            {{ \App\Vehicle::statusMatch($item) }}
+                            {{ \App\Models\Vehicle::statusMatch($item) }}
                         </option>
                     @endforeach
                 </select>
@@ -135,7 +152,7 @@
                 <td>{{ $vehicle->transmission }}</td>
                 <td>{{ $vehicle->colour }}</td>
                 <td>
-                    <livewire:vehicle.fit-options-modal :vehicle="$vehicle->id" :key="time().$vehicle->id" />
+                    <livewire:vehicle.fit-options-modal :vehicle="$vehicle->id" :key="time().$vehicle->id"/>
                 </td>
                 <td>{{ $vehicle->type }}</td>
                 <td>{{ $vehicle->chassis }}</td>
@@ -158,9 +175,9 @@
                 </td>
                 @if($ringfenced)
                     <td>
-                    @if($vehicle->broker)
-                        {{ $vehicle->broker->company_name }}
-                    @endif
+                        @if($vehicle->broker)
+                            {{ $vehicle->broker->company_name }}
+                        @endif
                     </td>
                 @endif
                 <td>{{ $vehicle->status() }}</td>
@@ -168,17 +185,21 @@
                     {{ \Carbon\Carbon::parse($vehicle->updated_at)->format( 'd/m/Y h:ia') }}
                 </td>
                 <td width="120px">
-                    <a href="{{route('vehicle.show', $vehicle->id)}}" class="btn btn-primary" data-toggle="tooltip" title="View Vehicle Information"><i class="far fa-eye"></i></a>
+                    <a href="{{route('vehicle.show', $vehicle->id)}}" class="btn btn-primary" data-toggle="tooltip"
+                       title="View Vehicle Information"><i class="far fa-eye"></i></a>
                     @can('admin')
-                        <a href="{{route('vehicle.edit', $vehicle->id)}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Vehicle Information"><i class="fas fa-edit"></i></a>
-                        <a href="{{route('order.reserve', $vehicle->id)}}" class="btn btn-primary" data-toggle="tooltip" title="Create order with Vehicle"><i class="fas fa-plus-square"></i></a>
+                        <a href="{{route('vehicle.edit', $vehicle->id)}}" class="btn btn-warning" data-toggle="tooltip"
+                           title="Edit Vehicle Information"><i class="fas fa-edit"></i></a>
+                        <a href="{{route('order.reserve', $vehicle->id)}}" class="btn btn-primary" data-toggle="tooltip"
+                           title="Create order with Vehicle"><i class="fas fa-plus-square"></i></a>
                         <a data-toggle="tooltip" title="Delete Vehicle">
-                            <livewire:vehicle.delete-vehicle :vehicle="$vehicle->id" :key="time().$vehicle->id" />
+                            <livewire:vehicle.delete-vehicle :vehicle="$vehicle->id" :key="time().$vehicle->id"/>
                         </a>
                         @if($vehicle->ring_fenced_stock === 1)
-                            <a wire:click="unRingFenceVehicle({{ $vehicle->id }})" class="btn btn-primary" data-toggle="tooltip" title="Move to Leden Stock"><i class="fa-solid fa-car"></i></a>
+                            <a wire:click="unRingFenceVehicle({{ $vehicle->id }})" class="btn btn-primary"
+                               data-toggle="tooltip" title="Move to Leden Stock"><i class="fa-solid fa-car"></i></a>
                         @else
-                            <livewire:vehicle.ring-fence-modal :vehicle="$vehicle->id" :key="time().$vehicle->id" />
+                            <livewire:vehicle.ring-fence-modal :vehicle="$vehicle->id" :key="time().$vehicle->id"/>
                         @endif
                     @endcan
                 </td>
@@ -192,7 +213,7 @@
     </table>
     <div class="d-flex justify-content-between">
         @if(!$vehicles->isEmpty())
-        <p>Showing {{ $vehicles->firstItem() }} - {{ $vehicles->lastItem() }} of {{$vehicles->total()}}</p>
+            <p>Showing {{ $vehicles->firstItem() }} - {{ $vehicles->lastItem() }} of {{$vehicles->total()}}</p>
         @endif
         <div>
             {{ $vehicles->links() }}

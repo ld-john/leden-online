@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Finance\Term;
+use App\Models\Finance\Term;
 use Illuminate\Database\Seeder;
 
 class TermSeeder extends Seeder

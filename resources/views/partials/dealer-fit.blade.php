@@ -1,11 +1,15 @@
 <div class="form-group row">
     <div class="col-md-4">
         <div><strong>Model:</strong></div>
-            <input type="text" disabled value="@if($model){{ \App\VehicleModel::where('id', $model)->first()?->name }} @endif" class="form-control">
+        <input type="text" disabled
+               value="@if($model){{ \App\Models\VehicleModel::where('id', $model)->first()?->name }} @endif"
+               class="form-control">
     </div>
     <div class="col-md-4">
         <div><strong>Dealer:</strong></div>
-        <input type="text" disabled value=" @if($dealership) {{ \App\Company::where('id', $dealership )->first()?->company_name }} @endif" class="form-control">
+        <input type="text" disabled
+               value=" @if($dealership) {{ \App\Models\Company::where('id', $dealership )->first()?->company_name }} @endif"
+               class="form-control">
     </div>
     <div class="col-md-4">
         <div><strong>Search</strong></div>
@@ -36,7 +40,8 @@
     </table>
     <div class="d-flex justify-content-between">
         @if(!$dealer_options->isEmpty())
-            <p>Showing {{ $dealer_options->firstItem() }} - {{ $dealer_options->lastItem() }} of {{$dealer_options->total()}}</p>
+            <p>Showing {{ $dealer_options->firstItem() }} - {{ $dealer_options->lastItem() }}
+                of {{$dealer_options->total()}}</p>
         @endif
         <div>
             {{ $dealer_options->links() }}

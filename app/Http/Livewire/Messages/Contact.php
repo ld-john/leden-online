@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Messages;
 
-use App\Message;
-use App\User;
+use App\Models\Message;
+use App\Models\User;
 use Auth;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;

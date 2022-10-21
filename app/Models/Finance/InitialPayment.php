@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Finance;
+namespace App\Models\Finance;
 
-use App\Order;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property mixed|string $option
+ * @property mixed $option
  */
-class FinanceType extends Model
+class InitialPayment extends Model
 {
     protected $guarded = [];
     function orders(): HasMany

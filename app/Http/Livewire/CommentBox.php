@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Comment;
+use App\Models\Comment;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Order;
 
-use App\Invoice;
-use App\Order;
-use App\Vehicle;
+use App\Models\Invoice;
+use App\Models\Order;
+use App\Models\Vehicle;
 use Livewire\Component;
 
 class DeleteOrder extends Component

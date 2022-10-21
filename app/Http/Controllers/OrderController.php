@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Finance\FinanceType;
-use App\Finance\InitialPayment;
-use App\Finance\Maintenance;
-use App\Finance\Mileage;
-use App\Finance\Term;
-use App\Invoice;
-use App\Order;
-use App\Vehicle;
+use App\Models\Finance\FinanceType;
+use App\Models\Finance\InitialPayment;
+use App\Models\Finance\Maintenance;
+use App\Models\Finance\Mileage;
+use App\Models\Finance\Term;
+use App\Models\Invoice;
+use App\Models\Order;
+use App\Models\Vehicle;
 use DateTime;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -93,7 +93,7 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Order $order
+     * @param \App\Models\Order $order
      * @return RedirectResponse
      */
     public function destroy(Order $order): RedirectResponse
@@ -113,7 +113,7 @@ class OrderController extends Controller
      * Duplicate the specified resource in storage.
      *
      * @param Request $request
-     * @param Order $order
+     * @param \App\Models\Order $order
      * @return RedirectResponse
      */
 

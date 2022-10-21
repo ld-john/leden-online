@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire\Finance;
 
-use App\Finance\FinanceType;
-use App\Finance\Term;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -18,25 +16,25 @@ class TermEditor extends Component
 
     public function mount()
     {
-        $this->metadata = Term::all();
+        $this->metadata = \App\Models\Finance\Term::all();
     }
 
     public function newTerm()
     {
-        $term = new Term();
+        $term = new \App\Models\Finance\Term();
         $term->option = $this->new_name;
         $term->save();
         Notify()->success('Term added successfully');
         return redirect(route('finance.term.index'));
     }
 
-    public function showEditModal(Term $type)
+    public function showEditModal(\App\Models\Finance\Term $type)
     {
         $this->edit = $type;
         $this->edit_name = $type->option;
     }
 
-    public function delete(Term $type)
+    public function delete(\App\Models\Finance\Term $type)
     {
         $type->delete();
         Notify()->success('Term deleted successfully');

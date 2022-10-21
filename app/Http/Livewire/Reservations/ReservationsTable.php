@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Reservations;
 
+use App\Models\Reservation;
+use App\Models\User;
 use App\Notifications\ReservationDeleted;
-use App\Reservation;
-use App\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

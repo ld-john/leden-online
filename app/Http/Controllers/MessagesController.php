@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
-use Illuminate\Http\Request;
-use App\MessageGroup;
-use Carbon\Carbon;
-use App\Message;
-use App\User;
+use App\Models\Message;
+use App\Models\MessageGroup;
+use App\Models\Order;
+use App\Models\User;
 use Auth;
+use Carbon\Carbon;
 use DB;
+use Illuminate\Http\Request;
 
 class MessagesController extends Controller
 {

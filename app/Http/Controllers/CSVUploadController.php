@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
-use App\CsvData;
-use App\FitOption;
 use App\Http\Requests\CsvImportRequest;
 use App\Imports\FitOptionImport;
-use App\Location;
-use App\Manufacturer;
+use App\Models\Company;
+use App\Models\CsvData;
+use App\Models\FitOption;
+use App\Models\Location;
+use App\Models\Manufacturer;
+use App\Models\User;
+use App\Models\Vehicle;
+use App\Models\VehicleModel;
 use App\Notifications\VehicleInStockNotification;
-use App\User;
-use App\Vehicle;
-use App\VehicleModel;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 

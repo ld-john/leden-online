@@ -2,10 +2,9 @@
 
 namespace App\Notifications;
 
-use App\Reservation;
+use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -15,7 +14,7 @@ class VehicleReserved extends Notification
 
     private string $message;
     /**
-     * @var Reservation
+     * @var \App\Models\Reservation
      */
     private Reservation $reservation;
 

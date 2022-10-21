@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
+use App\Models\Company;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 
 class CompanyController extends Controller
@@ -95,7 +94,7 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Company $company
+     * @param \App\Models\Company $company
      * @return Application|Factory|View
      */
     public function edit(Company $company)
@@ -109,7 +108,7 @@ class CompanyController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Company $company
+     * @param \App\Models\Company $company
      * @return RedirectResponse
      */
     public function update(Request $request, Company $company): RedirectResponse

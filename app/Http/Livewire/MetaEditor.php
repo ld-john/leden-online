@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\VehicleMeta;
-use App\VehicleModel;
+use App\Models\VehicleMeta;
+use App\Models\VehicleModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

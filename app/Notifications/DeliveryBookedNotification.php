@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Delivery;
+use App\Models\Delivery;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notification;
 

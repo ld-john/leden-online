@@ -1,7 +1,9 @@
 <div class="form-group row">
     <div class="col-md-4">
         <div><strong>Model:</strong></div>
-        <input type="text" disabled value="@if($model){{ \App\VehicleModel::where('id', $model)->first()?->name }} @endif" class="form-control">
+        <input type="text" disabled
+               value="@if($model){{ \App\Models\VehicleModel::where('id', $model)->first()?->name }} @endif"
+               class="form-control">
     </div>
     <div class="col-md-4">
         <div><strong>Model Year:</strong></div>
@@ -36,7 +38,8 @@
     </table>
     <div class="d-flex justify-content-between">
         @if(!$factory_options->isEmpty())
-            <p>Showing {{ $factory_options->firstItem() }} - {{ $factory_options->lastItem() }} of {{$factory_options->total()}}</p>
+            <p>Showing {{ $factory_options->firstItem() }} - {{ $factory_options->lastItem() }}
+                of {{$factory_options->total()}}</p>
         @endif
         <div>
             {{ $factory_options->links() }}

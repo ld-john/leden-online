@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Finance\InitialPayment;
+use App\Models\Finance\InitialPayment;
 use Illuminate\Database\Seeder;
 
 class InitialPaymentSeeder extends Seeder

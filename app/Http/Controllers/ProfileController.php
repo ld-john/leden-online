@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-use DataTables;
-use App\User;
-use Helper;
+use App\Models\Company;
+use App\Models\User;
 use Auth;
-use DB;
+use DataTables;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller

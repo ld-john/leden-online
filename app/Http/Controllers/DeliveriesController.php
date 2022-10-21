@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Delivery;
+use App\Models\Delivery;
+use App\Models\Order;
+use App\Models\User;
 use App\Notifications\DeliveryBookedNotification;
-use App\Order;
-use App\User;
 
 class DeliveriesController extends Controller
 {

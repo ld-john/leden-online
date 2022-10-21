@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Vehicle;
 
 use App\Exports\UniversalExport;
-use App\Vehicle;
+use App\Models\Vehicle;
 use Excel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;

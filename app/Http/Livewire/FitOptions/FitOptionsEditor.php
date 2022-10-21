@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\FitOptions;
 
-use App\Company;
-use App\FitOption;
-use App\VehicleModel;
+use App\Models\Company;
+use App\Models\FitOption;
+use App\Models\VehicleModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

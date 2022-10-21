@@ -2,8 +2,6 @@
 
 namespace App\Helpers;
 
-use App\User;
-use Auth;
 use DB;
 
 class Helper

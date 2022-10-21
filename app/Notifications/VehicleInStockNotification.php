@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Vehicle;
+use App\Models\Vehicle;
 use Illuminate\Notifications\Notification;
 
 class VehicleInStockNotification extends Notification

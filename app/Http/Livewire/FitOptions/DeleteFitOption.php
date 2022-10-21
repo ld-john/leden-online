@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\FitOptions;
 
-use App\FitOption;
+use App\Models\FitOption;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;

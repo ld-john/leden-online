@@ -33,7 +33,8 @@
         </div>
     </div>
     <h4 class="mt-6">Locations</h4>
-    <p>On the Ford Report CSV Import, any vehicle with a location not listed on this table will be marked with a status of Factory Order</p>
+    <p>On the Ford Report CSV Import, any vehicle with a location not listed on this table will be marked with a status
+        of Factory Order</p>
     <table class="table table-bordered ">
         <tr class="blue-background text-white">
             <th>Location</th>
@@ -43,11 +44,13 @@
         @forelse($locations as $location)
             <tr>
                 <td>{{ $location->location }}</td>
-                <td>{{ \App\Vehicle::statusMatch(intval($location->status))  }}</td>
+                <td>{{ \App\Models\Vehicle::statusMatch(intval($location->status))  }}</td>
                 <td class="text-center" style="width: 120px">
                     <div class="btn-group">
-                        <button wire:click="editLocation({{ $location }})" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button wire:click="deleteLocation({{ $location }})" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                        <button wire:click="editLocation({{ $location }})" class="btn btn-warning"><i
+                                    class="fa-solid fa-pen-to-square"></i></button>
+                        <button wire:click="deleteLocation({{ $location }})" class="btn btn-danger"><i
+                                    class="fa-solid fa-trash"></i></button>
                     </div>
                 </td>
             </tr>

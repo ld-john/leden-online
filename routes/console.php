@@ -1,7 +1,6 @@
 <?php
 
-use App\Reservation;
-use App\Vehicle;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Foundation\Inspiring;
 
@@ -33,5 +32,5 @@ Artisan::command('cleanVehicle', function () {
 });
 
 Artisan::command('checkReservationExpiry', function () {
-   (new App\Reservation)->checkExpiry();
+   (new \App\Models\Reservation)->checkExpiry();
 });

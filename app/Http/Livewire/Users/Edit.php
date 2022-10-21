@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Users;
 
-use App\Company;
+use App\Models\Company;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

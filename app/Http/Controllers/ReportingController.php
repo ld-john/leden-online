@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Exports\FinanceExports;
-use App\Exports\UniversalExport;
 use App\Exports\RegisteredExports;
-use App\Order;
-use App\Vehicle;
+use App\Exports\UniversalExport;
+use App\Models\Order;
+use App\Models\Vehicle;
 use Carbon\Carbon;
+use Dashboard;
 use DateTime;
 use Exception;
-use Dashboard;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use LaravelIdea\Helper\App\_IH_Vehicle_C;
@@ -449,7 +449,7 @@ class ReportingController extends Controller
     /**
      * @param $type
      * @param array $dates
-     * @return _IH_Vehicle_C|Builder[]|\Illuminate\Database\Eloquent\Collection|Vehicle[]
+     * @return _IH_Vehicle_C|Builder[]|\Illuminate\Database\Eloquent\Collection|\App\Models\Vehicle[]
      */
     public function returnDataForReports($type, array $dates)
     {

@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire\Delivery;
 
-use App\Delivery;
+use App\Models\Delivery;
+use App\Models\Order;
+use App\Models\Permission;
 use App\Notifications\DeliveryAwaitingConfirmationEmailNotification;
 use App\Notifications\DeliveryAwaitingConfirmationNotification;
-use App\Order;
-use App\Permission;
 use Carbon\Carbon;
 use DateTime;
 use Exception;

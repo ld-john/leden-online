@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Finance;
 
-use App\Finance\InitialPayment;
 use App\Http\Controllers\Controller;
+use App\Models\Finance\InitialPayment;
 use Illuminate\Http\Request;
 
 class InitialPaymentsController extends Controller
@@ -21,15 +21,15 @@ class InitialPaymentsController extends Controller
     {
     }
 
-    public function show(InitialPayment $initialPayment)
+    public function show(\App\Models\Finance\InitialPayment $initialPayment)
     {
     }
 
-    public function edit(InitialPayment $initialPayment)
+    public function edit(\App\Models\Finance\InitialPayment $initialPayment)
     {
     }
 
-    public function update(Request $request, InitialPayment $initialPayment)
+    public function update(Request $request, \App\Models\Finance\InitialPayment $initialPayment)
     {
     }
 

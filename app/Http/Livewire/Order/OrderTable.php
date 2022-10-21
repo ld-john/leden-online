@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Order;
 
-use App\Order;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;

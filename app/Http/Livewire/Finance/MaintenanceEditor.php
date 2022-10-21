@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire\Finance;
 
-use App\Finance\FinanceType;
-use App\Finance\Maintenance;
+use App\Models\Finance\Maintenance;
 use Livewire\Component;
 
 class MaintenanceEditor extends Component
@@ -33,7 +32,7 @@ class MaintenanceEditor extends Component
         $this->edit_name = $type->option;
     }
 
-    public function delete(Maintenance $type)
+    public function delete(\App\Models\Finance\Maintenance $type)
     {
         $type->delete();
         Notify()->success('Maintenance deleted successfully');

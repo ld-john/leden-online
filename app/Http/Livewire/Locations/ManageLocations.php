@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire\Locations;
 
-use App\Location;
-use App\Vehicle;
+use App\Models\Location;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 

@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
+use App\Models\User;
+use App\Models\Vehicle;
 use App\Notifications\VehicleHasBeenReserved;
 use App\Notifications\VehicleReserved;
-use App\Reservation;
-use App\Http\Requests\StoreReservationRequest;
-use App\Http\Requests\UpdateReservationRequest;
-use App\User;
-use App\Vehicle;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 

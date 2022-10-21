@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\FitOptions;
 
-use App\Company;
-use App\FitOption;
+use App\Models\Company;
+use App\Models\FitOption;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

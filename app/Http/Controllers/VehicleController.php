@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exports\DashboardExports;
-use App\Exports\RegisteredExports;
-
-use App\Order;
-use App\Reservation;
-use App\Vehicle;
-
+use App\Models\Reservation;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;

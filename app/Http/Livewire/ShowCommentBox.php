@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Comment;
+use App\Models\Comment;
 use Livewire\Component;
 
 class ShowCommentBox extends Component

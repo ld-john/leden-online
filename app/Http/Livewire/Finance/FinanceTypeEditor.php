@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Finance;
 
-use App\Finance\FinanceType;
+use App\Models\Finance\FinanceType;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -17,7 +17,7 @@ class FinanceTypeEditor extends Component
 
     public function mount()
     {
-        $this->metadata = FinanceType::all();
+        $this->metadata = \App\Models\Finance\FinanceType::all();
     }
 
     public function newFinanceType()
@@ -29,13 +29,13 @@ class FinanceTypeEditor extends Component
         return redirect(route('finance.finance-type.index'));
     }
 
-    public function showEditModal(FinanceType $type)
+    public function showEditModal(\App\Models\Finance\FinanceType $type)
     {
         $this->edit = $type;
         $this->edit_name = $type->option;
     }
 
-    public function delete(FinanceType $type)
+    public function delete(\App\Models\Finance\FinanceType $type)
     {
         $type->delete();
         Notify()->success('Finance Type deleted successfully');

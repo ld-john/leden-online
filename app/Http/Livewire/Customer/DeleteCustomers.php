@@ -2,10 +2,7 @@
 
 namespace App\Http\Livewire\Customer;
 
-use App\Customer;
-use App\Invoice;
-use App\Order;
-use App\Vehicle;
+use App\Models\Customer;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

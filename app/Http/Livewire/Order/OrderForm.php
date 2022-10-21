@@ -2,27 +2,28 @@
 
 namespace App\Http\Livewire\Order;
 
-use App\Company;
-use App\Customer;
-use App\Finance\FinanceType;
-use App\Finance\InitialPayment;
-use App\Finance\Maintenance;
-use App\Finance\Mileage;
-use App\Finance\Term;
-use App\FitOption;
 use App\Http\Controllers\OrderController;
-use App\Invoice;
-use App\Manufacturer;
+use App\Models\Company;
+use App\Models\Customer;
+use App\Models\Finance\FinanceType;
+use App\Models\Finance\InitialPayment;
+use App\Models\Finance\Maintenance;
+use App\Models\Finance\Mileage;
+use App\Models\Finance\Term;
+use App\Models\FitOption;
+use App\Models\Invoice;
+use App\Models\Manufacturer;
+use App\Models\Order;
+use App\Models\OrderUpload;
+use App\Models\Reservation;
+use App\Models\User;
+use App\Models\Vehicle;
+use App\Models\VehicleMeta;
+use App\Models\VehicleModel;
 use App\Notifications\DeliveryDateSetNotification;
 use App\Notifications\VehicleInStockNotification;
-use App\Order;
-use App\OrderUpload;
-use App\Reservation;
-use App\User;
-use App\Vehicle;
-use App\VehicleMeta;
-use App\VehicleModel;
 use Carbon\Carbon;
+use DateTime;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -30,8 +31,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use DateTime;
-use Livewire\WithPagination;
 
 class OrderForm extends Component
 {
@@ -751,7 +750,7 @@ class OrderForm extends Component
     }
 
     /**
-     * @param Invoice $invoice
+     * @param \App\Models\Invoice $invoice
      * @return void
      */
     public function saveInvoice(Invoice $invoice): void
@@ -792,7 +791,7 @@ class OrderForm extends Component
     }
 
     /**
-     * @param Customer $customer
+     * @param \App\Models\Customer $customer
      * @return void
      */
     public function saveCustomerDetails(Customer $customer): void
@@ -810,7 +809,7 @@ class OrderForm extends Component
     }
 
     /**
-     * @param Vehicle $vehicle
+     * @param \App\Models\Vehicle $vehicle
      * @return void
      */
     public function saveVehicleDetails(Vehicle $vehicle): void

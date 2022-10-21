@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire\Finance;
 
-use App\Finance\FinanceType;
-use App\Finance\InitialPayment;
+use App\Models\Finance\InitialPayment;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -23,7 +22,7 @@ class InitialPaymentsEditor extends Component
 
     public function newInitialPayment()
     {
-        $initialPayment = new FinanceType();
+        $initialPayment = new \App\Models\Finance\FinanceType();
         $initialPayment->option = $this->new_name;
         $initialPayment->save();
         Notify()->success('Initial Payment added successfully');
@@ -36,7 +35,7 @@ class InitialPaymentsEditor extends Component
         $this->edit_name = $type->option;
     }
 
-    public function delete(InitialPayment $type)
+    public function delete(\App\Models\Finance\InitialPayment $type)
     {
         $type->delete();
         Notify()->success('Initial Payment deleted successfully');

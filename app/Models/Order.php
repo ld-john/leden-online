@@ -1,15 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Finance\FinanceType;
-use App\Finance\InitialPayment;
-use App\Finance\Maintenance;
-use App\Finance\Mileage;
-use App\Finance\Term;
+use App\Models\Finance\FinanceType;
+use App\Models\Finance\InitialPayment;
+use App\Models\Finance\Maintenance;
+use App\Models\Finance\Mileage;
+use App\Models\Finance\Term;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;

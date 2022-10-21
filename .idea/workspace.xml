@@ -5,79 +5,128 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Exports/FinanceExports.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Finance/FinanceType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Finance/InitialPayment.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Finance/Maintenance.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Finance/Mileage.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Finance/Term.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Finance/FinanceTypesController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Finance/InitialPaymentsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Finance/MaintenancesController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Finance/MileagesController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Finance/TermsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Finance/FinanceTypeEditor.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Finance/InitialPaymentsEditor.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Finance/MaintenanceEditor.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Finance/TermEditor.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_13_153920_create_finance_types_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_13_161916_create_maintenances_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_13_162301_create_terms_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_13_162549_create_initial_payments_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_13_163416_create_mileages_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_14_093901_add_finance_information_to_orders.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_14_094937_retype_columns_in_orders_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_14_095500_retype_columns_in_orders_table_part2.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeders/FinanceTypeSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeders/InitialPaymentSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeders/MaintenanceSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeders/MileageSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeders/TermSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/exports/finance.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/finance/finance-type/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/finance/initial-payments/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/finance/maintenance/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/finance/terms/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/finance/finance-type-editor.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/finance/initial-payments-editor.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/finance/maintenance-editor.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/finance/term-editor.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/order/partials/finance.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_21_105359_remove_old_dates_from_order_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Comment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/CsvData.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/CsvData.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Customer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Delivery.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Delivery.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exports/DashboardExports.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exports/DashboardExports.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exports/ReportingExports.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exports/ReportingExports.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exports/UniversalExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exports/UniversalExport.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/FailedJob.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/FailedJob.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Finance/FinanceType.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Finance/FinanceType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Finance/InitialPayment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Finance/InitialPayment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Finance/Maintenance.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Finance/Maintenance.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Finance/Mileage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Finance/Mileage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Finance/Term.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Finance/Term.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/FitOption.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/FitOption.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Helpers/Helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/Helper.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DeliveriesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DeliveriesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Finance/FinanceTypesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Finance/FinanceTypesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Finance/InitialPaymentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Finance/InitialPaymentsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Finance/MaintenancesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Finance/MaintenancesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Finance/MileagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Finance/MileagesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Finance/TermsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Finance/TermsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FitOptionsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FitOptionsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/InvoiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/InvoiceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LocationsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LocationsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ManufacturerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ManufacturerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProfileController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReservationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/CommentBox.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/CommentBox.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Customer/CompanyTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/CompanyTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Customer/CustomerTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/CustomerTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Customer/DeleteCustomers.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/DeleteCustomers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Customer/QuickEditCustomer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/QuickEditCustomer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Dashboard/Broker/InStockOrdersTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Dashboard/Broker/InStockOrdersTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Delivery/DeliveryForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Delivery/DeliveryForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Finance/FinanceTypeEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Finance/FinanceTypeEditor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Finance/InitialPaymentsEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Finance/InitialPaymentsEditor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Finance/MaintenanceEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Finance/MaintenanceEditor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Finance/TermEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Finance/TermEditor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/DeleteFitOption.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/DeleteFitOption.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/EditFitOption.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/EditFitOption.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/FitOptionsEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/FitOptionsEditor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Locations/ManageLocations.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Locations/ManageLocations.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/MakeEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/MakeEditor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/MakeNameEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/MakeNameEditor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Messages/Contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Messages/Contact.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Messages/Messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Messages/Messages.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/MetaEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/MetaEditor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/DeleteOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/DeleteOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/DuplicateOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/DuplicateOrder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Reporting/ReportingTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Reporting/ReportingTable.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Reservations/AdminOverride.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Reservations/AdminOverride.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Reservations/ReservationsTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Reservations/ReservationsTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/ShowCommentBox.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/ShowCommentBox.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Update/ManageUpdates.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Update/ManageUpdates.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/UserPermissionCreator.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/UserPermissionCreator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/UserTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/UserTable.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Users/Edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Users/Edit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/DeleteVehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/DeleteVehicle.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/FitOptionsModal.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/FitOptionsModal.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/RingFenceModal.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/RingFenceModal.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/UniversalSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/UniversalSearch.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Invoice.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Invoice.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Location.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Location.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Manufacturer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Manufacturer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Message.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Message.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/MessageGroup.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/MessageGroup.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationEmailNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationEmailNotification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationNotification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryBookedNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryBookedNotification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryDateSetNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryDateSetNotification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/ReservationDeleted.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/ReservationDeleted.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/ReservationExpiryApproaching.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/ReservationExpiryApproaching.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/VehicleHasBeenReserved.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/VehicleHasBeenReserved.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Notifications/VehicleInStockNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/VehicleInStockNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/VehicleReserved.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/VehicleReserved.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/notifications.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/notifications.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/OrderLegacy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/OrderLegacy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/OrderUpload.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/OrderUpload.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Permission.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Permission.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Reservation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Updates.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Updates.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Vehicle.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/VehicleMeta.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/VehicleMeta.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/VehicleModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/VehicleModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/FinanceTypeSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/FinanceTypeSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/InitialPaymentSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/InitialPaymentSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/MaintenanceSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/MaintenanceSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/MileageSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/MileageSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/TermSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/TermSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/seeders/UserSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/UserSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/seeds/UserSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/UserSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/meta-editor.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/meta-editor.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/locations/manage-locations.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/locations/manage-locations.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/users/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/users/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/top_bar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/top_bar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/reporting/reporting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/reporting/reporting.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/users/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/profile.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/universal-search.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/universal-search.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/dealer-fit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/dealer-fit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/factory-fit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/factory-fit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/console.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/console.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,11 +340,11 @@
       <recent name="C:\Users\John Gotobed\OneDrive - Link Digital\Desktop" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\leden\app" />
       <recent name="C:\wamp64\www\leden\database\seeders" />
       <recent name="C:\wamp64\www\leden\storage\app\images" />
       <recent name="C:\wamp64\www\leden\resources\views\livewire\fit-options" />
       <recent name="C:\wamp64\www\leden\storage\app\public" />
-      <recent name="C:\wamp64\www\leden\public\user-uploads\csv-uploads" />
     </key>
   </component>
   <component name="RunManager">
@@ -500,13 +549,8 @@
       <workItem from="1666014227647" duration="25000" />
       <workItem from="1666256213547" duration="1849000" />
       <workItem from="1666339895015" duration="859000" />
-    </task>
-    <task id="LOCAL-00006" summary="Debug - Added Delete options for vehicles and orders. Orders offers a modal to confirm deletion.">
-      <created>1634659069544</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1634659069544</updated>
+      <workItem from="1666345657978" duration="1723000" />
+      <workItem from="1666360783405" duration="498000" />
     </task>
     <task id="LOCAL-00007" summary="Debug - CR Move event listeners for clicks outside of scope.">
       <created>1634659275349</created>
@@ -844,7 +888,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665669634569</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Add Finance Information and Renewal Report&#10;Added Options to add new Finance Information&#10;Added Migrations">
+      <created>1666345935363</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1666345935363</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -863,7 +914,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Build Date for Vehicles added" />
     <MESSAGE value="Build Date for Vehicles added - Quick Editable" />
     <MESSAGE value="Format the Build Date from the Importer" />
     <MESSAGE value="Order Date Editable, delete customers connected to orders, RingFenced Stock Dealer added, due date can now be nulled by import, dealer and broker can't see other orders." />
@@ -888,7 +938,8 @@
     <MESSAGE value="Updates to Reporting View" />
     <MESSAGE value="Tweaks to the reporting" />
     <MESSAGE value="Add Locations to match with the Ford Report" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Locations to match with the Ford Report" />
+    <MESSAGE value="Add Finance Information and Renewal Report&#10;Added Options to add new Finance Information&#10;Added Migrations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Finance Information and Renewal Report&#10;Added Options to add new Finance Information&#10;Added Migrations" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

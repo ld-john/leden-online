@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Finance\Mileage;
+use App\Models\Finance\Mileage;
 use Illuminate\Database\Seeder;
 
 class MileageSeeder extends Seeder

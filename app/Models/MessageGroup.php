@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -24,7 +25,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|MessageGroup whereOrderId($value)
  * @method static Builder|MessageGroup whereSubject($value)
  * @method static Builder|MessageGroup whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 class MessageGroup extends Model
 {

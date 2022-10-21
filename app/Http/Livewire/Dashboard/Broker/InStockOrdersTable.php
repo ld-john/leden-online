@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Dashboard\Broker;
 
-use App\Order;
+use App\Models\Order;
 use Auth;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;

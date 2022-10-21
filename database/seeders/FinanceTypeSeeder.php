@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Finance\FinanceType;
+use App\Models\Finance\FinanceType;
 use Illuminate\Database\Seeder;
 
 class FinanceTypeSeeder extends Seeder

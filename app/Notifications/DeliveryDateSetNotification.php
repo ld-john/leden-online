@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Vehicle;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notification;
 

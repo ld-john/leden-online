@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Update;
 
-use App\Updates;
+use App\Models\Updates;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

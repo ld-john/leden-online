@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Vehicle;
 
-use App\Vehicle;
+use App\Models\Vehicle;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;

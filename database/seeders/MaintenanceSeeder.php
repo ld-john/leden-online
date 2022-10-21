@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Customer;
-use App\Finance\Maintenance;
+use App\Models\Finance\Maintenance;
 use Illuminate\Database\Seeder;
 
 class MaintenanceSeeder extends Seeder

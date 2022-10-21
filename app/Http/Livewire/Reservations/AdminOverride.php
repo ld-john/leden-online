@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Reservations;
 
-use App\Reservation;
-use App\User;
-use App\Vehicle;
+use App\Models\Reservation;
+use App\Models\User;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -12,7 +12,7 @@ use Livewire\Component;
 class AdminOverride extends Component
 {
     /**
-     * @var Vehicle
+     * @var \App\Models\Vehicle
      */
     public $vehicle;
     public $broker_id;

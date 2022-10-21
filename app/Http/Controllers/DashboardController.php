@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
-use App\Updates;
-use App\Vehicle;
+use App\Models\Order;
+use App\Models\Updates;
+use App\Models\Vehicle;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Auth;
 

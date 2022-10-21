@@ -14,11 +14,13 @@
             <a wire:click="downloadCurrentData" class="btn btn-success text-white">Download Current View</a>
             <div class="form-check form-switch">
                 <label for="deliveriesBookedFilter" class="form-check-label">Include Deliveries Booked</label>
-                <input wire:model="deliveriesBookedFilter" type="checkbox" id="deliveriesBookedFilter" class="form-check-input" role="switch">
+                <input wire:model="deliveriesBookedFilter" type="checkbox" id="deliveriesBookedFilter"
+                       class="form-check-input" role="switch">
             </div>
             <div class="form-check form-switch">
                 <label for="completedOrdersFilter" class="form-check-label">Include Completed Orders</label>
-                <input wire:model="completedOrdersFilter" type="checkbox" id="completedOrdersFilter" class="form-check-input" role="switch">
+                <input wire:model="completedOrdersFilter" type="checkbox" id="completedOrdersFilter"
+                       class="form-check-input" role="switch">
             </div>
         </div>
     </div>
@@ -39,14 +41,16 @@
             <th>
                 <label for="BuildDateFilter" class="form-check-label small">Filter Build Date</label>
                 <div class="form-check form-switch">
-                    <input wire:model="filterBuildDate" type="checkbox" id="BuildDateFilter" class="form-check-input" role="switch">
+                    <input wire:model="filterBuildDate" type="checkbox" id="BuildDateFilter" class="form-check-input"
+                           role="switch">
                 </div>
                 Planned Build Date
             </th>
             <th>
                 <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>
                 <div class="form-check form-switch">
-                    <input wire:model="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input" role="switch">
+                    <input wire:model="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
+                           role="switch">
                 </div>
                 Due Date
             </th>
@@ -57,16 +61,20 @@
         </tr>
         <tr class="bg-light">
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchOrder" type="text" class="form-control" placeholder="Search Order">
+                <input wire:model.debounce:500ms="searchOrder" type="text" class="form-control"
+                       placeholder="Search Order">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchCustomer" type="text" class="form-control" placeholder="Search Customer">
+                <input wire:model.debounce:500ms="searchCustomer" type="text" class="form-control"
+                       placeholder="Search Customer">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchFordOrderNumber" type="text" class="form-control" placeholder="Search Ford Order Number">
+                <input wire:model.debounce:500ms="searchFordOrderNumber" type="text" class="form-control"
+                       placeholder="Search Ford Order Number">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchOrbitNumber" type="text" class="form-control" placeholder="Search Orbit Number">
+                <input wire:model.debounce:500ms="searchOrbitNumber" type="text" class="form-control"
+                       placeholder="Search Orbit Number">
             </th>
             <th class="p-1">
                 <select wire:model="searchType" name="type" id="type" class="form-select">
@@ -79,44 +87,54 @@
                 </select>
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchMake" type="text" class="form-control" placeholder="Search Make">
+                <input wire:model.debounce:500ms="searchMake" type="text" class="form-control"
+                       placeholder="Search Make">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchModel" type="text" class="form-control" placeholder="Search Model">
+                <input wire:model.debounce:500ms="searchModel" type="text" class="form-control"
+                       placeholder="Search Model">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchDetails" type="text" class="form-control" placeholder="Search Details">
+                <input wire:model.debounce:500ms="searchDetails" type="text" class="form-control"
+                       placeholder="Search Details">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchChassisPrefix" type="text" class="form-control" placeholder="Search Chassis Prefix">
+                <input wire:model.debounce:500ms="searchChassisPrefix" type="text" class="form-control"
+                       placeholder="Search Chassis Prefix">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchChassis" type="text" class="form-control" placeholder="Search Chassis">
+                <input wire:model.debounce:500ms="searchChassis" type="text" class="form-control"
+                       placeholder="Search Chassis">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchRegistration" type="text" class="form-control" placeholder="Search Registration">
+                <input wire:model.debounce:500ms="searchRegistration" type="text" class="form-control"
+                       placeholder="Search Registration">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchBuildDate" type="date" class="form-control" placeholder="Search Build Date">
+                <input wire:model.debounce:500ms="searchBuildDate" type="date" class="form-control"
+                       placeholder="Search Build Date">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchDueDate" type="date" class="form-control" placeholder="Search Due Date">
+                <input wire:model.debounce:500ms="searchDueDate" type="date" class="form-control"
+                       placeholder="Search Due Date">
             </th>
             <th class="p-1">
                 <select wire:model="searchStatus" name="status" id="status" class="form-select">
                     <option value="">Select Status</option>
                     @foreach($status as $item)
                         <option value="{{ $item }}">
-                            {{ \App\Vehicle::statusMatch($item) }}
+                            {{ \App\Models\Vehicle::statusMatch($item) }}
                         </option>
                     @endforeach
                 </select>
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchBroker" type="text" class="form-control" placeholder="Search Broker">
+                <input wire:model.debounce:500ms="searchBroker" type="text" class="form-control"
+                       placeholder="Search Broker">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchBrokerRef" type="text" class="form-control" placeholder="Search Broker Reference">
+                <input wire:model.debounce:500ms="searchBrokerRef" type="text" class="form-control"
+                       placeholder="Search Broker Reference">
             </th>
             <th></th>
         </tr>
@@ -126,7 +144,8 @@
             <tr>
                 <td>
                     @if($vehicle->order)
-                        <a href="{{ route('order.show', $vehicle->order->id) }}" class="btn btn-primary">Leden Order #{{ $vehicle->order->id }}</a>
+                        <a href="{{ route('order.show', $vehicle->order->id) }}" class="btn btn-primary">Leden Order
+                            #{{ $vehicle->order->id }}</a>
                     @else
                         Not on Order
                     @endif
@@ -169,7 +188,8 @@
                     @php
                         $button = $vehicle->websiteLocation();
                     @endphp
-                    <a class="btn btn-{{ $button['status'] }}" @if($button['route']) href="{{ route($button['route']) }}" @endif>{{ $button['location'] }}</a>
+                    <a class="btn btn-{{ $button['status'] }}"
+                       @if($button['route']) href="{{ route($button['route']) }}" @endif>{{ $button['location'] }}</a>
                 </td>
             </tr>
         @empty

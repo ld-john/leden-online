@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Customer;
 
-use App\Customer;
-use App\Order;
+use App\Models\Customer;
+use App\Models\Order;
 use Livewire\Component;
 use Livewire\WithPagination;
 

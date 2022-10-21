@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Finance;
 
-use App\Finance\Mileage;
 use App\Http\Controllers\Controller;
+use App\Models\Finance\Mileage;
 use Illuminate\Http\Request;
 
 class MileagesController extends Controller
@@ -28,11 +28,11 @@ class MileagesController extends Controller
     {
     }
 
-    public function update(Request $request, Mileage $mileage)
+    public function update(Request $request, \App\Models\Finance\Mileage $mileage)
     {
     }
 
-    public function destroy(Mileage $mileage)
+    public function destroy(\App\Models\Finance\Mileage $mileage)
     {
     }
 }

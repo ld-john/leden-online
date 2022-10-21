@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -41,12 +42,12 @@ class Invoice extends Model
     protected $guarded = [];
     use HasFactory;
 
-    public function order(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function order(): HasOne
     {
         return $this->hasOne(Order::class, 'invoice_id', 'id');
     }
 
-    public function inc_vat_value()
+    public function inc_vat_value(): float|bool
     {
         if ($this->invoice_value_to_dealer) {
             $value = $this->invoice_value_to_dealer * 1.2;

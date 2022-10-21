@@ -3,11 +3,11 @@
 namespace App\Http\Livewire\Order;
 
 use App\Http\Controllers\OrderController;
+use App\Models\Order;
+use App\Models\User;
+use App\Models\Vehicle;
 use App\Notifications\DeliveryDateSetNotification;
 use App\Notifications\VehicleInStockNotification;
-use App\Order;
-use App\User;
-use App\Vehicle;
 use DateTime;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
