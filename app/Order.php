@@ -2,6 +2,11 @@
 
 namespace App;
 
+use App\Finance\FinanceType;
+use App\Finance\InitialPayment;
+use App\Finance\Maintenance;
+use App\Finance\Mileage;
+use App\Finance\Term;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -86,6 +91,31 @@ class Order extends Model
     public function delivery(): HasOne
     {
         return $this->hasOne(Delivery::class, 'id', 'delivery_id');
+    }
+
+    public function FinanceType(): HasOne
+    {
+        return $this->hasOne(FinanceType::class, 'id', 'finance_type');
+    }
+
+    public function Maintenance(): HasOne
+    {
+        return $this->hasOne(Maintenance::class, 'id', 'maintenance');
+    }
+
+    public function Term(): HasOne
+    {
+        return $this->hasOne(Term::class, 'id', 'term');
+    }
+
+    public function InitialPayment(): HasOne
+    {
+        return $this->hasOne(InitialPayment::class, 'id', 'initial_payment');
+    }
+
+    public function Mileage(): HasOne
+    {
+        return $this->hasOne(Mileage::class, 'id', 'mileage');
     }
 
     public function basicCost()

@@ -29,7 +29,11 @@ class VehicleInStockNotification extends Notification
                 $this->vehicle->manufacturer->name .
                 ' ' .
                 $this->vehicle->model .
-                ' has been marked as In Stock. If this vehicle required Dealer Fit Options, please contact Leden offices now.',
+                ' Orbit Number - ' .
+                $this->vehicle->orbit_number .
+                ' has been marked as In Stock for Order #' .
+                $this->vehicle->order?->id .
+                '. If this vehicle required Dealer Fit Options, please contact Leden offices now.',
         ];
     }
 }

@@ -16,7 +16,7 @@
             <div class="card-body">
                 <h5>Registered - Month</h5>
                 <div class="row">
-                    @foreach($months as $month)
+                    @foreach($registeredMonths as $month)
                         <div class="col col-1 mb-4">
                             <a href="{{ route('monthly-registered', [\Carbon\Carbon::parse($month)->format('m'), \Carbon\Carbon::parse($month)->format('Y')]) }}" class="btn btn-primary btn-sm h-100 w-full">{{ $month }}</a>
                         </div>
@@ -24,9 +24,18 @@
                 </div>
                 <h5 class="mt-4">Registered - Quarters</h5>
                 <div class="row">
-                    @foreach($quarters as $quarter)
+                    @foreach($registeredQuarters as $quarter)
                         <div class="col col-3 mb-4">
                             <a href="{{ route('quarter-registered', [$quarter['quarter'], $quarter['year']]) }}" class="btn btn-secondary h-100 w-full">Q{{ $quarter['quarter'] }} {{ $quarter['year'] }}</a>
+                        </div>
+                    @endforeach
+                </div>
+                <hr>
+                <h5 class="mt-4">Renewal Reports</h5>
+                <div class="row">
+                    @foreach($financeMonths as $month)
+                        <div class="col col-1 mb-4">
+                            <a href="{{ route('monthly-finance', [\Carbon\Carbon::parse($month)->format('m'), \Carbon\Carbon::parse($month)->format('Y')]) }}" class="btn btn-primary btn-sm h-100 w-full">{{ $month }}</a>
                         </div>
                     @endforeach
                 </div>

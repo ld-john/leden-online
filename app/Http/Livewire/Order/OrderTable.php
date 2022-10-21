@@ -70,20 +70,8 @@ class OrderTable extends Component
         $orders = Order::whereHas('vehicle', function ($q) {
             $q->whereIn('vehicle_status', $this->status);
         })
-            ->select(
-                'id',
-                'vehicle_id',
-                'broker_id',
-                'dealer_id',
-                'customer_id',
-                'order_ref',
-                'delivery_date',
-                'delivery_id',
-                'broker_ref',
-                'updated_at',
-            )
             ->with([
-                'vehicle:id,model,ford_order_number,build_date,due_date,derivative,reg,vehicle_status,orbit_number,vehicle_registered_on',
+                'vehicle',
                 'customer:id,customer_name',
                 'broker:id,company_name',
                 'dealer:id,company_name',

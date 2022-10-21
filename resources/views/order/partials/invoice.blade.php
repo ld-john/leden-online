@@ -1,10 +1,15 @@
 <div class="invoice-box">
     {{-- Commision to finance company cost --}}
     <div class="form-group row">
-        <label for="invoice_finance" class="col-md-3 col-form-label">Commission to Finance Company (£)</label>
+        <label for="invoice_finance" class="col-md-3 col-form-label">Commission to Finance Company</label>
         <div class="col-md-9">
-            <input wire:model="invoice_finance" type="number" name="invoice_finance" id="invoice_finance" step=".01"
-                   class="form-control" autocomplete="off" />
+            <div class="input-group">
+                <div class="input-group-text">
+                    £
+                </div>
+                <input wire:model="invoice_finance" type="number" name="invoice_finance" id="invoice_finance" step=".01"
+                       class="form-control" autocomplete="off" />
+            </div>
         </div>
     </div>
     {{-- Commision to finance company reference--}}
@@ -80,10 +85,15 @@
 <div class="invoice-box">
     {{-- Fleet Procure Invoice --}}
     <div class="form-group row">
-        <label for="fleet_procure_invoice" class="col-md-3 col-form-label">Fleet Procure Invoice (£)</label>
+        <label for="fleet_procure_invoice" class="col-md-3 col-form-label">Fleet Procure Invoice</label>
         <div class="col-md-9">
-            <input wire:model="fleet_procure_invoice" type="number" name="fleet_procure_invoice" id="fleet_procure_invoice" step=".01"
-                   class="form-control" autocomplete="off" />
+            <div class="input-group">
+                <div class="input-group-text">
+                    £
+                </div>
+                <input wire:model="fleet_procure_invoice" type="number" name="fleet_procure_invoice" id="fleet_procure_invoice" step=".01"
+                       class="form-control" autocomplete="off" />
+            </div>
         </div>
     </div>
     {{-- Invoice from Fleet Procure Reference --}}
@@ -98,7 +108,7 @@
     <div class="row">
         <label class="col-md-3 col-form-label" for="fleet_procure_paid">Fleet Procure Invoice Pay Date</label>
         <div class="col-md-9">
-            <input wire:model="fleet_procure_paid" type="date" name="fleet_procure_paid"
+            <input wire:model="fleet_procure_paid" type="date" name="fleet_procure_paid" id="fleet_procure_paid"
                    class="form-control" autocomplete="off" />
         </div>
     </div>
@@ -106,10 +116,15 @@
 <div class="invoice-box">
     {{-- Invoice to broker cost --}}
     <div class="form-group row">
-        <label for="invoice_broker" class="col-md-3 col-form-label">Invoice to Broker (£)</label>
+        <label for="invoice_broker" class="col-md-3 col-form-label">Invoice to Broker</label>
         <div class="col-md-9">
-            <input wire:model="invoice_value_to_broker" type="number" name="invoice_broker" id="invoice_broker" step=".01"
-                   class="form-control" autocomplete="off" />
+            <div class="input-group">
+                <div class="input-group-text">
+                    £
+                </div>
+                <input wire:model="invoice_value_to_broker" type="number" name="invoice_broker" id="invoice_broker" step=".01"
+                       class="form-control" autocomplete="off" />
+            </div>
         </div>
     </div>
     {{-- Invoice to broker reference --}}
@@ -131,10 +146,15 @@
 <div class="invoice-box">
     {{-- Commission to broker cost --}}
     <div class="form-group row">
-        <label for="commission_broker" class="col-md-3 col-form-label">Commission to Broker (£)</label>
+        <label for="commission_broker" class="col-md-3 col-form-label">Commission to Broker</label>
         <div class="col-md-9">
-            <input wire:model="commission_broker" type="number" name="commission_broker" id="commission_broker" step=".01"
-                   class="form-control" autocomplete="off" />
+            <div class="input-group">
+                <div class="input-group-text">
+                    £
+                </div>
+                <input wire:model="commission_broker" type="number" name="commission_broker" id="commission_broker" step=".01"
+                       class="form-control" autocomplete="off" />
+            </div>
         </div>
     </div>
     {{-- Commission to broker reference --}}
@@ -149,7 +169,7 @@
     <div class="form-group row">
         <label class="col-md-3 col-form-label" for="commission_broker_paid">Broker Commission Pay Date</label>
         <div class="col-md-9">
-            <input wire:model="commission_broker_paid" type="date" name="commission_broker_paid"
+            <input wire:model="commission_broker_paid" type="date" name="commission_broker_paid" id="commission_broker_paid"
                    class="form-control" autocomplete="off" />
         </div>
     </div>
@@ -157,10 +177,15 @@
 <div class="invoice-box">
     {{-- Finance Company Bonus Invoice --}}
     <div class="form-group row">
-        <label for="finance_bonus_invoice" class="col-md-3 col-form-label">Finance Company Bonus Invoice (£)</label>
+        <label for="finance_bonus_invoice" class="col-md-3 col-form-label">Finance Company Bonus Invoice</label>
         <div class="col-md-9">
-            <input wire:model="finance_bonus_invoice" type="number" name="finance_bonus_invoice" id="finance_bonus_invoice" step=".01"
-                   class="form-control" autocomplete="off" />
+            <div class="input-group">
+                <div class="input-group-text">
+                    £
+                </div>
+                <input wire:model="finance_bonus_invoice" type="number" name="finance_bonus_invoice" id="finance_bonus_invoice" step=".01"
+                       class="form-control" autocomplete="off" />
+            </div>
         </div>
     </div>
     {{-- Finance Company Bonus Invoice Number --}}
@@ -183,10 +208,15 @@
 <div class="invoice-box">
     {{-- Ford Bonus Invoice --}}
     <div class="form-group row">
-        <label for="ford_bonus_invoice" class="col-md-3 col-form-label">Ford Bonus Invoice (£)</label>
+        <label for="ford_bonus_invoice" class="col-md-3 col-form-label">Ford Bonus Invoice</label>
         <div class="col-md-9">
-            <input wire:model="ford_bonus_invoice" type="number" name="ford_bonus_invoice" id="ford_bonus_invoice" step=".01"
-                   class="form-control" autocomplete="off" />
+            <div class="input-group">
+                <div class="input-group-text">
+                    £
+                </div>
+                <input wire:model="ford_bonus_invoice" type="number" name="ford_bonus_invoice" id="ford_bonus_invoice" step=".01"
+                       class="form-control" autocomplete="off" />
+            </div>
         </div>
     </div>
     {{-- Ford Bonus pay date --}}

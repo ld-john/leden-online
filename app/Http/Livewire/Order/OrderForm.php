@@ -4,6 +4,11 @@ namespace App\Http\Livewire\Order;
 
 use App\Company;
 use App\Customer;
+use App\Finance\FinanceType;
+use App\Finance\InitialPayment;
+use App\Finance\Maintenance;
+use App\Finance\Mileage;
+use App\Finance\Term;
 use App\FitOption;
 use App\Http\Controllers\OrderController;
 use App\Invoice;
@@ -31,12 +36,6 @@ use Livewire\WithPagination;
 class OrderForm extends Component
 {
     use WithFileUploads;
-    use WithPagination;
-    protected string $paginationTheme = 'bootstrap';
-    public function getQueryString(): array
-    {
-        return [];
-    }
     public bool $showAdditionalInformation = false;
     public bool $showDeliveryInformation = false;
     public bool $showInvoicingInformation = false;
@@ -130,6 +129,20 @@ class OrderForm extends Component
     public $attachments = [];
     public $fields = 1;
     public $successMsg;
+    public $financeType;
+    public $financeTypeOptions;
+    public $maintenance;
+    public $maintenanceOptions;
+    public $term;
+    public $termOptions;
+    public $initialPayments;
+    public $initialPaymentsOptions;
+    public $terminalPause;
+    public $mileage;
+    public $mileageOptions;
+    public $rental_value;
+    public $maintenance_rental_value;
+    public $renewal_date;
     public $now;
     protected $rules = [
         'make' => 'required_without:newmake',
@@ -183,6 +196,12 @@ class OrderForm extends Component
     public function mount()
     {
         $this->now = date('Y-m-d');
+
+        $this->financeTypeOptions = FinanceType::all();
+        $this->maintenanceOptions = Maintenance::all();
+        $this->termOptions = Term::all();
+        $this->initialPaymentsOptions = InitialPayment::all();
+        $this->mileageOptions = Mileage::all();
 
         if (isset($this->vehicle)) {
             if ($this->vehicle->vehicle_registered_on) {
@@ -392,6 +411,19 @@ class OrderForm extends Component
             $this->show_offer = $this->order->vehicle->show_offer;
             $this->hide_from_broker = $this->order->vehicle->hide_from_broker;
             $this->hide_from_dealer = $this->order->vehicle->hide_from_dealer;
+            $this->financeType = $this->order->finance_type;
+            $this->maintenance = $this->order->maintenance;
+            $this->term = $this->order->term;
+            $this->initialPayments = $this->order->initial_payment;
+            if ($this->order->terminal_pause) {
+                $this->terminalPause = 'yes';
+            } else {
+                $this->terminalPause = 'no';
+            }
+            $this->mileage = $this->order->mileage;
+            $this->rental_value = $this->order->rental;
+            $this->maintenance_rental_value = $this->order->maintenance_rental;
+            $this->renewal_date = $this->order->renewal_date;
         }
     }
 
@@ -441,6 +473,11 @@ class OrderForm extends Component
         if ($this->orbit_number === '') {
             $this->orbit_number = null;
         }
+        if ($this->terminalPause === 'yes') {
+            $this->terminalPause = true;
+        } else {
+            $this->terminalPause = false;
+        }
         $this->validate();
         if (!isset($this->order)) {
             if (isset($this->vehicle)) {
@@ -486,6 +523,15 @@ class OrderForm extends Component
             $order->invoice_id = $invoice->id;
             $order->fin_number = $this->fin_number;
             $order->deal_number = $this->deal_number;
+            $order->finance_type = $this->financeType;
+            $order->maintenance = $this->maintenance;
+            $order->term = $this->term;
+            $order->initial_payment = $this->initialPayments;
+            $order->terminal_pause = $this->terminalPause;
+            $order->mileage = $this->mileage;
+            $order->rental = $this->rental_value;
+            $order->maintenance_rental = $this->maintenance_rental_value;
+            $order->renewal_date = $this->renewal_date;
             $order->save();
             $this->setInvoiceValue($order, $invoice);
             foreach ($this->attachments as $attachment) {
@@ -536,6 +582,15 @@ class OrderForm extends Component
                 'invoice_id' => $invoice->id,
                 'fin_number' => $this->fin_number,
                 'deal_number' => $this->deal_number,
+                'finance_type' => $this->financeType,
+                'maintenance' => $this->maintenance,
+                'term' => $this->term,
+                'initial_payment' => $this->initialPayments,
+                'terminal_pause' => $this->terminalPause,
+                'mileage' => $this->mileage,
+                'rental' => $this->rental_value,
+                'maintenance_rental' => $this->maintenance_rental_value,
+                'renewal_date' => $this->renewal_date,
             ]);
 
             if ($order->wasChanged('delivery_date')) {

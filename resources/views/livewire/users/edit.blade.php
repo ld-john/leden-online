@@ -76,7 +76,7 @@
                     </div>
                     <label class="col-md-2 col-form-label" for="password_confirmation">Confirm New Password</label>
                     <div class="col-md-4">
-                        <input wire:model="password_confirm" type="password" name="password_confirmation" id="password_confirmation" class="form-control" autocomplete="off"/>
+                        <input wire:model="password_confirmation" type="password" name="password_confirmation" id="password_confirmation" class="form-control" autocomplete="off"/>
                     </div>
                 </div>
             </div>
@@ -87,19 +87,38 @@
 
     @elseif($type === 'edit')
         <!-- Card Header -->
+        @if($errors->count())
+            <div class="alert alert-danger alert-dismissible fade show m-5">
+                <h4 class="alert-heading"><i class="fa fa-exclamation-triangle"></i> There are some issues.</h4>
+                <hr>
+                <ul>
+                    {!! implode($errors->all('<li>:message</li>')) !!}
+                </ul>
+            </div>
+        @endif
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-l-blue">User Information</h6>
         </div>
         <!-- Card Body -->
         <div class="card-body">
             <div class="form-group row">
-                <label class="col-md-2 col-form-label" for="firstname">Firstname</label>
+                <label class="col-md-2 col-form-label" for="firstname">First name</label>
                 <div class="col-md-4">
-                    <input wire:model="first_name" type="text" name="firstname" id="firstname" required class="form-control" autocomplete="off"/>
+                    <div class="input-group">
+                        @error('first_name')
+                        <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
+                        @enderror
+                        <input wire:model="first_name" type="text" name="firstname" id="firstname" required class="form-control" autocomplete="off"/>
+                    </div>
                 </div>
-                <label class="col-md-2 col-form-label" for="lastname">Lastname</label>
+                <label class="col-md-2 col-form-label" for="lastname">Last name</label>
                 <div class="col-md-4">
-                    <input wire:model="last_name" type="text" name="lastname" id="lastname" required class="form-control" autocomplete="off" >
+                    <div class="input-group">
+                        @error('last_name')
+                        <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
+                        @enderror
+                        <input wire:model="last_name" type="text" name="lastname" id="lastname" required class="form-control" autocomplete="off" >
+                    </div>
                 </div>
             </div>
             <div class="form-group row">
@@ -112,7 +131,13 @@
                 </div>
                 <label class="col-md-2 col-form-label" for="phone">Phone</label>
                 <div class="col-md-4">
-                    <input wire:model="phone" type="text" name="phone" id="phone" class="form-control" autocomplete="off" placeholder="e.g. 07123 456789"/>
+                    <div class="input-group">
+                        @error('phone')
+                        <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
+                        @enderror
+                        <input wire:model="phone" type="text" name="phone" id="phone" class="form-control" autocomplete="off" placeholder="e.g. 07123 456789"/>
+                    </div>
+
                 </div>
             </div>
             <div class="form-group row">
@@ -160,6 +185,28 @@
                 @endif
             </div>
         </div>
+    @can('admin')
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-l-blue">Change Password</h6>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="password">New Password</label>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            @error('password')
+                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
+                            @enderror
+                            <input wire:model="password" type="password" name="password" id="password" class="form-control" autocomplete="off"/>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label" for="password_confirmation">Confirm New Password</label>
+                    <div class="col-md-4">
+                        <input wire:model="password_confirmation" type="password" name="password_confirmation" id="password_confirmation" class="form-control" autocomplete="off"/>
+                    </div>
+                </div>
+            </div>
+    @endcan
         <!-- Card Footer -->
         <div class="card-footer text-right">
             <a href="{{ route('user_manager') }}" class="btn btn-secondary">Cancel</a>

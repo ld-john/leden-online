@@ -8,13 +8,11 @@ use Livewire\Component;
 
 class Messages extends Component
 {
-
     protected $contacts;
 
     public function mount()
     {
-        if (Auth::user()->role === 'admin')
-        {
+        if (Auth::user()->role === 'admin') {
             $this->contacts = User::all();
         }
     }

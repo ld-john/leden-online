@@ -169,6 +169,20 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <p>Registration Company</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">{{ $order->registration_company?->company_name }}</p>
+                            </div>
+                            <div class="col-md-2">
+                                <p>Invoice Company</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">{{ $order->invoice_company?->company_name }}</p>
+                            </div>
+                        </div>
                     </div>
                     @if (Auth::user()->role != 'broker')
                         <!-- Card Header -->
@@ -287,6 +301,86 @@
 
 
                     @if (Auth::user()->role == 'admin')
+                        <!-- Card Header - Finance Information -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-l-blue">Finance Information</h6>
+                    </div>
+                    <!-- Card Body - Finance Information  -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                Finance Type
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">{{ $finance_type ?? '--' }}</p>
+                            </div>
+                            <div class="col-md-2">
+                                Maintenance
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">{{ $maintenance ?? '--'}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                Term
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">{{ $term ?? '--' }}</p>
+                            </div>
+                            <div class="col-md-2">
+                                Initial Payment
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">{{ $initial_payment ?? '--'}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                Terminal Pause
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">
+                                    @if($order->terminal_pause)
+                                        Yes
+                                    @else
+                                        No
+                                    @endif
+                                </p>
+                            </div>
+                            <div class="col-md-2">
+                                Mileage
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">{{ $mileage ?? '--'}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                @include('partials.view-order-cost-section', ['name' => 'Rental', 'value' => ($order->rental)])
+                            </div>
+                            <div class="col-md-6">
+                                @include('partials.view-order-cost-section', ['name' => 'Maintenance Rental', 'value' => ($order->maintenance_rental)])
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                Renewal Date
+                            </div>
+                            <div class="col-md-4">
+                                <p class="font-weight-bold">
+                                    @if( isset ($order->renewal_date) && ( $order->renewal_date != '0000-00-00 00:00:00') )
+                                        {{ date('d/m/Y', strtotime($order->renewal_date)) }}
+                                    @else
+                                        --
+                                    @endif
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                {{-- This space left intentionally blank --}}
+                            </div>
+                        </div>
+                    </div>
                         <!-- Card Header -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-l-blue">Admin Information</h6>

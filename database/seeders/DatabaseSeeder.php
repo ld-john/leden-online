@@ -2,6 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Finance\FinanceType;
+use App\Finance\InitialPayment;
+use App\Finance\Maintenance;
+use App\Finance\Mileage;
+use App\Finance\Term;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,8 +16,17 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $this->call(RegInvCompanySeeder::class);
+        FinanceType::truncate();
+        $this->call(FinanceTypeSeeder::class);
+        Maintenance::truncate();
+        $this->call(MaintenanceSeeder::class);
+        Term::truncate();
+        $this->call(TermSeeder::class);
+        InitialPayment::truncate();
+        $this->call(InitialPaymentSeeder::class);
+        Mileage::truncate();
+        $this->call(MileageSeeder::class);
     }
 }

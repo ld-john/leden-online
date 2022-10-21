@@ -33,6 +33,7 @@ class VehicleForm extends Component
     public $make;
     public $orbit_number;
     public $model;
+    public $broker;
     public $dealership;
     public $type;
     public $registration;
@@ -67,7 +68,6 @@ class VehicleForm extends Component
     public $show_offer = '0'; // Vehicle
     public $hide_from_broker = '0';
     public $hide_from_dealer = '0';
-    public $broker;
     public $factoryFitSearch;
     public $dealerFitSearch;
     public $successMsg = '';
@@ -273,6 +273,7 @@ class VehicleForm extends Component
     {
         $options = [
             'dealers' => Company::where('company_type', 'dealer')->get(),
+            'brokers' => Company::where('company_type', 'broker')->get(),
             'manufacturers' => Manufacturer::all()->keyBy('id'),
             'vehicle_models' => VehicleModel::where(
                 'manufacturer_id',

@@ -262,9 +262,9 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="dealership" class="col-md-2 col-form-label">Dealership</label>
+                    <label for="dealership" class="col-md-2 col-form-label"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Dealership</label>
                     <div class="col-md-6 mb-3">
-                        <select wire:model="dealership" name="dealership" id="dealership" class="form-control">
+                        <select wire:model="dealership" name="dealership" id="dealership" class="form-select">
                             <option value="">Select Dealership</option>
                             @foreach ($dealers as $dealer)
                                 <option value="{{ $dealer->id }}">{{ $dealer->company_name }}</option>
@@ -272,6 +272,19 @@
                         </select>
                     </div>
                 </div>
+                @if($vehicle->ring_fenced_stock)
+                    <div class="form-group row">
+                        <label for="broker" class="col-md-2 col-form-label">Select Broker</label>
+                        <div class="col-md-6 mb-3">
+                            <select wire:model="broker" name="broker" id="broker" class="form-select">
+                                <option value="">Select Broker</option>
+                                @foreach($brokers as $broker)
+                                    <option value="{{ $broker->id }}">{{ $broker->company_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                @endif
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="chassis_prefix">Chassis Prefix</label>
                     <div class="col-md-6">
@@ -287,8 +300,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_status">Vehicle Status <small
-                                class="text-danger">(required)</small></label>
+                    <label class="col-md-2 col-form-label" for="vehicle_status"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Vehicle Status</label>
                     <div class="col-md-6">
                         <div class="input-group">
                             @error('status')

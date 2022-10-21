@@ -49,7 +49,6 @@ class ProfileController extends Controller
                 'Your profile has been updated!',
                 'Profile Updated',
             );
-            return view('users.profile');
         } else {
             if (
                 $request->get('password') !=
@@ -58,7 +57,6 @@ class ProfileController extends Controller
                 notify()->error(
                     'Your new passwords do not match! Please try again.',
                 );
-                return view('users.profile');
             } else {
                 $user->firstname = $request->get('firstname');
                 $user->lastname = $request->get('lastname');
@@ -69,9 +67,9 @@ class ProfileController extends Controller
                     'Your profile and password has been updated!',
                     'Profile Updated',
                 );
-                return view('users.profile');
             }
         }
+        return view('users.profile');
     }
 
     public function showUserManager(Request $request)

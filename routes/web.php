@@ -166,6 +166,13 @@ Route::middleware('auth')->group(function () {
                 'registeredQuarter',
             )->name('quarter-registered');
             Route::get('/weekly-{report}/{year}/{quarter}', 'weeklyDownload');
+            Route::get('/financeMonthly/{month}/{year}', 'financeMonth')->name(
+                'monthly-finance',
+            );
+            Route::get(
+                '/financeQuarterly/{quarter}/{year}',
+                'financeQuarter',
+            )->name('quarter-finance');
         });
 
     /* CSVUploadController routes */
@@ -299,6 +306,8 @@ Route::middleware('auth')->group(function () {
      *
      */
 
+    Route::get('/link/order-date-clean-up', 'OrderController@date_cleanup');
+
     //Route::get('/link/due-date-clean-up', 'VehicleController@DueDateCleanup');
     //Route::get('/link/reg-date-clean-up', 'VehicleController@reg_date_cleanup');
 
@@ -344,5 +353,33 @@ Route::middleware('auth')->group(function () {
         ->prefix('locations')
         ->group(function () {
             Route::get('create', 'create')->name('create');
+        });
+
+    Route::prefix('finance')
+        ->name('finance.')
+        ->group(function () {
+            Route::get(
+                'finance-type/index',
+                'Finance\FinanceTypesController@index',
+            )->name('finance-type.index');
+            Route::get(
+                'finance-type/create',
+                'Finance\FinanceTypesController@create',
+            )->name('finance-type.create');
+            Route::get(
+                'maintenance/index',
+                'Finance\MaintenancesController@index',
+            )->name('maintenance.index');
+            Route::get('term/index', 'Finance\TermsController@index')->name(
+                'term.index',
+            );
+            Route::get(
+                'initial-payment/index',
+                'Finance\InitialPaymentsController@index',
+            )->name('initial-payment.index');
+            Route::get(
+                'mileage/index',
+                'Finance\MileagesController@index',
+            )->name('mileage.index');
         });
 });

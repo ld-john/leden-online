@@ -283,18 +283,21 @@
                         Meta Management
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item" href="{{ route('meta.make.index') }}">Make</a>
-                            <a class="dropdown-item" href="{{ route('meta.factoryfit.index') }}">Factory Fit Options</a>
-                            <a class="dropdown-item" href="{{ route('meta.dealerfit.index') }}">Dealer Fit Options</a>
-                            <a class="dropdown-item" href="{{ route('meta.colour.index') }}">Colours</a>
-                            <a class="dropdown-item" href="{{ route('meta.derivative.index') }}">Derivatives</a>
-                            <a class="dropdown-item" href="{{ route('meta.engine.index') }}">Engines</a>
-                            <a class="dropdown-item" href="{{ route('meta.fuel.index') }}">Fuel Types</a>
-                            <a class="dropdown-item" href="{{ route('meta.transmission.index') }}">Transmissions</a>
-                            <a class="dropdown-item" href="{{ route('meta.trim.index') }}">Trims</a>
-                            <a class="dropdown-item" href="{{ route('meta.type.index') }}">Types</a>
-                        </li>
+                        <li><a class="dropdown-item" href="{{ route('meta.make.index') }}">Make</a></li>
+                        <li><a class="dropdown-item" href="{{ route('meta.factoryfit.index') }}">Factory Fit Options</a></li>
+                        <li><a class="dropdown-item" href="{{ route('meta.dealerfit.index') }}">Dealer Fit Options</a></li>
+                        <li><a class="dropdown-item" href="{{ route('meta.colour.index') }}">Colours</a></li>
+                        <li><a class="dropdown-item" href="{{ route('meta.derivative.index') }}">Derivatives</a></li>
+                        <li><a class="dropdown-item" href="{{ route('meta.engine.index') }}">Engines</a></li>
+                        <li><a class="dropdown-item" href="{{ route('meta.fuel.index') }}">Fuel Types</a></li>
+                        <li><a class="dropdown-item" href="{{ route('meta.transmission.index') }}">Transmissions</a></li>
+                        <li><a class="dropdown-item" href="{{ route('meta.trim.index') }}">Trims</a></li>
+                        <li><a class="dropdown-item" href="{{ route('meta.type.index') }}">Types</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a href="{{ route('finance.finance-type.index') }}" class="dropdown-item">Finance Type</a></li>
+                        <li><a href="{{ route('finance.maintenance.index') }}" class="dropdown-item">Maintenance</a></li>
+                        <li><a href="{{ route('finance.term.index') }}" class="dropdown-item">Term</a></li>
+                        <li><a href="{{ route('finance.initial-payment.index') }}" class="dropdown-item">Initial Payment</a></li>
                     </ul>
                 </li>
             @endcan

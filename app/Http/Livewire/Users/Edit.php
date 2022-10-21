@@ -21,7 +21,7 @@ class Edit extends Component
     public $company_id;
     public $role;
     public $password;
-    public $password_confirm;
+    public $password_confirmation;
     public $avatar;
     public $companies;
 
@@ -58,8 +58,14 @@ class Edit extends Component
             'firstname' => $validate['first_name'],
             'lastname' => $validate['last_name'],
             'phone' => $validate['phone'],
-            'password' => bcrypt($validate['password']),
         ]);
+
+        if ($validate['password']) {
+            $this->user->update([
+                'password' => bcrypt($validate['password']),
+            ]);
+        }
+
         if ($this->avatar) {
             $this->user->update([
                 'avatar' => $this->avatar->store('images/avatar'),
@@ -84,6 +90,7 @@ class Edit extends Component
             'email' => 'required|email',
             'role' => 'required',
             'avatar' => 'sometimes|nullable|image|max:2048',
+            'password' => 'sometimes|nullable|confirmed',
         ]);
         $this->user->update([
             'firstname' => $validate['first_name'],
@@ -93,6 +100,14 @@ class Edit extends Component
             'role' => $validate['role'],
             'company_id' => $this->company_id,
         ]);
+
+        if ($validate['password']) {
+            $this->user->update([
+                'password' => bcrypt($this->password),
+                'firstname' => $validate['first_name'],
+            ]);
+        }
+
         if ($this->avatar) {
             $this->user->update([
                 'avatar' => $this->avatar->store('images/avatar'),

@@ -1,5 +1,5 @@
 @extends('layouts.main', [
-    'title' => 'users.profile',
+    'title' => 'User Profile',
     'activePage' => 'users.profile'
     ])
 

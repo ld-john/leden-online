@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\FinanceExports;
 use App\Exports\UniversalExport;
 use App\Exports\RegisteredExports;
 use App\Order;
@@ -12,8 +13,6 @@ use Exception;
 use Dashboard;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use LaravelIdea\Helper\App\_IH_Order_C;
-use LaravelIdea\Helper\App\_IH_Order_QB;
 use LaravelIdea\Helper\App\_IH_Vehicle_C;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -62,8 +61,9 @@ class ReportingController extends Controller
             'quarterly_sales' => $quarterly_sales,
             'quarterly_registered' => $quarterly_registered,
             'quarterly_completed' => $quarterly_completed,
-            'months' => $this->registeredMonths(),
-            'quarters' => $this->registeredQuarters(),
+            'registeredMonths' => $this->registeredMonths(),
+            'registeredQuarters' => $this->registeredQuarters(),
+            'financeMonths' => $this->financeMonths(),
         ]);
     }
 
@@ -258,6 +258,27 @@ class ReportingController extends Controller
             ];
         }
         return $data;
+    }
+
+    public function financeMonths()
+    {
+        $data = Order::all();
+        return $data
+            ->pluck('renewal_date')
+            ->map(function ($item) {
+                return Carbon::parse($item)
+                    ->subMonths(6)
+                    ->format('Y m');
+            })
+            ->sort()
+            ->filter(function ($value) {
+                return $value !== '-0001 11';
+            })
+            ->map(function ($item) {
+                return Carbon::createFromFormat('Y m', $item)->format('F Y');
+            })
+            ->unique()
+            ->flatten();
     }
 
     public function registeredMonths()
@@ -469,6 +490,20 @@ class ReportingController extends Controller
         return Excel::download(
             new RegisteredExports($vehicles),
             'monthly-registered-' . $month . '-' . $year . '.xls',
+        );
+    }
+
+    public function financeMonth($month, $year)
+    {
+        $report_month = $month + 6;
+        $orders = Order::where(function ($query) use ($report_month, $year) {
+            $query
+                ->whereMonth('renewal_date', $report_month)
+                ->whereYear('renewal_date', $year);
+        })->get();
+        return Excel::download(
+            new FinanceExports($orders),
+            'monthly-finance-' . $month . '-' . $year . '.xls',
         );
     }
 

@@ -150,6 +150,30 @@
                 </div>
             </div>
             <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFinanceInfo">
+                    <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseFinanceInfo"
+                            aria-expanded="false"
+                            aria-controls="collapseFinanceInfo"
+                    >
+                        Finance Information
+                    </button>
+                </h2>
+                <div
+                        id="collapseFinanceInfo"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingFinanceInfo"
+                        wire:ignore.self
+                >
+                    <div class="accordion-body">
+                        @include('order.partials.finance')
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
                 <h2 class="accordion-header" id="headingInvoice">
                     <button
                             class="accordion-button collapsed"

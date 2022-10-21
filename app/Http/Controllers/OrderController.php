@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Finance\FinanceType;
+use App\Finance\InitialPayment;
+use App\Finance\Maintenance;
+use App\Finance\Mileage;
+use App\Finance\Term;
 use App\Invoice;
 use App\Order;
 use App\Vehicle;
@@ -53,7 +58,25 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return view('order.show', ['order' => $order]);
+        $finance_type = FinanceType::where('id', $order->finance_type)->first()
+            ?->option;
+        $maintenance = Maintenance::where('id', $order->maintenance)->first()
+            ?->option;
+        $term = Term::where('id', $order->term)->first()?->option;
+        $initial_payment = InitialPayment::where(
+            'id',
+            $order->initial_payment,
+        )->first()?->option;
+        $mileage = Mileage::where('id', $order->mileage)->first()?->option;
+
+        return view('order.show', [
+            'order' => $order,
+            'finance_type' => $finance_type,
+            'maintenance' => $maintenance,
+            'term' => $term,
+            'initial_payment' => $initial_payment,
+            'mileage' => $mileage,
+        ]);
     }
 
     /**
@@ -299,5 +322,31 @@ class OrderController extends Controller
 
         //return $pdf->stream();
         return $pdf->download('leden-order-' . $order->id . '.pdf');
+    }
+
+    function date_cleanup()
+    {
+        Order::chunk('50', function ($orders) {
+            foreach ($orders as $order) {
+                if ($order->delivery_date_OLD) {
+                    $order->update([
+                        'delivery_date' => $order->delivery_date_OLD,
+                    ]);
+                    var_dump('delivery date moved');
+                }
+                if ($order->due_date_OLD) {
+                    $order->update([
+                        'due_date' => $order->due_date_OLD,
+                    ]);
+                    var_dump('due date moved');
+                }
+                if ($order->completed_date_OLD) {
+                    $order->update([
+                        'completed_date' => $order->completed_date_OLD,
+                    ]);
+                    var_dump('completed date moved');
+                }
+            }
+        });
     }
 }

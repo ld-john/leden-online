@@ -56,6 +56,7 @@
                 @endforeach
             </table>
         </div>
+
     </div>
     <div class="modal @if($editModel) show @endif">
 

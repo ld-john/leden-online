@@ -46,7 +46,9 @@ class ReservationController extends Controller
         $customer = Auth::user()->id;
         $broker = Auth::user()->company_id;
         $vehicle_id = $vehicle->id;
-        $expiry = Carbon::now()->addWeekdays(2)->format('Y-m-d');
+        $expiry = Carbon::now()
+            ->addWeekdays(2)
+            ->format('Y-m-d');
 
         $reservation = new Reservation();
 
@@ -61,11 +63,11 @@ class ReservationController extends Controller
 
         $admin = User::where('company_id', '7')->get();
 
-        foreach ($admin as $user ) {
+        foreach ($admin as $user) {
             $user->notify(new VehicleHasBeenReserved($reservation));
         }
 
-        return redirect( route('vehicle.show', $vehicle) );
+        return redirect(route('vehicle.show', $vehicle));
     }
 
     public function extend(Reservation $reservation)
@@ -75,24 +77,24 @@ class ReservationController extends Controller
             $reservation->update([
                 'expiry_date' => $new_date,
                 'status' => 'extended',
-                'leden_user_id' => Auth::user()->id
+                'leden_user_id' => Auth::user()->id,
             ]);
         } else {
             $reservation->update([
                 'expiry_date' => $new_date,
                 'status' => 'extended_deadline_approaching',
-                'leden_user_id' => Auth::user()->id
+                'leden_user_id' => Auth::user()->id,
             ]);
         }
 
-        return redirect( route('reservation.index') );
+        return redirect(route('reservation.index'));
     }
 
     public function toggle(User $user)
     {
         $user->update([
-            'reservation_allowed' => !$user->reservation_allowed
+            'reservation_allowed' => !$user->reservation_allowed,
         ]);
-        return redirect( route('user_manager'));
+        return redirect(route('user_manager'));
     }
 }

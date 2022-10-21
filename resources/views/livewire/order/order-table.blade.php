@@ -18,6 +18,9 @@
                 <th>Leden Order #</th>
                 <th>Model</th>
                 <th>Derivative</th>
+                @can('broker')
+                    <th>Colour</th>
+                @endcan
                 <th>
                     Ford Order Number
 
@@ -62,6 +65,9 @@
                 <th class="p-1">
                     <input wire:model.debounce:500ms="searchDerivative" type="text" class="form-control" placeholder="Search Derivatives">
                 </th>
+                @can('broker')
+                    <th></th>
+                @endcan
                 <th class="p-1">
                     <input wire:model.debounce:500ms="searchOrderNumber" type="text" class="form-control" placeholder="Search Ford Order Number">
                 </th>
@@ -109,6 +115,9 @@
                     <td>{{ $order->id ?? '' }}</td>
                     <td>{{ $order->vehicle->model ?? ''}}</td>
                     <td>{{ $order->vehicle->derivative ?? ''}}</td>
+                    @can('broker')
+                        <td>{{ $order->vehicle->colour ?? '--'}}</td>
+                    @endcan
                     <td>{{ $order->vehicle->ford_order_number ?? ''}}</td>
                     <td>{{ $order->vehicle->orbit_number }}</td>
                     <td>{{ $order->vehicle->reg ?? ''}}</td>
