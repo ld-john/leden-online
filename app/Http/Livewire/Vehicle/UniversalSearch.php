@@ -86,7 +86,7 @@ class UniversalSearch extends Component
 
     private function filterVehiclesForDisplay(): Builder|Vehicle
     {
-        return Vehicle::whereIn('vehicle_status', [
+        $statusFilter = [
             '1',
             '3',
             '4',
@@ -98,13 +98,22 @@ class UniversalSearch extends Component
             '14',
             '15',
             '16',
-        ])
-            ->when($this->deliveriesBookedFilter, function ($query) {
-                $query->orWhere('vehicle_status', '6');
-            })
-            ->when($this->completedOrdersFilter, function ($query) {
-                $query->orWhere('vehicle_status', '7');
-            })
+        ];
+
+        if ($this->completedOrdersFilter) {
+            $statusFilter[] = '7';
+        }
+
+        if ($this->deliveriesBookedFilter) {
+            $statusFilter[] = '6';
+        }
+
+        return Vehicle::whereIn('vehicle_status', $statusFilter)
+            ->with('order')
+            ->with('order.customer')
+            ->with('manufacturer')
+            ->with('broker')
+            ->with('reservation')
             ->when($this->searchID, function ($query) {
                 $query->where('id', 'like', '%' . $this->searchID . '%');
             })

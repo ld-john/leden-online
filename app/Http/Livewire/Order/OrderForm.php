@@ -15,12 +15,16 @@ use App\Models\Invoice;
 use App\Models\Manufacturer;
 use App\Models\Order;
 use App\Models\OrderUpload;
+use App\Models\Permission;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\VehicleMeta;
 use App\Models\VehicleModel;
 use App\Notifications\DeliveryDateSetNotification;
+use App\Notifications\RegistrationNumberAddedEmailNotification;
+use App\Notifications\RegistrationNumberAddedNotification;
+use App\Notifications\VehicleInStockEmailNotification;
 use App\Notifications\VehicleInStockNotification;
 use Carbon\Carbon;
 use DateTime;
@@ -750,7 +754,7 @@ class OrderForm extends Component
     }
 
     /**
-     * @param \App\Models\Invoice $invoice
+     * @param Invoice $invoice
      * @return void
      */
     public function saveInvoice(Invoice $invoice): void
@@ -791,7 +795,7 @@ class OrderForm extends Component
     }
 
     /**
-     * @param \App\Models\Customer $customer
+     * @param Customer $customer
      * @return void
      */
     public function saveCustomerDetails(Customer $customer): void
@@ -809,7 +813,7 @@ class OrderForm extends Component
     }
 
     /**
-     * @param \App\Models\Vehicle $vehicle
+     * @param Vehicle $vehicle
      * @return void
      */
     public function saveVehicleDetails(Vehicle $vehicle): void
@@ -850,15 +854,36 @@ class OrderForm extends Component
                 'orbit_number' => $this->orbit_number,
             ]);
         }
-
+        $brokers = User::where('company_id', $this->broker)->get();
+        $permission = Permission::where('name', 'receive-emails')->first();
+        $mailBrokers = $permission->users
+            ->where('company_id', $this->broker)
+            ->all();
         if ($vehicle->wasChanged('vehicle_status')) {
             if ($vehicle->vehicle_status === '7') {
                 $this->order->update(['completed_date' => now()]);
             } elseif ($vehicle->vehicle_status === '1') {
-                $brokers = User::where('company_id', $this->broker)->get();
                 foreach ($brokers as $broker) {
                     $broker->notify(new VehicleInStockNotification($vehicle));
                 }
+                foreach ($mailBrokers as $broker) {
+                    $broker->notify(
+                        new VehicleInStockEmailNotification($vehicle),
+                    );
+                }
+            }
+        }
+
+        if ($vehicle->wasChanged('reg')) {
+            foreach ($brokers as $broker) {
+                $broker->notify(
+                    new RegistrationNumberAddedNotification($vehicle),
+                );
+            }
+            foreach ($mailBrokers as $broker) {
+                $broker->notify(
+                    new RegistrationNumberAddedEmailNotification($vehicle),
+                );
             }
         }
 

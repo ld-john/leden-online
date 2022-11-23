@@ -60,6 +60,8 @@ class VehicleTable extends Component
     {
         $data = Vehicle::with('manufacturer:id,name')
             ->with('order:id,vehicle_id')
+            ->with('dealer')
+            ->with('broker')
             ->when($this->role === 'broker', function ($query) {
                 $query->where('hide_from_broker', false);
             })

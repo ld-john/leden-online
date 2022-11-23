@@ -5,9 +5,13 @@ namespace App\Http\Livewire\Vehicle;
 use App\Models\Company;
 use App\Models\FitOption;
 use App\Models\Manufacturer;
+use App\Models\Permission;
+use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\VehicleMeta;
 use App\Models\VehicleModel;
+use App\Notifications\RegistrationNumberAddedEmailNotification;
+use App\Notifications\RegistrationNumberAddedNotification;
 use DateTime;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -199,40 +203,38 @@ class VehicleForm extends Component
             ]);
         }
 
-        $vehicle->vehicle_status = $this->status;
-        $vehicle->reg = $this->registration;
-        $vehicle->ford_order_number = $this->order_ref;
-        $vehicle->model_year = $this->model_year;
-        $vehicle->make = $this->make;
-        $vehicle->model = VehicleModel::where(
-            'id',
-            $this->model,
-        )->first()->name;
-        $vehicle->derivative = $this->derivative;
-        $vehicle->engine = $this->engine;
-        $vehicle->transmission = $this->transmission;
-        $vehicle->fuel_type = $this->fuel_type;
-        $vehicle->colour = $this->colour;
-        $vehicle->chassis = $this->chassis;
-        $vehicle->dealer_id = $this->dealership;
-        $vehicle->broker_id = $this->broker;
-        $vehicle->trim = $this->trim;
-        $vehicle->chassis_prefix = $this->chassis_prefix;
-        $vehicle->type = $this->type;
-        $vehicle->metallic_paint = $this->metallic_paint;
-        $vehicle->list_price = $this->list_price;
-        $vehicle->first_reg_fee = $this->first_reg_fee;
-        $vehicle->rfl_cost = $this->rfl_cost;
-        $vehicle->onward_delivery = $this->onward_delivery;
-        $vehicle->build_date = $this->build_date;
-        $vehicle->due_date = $this->due_date;
-        $vehicle->vehicle_registered_on = $this->registered_date;
-        $vehicle->hide_from_broker = $this->hide_from_broker;
-        $vehicle->hide_from_dealer = $this->hide_from_dealer;
-        $vehicle->show_offer = $this->show_offer;
-        $vehicle->show_discount = $this->show_discount;
-        $vehicle->show_in_ford_pipeline = $this->ford_pipeline;
-        $vehicle->save();
+        $vehicle->update([
+            'vehicle_status' => $this->status,
+            'reg' => $this->registration,
+            'ford_order_number' => $this->order_ref,
+            'model_year' => $this->model_year,
+            'make' => $this->make,
+            'model' => VehicleModel::where('id', $this->model)->first()->name,
+            'derivative' => $this->derivative,
+            'engine' => $this->engine,
+            'transmission' => $this->transmission,
+            'fuel_type' => $this->fuel_type,
+            'colour' => $this->colour,
+            'chassis' => $this->chassis,
+            'dealer_id' => $this->dealership,
+            'broker_id' => $this->broker,
+            'trim' => $this->trim,
+            'chassis_prefix' => $this->chassis_prefix,
+            'type' => $this->type,
+            'metallic_paint' => $this->metallic_paint,
+            'list_price' => $this->list_price,
+            'first_reg_fee' => $this->first_reg_fee,
+            'rfl_cost' => $this->rfl_cost,
+            'onward_delivery' => $this->onward_delivery,
+            'build_date' => $this->build_date,
+            'due_date' => $this->due_date,
+            'vehicle_registered_on' => $this->registered_date,
+            'hide_from_broker' => $this->hide_from_broker,
+            'hide_from_dealer' => $this->hide_from_dealer,
+            'show_offer' => $this->show_offer,
+            'show_discount' => $this->show_discount,
+            'show_in_ford_pipeline' => $this->ford_pipeline,
+        ]);
 
         $fitOptions = array_merge(
             $this->factoryFitOptions,
@@ -246,6 +248,23 @@ class VehicleForm extends Component
                 'Vehicle was updated successfully',
                 'Vehicle Updated',
             );
+            $brokers = User::where('company_id', $this->broker)->get();
+            $permission = Permission::where('name', 'receive-emails')->first();
+            $mailBrokers = $permission->users
+                ->where('company_id', $this->broker)
+                ->all();
+            if ($vehicle->wasChanged('reg')) {
+                foreach ($brokers as $broker) {
+                    $broker->notify(
+                        new RegistrationNumberAddedNotification($vehicle),
+                    );
+                }
+                foreach ($mailBrokers as $broker) {
+                    $broker->notify(
+                        new RegistrationNumberAddedEmailNotification($vehicle),
+                    );
+                }
+            }
         } else {
             notify()->success(
                 'Vehicle was created successfully',

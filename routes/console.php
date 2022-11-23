@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Reservation;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Foundation\Inspiring;
@@ -21,16 +22,15 @@ Artisan::command('inspire', function () {
 
 Artisan::command('cleanVehicle', function () {
     $date = Carbon::now()->subDays(30);
-    $deleted = Vehicle::where('deleted_at', '>', $date)->onlyTrashed()->get();
-
-    var_dump(count($deleted));
+    $deleted = Vehicle::where('deleted_at', '>', $date)
+        ->onlyTrashed()
+        ->get();
 
     foreach ($deleted as $item) {
         $item->forceDelete();
     }
-
 });
 
 Artisan::command('checkReservationExpiry', function () {
-   (new \App\Models\Reservation)->checkExpiry();
+    (new Reservation())->checkExpiry();
 });

@@ -29,6 +29,7 @@ class CompanyTable extends Component
         $data = Company::when($this->searchType, function ($query) {
             $query->where('company_type', $this->searchType);
         })
+            ->with('users')
             ->when($this->searchName, function ($query) {
                 $query->where(
                     'company_name',

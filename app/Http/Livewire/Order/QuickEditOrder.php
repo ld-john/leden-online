@@ -4,9 +4,13 @@ namespace App\Http\Livewire\Order;
 
 use App\Http\Controllers\OrderController;
 use App\Models\Order;
+use App\Models\Permission;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Notifications\DeliveryDateSetNotification;
+use App\Notifications\RegistrationNumberAddedEmailNotification;
+use App\Notifications\RegistrationNumberAddedNotification;
+use App\Notifications\VehicleInStockEmailNotification;
 use App\Notifications\VehicleInStockNotification;
 use DateTime;
 use Exception;
@@ -112,16 +116,40 @@ class QuickEditOrder extends Component
         ]);
         $order = $this->order;
 
+        $brokers = User::where('company_id', $order->broker->id)->get();
+        $permission = Permission::where('name', 'receive-emails')->first();
+        $mailBrokers = $permission->users
+            ->where('company_id', $order->broker->id)
+            ->all();
+
         if ($this->vehicle->wasChanged('vehicle_status')) {
             if ($this->vehicle->vehicle_status === '7') {
                 $this->order->update(['completed_date' => now()]);
             } elseif ($this->vehicle->vehicle_status === '1') {
-                $brokers = User::where('company_id', $order->broker)->get();
                 foreach ($brokers as $broker) {
                     $broker->notify(
                         new VehicleInStockNotification($this->vehicle),
                     );
                 }
+                foreach ($mailBrokers as $broker) {
+                    $broker->notify(
+                        new VehicleInStockEmailNotification($this->vehicle),
+                    );
+                }
+            }
+        }
+        if ($this->vehicle->wasChanged('reg')) {
+            foreach ($brokers as $broker) {
+                $broker->notify(
+                    new RegistrationNumberAddedNotification($this->vehicle),
+                );
+            }
+            foreach ($mailBrokers as $broker) {
+                $broker->notify(
+                    new RegistrationNumberAddedEmailNotification(
+                        $this->vehicle,
+                    ),
+                );
             }
         }
 

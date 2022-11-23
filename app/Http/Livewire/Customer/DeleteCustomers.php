@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Customer;
 
 use App\Models\Customer;
+use App\Models\Order;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -17,7 +18,10 @@ class DeleteCustomers extends Component
     public function mount(Customer $customer)
     {
         $this->customer = $customer;
-        $this->orders = $customer->orders;
+        $this->orders = Order::where('customer_id', '=', $customer->id)
+            ->with('vehicle')
+            ->with('vehicle.manufacturer')
+            ->get();
     }
 
     public function toggleDeleteModal()

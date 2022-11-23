@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed $address_1
  * @property mixed $customer_name
  * @property mixed $id
+ * @property mixed $orders
  */
 class Customer extends Model
 {
@@ -29,9 +31,8 @@ class Customer extends Model
         return $this->customer_name;
     }
 
-    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'customer_id', 'id');
     }
-
 }

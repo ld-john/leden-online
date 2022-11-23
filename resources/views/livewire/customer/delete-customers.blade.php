@@ -20,8 +20,11 @@
                         <p>{{ $customer->customer_name ?? 'This customer' }} has placed the following orders:</p>
                         <ul>
                             @foreach($orders as $order)
-                                <li><a target="_blank" href="{{ route('order.show', $order->id) }}">{{$order->id}}</a> -
-                                    <a data-toggle="tooltip" title="Delete Order"><livewire:order.delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
+                                <li class="mb-2">
+                                    <span class="d-flex justify-content-between">
+                                        <span><a target="_blank" href="{{ route('order.show', $order->id) }}">{{$order->id}}</a> - {{ $order->vehicle->manufacturer->name }} {{ $order->vehicle->model }}</span>
+                                        <a data-toggle="tooltip" title="Delete Order"><livewire:order.delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id" /></a>
+                                    </span>
                                 </li>
 
                             @endforeach

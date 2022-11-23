@@ -5,11 +5,11 @@ namespace App\Notifications;
 use App\Models\Vehicle;
 use Illuminate\Notifications\Notification;
 
-class VehicleInStockNotification extends Notification
+class RegistrationNumberAddedNotification extends Notification
 {
     public Vehicle $vehicle;
 
-    public function __construct(Vehicle $vehicle)
+    public function __construct($vehicle)
     {
         $this->vehicle = $vehicle;
     }
@@ -23,18 +23,19 @@ class VehicleInStockNotification extends Notification
     {
         $broker_ref = $this->vehicle->order?->broker_ref ?? 'TBC';
         return [
-            'vehicle' => $this->vehicle->id,
+            'vehicle' => $this->vehicle,
             'type' => 'vehicle',
             'message' =>
-                'A ' .
+                'A registration of ' .
+                $this->vehicle->reg .
+                ' has been added to ' .
                 $this->vehicle->manufacturer->name .
                 ' ' .
                 $this->vehicle->model .
-                ' Order Number - ' .
+                ' Order Number: ' .
                 $broker_ref .
-                ' has been marked as In Stock, associated with Leden Order #' .
-                $this->vehicle->order?->id .
-                '. If this vehicle required Dealer Fit Options, please contact Leden offices now.',
+                ', associated with Leden Order #' .
+                $this->vehicle->order?->id,
         ];
     }
 }

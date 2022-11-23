@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Finance;
 
+use App\Models\Finance\FinanceType;
 use App\Models\Finance\InitialPayment;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -17,12 +18,12 @@ class InitialPaymentsEditor extends Component
 
     public function mount()
     {
-        $this->metadata = InitialPayment::all();
+        $this->metadata = InitialPayment::with('orders')->get();
     }
 
     public function newInitialPayment()
     {
-        $initialPayment = new \App\Models\Finance\FinanceType();
+        $initialPayment = new FinanceType();
         $initialPayment->option = $this->new_name;
         $initialPayment->save();
         Notify()->success('Initial Payment added successfully');

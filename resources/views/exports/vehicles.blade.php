@@ -42,10 +42,10 @@
             <td>
                 @if($vehicle->order)
 
-                    @if(Carbon\Carbon::parse($vehicle->order->due_date)->format('y') === '-1')
+                    @if(Carbon\Carbon::parse($vehicle->due_date)->format('y') === '-1')
                         N/a
                     @elseif($vehicle->order->due_date)
-                        {{ Carbon\Carbon::parse($vehicle->order->due_date)->format('d/m/y') }}
+                        {{ Carbon\Carbon::parse($vehicle->due_date)->format('d/m/y') }}
                     @else
                         N/a
                     @endif
@@ -56,6 +56,8 @@
             <td>
                 @if($vehicle->order)
                     {{ $vehicle->order->broker->company_name }}
+                @elseif($vehicle->broker)
+                    {{ $vehicle->broker->company_name }}
                 @else
                     No Broker found
                 @endif

@@ -43,6 +43,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed $manufacturer
  * @property mixed $id
  * @property mixed $order
+ * @property mixed $orbit_number
  */
 class Vehicle extends Model
 {
@@ -120,6 +121,7 @@ class Vehicle extends Model
             'route' => null,
             'status' => 'danger',
         ];
+
         if (!$this->order) {
             $data['status'] = 'warning';
             if ($this->ring_fenced_stock) {
@@ -155,6 +157,12 @@ class Vehicle extends Model
                 $data['location'] = 'Manage Deliveries';
                 $data['route'] = 'manage_deliveries';
             }
+        }
+
+        if ($this->reservation) {
+            $data['location'] = 'Reservation';
+            $data['route'] = 'reservation.index';
+            $data['status'] = 'danger';
         }
 
         return $data;

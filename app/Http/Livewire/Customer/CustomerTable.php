@@ -24,9 +24,13 @@ class CustomerTable extends Component
 
     public function render()
     {
-        $customers = Customer::orderBy('customer_name', 'asc')->paginate($this->paginate);
+        $customers = Customer::orderBy('customer_name', 'asc')
+            ->with('orders')
+            ->paginate($this->paginate);
 
-        return view('livewire.customer.customer-table', ['customers' => $customers]);
+        return view('livewire.customer.customer-table', [
+            'customers' => $customers,
+        ]);
     }
 
     public function mergeSelected()
@@ -35,8 +39,7 @@ class CustomerTable extends Component
         $keep = array_shift($merge);
 
         $orders = Order::whereIn('customer_id', $merge)->get();
-        foreach ($orders as $order)
-        {
+        foreach ($orders as $order) {
             $order->update(['customer_id' => $keep]);
         }
 

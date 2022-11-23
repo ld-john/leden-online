@@ -118,6 +118,10 @@ class VehicleController extends Controller
     {
         $vehicles = Vehicle::where('vehicle_status', 4)
             ->with('manufacturer:id,name')
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
+            ->with('broker')
             ->get();
 
         $date = Carbon::now()->format('Y-m-d');
@@ -132,6 +136,10 @@ class VehicleController extends Controller
     {
         $vehicles = Vehicle::where('vehicle_status', 10)
             ->with('manufacturer:id,name')
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
+            ->with('broker')
             ->get();
 
         $date = Carbon::now()->format('Y-m-d');
@@ -145,6 +153,10 @@ class VehicleController extends Controller
     {
         $vehicles = Vehicle::where('vehicle_status', 11)
             ->with('manufacturer:id,name')
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
+            ->with('broker')
             ->get();
 
         $date = Carbon::now()->format('Y-m-d');
@@ -158,6 +170,10 @@ class VehicleController extends Controller
     {
         $vehicles = Vehicle::where('vehicle_status', 1)
             ->with('manufacturer:id,name')
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
+            ->with('broker')
             ->get();
 
         $date = Carbon::now()->format('Y-m-d');
@@ -171,6 +187,10 @@ class VehicleController extends Controller
     public function ready_for_delivery_export(): BinaryFileResponse
     {
         $vehicles = Vehicle::where('vehicle_status', 3)
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
+            ->with('broker')
             ->with('manufacturer:id,name')
             ->get();
 
@@ -184,7 +204,11 @@ class VehicleController extends Controller
     public function delivery_booked_export(): BinaryFileResponse
     {
         $vehicles = Vehicle::where('vehicle_status', 6)
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
             ->with('manufacturer:id,name')
+            ->with('broker')
             ->get();
 
         $date = Carbon::now()->format('Y-m-d');
@@ -197,7 +221,11 @@ class VehicleController extends Controller
     public function awaiting_ship_export(): BinaryFileResponse
     {
         $vehicles = Vehicle::where('vehicle_status', 13)
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
             ->with('manufacturer:id,name')
+            ->with('broker')
             ->get();
 
         $date = Carbon::now()->format('Y-m_d');
@@ -210,7 +238,11 @@ class VehicleController extends Controller
     public function at_converter_export(): BinaryFileResponse
     {
         $vehicles = Vehicle::where('vehicle_status', 12)
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
             ->with('manufacturer:id,name')
+            ->with('broker')
             ->get();
 
         $date = Carbon::now()->format('Y-m_d');
@@ -224,7 +256,11 @@ class VehicleController extends Controller
     public function in_stock_registered_export(): BinaryFileResponse
     {
         $vehicles = Vehicle::where('vehicle_status', 15)
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
             ->with('manufacturer:id,name')
+            ->with('broker')
             ->get();
 
         $date = Carbon::now()->format('Y-m_d');
@@ -239,6 +275,7 @@ class VehicleController extends Controller
     {
         $vehicles = Vehicle::onlyTrashed()
             ->latest()
+            ->with('manufacturer')
             ->paginate(10);
 
         return view('vehicles.deleted', [

@@ -72,9 +72,11 @@ class OrderTable extends Component
         })
             ->with([
                 'vehicle',
+                'vehicle.manufacturer',
                 'customer:id,customer_name',
                 'broker:id,company_name',
                 'dealer:id,company_name',
+                'delivery',
             ])
             ->when($this->brokerID, function ($query) {
                 $query->where('broker_id', $this->brokerID);

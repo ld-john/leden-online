@@ -44,8 +44,7 @@
             <th>
                 <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>
                 <div class="form-check form-switch">
-                    <input wire:model="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
-                           role="switch">
+                    <input wire:model="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input" role="switch">
                 </div>
                 Due Date
             </th>
@@ -196,8 +195,13 @@
                             <livewire:vehicle.delete-vehicle :vehicle="$vehicle->id" :key="time().$vehicle->id"/>
                         </a>
                         @if($vehicle->ring_fenced_stock === 1)
+                            <a data-toggle="tooltip" title="Move Broker">
+                            <livewire:vehicle.quick-edit-ringfence :vehicle="$vehicle->id" :key="time().$vehicle->id" />
+                            </a>
                             <a wire:click="unRingFenceVehicle({{ $vehicle->id }})" class="btn btn-primary"
-                               data-toggle="tooltip" title="Move to Leden Stock"><i class="fa-solid fa-car"></i></a>
+                               data-toggle="tooltip" title="Move to Leden Stock">
+                                <i class="fa-solid fa-car"></i>
+                            </a>
                         @else
                             <livewire:vehicle.ring-fence-modal :vehicle="$vehicle->id" :key="time().$vehicle->id"/>
                         @endif

@@ -272,27 +272,27 @@
                         </select>
                     </div>
                 </div>
-                @if($vehicle->ring_fenced_stock)
-                    <div class="form-group row">
-                        <label for="broker" class="col-md-2 col-form-label">Select Broker</label>
-                        <div class="col-md-6 mb-3">
-                            <select wire:model="broker" name="broker" id="broker" class="form-select">
-                                <option value="">Select Broker</option>
-                                @foreach($brokers as $broker)
-                                    <option value="{{ $broker->id }}">{{ $broker->company_name }}</option>
-                                @endforeach
-                            </select>
+                @if($vehicle)
+                    @if($vehicle->ring_fenced_stock)
+                        <div class="form-group row">
+                            <label for="broker" class="col-md-2 col-form-label">Select Broker</label>
+                            <div class="col-md-6 mb-3">
+                                <select wire:model="broker" name="broker" id="broker" class="form-select">
+                                    <option value="">Select Broker</option>
+                                    @foreach($brokers as $broker)
+                                        <option value="{{ $broker->id }}">{{ $broker->company_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 @endif
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="chassis_prefix">Chassis Prefix</label>
                     <div class="col-md-6">
-                        <input wire:model="chassis_prefix" type="text" name="chassis_prefix" id="chassis_prefix" class="form-control"
-                               autocomplete="off" />
+                        <input wire:model="chassis_prefix" type="text" name="chassis_prefix" id="chassis_prefix" class="form-control" autocomplete="off" />
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="chassis">Chassis</label>
                     <div class="col-md-6">

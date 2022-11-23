@@ -72,6 +72,7 @@ class User extends Authenticatable
         return Message::where('recipient_id', $this->id)
             ->take(4)
             ->orderBy('created_at', 'DESC')
+            ->with('sender')
             ->get();
     }
 

@@ -17,7 +17,7 @@ class FinanceTypeEditor extends Component
 
     public function mount()
     {
-        $this->metadata = \App\Models\Finance\FinanceType::all();
+        $this->metadata = FinanceType::with('orders')->get();
     }
 
     public function newFinanceType()
@@ -29,13 +29,13 @@ class FinanceTypeEditor extends Component
         return redirect(route('finance.finance-type.index'));
     }
 
-    public function showEditModal(\App\Models\Finance\FinanceType $type)
+    public function showEditModal(FinanceType $type)
     {
         $this->edit = $type;
         $this->edit_name = $type->option;
     }
 
-    public function delete(\App\Models\Finance\FinanceType $type)
+    public function delete(FinanceType $type)
     {
         $type->delete();
         Notify()->success('Finance Type deleted successfully');

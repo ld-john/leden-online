@@ -447,7 +447,7 @@
                                 @if($order->delivery_date)
                                     <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
                                 @endif
-                                <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
+{{--                                <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>--}}
                             @elseif (Auth::user()->role == 'dealer' && $order->admin_accepted == 1 && $order->dealer_accepted == 0)
                                 @if($order->delivery_date)
                                     <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>

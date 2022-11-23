@@ -19,13 +19,18 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param Schedule $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
         $schedule->command('cleanVehicle')->dailyAt('23:50');
-        $schedule->command('checkReservationExpiry')->dailyAt('23:55')->withoutOverlapping()->runInBackground();;
+        $schedule
+            ->command('checkReservationExpiry')
+            ->dailyAt('23:55')
+            ->withoutOverlapping()
+            ->runInBackground()
+            ->appendOutputTo('public/command_test.txt');
     }
 
     /**
@@ -33,9 +38,9 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
-    protected function commands()
+    protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

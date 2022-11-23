@@ -14,7 +14,7 @@ class MaintenanceEditor extends Component
 
     public function mount()
     {
-        $this->metadata = Maintenance::all();
+        $this->metadata = Maintenance::with('orders')->get();
     }
 
     public function newMaintenance()

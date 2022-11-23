@@ -22,7 +22,9 @@ class MetaEditor extends Component
 
     public function mount()
     {
-        $this->metadata = VehicleMeta::where('type', $this->metatype)->get();
+        $this->metadata = VehicleMeta::where('type', $this->metatype)
+            ->with('vehicle_model')
+            ->get();
         $this->models = VehicleModel::orderBy('name')->get();
     }
 

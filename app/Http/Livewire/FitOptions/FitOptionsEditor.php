@@ -48,6 +48,9 @@ class FitOptionsEditor extends Component
         return view('livewire.fit-options.fit-options-editor', [
             'vehicle_models' => VehicleModel::orderBy('name')->get(),
             'fitOptions' => FitOption::where('option_type', $this->fitType)
+                ->with('vehicle_model')
+                ->with('vehicles')
+                ->with('dealer')
                 ->when($this->option_name, function ($query) {
                     $query->where(
                         'option_name',
