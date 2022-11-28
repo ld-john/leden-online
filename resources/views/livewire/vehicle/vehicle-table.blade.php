@@ -184,28 +184,66 @@
                     {{ \Carbon\Carbon::parse($vehicle->updated_at)->format( 'd/m/Y h:ia') }}
                 </td>
                 <td width="120px">
-                    <a href="{{route('vehicle.show', $vehicle->id)}}" class="btn btn-primary" data-toggle="tooltip"
-                       title="View Vehicle Information"><i class="far fa-eye"></i></a>
+                    <div class="d-grid grid-cols-2 gap-2">
+                    <a
+                            href="{{route('vehicle.show', $vehicle->id)}}"
+                            class="btn btn-primary"
+                            data-toggle="tooltip"
+                            title="View Vehicle Information"
+                    >
+                        <i class="far fa-eye"></i>
+                    </a>
                     @can('admin')
-                        <a href="{{route('vehicle.edit', $vehicle->id)}}" class="btn btn-warning" data-toggle="tooltip"
-                           title="Edit Vehicle Information"><i class="fas fa-edit"></i></a>
-                        <a href="{{route('order.reserve', $vehicle->id)}}" class="btn btn-primary" data-toggle="tooltip"
-                           title="Create order with Vehicle"><i class="fas fa-plus-square"></i></a>
-                        <a data-toggle="tooltip" title="Delete Vehicle">
+                        <a
+                                href="{{route('vehicle.edit', $vehicle->id)}}"
+                                class="btn btn-warning"
+                                data-toggle="tooltip"
+                                title="Edit Vehicle Information"
+                        >
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a
+                                href="{{route('order.reserve', $vehicle->id)}}"
+                                class="btn btn-info"
+                                data-toggle="tooltip"
+                                title="Create order with Vehicle"
+                        >
+                            <i class="fas fa-plus-square"></i>
+                        </a>
+                        <a
+                                data-toggle="tooltip"
+                                title="Delete Vehicle"
+                                class="btn btn-danger"
+                        >
                             <livewire:vehicle.delete-vehicle :vehicle="$vehicle->id" :key="time().$vehicle->id"/>
                         </a>
                         @if($vehicle->ring_fenced_stock === 1)
-                            <a data-toggle="tooltip" title="Move Broker">
-                            <livewire:vehicle.quick-edit-ringfence :vehicle="$vehicle->id" :key="time().$vehicle->id" />
+                            <a
+                                    data-toggle="tooltip"
+                                    title="Move Broker"
+                                    class="btn btn-warning"
+                            >
+                                <livewire:vehicle.quick-edit-ringfence :vehicle="$vehicle->id" :key="time().$vehicle->id" />
                             </a>
-                            <a wire:click="unRingFenceVehicle({{ $vehicle->id }})" class="btn btn-primary"
-                               data-toggle="tooltip" title="Move to Leden Stock">
+                            <a
+                                    wire:click="unRingFenceVehicle({{ $vehicle->id }})"
+                                    class="btn btn-dark"
+                                    data-toggle="tooltip"
+                                    title="Move to Leden Stock"
+                            >
                                 <i class="fa-solid fa-car"></i>
                             </a>
                         @else
-                            <livewire:vehicle.ring-fence-modal :vehicle="$vehicle->id" :key="time().$vehicle->id"/>
+                                <a
+                                        class="btn btn-dark"
+                                        data-toggle="tooltip"
+                                        title="Move to Ring Fenced Stock"
+                                >
+                                    <livewire:vehicle.ring-fence-modal :vehicle="$vehicle->id" :key="time().$vehicle->id"/>
+                                </a>
                         @endif
                     @endcan
+                    </div>
                 </td>
             </tr>
         @empty

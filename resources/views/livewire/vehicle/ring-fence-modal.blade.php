@@ -1,5 +1,5 @@
 <div>
-    <a wire:click="toggleModal()" class="btn btn-primary" data-toggle="tooltip" title="Move to Ring Fenced Stock"><i class="fa-solid fa-car"></i></a>
+    <i wire:click="toggleModal()" class="fa-solid fa-car"></i>
     <div class="modal @if($ringFenceModal) show @endif">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

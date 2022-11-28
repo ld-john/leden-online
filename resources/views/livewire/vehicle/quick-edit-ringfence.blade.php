@@ -1,12 +1,10 @@
 <div>
-    <button
-            class="btn btn-warning"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvas-{{$vehicle->id}}"
-            aria-controls="offcanvasExample">
-        <i class="fa-solid fa-pencil"></i>
-    </button>
+        <i
+                class="fa-solid fa-pencil"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvas-{{$vehicle->id}}"
+                aria-controls="offcanvasExample"
+        ></i>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-{{$vehicle->id}}" aria-labelledby="offcanvasExampleLabel" wire:ignore.self>
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Move Broker for Vehicle #{{ $vehicle->id }}</h5>

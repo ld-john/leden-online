@@ -17,7 +17,7 @@
                                 </tr>
                                 @foreach($permissions as $permission)
                                     <tr>
-                                        <td><input type="checkbox" value="{{ $permission->id }}" wire:model="assigned_permissions" @if($user->canPerform->contains($permission->id)) checked @endif></td>
+                                        <td><input type="checkbox" value="{{ $permission->id }}" wire:model="assigned_permissions" @if(in_array($permission->id, $assigned_permissions)) checked @endif></td>
                                         <td>{{ $permission->label }}</td>
                                         <td>
                                             <ul>

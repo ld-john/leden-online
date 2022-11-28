@@ -1,12 +1,10 @@
 <div class="d-inline-block">
-    <button
-            class="btn btn-warning"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvas-{{$order->id}}"
-            aria-controls="offcanvasExample">
-        <i class="fa-solid fa-pencil"></i>
-    </button>
+        <i
+                class="fa-solid fa-pencil"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvas-{{$order->id}}"
+                aria-controls="offcanvasExample"
+        ></i>
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-{{$order->id}}" aria-labelledby="offcanvasExampleLabel" wire:ignore.self>
         <div class="offcanvas-header">

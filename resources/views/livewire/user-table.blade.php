@@ -75,10 +75,10 @@
                     <td>
                          {{ ucwords($user->role) }}
                     </td>
-                    <td>
+                    <td width="120px">
                          @if($user->is_deleted === null)
-                              <div class="btn-group">
-                                   <a href="/user-management/edit/{{$user->id}}" class="btn btn-warning" data-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a>
+                              <div class="d-grid grid-cols-2 gap-2">
+                                   <a href="/user-management/edit/{{$user->id}}" class="btn btn-primary" data-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a>
                                    <a href="/user-management/disable/{{$user->id}}" class="btn btn-danger" data-toggle="tooltip" title="Disable Profile"><i class="fas fa-times"></i></a>
                                    @if($user->role === 'broker')
                                         <a href="{{route('reservation.toggle', $user->id)}}"  data-toggle="tooltip" @if($user->reservation_allowed === 1) class="btn btn-warning" title="Disable Reservation" @else class="btn btn-success" title="Reactivate Reservation" @endif ><i class="fa-solid fa-car"></i></a>
@@ -86,7 +86,7 @@
                               </div>
 
                          @else
-                              <div class="btn-group">
+                              <div class="d-grid grid-cols-2 gap-2">
                                    <a href="/user-management/disable/{{$user->id}}" class="btn btn-success" data-toggle="tooltip" title="Enable Profile"><i class="fas fa-check"></i></a>
                                    <a href="/user-management/delete/{{$user->id}}" class="btn btn-danger" data-toggle="tooltip" title="Delete Profile"><i class="fas fa-trash"></i></a>
 

@@ -71,7 +71,7 @@
                          @endif
                     </td>
                     <td>
-                         <div class="btn-group">
+                         <div class="d-grid grid-cols-2 gap-2">
                               @can('admin')
                                    @if( $reservation->status === 'active' || $reservation->status === 'deadline_approaching')
                                         <a href="{{route('reservation.extend', $reservation->id)}}" data-toggle="tooltip" title="Extend Reservation" class="btn btn-primary"><i class="fa-solid fa-stopwatch"></i></a>

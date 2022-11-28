@@ -53,12 +53,24 @@
                                         <td>{{ $vehicle->reg ?? '' }}</td>
                                         <td>{{ $vehicle->status() }}</td>
                                         <td>
-                                            <a href="{{ route('vehicle.restore', $vehicle->id) }}" class="btn btn-success" data-toggle="tooltip" title="Restore">
+                                            <div class="d-grid grid-cols-2 gap-2">
+                                            <a
+                                                    href="{{ route('vehicle.restore', $vehicle->id) }}"
+                                                    class="btn btn-success"
+                                                    data-toggle="tooltip"
+                                                    title="Restore"
+                                            >
                                                 <i class="fa-solid fa-trash-arrow-up"></i>
                                             </a>
-                                            <a href="{{ route('vehicle.force-delete', $vehicle->id) }}" class="btn btn-danger" data-toggle="tooltip" title="PERMANENTLY DELETE">
+                                            <a
+                                                    href="{{ route('vehicle.force-delete', $vehicle->id) }}"
+                                                    class="btn btn-danger"
+                                                    data-toggle="tooltip"
+                                                    title="PERMANENTLY DELETE"
+                                            >
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </a>
+                                            </div>
                                         </td>
                                     </tr>
 

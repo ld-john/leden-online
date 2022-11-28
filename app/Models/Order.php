@@ -44,6 +44,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Comments;
  * @property mixed $broker
  * @property mixed $delivery
  * @property mixed $delivery_id;
+ * @property mixed $contract_confirmation
  */
 class Order extends Model
 {

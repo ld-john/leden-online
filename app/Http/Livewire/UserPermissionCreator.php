@@ -19,7 +19,7 @@ class UserPermissionCreator extends Component
     public function mount(User $user)
     {
         $this->user = $user;
-        $this->assigned_permissions = $user->canPerform->pluck('id');
+        $this->assigned_permissions = $user->canPerform->pluck('id')->toArray();
     }
     public function addNewPermission()
     {
@@ -34,7 +34,7 @@ class UserPermissionCreator extends Component
     }
     public function render(): Factory|View|Application
     {
-        $permissions = Permission::all();
+        $permissions = Permission::with('users')->get();
         return view('livewire.user-permission-creator', [
             'permissions' => $permissions,
         ]);

@@ -157,37 +157,72 @@
                     <td>{{ $order->dealer->company_name ?? ''}}</td>
                     <td>{{ \Carbon\Carbon::parse($order->updated_at)->format('d/m/Y h:ia') }}</td>
                     <td width="120px">
-                        <div class="d-flex flex-wrap">
-                            <a href="{{route('order.show', $order->id)}}" class="btn btn-primary" data-toggle="tooltip"
-                               title="View Order"><i class="far fa-eye"></i></a>
+                        <div class="d-grid grid-cols-2 gap-2">
+                            <a
+                                    href="{{route('order.show', $order->id)}}"
+                                    class="btn btn-primary"
+                                    data-toggle="tooltip"
+                                    title="View Order"
+                            >
+                                <i class="far fa-eye"></i>
+                            </a>
                             @can('admin')
-                                <a href="{{route('order.edit', $order->id)}}" class="btn btn-warning"
-                                   data-toggle="tooltip" title="Edit Order"><i class="fas fa-edit"></i></a>
-                                <a data-toggle="tooltip" title="Copy Order">
+                                <a
+                                        href="{{route('order.edit', $order->id)}}"
+                                        class="btn btn-secondary"
+                                        data-toggle="tooltip"
+                                        title="Edit Order"
+                                >
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a
+                                        class="btn btn-info"
+                                        data-toggle="tooltip"
+                                        title="Copy Order"
+                                >
                                     <livewire:order.duplicate-order :order="$order->id" :key="time().$order->id"/>
                                 </a>
-                                <a data-toggle="tooltip" title="Delete Order">
-                                    <livewire:order.delete-order :order="$order->id" :vehicle="$order->vehicle"
-                                                                 :key="time().$order->id"/>
+                                <a
+                                        class="btn btn-danger"
+                                        data-toggle="tooltip"
+                                        title="Delete Order"
+                                >
+                                    <livewire:order.delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id"/>
                                 </a>
-                                <a data-toggle="tooltip" title="Quick Edit">
-                                    <livewire:order.quick-edit-order :order="$order->id" :vehicle="$order->vehicle"
-                                                                     view="order" :key="time().$order->id"/>
+                                <a
+                                        class="btn btn-warning"
+                                        data-toggle="tooltip"
+                                        title="Quick Edit"
+                                >
+                                    <livewire:order.quick-edit-order :order="$order->id" :vehicle="$order->vehicle" view="order" :key="time().$order->id"/>
                                 </a>
                                 @if($order->delivery_date && $order->delivery_date !== '0000-00-00 00:00:00' && $order->vehicle->vehicle_status === 1)
-                                    <a data-toggle="tooltip" title="Request Delivery"
-                                       href="{{ route('delivery.create', $order->id) }}" class="btn btn-primary"><i
-                                                class="fa-solid fa-truck"></i></a>
+                                    <a
+                                            data-toggle="tooltip"
+                                            title="Request Delivery"
+                                            href="{{ route('delivery.create', $order->id) }}"
+                                            class="btn btn-dark"
+                                    >
+                                        <i class="fa-solid fa-truck"></i>
+                                    </a>
                                 @endif
                             @endcan
                             @can('broker')
                                 @if($order->delivery_date && $order->delivery_date !== '0000-00-00 00:00:00' && $order->vehicle->vehicle_status === 1)
-                                    <a data-toggle="tooltip" title="Request Delivery"
-                                       href="{{ route('delivery.create', $order->id) }}" class="btn btn-primary"><i
-                                                class="fa-solid fa-truck"></i></a>
+                                    <a
+                                            data-toggle="tooltip"
+                                            title="Request Delivery"
+                                            href="{{ route('delivery.create', $order->id) }}"
+                                            class="btn btn-dark"
+                                    >
+                                        <i class="fa-solid fa-truck"></i>
+                                    </a>
                                 @endif
                             @endcan
                         </div>
+                        @can('admin')
+                            <livewire:order.contract-confirmation-checkbox :order="$order->id" :key="time().$order->id"></livewire:order.contract-confirmation-checkbox>
+                        @endcan
                     </td>
                 </tr>
             @empty
@@ -348,26 +383,43 @@
                     <td>{{ $order->dealer->company_name ?? ''}}</td>
                     <td>{{ \Carbon\Carbon::parse($order->updated_at)->format('d/m/Y h:ia') }}</td>
                     <td width="120px">
-                        <div class="d-flex flex-wrap">
+                        <div class="d-grid grid-cols-2 gap-2">
                             <a href="{{route('order.show', $order->id)}}" class="btn btn-primary" data-toggle="tooltip"
                                title="View Order"><i class="far fa-eye"></i></a>
                             @can('admin')
-                                <a data-toggle="tooltip" title="Delete Order">
-                                    <livewire:order.delete-order :order="$order->id" :vehicle="$order->vehicle"
-                                                                 :key="time().$order->id"/>
+                                <a
+                                        data-toggle="tooltip"
+                                        title="Delete Order"
+                                        class="btn btn-danger"
+                                >
+                                    <livewire:order.delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id"/>
                                 </a>
-                                <a data-toggle="tooltip" title="Quick Edit">
-                                    <livewire:order.quick-edit-order :order="$order->id" :vehicle="$order->vehicle"
-                                                                     view="delivery" :key="time().$order->id"/>
+                                <a
+                                        data-toggle="tooltip"
+                                        title="Quick Edit"
+                                        class="btn btn-warning"
+                                >
+                                    <livewire:order.quick-edit-order :order="$order->id" :vehicle="$order->vehicle" view="delivery" :key="time().$order->id"/>
                                 </a>
                                 @if($order->vehicle->vehicle_registered_on && $order->vehicle->vehicle_registered_on !== '0000-00-00 00:00:00' && $order->vehicle->vehicle_registered_on < $now)
-                                    <a wire:click="markCompleted({{$order->id}})" data-toggle="tooltip"
-                                       title="Mark as Complete" class="btn btn-success"><i
-                                                class="fa-solid fa-check"></i></a>
+                                    <a
+                                            wire:click="markCompleted({{$order->id}})"
+                                            data-toggle="tooltip"
+                                            title="Mark as Complete"
+                                            class="btn btn-success"
+                                    >
+                                        <i class="fa-solid fa-check"></i>
+                                    </a>
                                 @endif
                                 @if($order->delivery)
-                                    <a href="{{ route('delivery.show', $order->delivery_id) }}" class="btn btn-primary"
-                                       data-toggle="tooltip" title="View Delivery"><i class="fa-solid fa-truck"></i></a>
+                                    <a
+                                            href="{{ route('delivery.show', $order->delivery_id) }}"
+                                            class="btn btn-dark"
+                                            data-toggle="tooltip"
+                                            title="View Delivery"
+                                    >
+                                        <i class="fa-solid fa-truck"></i>
+                                    </a>
                                 @endif
                             @endcan
                             @can('broker')

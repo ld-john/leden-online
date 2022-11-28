@@ -19,6 +19,7 @@ class InStockOrdersTable extends Component
             $query->where('vehicle_status', '1');
         })
             ->where('broker_id', Auth::user()->company_id)
+            ->with('vehicle')
             ->orderBy('delivery_date', 'DESC')
             ->paginate($this->paginate);
         return view('livewire.dashboard.broker.in-stock-orders-table', [

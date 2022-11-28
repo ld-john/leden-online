@@ -464,6 +464,9 @@
                 </div>
                 @livewire('comment-box', ['commentable_id' => $order->id, 'commentable_type' => 'order'])
                 @livewire('show-comment-box', ['commentable_id' => $order->vehicle->id, 'commentable_type' => 'vehicle'])
+                @if($order->delivery)
+                    @livewire('show-comment-box', ['commentable_id' => $order->delivery->id, 'commentable_type' => 'delivery'])
+                @endif
             </div>
         </div>
     </div>

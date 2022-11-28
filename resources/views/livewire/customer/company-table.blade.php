@@ -74,9 +74,16 @@
 
                     </td>
                     <td>
-                         <a href="/companies/edit/{{$company->id}}" class="edit btn btn-warning" data-toggle="tooltip" title="Edit Company Profile">
+                         <div class="d-grid grid-cols-2 gap-2">
+                         <a
+                                 href="/companies/edit/{{$company->id}}"
+                                 class="edit btn btn-warning"
+                                 data-toggle="tooltip"
+                                 title="Edit Company Profile"
+                         >
                               <i class="fas fa-edit"></i>
                          </a>
+                         </div>
                     </td>
                </tr>
           @empty

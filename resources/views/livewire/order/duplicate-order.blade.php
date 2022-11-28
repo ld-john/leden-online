@@ -1,11 +1,5 @@
 <div class="d-inline-block">
-    <button
-            type="button"
-            class="btn btn-primary"
-            wire:click="toggleDuplicateModal"
-    >
-        <i class="fas fa-copy"></i>
-    </button>
+    <i class="fas fa-copy text-white" wire:click="toggleDuplicateModal"></i>
     <div class="modal @if($modalShow) show @endif">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

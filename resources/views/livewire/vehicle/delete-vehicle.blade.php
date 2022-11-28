@@ -1,11 +1,5 @@
 <div class="d-inline-block">
-     <button
-             type="button"
-             class="btn btn-danger delete-order"
-             wire:click="toggleDeleteModal"
-     >
-          <i class="fas fa-trash"></i>
-     </button>
+     <i class="fas fa-trash text-white" wire:click="toggleDeleteModal"></i>
      <div class="modal @if($modalShow) show @endif">
           <div class="modal-dialog" role="document">
                <div class="modal-content">
