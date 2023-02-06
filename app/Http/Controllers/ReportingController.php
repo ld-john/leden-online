@@ -11,10 +11,14 @@ use Carbon\Carbon;
 use Dashboard;
 use DateTime;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use LaravelIdea\Helper\App\_IH_Vehicle_C;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ReportingController extends Controller
 {
@@ -29,6 +33,7 @@ class ReportingController extends Controller
     }
 
     /**
+     * Show the reporting page
      * @throws Exception
      */
     public function showReporting()
@@ -67,6 +72,10 @@ class ReportingController extends Controller
         ]);
     }
 
+    /**
+     * Get a collection of orders that were created in the last 6 months and count them.
+     * @return Collection
+     */
     public function getRecordsByMonth(): Collection
     {
         $months = $this->monthNames();
@@ -82,6 +91,11 @@ class ReportingController extends Controller
         return collect($month_array);
     }
 
+    /**
+     * Get the orders which have been created in the last 6 weeks and count them
+     * @return Collection
+     * @throws Exception
+     */
     public function getRecordsByWeek(): Collection
     {
         $weeks = $this->weekNumbers();
@@ -100,6 +114,7 @@ class ReportingController extends Controller
     }
 
     /**
+     * Get the orders which have been created in the last 4 annual quarters and count them
      * @throws Exception
      */
     public function getRecordsByQuarter(): Collection
@@ -123,6 +138,10 @@ class ReportingController extends Controller
         return collect($quarter_array);
     }
 
+    /**
+     * Get the Vehicles which have been registered in the last 6 months
+     * @return Collection
+     */
     public function getRegisteredByMonth(): Collection
     {
         $months = $this->monthNames();
@@ -140,6 +159,11 @@ class ReportingController extends Controller
         return collect($month_array);
     }
 
+    /**
+     * Get the vehicles which have been registered in the last 6 weeks
+     * @return Collection
+     * @throws Exception
+     */
     public function getRegisteredByWeekly(): Collection
     {
         $weeks = $this->weekNumbers();
@@ -161,6 +185,7 @@ class ReportingController extends Controller
     }
 
     /**
+     * Get the vehicles which have been registered in the last 4 annual quarters
      * @throws Exception
      */
     public function getRegisteredByQuarter(): Collection
@@ -187,6 +212,10 @@ class ReportingController extends Controller
         return collect($quarter_array);
     }
 
+    /**
+     * Get a count of the orders which have been completed in the last 6 months
+     * @return Collection
+     */
     public function getCompletedByMonth(): Collection
     {
         $months = $this->monthNames();
@@ -202,6 +231,11 @@ class ReportingController extends Controller
         return collect($month_array);
     }
 
+    /**
+     * Get a count of the Orders which have been completed in the last 6 weeks.
+     * @return Collection
+     * @throws Exception
+     */
     public function getCompletedByWeekly(): Collection
     {
         $weeks = $this->weekNumbers();
@@ -220,6 +254,7 @@ class ReportingController extends Controller
     }
 
     /**
+     * Get a count of the orders which have been completed in the last 4 annual quarters
      * @throws Exception
      */
     public function getCompletedByQuarter(): Collection
@@ -243,6 +278,10 @@ class ReportingController extends Controller
         return collect($quarter_array);
     }
 
+    /**
+     * Get the vehicles which have been registered per quarter since the website started collecting information
+     * @return array
+     */
     public function registeredQuarters()
     {
         $start_date = $this->registeredMonths()[0];
@@ -260,6 +299,10 @@ class ReportingController extends Controller
         return $data;
     }
 
+    /**
+     * Get the renewal dates report for 6 months before the renewal date
+     * @return Collection
+     */
     public function financeMonths()
     {
         $data = Order::all();
@@ -281,6 +324,10 @@ class ReportingController extends Controller
             ->flatten();
     }
 
+    /**
+     * Get the vehicles which have been registered each month since the website started collecting information.
+     * @return mixed
+     */
     public function registeredMonths()
     {
         $data = Vehicle::where(function ($query) {
@@ -305,6 +352,10 @@ class ReportingController extends Controller
             ->flatten();
     }
 
+    /**
+     * Get the names of the last 6 months with the year
+     * @return array
+     */
     public function monthNames(): array
     {
         $period = now()
@@ -323,6 +374,10 @@ class ReportingController extends Controller
         return $data;
     }
 
+    /**
+     * Get the number of the last 6 weeks, along with the year
+     * @return array
+     */
     public function weekNumbers(): array
     {
         $period = now()
@@ -340,6 +395,10 @@ class ReportingController extends Controller
         return $data;
     }
 
+    /**
+     * Get the last 4 quarters based on the current date
+     * @return array
+     */
     public function quarters(): array
     {
         $period = now()
@@ -360,6 +419,7 @@ class ReportingController extends Controller
     }
 
     /**
+     * Get the start and end date of a quarter when given a number and a year.
      * @throws Exception
      */
     public function get_dates_of_quarter(
@@ -422,6 +482,7 @@ class ReportingController extends Controller
     }
 
     /**
+     * Get the start and end date of a period of time, either a week, month or quarter
      * @throws Exception
      */
     public function getStartAndEndDate(
@@ -447,11 +508,12 @@ class ReportingController extends Controller
     }
 
     /**
-     * @param $type
+     * When given a report type and a selection of dates, prepare the data for a report.
+     * @param string $type
      * @param array $dates
-     * @return _IH_Vehicle_C|Builder[]|\Illuminate\Database\Eloquent\Collection|\App\Models\Vehicle[]
+     * @return _IH_Vehicle_C|Builder|\Illuminate\Database\Eloquent\Collection|Vehicle
      */
-    public function returnDataForReports($type, array $dates)
+    public function returnDataForReports(string $type, array $dates)
     {
         if ($type === 'placed') {
             $data = Vehicle::whereHas('order', function ($query) use ($dates) {
@@ -469,30 +531,53 @@ class ReportingController extends Controller
         }
         return $data;
     }
+
+    /**
+     * @return Application|Factory|View
+     */
     public function index()
     {
         return view('reporting.index');
     }
+
+    /**
+     * Get the vehicle information for the Registered - Month report.
+     * @param $month
+     * @param $year
+     * @return BinaryFileResponse
+     */
     public function registeredMonth($month, $year)
     {
-        $vehicles = Vehicle::where(function ($query) {
+        $registered = Vehicle::where(function ($query) use ($month, $year) {
             $query
-                ->where('vehicle_status', '7')
-                ->orWhere('vehicle_status', '6')
-                ->orWhere('vehicle_status', '15');
-        })
-            ->where(function ($query) use ($month, $year) {
+                ->whereMonth('vehicle_registered_on', $month)
+                ->whereYear('vehicle_registered_on', $year);
+        })->get();
+        $delivery = Vehicle::whereHas('order', function ($query) use (
+            $month,
+            $year,
+        ) {
+            $query->where(function ($query) use ($month, $year) {
                 $query
-                    ->whereMonth('vehicle_reg_date', $month)
-                    ->whereYear('vehicle_reg_date', $year);
-            })
+                    ->whereMonth('delivery_date', $month)
+                    ->whereYear('delivery_date', $year);
+            });
+        })
+            ->whereNull('vehicle_registered_on')
             ->get();
+        $vehicles = $registered->merge($delivery);
         return Excel::download(
             new RegisteredExports($vehicles),
             'monthly-registered-' . $month . '-' . $year . '.xls',
         );
     }
 
+    /**
+     * When given a month and a year, collect the information for the renewal report.
+     * @param $month
+     * @param $year
+     * @return BinaryFileResponse
+     */
     public function financeMonth($month, $year)
     {
         $report_month = $month + 6;
@@ -508,6 +593,7 @@ class ReportingController extends Controller
     }
 
     /**
+     * When given the type of report and dates, prepare the weekly report for downloading
      * @throws Exception
      */
     public function weeklyDownload($report, $year, $week)
@@ -521,6 +607,7 @@ class ReportingController extends Controller
     }
 
     /**
+     * When given the type of report and dates, prepare the monthly report for downloading
      * @throws Exception
      */
     public function monthlyDownload($report, $year, $month)
@@ -534,6 +621,7 @@ class ReportingController extends Controller
     }
 
     /**
+     * When given the type of report and dates, prepare the quarterly report for downloading
      * @throws Exception
      */
     public function quarterlyDownload($report, $year, $quarter)
@@ -547,24 +635,37 @@ class ReportingController extends Controller
     }
 
     /**
+     * Get the vehicle information for the Registered - Quarters report.
      * @throws Exception
      */
-    public function registeredQuarter($quarter, $year)
+    public function registeredQuarter($quarter = null, $year = null)
     {
-        $quarter = intval($quarter);
-        $year = intval($year);
+        if ($quarter) {
+            $quarter = intval($quarter);
+        } else {
+            $quarter = 'current';
+        }
+        if ($year) {
+            $year = intval($year);
+        } else {
+            $year = Carbon::now()->format('Y');
+        }
 
         $dates = $this->get_dates_of_quarter($quarter, $year);
 
-        $vehicles = Vehicle::where(function ($query) {
-            $query
-                ->where('vehicle_status', '7')
-                ->orWhere('vehicle_status', '6')
-                ->orWhere('vehicle_status', '15');
+        $registered = Vehicle::where(function ($query) use ($dates) {
+            $query->whereBetween('vehicle_registered_on', $dates);
+        })->get();
+
+        $delivery = Vehicle::whereHas('order', function ($query) use ($dates) {
+            $query->where(function ($query) use ($dates) {
+                $query->whereBetween('delivery_date', $dates);
+            });
         })
-            ->whereBetween('vehicle_reg_date', $dates)
-            ->orderBy('vehicle_reg_date')
+            ->whereNull('vehicle_registered_on')
             ->get();
+
+        $vehicles = $registered->merge($delivery);
 
         return Excel::download(
             new RegisteredExports($vehicles),

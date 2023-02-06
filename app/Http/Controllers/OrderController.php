@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BrokersOrderDownload;
+use App\Models\Company;
 use App\Models\Finance\FinanceType;
 use App\Models\Finance\InitialPayment;
 use App\Models\Finance\Maintenance;
@@ -10,13 +12,17 @@ use App\Models\Finance\Term;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Vehicle;
+use Carbon\Carbon;
 use DateTime;
+use Excel;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Str;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class OrderController extends Controller
 {
@@ -28,7 +34,7 @@ class OrderController extends Controller
         ) {
             if (
                 !empty($vehicle->order?->delivery_date) ||
-                $vehicle->order?->delivery_date !== '0000-00-00 00:00:00'
+                $vehicle->order?->delivery_date !== '0000-00-00'
             ) {
                 $vehicle->update([
                     'vehicle_reg_date' => $vehicle->order?->delivery_date,
@@ -93,7 +99,7 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Order $order
+     * @param Order $order
      * @return RedirectResponse
      */
     public function destroy(Order $order): RedirectResponse
@@ -113,7 +119,7 @@ class OrderController extends Controller
      * Duplicate the specified resource in storage.
      *
      * @param Request $request
-     * @param \App\Models\Order $order
+     * @param Order $order
      * @return RedirectResponse
      */
 
@@ -348,5 +354,29 @@ class OrderController extends Controller
                 }
             }
         });
+    }
+
+    /**
+     * Export the Orders for Central Contracts with the required fields for their CSV
+     * @return BinaryFileResponse
+     */
+    function broker_orders_export(Company $broker)
+    {
+        $orders = Order::whereHas('vehicle', function ($q) {
+            $q->where('vehicle_status', '!=', '7');
+        })
+            ->where('broker_id', '=', $broker->id)
+            ->with('vehicle')
+            ->with('customer')
+            ->get();
+
+        $date = Carbon::now()->format('Y_m_d');
+
+        $company_name = Str::snake($broker->company_name);
+
+        return Excel::download(
+            new BrokersOrderDownload($orders),
+            $company_name . '_orders_' . $date . '.csv',
+        );
     }
 }

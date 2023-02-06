@@ -57,6 +57,14 @@ Route::middleware('auth')->group(function () {
             'completed_orders',
         );
         Route::get('/order-bank', 'showOrderBank')->name('order_bank');
+        Route::prefix('export')
+            ->name('export.')
+            ->group(function () {
+                Route::get(
+                    '/brokers-download/{broker}',
+                    'broker_orders_export',
+                )->name('brokers_orders_export');
+            });
         Route::prefix('orders')
             ->name('order.')
             ->group(function () {
@@ -115,34 +123,44 @@ Route::middleware('auth')->group(function () {
                 Route::get('/restore/{vehicle}', 'restore')->name('restore');
                 Route::get('/search/', 'searchVehicles')->name('search');
             });
-            Route::name('export.')->group(function () {
-                Route::get('/foexport/', 'factory_order_export')->name(
-                    'factory_order',
-                );
-                Route::get('/eurovhcexport/', 'europe_vhc_export')->name(
-                    'europe_vhc',
-                );
-                Route::get('/ukvhcexport/', 'uk_vhc_export')->name('uk_vhc');
-                Route::get('/instockexport/', 'in_stock_export')->name(
-                    'in_stock',
-                );
-                Route::get(
-                    '/readyfordeliveryexport/',
-                    'ready_for_delivery_export',
-                )->name('ready_for_delivery');
-                Route::get('/deliverybooked/', 'delivery_booked_export')->name(
-                    'delivery_booked',
-                );
-                Route::get('/awaitingship/', 'awaiting_ship_export')->name(
-                    'awaiting_ship',
-                );
-                Route::get('/atconverter/', 'at_converter_export')->name(
-                    'at_converter',
-                );
-                Route::get('/registered/', 'in_stock_registered_export')->name(
-                    'registered',
-                );
-            });
+            Route::name('export.')
+                ->prefix('export')
+                ->group(function () {
+                    Route::get(
+                        '/brokers-stock/{broker}',
+                        'brokers_stock_export',
+                    )->name('brokers_stock_export');
+                    Route::get('/foexport/', 'factory_order_export')->name(
+                        'factory_order',
+                    );
+                    Route::get('/eurovhcexport/', 'europe_vhc_export')->name(
+                        'europe_vhc',
+                    );
+                    Route::get('/ukvhcexport/', 'uk_vhc_export')->name(
+                        'uk_vhc',
+                    );
+                    Route::get('/instockexport/', 'in_stock_export')->name(
+                        'in_stock',
+                    );
+                    Route::get(
+                        '/readyfordeliveryexport/',
+                        'ready_for_delivery_export',
+                    )->name('ready_for_delivery');
+                    Route::get(
+                        '/deliverybooked/',
+                        'delivery_booked_export',
+                    )->name('delivery_booked');
+                    Route::get('/awaitingship/', 'awaiting_ship_export')->name(
+                        'awaiting_ship',
+                    );
+                    Route::get('/atconverter/', 'at_converter_export')->name(
+                        'at_converter',
+                    );
+                    Route::get(
+                        '/registered/',
+                        'in_stock_registered_export',
+                    )->name('registered');
+                });
         });
     });
 
@@ -162,7 +180,7 @@ Route::middleware('auth')->group(function () {
                 'registeredMonth',
             )->name('monthly-registered');
             Route::get(
-                '/registeredQuarterly/{quarter}/{year}',
+                '/registeredQuarterly/{quarter?}/{year?}',
                 'registeredQuarter',
             )->name('quarter-registered');
             Route::get('/weekly-{report}/{year}/{quarter}', 'weeklyDownload');
@@ -213,6 +231,11 @@ Route::middleware('auth')->group(function () {
                 );
             });
         });
+
+    Route::get('logs', [
+        \Rap2hpoutre\LaravelLogViewer\LogViewerController::class,
+        'index',
+    ]);
 
     /* ProfileController routes */
     Route::controller('ProfileController')->group(function () {
@@ -305,8 +328,13 @@ Route::middleware('auth')->group(function () {
      * Added by Link Digital
      *
      */
-
+    Route::get('/link/vehicle-date-clean-up', 'VehicleController@cleanDates');
+    Route::get(
+        '/link/vehicle_provisional_date',
+        'VehicleController@checkProvisionalDates',
+    );
     Route::get('/link/order-date-clean-up', 'OrderController@date_cleanup');
+    Route::get('/link/invoice-date-clean-up', 'InvoiceController@cleanDates');
 
     //Route::get('/link/due-date-clean-up', 'VehicleController@DueDateCleanup');
     //Route::get('/link/reg-date-clean-up', 'VehicleController@reg_date_cleanup');

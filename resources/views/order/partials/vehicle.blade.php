@@ -296,10 +296,7 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="build_date">Proposed Build Date</label>
     <div class="col-md-6">
-        <input wire:model="build_date" type="date" name="build_date" id="build_date" class="form-control"
-               autocomplete="off"
-               onchange="this.dispatchEvent(new InputEvent('input'))"
-        />
+        <input wire:model="build_date" type="date" name="build_date" id="build_date" class="form-control" autocomplete="off" />
     </div>
 </div>
 @if($status === "1" || $status === "3" || $status === "5" || $status === "6" || $status === "15" )
@@ -324,18 +321,14 @@
 </div>
 {{-- Vehicle Registered On --}}
 <div class="form-group row">
-    <label class="col-md-2 col-form-label" for="vehicle_registered_on">Vehicle
+    <label class="col-md-2 col-form-label" for="registered_date">Vehicle
         Registered</label>
     <div class="col-md-6">
-        <input type="date"
-               name="vehicle_registered_on"
-               class="form-control"
-               autocomplete="off"
-               wire:model.debounce:500ms="registered_date"
-        />
+        <input type="date" name="registered_date" class="form-control"
+               autocomplete="off" wire:model="registered_date" />
     </div>
 </div>
-{{-- Show in Ford Pipline --}}
+{{-- Show in Ford Pipeline --}}
 <div class="form-group row">
     <label for="show_in_ford_pipeline" class="col-md-2 col-form-label">Show in Ford
         Pipeline</label>

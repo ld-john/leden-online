@@ -193,7 +193,8 @@ class CSVUploadController extends Controller
                         $vehicle->vehicle_status === 7 ||
                         $vehicle->vehicle_status === 3 ||
                         $vehicle->vehicle_status === 14 ||
-                        $vehicle->vehicle_status === 15
+                        $vehicle->vehicle_status === 15 ||
+                        $vehicle->vehice_status === 5
                     ) {
                         continue;
                     }

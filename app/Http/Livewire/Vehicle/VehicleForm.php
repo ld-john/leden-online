@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Vehicle;
 
+use App\Http\Controllers\OrderController;
 use App\Models\Company;
 use App\Models\FitOption;
 use App\Models\Manufacturer;
@@ -12,11 +13,14 @@ use App\Models\VehicleMeta;
 use App\Models\VehicleModel;
 use App\Notifications\RegistrationNumberAddedEmailNotification;
 use App\Notifications\RegistrationNumberAddedNotification;
+use Carbon\Carbon;
 use DateTime;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -74,6 +78,7 @@ class VehicleForm extends Component
     public $factoryFitSearch;
     public $dealerFitSearch;
     public $successMsg = '';
+    public $now = '';
     protected $rules = [
         'make' => 'required',
         'model' => 'required',
@@ -107,12 +112,14 @@ class VehicleForm extends Component
     ];
 
     /**
+     * Prepare the details of the vehicle if a vehicle model is handed to the form
      * @return void
      *@throws Exception
      */
 
     public function mount(): void
     {
+        $this->now = date('Y-m-d');
         if (isset($this->vehicle)) {
             $this->make = $this->vehicle->make ?: null;
             $this->model = VehicleModel::where(
@@ -120,18 +127,9 @@ class VehicleForm extends Component
                 $this->vehicle->model,
             )->first()->id;
 
-            if ($this->vehicle->vehicle_registered_on) {
-                $reg = new DateTime($this->vehicle->vehicle_registered_on);
-                $this->registered_date = $reg->format('Y-m-d');
-            }
-            if ($this->vehicle->build_date) {
-                $bd = new DateTime($this->vehicle->build_date);
-                $this->build_date = $bd->format('Y-m-d');
-            }
-            if ($this->vehicle->due_date) {
-                $dd = new DateTime($this->vehicle->due_date);
-                $this->due_date = $dd->format('Y-m-d');
-            }
+            $this->registered_date = $this->vehicle->vehicle_registered_on;
+            $this->build_date = $this->vehicle->build_date;
+            $this->due_date = $this->vehicle->due_date;
 
             $this->type = $this->vehicle->type;
             $this->orbit_number = $this->vehicle->orbit_number;
@@ -173,13 +171,18 @@ class VehicleForm extends Component
     }
 
     /**
+     * Validate each property as the details are changed
      * @throws ValidationException
      */
-    public function updated($propertyName)
+    public function updated($propertyName): void
     {
         $this->validateOnly($propertyName);
     }
 
+    /**
+     * Save the vehicle when the form is submitted
+     * @return Application|RedirectResponse|Redirector
+     */
     public function orderFormSubmit()
     {
         $this->validate();
@@ -250,7 +253,7 @@ class VehicleForm extends Component
             );
             $brokers = User::where('company_id', $this->broker)->get();
             $permission = Permission::where('name', 'receive-emails')->first();
-            $mailBrokers = $permission->users
+            $mailBrokers = $permission?->users
                 ->where('company_id', $this->broker)
                 ->all();
             if ($vehicle->wasChanged('reg')) {
@@ -259,10 +262,14 @@ class VehicleForm extends Component
                         new RegistrationNumberAddedNotification($vehicle),
                     );
                 }
-                foreach ($mailBrokers as $broker) {
-                    $broker->notify(
-                        new RegistrationNumberAddedEmailNotification($vehicle),
-                    );
+                if ($mailBrokers) {
+                    foreach ($mailBrokers as $broker) {
+                        $broker->notify(
+                            new RegistrationNumberAddedEmailNotification(
+                                $vehicle,
+                            ),
+                        );
+                    }
                 }
             }
         } else {
@@ -274,10 +281,18 @@ class VehicleForm extends Component
 
         $this->markOrderComplete($vehicle, $vehicle->order());
 
+        OrderController::setProvisionalRegDate($vehicle);
+
         return redirect(route('vehicle.show', $vehicle->id));
     }
 
-    private function markOrderComplete($vehicle, $order)
+    /**
+     * If the order has been completed, add the completed date
+     * @param $vehicle
+     * @param $order
+     * @return void
+     */
+    private function markOrderComplete($vehicle, $order): void
     {
         if (
             $vehicle->vehicle_status === '7' &&
@@ -287,6 +302,10 @@ class VehicleForm extends Component
         }
     }
 
+    /**
+     * Render the Vehicle Form
+     * @return Factory|View|Application
+     */
     public function render(): Factory|View|Application
     {
         $options = [
@@ -390,14 +409,23 @@ class VehicleForm extends Component
         ];
         return view('livewire.vehicle.vehicle-form', $options);
     }
-    public function updatedFactoryFitOptions()
+
+    /**
+     * When the Factory Fit options are updated, update the array with the details of the Fit Option
+     * @return void
+     */
+    public function updatedFactoryFitOptions(): void
     {
         $this->factoryFitOptionsArray = FitOption::find(
             $this->factoryFitOptions,
         );
     }
 
-    public function updatedDealerFitOptions()
+    /**
+     * When the Dealer Fit options are updated, update the array with the details of the Fit Option
+     * @return void
+     */
+    public function updatedDealerFitOptions(): void
     {
         $this->dealerFitOptionsArray = FitOption::find($this->dealerFitOptions);
     }

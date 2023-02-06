@@ -16,7 +16,8 @@
             <div class="form-group me-2 w-100">
                 <label for="model">Model</label>
                 <div class="input-group">
-                    <select name="model" id="" class="form-control">
+                    <select wire:model="model" name="model" id="" class="form-control">
+                        <option value="">Please Select...</option>
                         @foreach($vehicle_models as $vehicle_model)
                             <option value="{{ $vehicle_model->id }}">{{ $vehicle_model->name }}</option>
                         @endforeach
@@ -90,7 +91,7 @@
         @forelse($fitOptions as $fitOption)
             <tr>
                 <td>{{ $fitOption->option_name }}</td>
-                <td>{{ $fitOption->vehicle_model->name }}</td>
+                <td>{{ $fitOption->vehicle_model?->name }}</td>
                 <td>{{ $fitOption->model_year }}MY</td>
                 @if($fitType === 'dealer')
                     <td>

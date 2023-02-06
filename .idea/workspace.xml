@@ -5,32 +5,62 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/ContractConfirmationCheckbox.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_23_143018_add_delivery_authorisation_to_deliveries_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_23_162940_move_contract_confirmation_to_orders_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/order/contract-confirmation-checkbox.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Exports/BrokersOrderDownload.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Exports/BrokersStockDownload.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/DealerDiscountsController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/DealerDiscountEditor.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/DealerDiscountField.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/DealerDiscount.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_28_115734_create_dealer_discounts_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_12_07_155938_retype_columns_in_vehicles_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_12_07_160344_retype_columns_in_vehicles_table_part2.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_12_13_152543_remove_old_dates_from_vehicles_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_12_13_152800_retype_columns_on_invoices_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_12_13_153224_retype_columns_on_invoices_table2.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_12_16_155527_remove_old_dates_from_invoices_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/banners/DekUl5AyqxWoblWkHEhVi6ixR6xFFNnDBG95DaXn.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/banners/Ek2mFPKxgpruiZwZ8Igay4NINZkdHT2xD4o0veCf.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/banners/gad6GiuvYEf1PC8v7jdRhNyxYnIsvVH4oUs6T5LT.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/avatar/NMWpnc7bjfg7yU55EbbF75o6igwMzmfJTcBJ1jkf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/avatar/hgViymEpEypj9XgZkXy0JULveQ0MbNqXqXNci6hV.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/avatar/kNLF233z81OsdREqnwEEsnzaRgiGUjPqOqGI9pNi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/exports/brokers-orders-download.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/exports/brokers-stock-download.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/customer/dealer-discount-editor.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/customer/dealer-discount-field.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/leden.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/leden.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Dashboard/Broker/InStockOrdersTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Dashboard/Broker/InStockOrdersTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/UserPermissionCreator.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/UserPermissionCreator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/_custom.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_custom.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/customer/company-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/customer/company-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/delete-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/delete-order.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/duplicate-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/duplicate-order.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/InvoiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/InvoiceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/EditFitOption.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/EditFitOption.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/DeleteOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/DeleteOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Vehicle.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/companies/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/companies/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/partials/boxes.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/partials/boxes.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/exports/reports.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/reports.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/customer/delete-customers.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/customer/delete-customers.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/fit-options/edit-fit-option.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/fit-options/edit-fit-option.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/fit-options/fit-options-editor.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/fit-options/fit-options-editor.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/reservations/reservations-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/reservations/reservations-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/user-permission-creator.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/user-permission-creator.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/user-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/user-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/delete-vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/delete-vehicle.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/quick-edit-ringfence.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/quick-edit-ringfence.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/ring-fence-modal.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/ring-fence-modal.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/deleted.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/deleted.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/reporting/reporting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/reporting/reporting.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,6 +232,7 @@
       <path value="$PROJECT_DIR$/vendor/mckenziearts/laravel-notify" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-uuid" />
       <path value="$PROJECT_DIR$/vendor/symfony/uid" />
+      <path value="$PROJECT_DIR$/vendor/rap2hpoutre/laravel-log-viewer" />
     </include_path>
   </component>
   <component name="ProjectId" id="1yGOd01KlxTowHiLnyYqA6dZo6t" />
@@ -218,18 +249,20 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/John Gotobed/OneDrive - Link Digital/Documents/genie/backup-11.10.2022_10-32-41_geniepro&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/wamp64/www/medtick/wp-content/themes/medtickv2&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;php.override.implement.member.chooser.php.doc&quot;: &quot;NONE&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\wamp64\\www\\leden\\node_modules\\prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;HTML&quot;,
       &quot;CSS&quot;,
       &quot;PHP&quot;
     ]
@@ -470,14 +503,27 @@
       <workItem from="1669374556621" duration="2363000" />
       <workItem from="1669378782518" duration="734000" />
       <workItem from="1669387019355" duration="1284000" />
-      <workItem from="1669391313536" duration="4969000" />
-    </task>
-    <task id="LOCAL-00009" summary="Debug - Soft Delete Orders added">
-      <created>1636538458598</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1636538458598</updated>
+      <workItem from="1669391313536" duration="5768000" />
+      <workItem from="1669636613983" duration="5802000" />
+      <workItem from="1669730379468" duration="8921000" />
+      <workItem from="1669800745548" duration="10000" />
+      <workItem from="1669978977010" duration="3807000" />
+      <workItem from="1670427180060" duration="8621000" />
+      <workItem from="1670514092090" duration="1099000" />
+      <workItem from="1670855315099" duration="20482000" />
+      <workItem from="1671013782236" duration="4404000" />
+      <workItem from="1671026587735" duration="6841000" />
+      <workItem from="1671099230714" duration="4944000" />
+      <workItem from="1671189715335" duration="1321000" />
+      <workItem from="1671204515156" duration="4344000" />
+      <workItem from="1671445185745" duration="24000" />
+      <workItem from="1671468781996" duration="3679000" />
+      <workItem from="1671532510485" duration="3962000" />
+      <workItem from="1673448008296" duration="484000" />
+      <workItem from="1674222201094" duration="944000" />
+      <workItem from="1674223302068" duration="3076000" />
+      <workItem from="1675260422893" duration="1345000" />
+      <workItem from="1675680060792" duration="2792000" />
     </task>
     <task id="LOCAL-00010" summary="Debug - Soft Delete Orders added">
       <created>1637160959411</created>
@@ -815,7 +861,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669213735126</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Added Contract Confirmation button to order table which can be toggled by those with the manages deliveries permission&#10;Rearranged all buttons into a grid layout.">
+      <created>1669631481653</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1669631481653</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -834,7 +887,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Order Date Editable, delete customers connected to orders, RingFenced Stock Dealer added, due date can now be nulled by import, dealer and broker can't see other orders." />
     <MESSAGE value="Page Uniformity Changes" />
     <MESSAGE value="Page Uniformity Changes - Manage Deliveries now Livewire&#10;&#10;Quick Edit added to Manage Deliveries&#10;&#10;Dealers and Brokers should have accurate numbers." />
     <MESSAGE value="Marking Orders Complete requires the vehicle to have a registration date that has passed." />
@@ -859,18 +911,8 @@
     <MESSAGE value="Add Finance Information and Renewal Report&#10;Added Options to add new Finance Information&#10;Added Migrations" />
     <MESSAGE value="Moved all Models to a Models Folder" />
     <MESSAGE value="Added Quick Edit Ring Fence to allow Ring Fenced stock to transfer directly between brokers&#10;Added Notifications for adding the Registration Number and email notification for if the vehicle is in stock" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Quick Edit Ring Fence to allow Ring Fenced stock to transfer directly between brokers&#10;Added Notifications for adding the Registration Number and email notification for if the vehicle is in stock" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Models/Vehicle.php</url>
-          <line>120</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Added Contract Confirmation button to order table which can be toggled by those with the manages deliveries permission&#10;Rearranged all buttons into a grid layout." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Contract Confirmation button to order table which can be toggled by those with the manages deliveries permission&#10;Rearranged all buttons into a grid layout." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

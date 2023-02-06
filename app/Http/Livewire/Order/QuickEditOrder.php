@@ -118,7 +118,7 @@ class QuickEditOrder extends Component
 
         $brokers = User::where('company_id', $order->broker->id)->get();
         $permission = Permission::where('name', 'receive-emails')->first();
-        $mailBrokers = $permission->users
+        $mailBrokers = $permission?->users
             ->where('company_id', $order->broker->id)
             ->all();
 
@@ -131,10 +131,12 @@ class QuickEditOrder extends Component
                         new VehicleInStockNotification($this->vehicle),
                     );
                 }
-                foreach ($mailBrokers as $broker) {
-                    $broker->notify(
-                        new VehicleInStockEmailNotification($this->vehicle),
-                    );
+                if ($mailBrokers) {
+                    foreach ($mailBrokers as $broker) {
+                        $broker->notify(
+                            new VehicleInStockEmailNotification($this->vehicle),
+                        );
+                    }
                 }
             }
         }
@@ -144,12 +146,14 @@ class QuickEditOrder extends Component
                     new RegistrationNumberAddedNotification($this->vehicle),
                 );
             }
-            foreach ($mailBrokers as $broker) {
-                $broker->notify(
-                    new RegistrationNumberAddedEmailNotification(
-                        $this->vehicle,
-                    ),
-                );
+            if ($mailBrokers) {
+                foreach ($mailBrokers as $broker) {
+                    $broker->notify(
+                        new RegistrationNumberAddedEmailNotification(
+                            $this->vehicle,
+                        ),
+                    );
+                }
             }
         }
 

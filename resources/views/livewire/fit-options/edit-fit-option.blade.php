@@ -22,9 +22,12 @@
                            autocomplete="off"
                     />
                     <p class="mb-0 mt-2">Model</p>
-                    <input wire:model="model" type="text" name="model" id="model" class="form-control"
-                           autocomplete="off"
-                    />
+                    <select wire:model="model" name="model" id="" class="form-control">
+                        <option value="">Please Select...</option>
+                        @foreach($vehicle_models as $vehicle_model)
+                            <option value="{{ $vehicle_model->id }}">{{ $vehicle_model->name }}</option>
+                        @endforeach
+                    </select>
                     <p class="mb-0 mt-2">Model Year</p>
                     <input wire:model="model_year" type="text" name="model_year" class="form-control model_year"
                            autocomplete="off" onchange="this.dispatchEvent(new InputEvent('input'))"

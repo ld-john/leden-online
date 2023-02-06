@@ -4,6 +4,7 @@ namespace App\Http\Livewire\FitOptions;
 
 use App\Models\Company;
 use App\Models\FitOption;
+use App\Models\VehicleModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -19,6 +20,7 @@ class EditFitOption extends Component
     public $modalShow = false;
     public $price;
     public $dealers;
+    public $vehicle_models;
 
     public function mount(FitOption $fitOption)
     {
@@ -29,6 +31,7 @@ class EditFitOption extends Component
         $this->dealer = $fitOption->dealer;
         $this->price = $fitOption->option_price;
         $this->dealers = Company::where('company_type', 'dealer')->get();
+        $this->vehicle_models = VehicleModel::orderBy('name')->get();
     }
 
     public function toggleEditModal()

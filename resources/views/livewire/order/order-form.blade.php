@@ -277,6 +277,8 @@
         let invoice_funder_for = document.querySelector('#invoice_funder_for')
         let invoiceValue = document.querySelector('#invoice_value')
 
+        window.addEventListener('dealerDiscountChanged', invoiceValueChange)
+
         function invoiceValueChange()
         {
 

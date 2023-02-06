@@ -30,6 +30,8 @@
                 $invoice_diff = $vehicle->order?->invoice->invoice_value_to_dealer;
             } elseif ($vehicle->order?->invoice->invoice_value_from_dealer) {
                 $invoice_diff = $vehicle->order?->invoice->invoice_value_from_dealer * -1;
+            } else {
+                $invoice_diff = null;
             }
         @endphp
         <tr>
