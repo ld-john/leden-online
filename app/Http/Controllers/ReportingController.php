@@ -284,7 +284,7 @@ class ReportingController extends Controller
      */
     public function registeredQuarters()
     {
-        $start_date = $this->registeredMonths()[0];
+        $start_date = $this->registeredMonths()[2021][0]['label'];
         $start = Carbon::createFromFormat('F Y', $start_date)->monthsUntil(
             now(),
             3,
@@ -318,10 +318,11 @@ class ReportingController extends Controller
                 return $value !== '-0001 11';
             })
             ->map(function ($item) {
-                return Carbon::createFromFormat('Y m', $item)->format('F Y');
+                return ['label' => Carbon::createFromFormat('Y m', $item)->format('F Y'), 'year' => Carbon::createFromFormat('Y m', $item)->format('Y')];
             })
             ->unique()
-            ->flatten();
+            ->groupBy('year')
+            ->toArray();
     }
 
     /**
@@ -336,8 +337,10 @@ class ReportingController extends Controller
                 ->orWhere('vehicle_status', '6')
                 ->orWhere('vehicle_status', '15');
         })->get();
+        $data1 = $data->pluck('vehicle_registered_on');
+        $data2 = $data->pluck('order.delivery_date');
+        $data = $data1->merge($data2);
         return $data
-            ->pluck('vehicle_reg_date')
             ->map(function ($item) {
                 return Carbon::parse($item)->format('Y m');
             })
@@ -346,10 +349,11 @@ class ReportingController extends Controller
                 return $value !== '-0001 11';
             })
             ->map(function ($item) {
-                return Carbon::createFromFormat('Y m', $item)->format('F Y');
+                return ['label' => Carbon::createFromFormat('Y m', $item)->format('F Y'), 'year' => Carbon::createFromFormat('Y m', $item)->format('Y')];
             })
             ->unique()
-            ->flatten();
+            ->groupBy('year')
+            ->toArray();
     }
 
     /**

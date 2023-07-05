@@ -232,11 +232,6 @@ Route::middleware('auth')->group(function () {
             });
         });
 
-    Route::get('logs', [
-        \Rap2hpoutre\LaravelLogViewer\LogViewerController::class,
-        'index',
-    ]);
-
     /* ProfileController routes */
     Route::controller('ProfileController')->group(function () {
         Route::get('/profile', 'showProfile')->name('profile');
@@ -333,37 +328,9 @@ Route::middleware('auth')->group(function () {
         '/link/vehicle_provisional_date',
         'VehicleController@checkProvisionalDates',
     );
+
     Route::get('/link/order-date-clean-up', 'OrderController@date_cleanup');
     Route::get('/link/invoice-date-clean-up', 'InvoiceController@cleanDates');
-
-    //Route::get('/link/due-date-clean-up', 'VehicleController@DueDateCleanup');
-    //Route::get('/link/reg-date-clean-up', 'VehicleController@reg_date_cleanup');
-
-    //    Route::get('/link/test/4', 'OrderController@dataTest')->name('test4');
-    //    Route::get('/link/test/', 'VehicleController@getVehicleMeta')->name('test');
-    //    Route::get('/link/test2/', 'CustomerController@buildNewCustomer')->name('test2');
-    //    Route::get('/link/test3/', 'ManufacturerController@buildManufacturerTable')->name('test3');
-    //    Route::get('/link/completed-date/', 'VehicleController@completedDateCleanup')->name('test4');
-    //    Route::get('/link/order-ref/', 'VehicleController@orderRefCleanup')->name('test5');
-    //    Route::get('/link/date-clean-up', 'VehicleController@date_cleaner')->name('test6');
-    //    Route::get('/link/customer-name-clean-up', 'CustomerController@name_cleaner')->name('test7');
-    //    Route::get('/link/vehicle-broker-dealer-clean-up', 'OrderController@VehicleBrokerDealerCleanup')->name('test8');
-    //    Route::get('/link/invoice-value-clean-up', 'OrderController@invoice_value_cleaner')->name('test9');
-    //    Route::get('/link/fit-option-clean-up', 'VehicleController@fitOptionsCleanUp');
-    //    Route::get(
-    //        '/link/comment-clean-up',
-    //        'CommentController@makeCommentsPolymorphic',
-    //    );
-    //    Route::get(
-    //        '/link/vehicle-model-clean-up',
-    //        'ManufacturerController@vehicle_model_clean_up',
-    //    );
-    //    Route::get(
-    //        '/link/fit-options-clean-up',
-    //        'FitOptionsController@fitOptionsClean',
-    //    );
-    //    Route::get('/link/meta-clean-up', 'VehicleMetaController@clean');
-    //    Route::get('/link/meta-add-on', 'VehicleMetaController@addon');
 
     /*
      * News Updates Controller

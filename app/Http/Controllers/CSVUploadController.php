@@ -110,7 +110,8 @@ class CSVUploadController extends Controller
 
     public function executeCsvUpload(
         Request $request,
-    ): bool|RedirectResponse|View {
+    ): bool|RedirectResponse|View
+    {
         $file = $request->file('file');
 
         $request->validate([
@@ -180,79 +181,85 @@ class CSVUploadController extends Controller
             );
             return redirect()->route('pipeline');
         } elseif ($request->input('upload_type') === 'ford_create') {
+            $exclude_status = [1, 3, 5, 6, 7, 14, 15];
+
             foreach ($vehicle_uploads as $ford_report) {
+
                 $vehicle = Vehicle::where(
                     'orbit_number',
                     '=',
                     $ford_report['ORBITNO'],
                 )->first();
 
+
                 if ($vehicle) {
-                    if (
-                        $vehicle->vehicle_status === 6 ||
-                        $vehicle->vehicle_status === 7 ||
-                        $vehicle->vehicle_status === 3 ||
-                        $vehicle->vehicle_status === 14 ||
-                        $vehicle->vehicle_status === 15 ||
-                        $vehicle->vehice_status === 5
-                    ) {
-                        continue;
-                    }
+                    if (in_array($vehicle->vehicle_status, $exclude_status)) {
+                        \Log::debug(
+                            $vehicle->id .
+                            ' ' .
+                            $vehicle->niceName() .
+                            ' has the vehicle status ' .
+                            Vehicle::statusMatch($vehicle->vehicle_status) .
+                            ' and was skipped in the Ford Report import.',
+                        );
 
-                    $prefix = array_shift($ford_report);
-
-                    $location = Location::where(
-                        'location',
-                        '=',
-                        $ford_report['LOCATION'],
-                    )->first();
-
-                    if ($location) {
-                        $location = intval($location->status);
                     } else {
-                        $location = 4;
-                    }
 
-                    $build_date = null;
+                        $prefix = array_shift($ford_report);
 
-                    if ($ford_report['PLAN_BUILD_DATE']) {
-                        $build_date = Carbon::createFromFormat(
-                            'd/m/Y',
-                            $ford_report['PLAN_BUILD_DATE'],
-                        )->format('Y-m-d h:i:s');
-                    }
+                        $location = Location::where(
+                            'location',
+                            '=',
+                            $ford_report['LOCATION'],
+                        )->first();
 
-                    if ($ford_report['ETA_DATE']) {
-                        $due_date = Carbon::createFromFormat(
-                            'd/m/Y',
-                            $ford_report['ETA_DATE'],
-                        )->format('Y-m-d h:i:s');
-                    } else {
-                        $due_date = null;
-                    }
+                        if ($location) {
+                            $location = intval($location->status);
+                        } else {
+                            $location = 4;
+                        }
 
-                    $vehicle->update([
-                        'chassis' => $ford_report['VIN'],
-                        'chassis_prefix' => $prefix,
-                        'vehicle_status' => $location,
-                        'build_date' => $build_date,
-                        'due_date' => $due_date,
-                    ]);
+                        $build_date = null;
 
-                    $order = $vehicle->order;
-                    if ($order) {
-                        if ($vehicle->wasChanged('vehicle_status')) {
-                            if ($vehicle->vehicle_status === '1') {
-                                $brokers = User::where(
-                                    'company_id',
-                                    $order->broker,
-                                )->get();
-                                foreach ($brokers as $broker) {
-                                    $broker->notify(
-                                        new VehicleInStockNotification(
-                                            $vehicle,
-                                        ),
-                                    );
+                        if ($ford_report['PLAN_BUILD_DATE']) {
+                            $build_date = Carbon::createFromFormat(
+                                'd/m/Y',
+                                $ford_report['PLAN_BUILD_DATE'],
+                            )->format('Y-m-d h:i:s');
+                        }
+
+                        if ($ford_report['ETA_DATE']) {
+                            $due_date = Carbon::createFromFormat(
+                                'd/m/Y',
+                                $ford_report['ETA_DATE'],
+                            )->format('Y-m-d h:i:s');
+                        } else {
+                            $due_date = null;
+                        }
+
+                        $vehicle->update([
+                            'chassis' => $ford_report['VIN'],
+                            'chassis_prefix' => $prefix,
+                            'vehicle_status' => $location,
+                            'build_date' => $build_date,
+                            'due_date' => $due_date,
+                        ]);
+
+                        $order = $vehicle->order;
+                        if ($order) {
+                            if ($vehicle->wasChanged('vehicle_status')) {
+                                if ($vehicle->vehicle_status === '1') {
+                                    $brokers = User::where(
+                                        'company_id',
+                                        $order->broker,
+                                    )->get();
+                                    foreach ($brokers as $broker) {
+                                        $broker->notify(
+                                            new VehicleInStockNotification(
+                                                $vehicle,
+                                            ),
+                                        );
+                                    }
                                 }
                             }
                         }
@@ -264,60 +271,9 @@ class CSVUploadController extends Controller
                 'Import Update Successfully',
             );
             return redirect()->route('csv_upload');
-        } elseif ($request->input('upload_type') === 'ford_test') {
-            foreach ($vehicle_uploads as $ford_report) {
-                $vehicle = Vehicle::where(
-                    'orbit_number',
-                    '=',
-                    $ford_report['ORBITNO'],
-                )->first();
 
-                if ($vehicle) {
-                    if (
-                        $vehicle->vehicle_status === 6 ||
-                        $vehicle->vehicle_status === 7 ||
-                        $vehicle->vehicle_status === 3 ||
-                        $vehicle->vehicle_status === 14 ||
-                        $vehicle->vehicle_status === 15 ||
-                        $vehicle->vehicle_status === 16
-                    ) {
-                        continue;
-                    }
-                    $ford_test[$vehicle->id]['prefix'] = array_shift(
-                        $ford_report,
-                    );
-                    $ford_test[$vehicle->id]['location'] =
-                        $ford_report['LOCATION'];
-                    $status = match ($ford_report['LOCATION']) {
-                        'DELIVERED' => 1,
-                        'VFS-NORTH', 'VFS-SOUTH', 'VFS-SOTON' => 12,
-                        'DBN DOCKS', 'SILV EXP', 'VAL PORT', 'VALENCIA' => 13,
-                        'ANTWERP', 'AUTOPORT', 'NEW FLUSH' => 10,
-                        'DAGTOPS', 'LIV DOCKS', 'LIVTOPS', 'SOTTOPS' => 11,
-                        default => 4,
-                    };
-                    $status = Vehicle::statusMatch($status);
-                    $ford_test[$vehicle->id]['orbit'] = $vehicle->orbit_number;
-                    $ford_test[$vehicle->id]['status'] = $status;
-                    $ford_test[$vehicle->id]['chassis'] = $ford_report['VIN'];
-                    if ($ford_report['PLAN_BUILD_DATE']) {
-                        $ford_test[$vehicle->id][
-                            'build_date'
-                        ] = Carbon::createFromFormat(
-                            'd/m/Y',
-                            $ford_report['PLAN_BUILD_DATE'],
-                        )->format('Y-m-d h:i:s');
-                    } else {
-                        $ford_test[$vehicle->id]['build_date'] = 'TBC';
-                    }
-                }
-            }
-            return view('upload.ford_test', [
-                'ford_test' => $ford_test,
-            ]);
-        } else {
-            return false;
         }
+        return false;
     }
 
     function csvToArray($filename = '', $delimiter = ','): array

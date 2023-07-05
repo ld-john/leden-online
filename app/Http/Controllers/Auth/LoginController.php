@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -27,7 +28,18 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::DASHBOARD;
+    protected string $redirectTo = RouteServiceProvider::DASHBOARD;
+
+    public function redirectTo() {
+        \Log::info(
+            Auth::user()->firstname .
+            ' ' .
+            Auth::user()->lastname .
+            ' (' .
+            ucfirst(Auth::user()->role) .
+            ') has logged into the Leden System',
+        );
+    }
 
     /**
      * Create a new controller instance.
@@ -41,8 +53,8 @@ class LoginController extends Controller
 
     /**
      * Checks to see if a user is not deleted
-     * 
-     * @return void
+     *
+     * @return array
      */
     protected function credentials(Request $request)
     {

@@ -61,6 +61,7 @@ class DashboardController extends Controller
                 'completed_orders' => $completed->count(),
             ]);
         } else {
+
             $data = Vehicle::where('vehicle_status', 1)
                 ->select(['id', 'make', 'model', 'reg', 'type'])
                 ->with('manufacturer:id,name')

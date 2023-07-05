@@ -16,11 +16,29 @@
             <div class="card-body">
                 <h5>Registered - Month</h5>
                 <div class="row">
-                    @foreach($registeredMonths as $month)
-                        <div class="col col-1 mb-4">
-                            <a href="{{ route('monthly-registered', [\Carbon\Carbon::parse($month)->format('m'), \Carbon\Carbon::parse($month)->format('Y')]) }}" class="btn btn-primary btn-sm h-100 w-full">{{ $month }}</a>
-                        </div>
-                    @endforeach
+                    <div class="accordion" id="reportingMonths">
+                        @foreach($registeredMonths as $year => $months)
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading{{$loop->iteration}}">
+                                    <button class="accordion-button @if(!$loop->last) collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$loop->iteration}}" aria-expanded="true" aria-controls="collapse{{$loop->iteration}}">
+                                        {{ $year }}
+                                    </button>
+                                </h2>
+                                <div id="collapse{{$loop->iteration}}" class="accordion-collapse collapse @if($loop->last) show @endif" aria-labelledby="heading{{$loop->iteration}}" data-bs-parent="#reportingMonths">
+                                    <div class="accordion-body">
+                                        <div class="row">
+                                            @foreach($months as $month)
+                                                <div class="col col-3 mb-4">
+                                                    <a href="{{ route('monthly-registered', [\Carbon\Carbon::parse($month['label'])->format('m'), \Carbon\Carbon::parse($month['label'])->format('Y')]) }}" class="btn btn-primary h-100 w-full">{{ $month['label'] }}</a>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
                 </div>
                 <h5 class="mt-4">Registered - Quarters</h5>
                 <div class="row">
@@ -36,11 +54,30 @@
                 <hr>
                 <h5 class="mt-4">Renewal Reports</h5>
                 <div class="row">
-                    @foreach($financeMonths as $month)
-                        <div class="col col-1 mb-4">
-                            <a href="{{ route('monthly-finance', [\Carbon\Carbon::parse($month)->format('m'), \Carbon\Carbon::parse($month)->format('Y')]) }}" class="btn btn-primary btn-sm h-100 w-full">{{ $month }}</a>
-                        </div>
-                    @endforeach
+                    <div class="accordion" id="financeMonths">
+                        @foreach($financeMonths as $year => $months)
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-heading{{$loop->iteration}}">
+                                    <button class="accordion-button @if(!$loop->first) collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{$loop->iteration}}" aria-expanded="false" aria-controls="flush-collapse{{$loop->iteration}}">
+                                        {{ $year }}
+                                    </button>
+                                </h2>
+                                <div id="flush-collapse{{$loop->iteration}}" class="accordion-collapse collapse @if($loop->first) show @endif" aria-labelledby="flush-heading{{$loop->iteration}}" data-bs-parent="#financeMonths">
+                                    <div class="accordion-body">
+                                        <div class="row">
+                                            @foreach($months as $month)
+                                                <div class="col col-3 mb-4">
+                                                    <a href="{{ route('monthly-finance', [\Carbon\Carbon::parse($month['label'])->format('m'), \Carbon\Carbon::parse($month['label'])->format('Y')]) }}" class="btn btn-primary h-100 w-full">{{ $month['label'] }}</a>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        @endforeach
+
+                    </div>
                 </div>
             </div>
         </div>

@@ -308,6 +308,12 @@
                         Manage Promos
                     </a>
                 </li>
+                <li class="nav-item @if($activePage == 'log_viewer') active @endif">
+                    <a class="nav-link" href="{{ route('log-viewer.index') }}">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        View Logs
+                    </a>
+                </li>
             @endcan
         </ul>
     </div>
