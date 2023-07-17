@@ -198,8 +198,8 @@ class VehicleForm extends Component
             } elseif ($this->orbit_number === null) {
                 $vehicle->orbit_number = null;
             }
-        } elseif (!isset($this->orbit_number) || $this->orbit_number === '') {
-            $vehicle = new Vehicle();
+        } elseif ($this->orbit_number === null) {
+            $vehicle = Vehicle::create();
         } else {
             $vehicle = Vehicle::firstOrNew([
                 'orbit_number' => $this->orbit_number,
@@ -311,7 +311,9 @@ class VehicleForm extends Component
         $options = [
             'dealers' => Company::where('company_type', 'dealer')->get(),
             'brokers' => Company::where('company_type', 'broker')->get(),
-            'manufacturers' => Manufacturer::all()->keyBy('id'),
+            'manufacturers' => Manufacturer::all()
+                ->keyBy('id')
+                ->sortBy('name'),
             'vehicle_models' => VehicleModel::where(
                 'manufacturer_id',
                 $this->make,
@@ -376,6 +378,7 @@ class VehicleForm extends Component
                 ->get(),
             'factory_options' => FitOption::latest()
                 ->where('option_type', 'factory')
+                ->whereNull('archived_at')
                 ->when($this->model, function ($query) {
                     $query->where('model', $this->model);
                 })
@@ -392,6 +395,7 @@ class VehicleForm extends Component
                 ->paginate(5),
             'dealer_options' => FitOption::latest()
                 ->where('option_type', 'dealer')
+                ->whereNull('archived_at')
                 ->when($this->model, function ($query) {
                     $query->where('model', $this->model);
                 })

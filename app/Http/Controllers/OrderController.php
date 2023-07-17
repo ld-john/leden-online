@@ -248,21 +248,13 @@ class OrderController extends Controller
         $created = new DateTime($order->created_at);
         $amended = new DateTime($order->updated_at);
         $deliveryDate = new DateTime($order->delivery_date);
-        if (
-            $order->broker_accepted &&
-            $order->dealeraccepted &&
-            $order->admin_accepted
-        ) {
-            $dateConfirmed = $deliveryDate->format('d/m/Y');
-        } else {
-            $dateConfirmed = 'TBC';
-        }
+        $deliveryDate = $deliveryDate->format('d/m/Y');
 
         $vehicleDetails = [
             [
                 'Manufacturer Order Ref' => $order->vehicle->ford_order_number,
                 'Order Date' => $created->format('d/m/Y'),
-                'Delivery Date' => $dateConfirmed,
+                'Delivery Date' => $deliveryDate,
             ],
             [
                 'Vehicle Make' => $order->vehicle->manufacturer->name ?? '--',

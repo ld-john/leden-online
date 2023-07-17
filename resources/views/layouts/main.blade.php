@@ -37,7 +37,7 @@
   <!-- Main Content -->
   <div id="content">
     @include('partials.top_bar')
-    <x:notify-messages />
+{{--    <x-notify::notify />--}}
     @yield('content')
   </div>
 </div>

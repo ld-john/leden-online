@@ -27,10 +27,16 @@ class Kernel extends ConsoleKernel
         $schedule->command('cleanVehicle')->dailyAt('23:50');
         $schedule
             ->command('checkReservationExpiry')
+            ->weekdays()
             ->dailyAt('23:55')
             ->withoutOverlapping()
-            ->runInBackground()
-            ->appendOutputTo('public/command_test.txt');
+            ->runInBackground();
+        $schedule
+            ->command('checkDeliveries')
+            ->weekdays()
+            ->dailyAt('9:30')
+            ->withoutOverlapping()
+            ->runInBackground();
     }
 
     /**

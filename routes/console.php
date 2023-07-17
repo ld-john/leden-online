@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Delivery;
 use App\Models\Reservation;
 use App\Models\Vehicle;
 use Carbon\Carbon;
@@ -33,4 +34,8 @@ Artisan::command('cleanVehicle', function () {
 
 Artisan::command('checkReservationExpiry', function () {
     (new Reservation())->checkExpiry();
+});
+
+Artisan::command('checkDeliveries', function () {
+    (new Delivery())->checkDeliveries();
 });

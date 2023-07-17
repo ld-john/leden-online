@@ -70,6 +70,7 @@ class UniversalSearch extends Component
     public function downloadCurrentData(): BinaryFileResponse
     {
         $data = $this->filterVehiclesForDisplay()->get();
+
         return Excel::download(
             new UniversalExport($data),
             'leden-vehicle-download.xls',
@@ -125,16 +126,15 @@ class UniversalSearch extends Component
                 );
             })
             ->when($this->searchMake, function ($query) {
-                $query->whereHas('manufacturer', function ($query) {
-                    $query->where(
-                        'name',
-                        'like',
-                        '%' . $this->searchMake . '%',
-                    );
-                });
-            })
-            ->when($this->searchModel, function ($query) {
-                $query->where('model', 'like', '%' . $this->searchModel . '%');
+                $query
+                    ->whereHas('manufacturer', function ($query) {
+                        $query->where(
+                            'name',
+                            'like',
+                            '%' . $this->searchMake . '%',
+                        );
+                    })
+                    ->orWhere('model', 'like', '%' . $this->searchMake . '%');
             })
             ->when($this->searchFordOrderNumber, function ($query) {
                 $query->where(

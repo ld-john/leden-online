@@ -20,6 +20,8 @@
         <th>Status</th>
         <th>Broker</th>
         <th>Broker Reference</th>
+        <th>Factory Fit Options</th>
+        <th>Dealer Fit Options</th>
         <th>Website Location</th>
     </tr>
     </thead>
@@ -55,6 +57,12 @@
                 {{ $vehicle->broker?->company_name }}
             </td>
             <td>{{ $vehicle->order?->broker_ref }}</td>
+            <td>
+                {{ implode(', ', $vehicle->factoryFitOptions()->pluck('option_name')->toArray()) }}
+            </td>
+            <td>
+                {{ implode(', ', $vehicle->dealerFitOptions()->pluck('option_name')->toArray()) }}
+            </td>
             <td>
                 @php
                     $button = $vehicle->websiteLocation();

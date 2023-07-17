@@ -74,9 +74,7 @@
                                     </div>
                                 </div>
                             </div>
-
                         @endforeach
-
                     </div>
                 </div>
             </div>
@@ -124,7 +122,6 @@
                 @endforeach
             </div>
         </div>
-
         <!-- Monthly Placed -->
 
         <div class="card shadow mb-4">

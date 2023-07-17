@@ -112,3 +112,28 @@
         <input wire:model="renewal_date" type="date" name="renewal_date" id="renewal_date" class="form-control" autocomplete="off" />
     </div>
 </div>
+
+{{-- Broker --}}
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="broker"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Broker</label>
+    <div class="col-md-6">
+
+        <div class="input-group mb-3">
+            @error('broker')
+            <label class="input-group-text bg-danger text-white" for="inputGroupSelectBroker"><i class="fa fa-exclamation-triangle"></i></label>
+            @enderror
+            <select wire:model="broker" class="form-select" id="inputGroupSelectBroker">
+                <option selected>Choose...</option>
+
+                @if ( $brokers )
+
+                    @foreach ($brokers as $broker)
+                        <option value="{{ $broker->id }}">{{ $broker->company_name }}</option>
+
+                    @endforeach
+
+                @endif
+            </select>
+        </div>
+    </div>
+</div>

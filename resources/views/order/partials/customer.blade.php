@@ -32,7 +32,5 @@
     @if(!$customers->isEmpty())
         <p>Showing {{ $customers->firstItem() }} - {{ $customers->lastItem() }} of {{$customers->total()}}</p>
     @endif
-    <div>
-        {{ $customers->links() }}
-    </div>
+    {{ $customers->links('pagination.customer-order-form-pagination') }}
 </div>

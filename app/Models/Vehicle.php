@@ -175,7 +175,14 @@ class Vehicle extends Model
 
     public static function statusMatch($value): string
     {
-        return match ($value) {
+        $statuses = Vehicle::statusList();
+
+        return $statuses[$value] ?? 'Status Not Known';
+    }
+
+    public static function statusList(): array
+    {
+        return [
             1 => 'In Stock',
             3 => 'Ready for Delivery',
             4 => 'Factory Order',
@@ -189,8 +196,7 @@ class Vehicle extends Model
             14 => 'Recall',
             15 => 'In Stock (Registered)',
             16 => 'Damaged/Recalled',
-            default => 'Not Known',
-        };
+        ];
     }
 
     public function niceName(): string

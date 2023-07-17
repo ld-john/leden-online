@@ -32,8 +32,7 @@
             <th>Ford Order Number</th>
             <th>Orbit Number</th>
             <th>Vehicle Type</th>
-            <th>Make</th>
-            <th>Model</th>
+            <th>Make / Model</th>
             <th>Details</th>
             <th>Chassis Prefix</th>
             <th>Chassis</th>
@@ -57,6 +56,7 @@
             <th>Status</th>
             <th>Broker</th>
             <th>Broker Reference</th>
+            <th>Fit Options</th>
             <th>Website Location</th>
         </tr>
         <tr class="bg-light">
@@ -89,10 +89,6 @@
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchMake" type="text" class="form-control"
                        placeholder="Search Make">
-            </th>
-            <th class="p-1">
-                <input wire:model.debounce:500ms="searchModel" type="text" class="form-control"
-                       placeholder="Search Model">
             </th>
             <th class="p-1">
                 <input wire:model.debounce:500ms="searchDetails" type="text" class="form-control"
@@ -137,6 +133,7 @@
                        placeholder="Search Broker Reference">
             </th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -156,8 +153,7 @@
                 <td>{{ $vehicle->ford_order_number }}</td>
                 <td>{{ $vehicle->orbit_number }}</td>
                 <td>{{ $vehicle->type }}</td>
-                <td>{{ $vehicle->manufacturer?->name }}</td>
-                <td>{{ $vehicle->model }}</td>
+                <td>{{ $vehicle->manufacturer?->name }} {{ $vehicle->model }}</td>
                 <td class="p-0">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><strong>Derivative:</strong><br> {{ $vehicle->derivative }}</li>
@@ -184,6 +180,32 @@
                     {{ $vehicle->broker?->company_name }}
                 </td>
                 <td>{{ $vehicle->order?->broker_ref }}</td>
+                <td class="p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Factory Fit Options:</strong> <br>
+                            @if(count($vehicle->factoryFitOptions()) === 0)
+                                No
+                            @else
+                                <button class="btn btn-primary">
+                                    Yes
+                                    <span class="badge bg-light text-dark">{{ count($vehicle->factoryFitOptions()) }}</span>
+                                </button>
+                            @endif
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Dealer Fit Options:</strong> <br>
+                            @if((count($vehicle->dealerFitOptions()) === 0))
+                                No
+                            @else
+                                <button class="btn btn-primary">
+                                    Yes
+                                    <span class="badge bg-light text-dark">{{ count($vehicle->dealerFitOptions()) }}</span>
+                                </button>
+                            @endif
+                        </li>
+                    </ul>
+                </td>
                 <td>
                     @php
                         $button = $vehicle->websiteLocation();

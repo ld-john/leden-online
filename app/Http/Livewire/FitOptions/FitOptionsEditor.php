@@ -5,6 +5,7 @@ namespace App\Http\Livewire\FitOptions;
 use App\Models\Company;
 use App\Models\FitOption;
 use App\Models\VehicleModel;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -28,6 +29,7 @@ class FitOptionsEditor extends Component
     public $model_year;
     public $dealer;
     public $price;
+    public $showArchive = false;
     public $dealers;
     protected $rules = [
         'option_name' => 'required',
@@ -48,6 +50,9 @@ class FitOptionsEditor extends Component
         return view('livewire.fit-options.fit-options-editor', [
             'vehicle_models' => VehicleModel::orderBy('name')->get(),
             'fitOptions' => FitOption::where('option_type', $this->fitType)
+                ->when($this->showArchive === false, function ($query) {
+                    $query->where('archived_at', null);
+                })
                 ->with('vehicle_model')
                 ->with('vehicles')
                 ->with('dealer')
@@ -67,6 +72,16 @@ class FitOptionsEditor extends Component
                 })
                 ->when($this->model, function ($query) {
                     $query->where('model', 'like', '%' . $this->model . '%');
+                })
+                ->when($this->dealer, function ($query) {
+                    $query->where('dealer_id', '=', $this->dealer);
+                })
+                ->when($this->price, function ($query) {
+                    $query->where(
+                        'option_price',
+                        'like',
+                        '%' . $this->price . '%',
+                    );
                 })
                 ->latest()
                 ->paginate($this->paginate),
@@ -88,6 +103,28 @@ class FitOptionsEditor extends Component
             'New ' . ucfirst($this->fitType) . ' Fit Option Created',
             'Fit Option Created Successfully',
         );
+        return redirect(request()->header('Referer'));
+    }
+
+    public function archiveFitOption($fit_option)
+    {
+        $option = FitOption::whereId($fit_option)->first();
+
+        $option->option_name .= ' - ARCHIVED';
+        $option->archived_at = now();
+        $option->save();
+
+        return redirect(request()->header('Referer'));
+    }
+
+    public function unarchiveFitOption($fit_option)
+    {
+        $option = FitOption::whereId($fit_option)->first();
+
+        $option->option_name = substr($option->option_name, 0, -11);
+        $option->archived_at = null;
+        $option->save();
+
         return redirect(request()->header('Referer'));
     }
 }

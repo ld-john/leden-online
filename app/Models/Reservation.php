@@ -26,7 +26,7 @@ class Reservation extends Model
 
     protected $guarded = [];
 
-    public function checkExpiry()
+    public function checkExpiry(): void
     {
         $date = Carbon::now();
         $tomorrow = Carbon::now()->addWeekday(1);

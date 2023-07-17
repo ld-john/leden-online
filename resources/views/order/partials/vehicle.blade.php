@@ -299,7 +299,7 @@
         <input wire:model="build_date" type="date" name="build_date" id="build_date" class="form-control" autocomplete="off" />
     </div>
 </div>
-@if($status === "1" || $status === "3" || $status === "5" || $status === "6" || $status === "15" )
+@if($status === 1 || $status === 3 || $status === 5 || $status === 6 || $status === 15 )
     {{-- Delivery Date --}}
     <div class="form-group row">
         <label class="col-md-2 col-form-label" for="delivery_date">Delivery Date</label>

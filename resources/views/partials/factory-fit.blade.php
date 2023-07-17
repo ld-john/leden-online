@@ -41,13 +41,14 @@
             <p>Showing {{ $factory_options->firstItem() }} - {{ $factory_options->lastItem() }}
                 of {{$factory_options->total()}}</p>
         @endif
-        <div>
-            {{ $factory_options->links() }}
-        </div>
+
+        {{ $factory_options->links('pagination.factory-order-form-pagination') }}
+
     </div>
 @else
     Please select the Model and Model Year above
 @endif
+@if($factoryFitOptionsArray)
 <div class="form-group row" style="margin-top: 10px">
     <table class="table table-bordered">
         <thead>
@@ -65,3 +66,5 @@
         </tbody>
     </table>
 </div>
+
+@endif

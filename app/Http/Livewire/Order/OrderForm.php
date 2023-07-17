@@ -35,10 +35,13 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class OrderForm extends Component
 {
     use WithFileUploads;
+
+    use WithPagination;
 
     public bool $showAdditionalInformation = false;
     public bool $showDeliveryInformation = false;
@@ -478,6 +481,14 @@ class OrderForm extends Component
         } else {
             $this->terminalPause = false;
         }
+
+        if (
+            $this->delivery_date === '-0001-11-30' ||
+            $this->delivery_date === ''
+        ) {
+            $this->delivery_date = null;
+        }
+
         $this->validate();
         if (!isset($this->order)) {
             if (isset($this->vehicle)) {
@@ -500,7 +511,6 @@ class OrderForm extends Component
                     throw new ErrorException('Vehicle already ordered');
                 }
             }
-            $this->saveVehicleDetails($vehicle);
             if (!isset($this->customer_id) || $this->customer_id === '') {
                 $customer = Customer::create();
                 $this->saveCustomerDetails($customer);
@@ -533,6 +543,9 @@ class OrderForm extends Component
             $order->maintenance_rental = $this->maintenance_rental_value;
             $order->renewal_date = $this->renewal_date;
             $order->save();
+
+            $this->saveVehicleDetails($vehicle);
+
             $this->setInvoiceValue($order, $invoice);
             foreach ($this->attachments as $attachment) {
                 $file = new OrderUpload();
@@ -547,10 +560,6 @@ class OrderForm extends Component
                 'Order Created',
             );
         } else {
-            //Update Vehicle
-            $vehicle = $this->order->vehicle;
-            $this->saveVehicleDetails($vehicle);
-
             //Update Invoice
             $invoice = $this->order->invoice;
             $this->saveInvoice($invoice);
@@ -558,6 +567,10 @@ class OrderForm extends Component
             //Update Customer
             $customer = $this->order->customer;
             $this->saveCustomerDetails($customer);
+
+            //Update Vehicle
+            $vehicle = $this->order->vehicle;
+            $this->saveVehicleDetails($vehicle);
 
             //Update Order
             $order = $this->order;
@@ -644,7 +657,9 @@ class OrderForm extends Component
                     );
                 })
                 ->paginate(5),
-            'manufacturers' => Manufacturer::all()->keyBy('id'),
+            'manufacturers' => Manufacturer::all()
+                ->keyBy('id')
+                ->sortby('name'),
             'vehicle_models' => VehicleModel::where(
                 'manufacturer_id',
                 $this->make,
@@ -717,6 +732,7 @@ class OrderForm extends Component
 
             'factory_options' => FitOption::latest()
                 ->where('option_type', 'factory')
+                ->whereNull('archived_at')
                 ->when($this->model, function ($query) {
                     $query->where('model', $this->model);
                 })
@@ -730,9 +746,10 @@ class OrderForm extends Component
                         '%' . $this->factoryFitSearch . '%',
                     );
                 })
-                ->paginate(5),
+                ->paginate(5, ['*'], 'factoryOptionsPage'),
             'dealer_options' => FitOption::latest()
                 ->where('option_type', 'dealer')
+                ->whereNull('archived_at')
                 ->when($this->model, function ($query) {
                     $query->where('model', $this->model);
                 })
@@ -746,7 +763,7 @@ class OrderForm extends Component
                         '%' . $this->dealerFitSearch . '%',
                     );
                 })
-                ->paginate(5),
+                ->paginate(5, ['*'], 'dealerOptionsPage'),
         ];
         return view('livewire.order.order-form', $options);
     }
@@ -815,6 +832,7 @@ class OrderForm extends Component
     /**
      * Save the details to the Vehicle model
      * @param Vehicle $vehicle
+     * @param Order $order
      * @return void
      */
     public function saveVehicleDetails(Vehicle $vehicle): void
@@ -861,9 +879,12 @@ class OrderForm extends Component
             ->where('company_id', $this->broker)
             ->all();
         if ($vehicle->wasChanged('vehicle_status')) {
-            if ($vehicle->vehicle_status === '7') {
+            if ($vehicle->vehicle_status == '7') {
                 $this->order->update(['completed_date' => now()]);
-            } elseif ($vehicle->vehicle_status === '1') {
+            } elseif (
+                $vehicle->vehicle_status == '1' ||
+                $vehicle->vehicle_status == '15'
+            ) {
                 foreach ($brokers as $broker) {
                     $broker->notify(new VehicleInStockNotification($vehicle));
                 }
@@ -874,6 +895,10 @@ class OrderForm extends Component
                         );
                     }
                 }
+
+                $vehicle->update([
+                    'due_date' => null,
+                ]);
             }
         }
 
@@ -949,5 +974,14 @@ class OrderForm extends Component
                 ) ?? 0;
             $this->dispatchBrowserEvent('dealerDiscountChanged');
         }
+    }
+
+    public function updatingFactoryFitSearch(): void
+    {
+        $this->resetPage('factoryOptionsPage');
+    }
+    public function updatingDealerFitSearch(): void
+    {
+        $this->resetPage('dealerOptionsPage');
     }
 }

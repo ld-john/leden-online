@@ -93,6 +93,8 @@ class CSVUploadController extends Controller
             $upload[1]['chassis'] = $vehicle_upload['chassis'];
             $upload[1]['transmission'] = $vehicle_upload['transmission'];
             $upload[1]['reg'] = $vehicle_upload['registration'];
+            $upload[1]['trim'] = $vehicle_upload['trim'];
+            $upload[1]['fuel_type'] = $vehicle_upload['fuel_type'];
             $upload[1]['ring_fenced_stock'] = 1;
             $upload[1]['broker_id'] = $broker;
             $upload[1]['updated_at'] = Carbon::now();
@@ -110,8 +112,7 @@ class CSVUploadController extends Controller
 
     public function executeCsvUpload(
         Request $request,
-    ): bool|RedirectResponse|View
-    {
+    ): bool|RedirectResponse|View {
         $file = $request->file('file');
 
         $request->validate([
@@ -184,27 +185,23 @@ class CSVUploadController extends Controller
             $exclude_status = [1, 3, 5, 6, 7, 14, 15];
 
             foreach ($vehicle_uploads as $ford_report) {
-
                 $vehicle = Vehicle::where(
                     'orbit_number',
                     '=',
                     $ford_report['ORBITNO'],
                 )->first();
 
-
                 if ($vehicle) {
                     if (in_array($vehicle->vehicle_status, $exclude_status)) {
                         \Log::debug(
                             $vehicle->id .
-                            ' ' .
-                            $vehicle->niceName() .
-                            ' has the vehicle status ' .
-                            Vehicle::statusMatch($vehicle->vehicle_status) .
-                            ' and was skipped in the Ford Report import.',
+                                ' ' .
+                                $vehicle->niceName() .
+                                ' has the vehicle status ' .
+                                Vehicle::statusMatch($vehicle->vehicle_status) .
+                                ' and was skipped in the Ford Report import.',
                         );
-
                     } else {
-
                         $prefix = array_shift($ford_report);
 
                         $location = Location::where(
@@ -271,7 +268,6 @@ class CSVUploadController extends Controller
                 'Import Update Successfully',
             );
             return redirect()->route('csv_upload');
-
         }
         return false;
     }

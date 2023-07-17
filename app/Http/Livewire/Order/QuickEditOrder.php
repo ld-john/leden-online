@@ -103,6 +103,13 @@ class QuickEditOrder extends Component
             $this->orbit_number = null;
         }
 
+        if (
+            $this->delivery_date === '-0001-11-30' ||
+            $this->delivery_date === ''
+        ) {
+            $this->delivery_date = null;
+        }
+
         $this->validate();
 
         $this->vehicle->update([
@@ -123,9 +130,12 @@ class QuickEditOrder extends Component
             ->all();
 
         if ($this->vehicle->wasChanged('vehicle_status')) {
-            if ($this->vehicle->vehicle_status === '7') {
+            if ($this->vehicle->vehicle_status == '7') {
                 $this->order->update(['completed_date' => now()]);
-            } elseif ($this->vehicle->vehicle_status === '1') {
+            } elseif (
+                $this->vehicle->vehicle_status == '1' ||
+                $this->vehicle->vehicle_status == '15'
+            ) {
                 foreach ($brokers as $broker) {
                     $broker->notify(
                         new VehicleInStockNotification($this->vehicle),
@@ -138,6 +148,9 @@ class QuickEditOrder extends Component
                         );
                     }
                 }
+                $this->vehicle->update([
+                    'due_date' => null,
+                ]);
             }
         }
         if ($this->vehicle->wasChanged('reg')) {

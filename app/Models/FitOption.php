@@ -21,6 +21,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property mixed $dealer_id
+ * @property Carbon|null $archived_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\FitOption query()

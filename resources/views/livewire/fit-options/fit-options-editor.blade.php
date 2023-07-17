@@ -16,7 +16,7 @@
             <div class="form-group me-2 w-100">
                 <label for="model">Model</label>
                 <div class="input-group">
-                    <select wire:model="model" name="model" id="" class="form-control">
+                    <select wire:model="model" name="model" id="model" class="form-select">
                         <option value="">Please Select...</option>
                         @foreach($vehicle_models as $vehicle_model)
                             <option value="{{ $vehicle_model->id }}">{{ $vehicle_model->name }}</option>
@@ -39,7 +39,7 @@
             @if($fitType === 'dealer')
                 <div class="form-group me-2 w-100">
                     <label for="dealer">Dealer</label>
-                    <select name="dealer" id="dealer" wire:model="dealer" class="form-control">
+                    <select name="dealer" id="dealer" wire:model="dealer" class="form-select">
                         <option value=""></option>
                         @foreach($dealers as $option)
                             <option value="{{ $option->id }}">{{ $option->company_name }}</option>
@@ -73,6 +73,14 @@
             </select>
             entries
         </div>
+        <div class="w-25 p-3 d-flex align-items-center">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" wire:model="showArchive" >
+                <label class="form-check-label" for="flexCheckDefault">
+                    Show Archived Items
+                </label>
+            </div>
+        </div>
     </div>
     <table class="table table-bordered">
         <thead>
@@ -85,6 +93,36 @@
             @endif
             <th>Price</th>
             <th>Actions</th>
+        </tr>
+        <tr class="bg-light">
+            <th class="p-1">
+                <input wire:model.debounce="option_name" type="text" class="form-control" placeholder="Search Option Name">
+            </th>
+            <th class="p-1">
+                <select wire:model="model" name="model" id="" class="form-select">
+                    <option value="">Please Select...</option>
+                    @foreach($vehicle_models as $vehicle_model)
+                        <option value="{{ $vehicle_model->id }}">{{ $vehicle_model->name }}</option>
+                    @endforeach
+                </select>
+            </th>
+            <th class="p-1">
+                <input type="text" class="form-control model_year" id="model_year_input" wire:model="model_year" onchange="this.dispatchEvent(new InputEvent('input'))" placeholder="Search Year">
+            </th>
+            @if($fitType === 'dealer')
+                <th class="p-1">
+                    <select name="dealer" id="dealer" wire:model="dealer" class="form-select">
+                        <option value="">Search Dealer</option>
+                        @foreach($dealers as $option)
+                            <option value="{{ $option->id }}">{{ $option->company_name }}</option>
+                        @endforeach
+                    </select>
+                </th>
+            @endif
+            <th class="p-1">
+                <input wire:model.debounce="price" type="text" class="form-control" placeholder="Search Price">
+            </th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -105,6 +143,15 @@
                     @if(count($fitOption->vehicles) === 0)
                         <a data-toggle="tooltip" title="Delete Fit Option">
                             <livewire:fit-options.delete-fit-option :fitOption="$fitOption->id" :key="time().$fitOption->id" />
+                        </a>
+                    @endif
+                    @if($fitOption->archived_at)
+                        <a data-toggle="tooltip" title="Unarchive Fit Option" wire:click="unarchiveFitOption({{ $fitOption->id }})" class="btn btn-success">
+                            <i class="fa-solid fa-box-archive"></i>
+                        </a>
+                    @else
+                        <a data-toggle="tooltip" title="Archive Fit Option" wire:click="archiveFitOption({{ $fitOption->id }})" class="btn btn-primary">
+                            <i class="fa-solid fa-box-archive"></i>
                         </a>
                     @endif
                     <livewire:fit-options.edit-fit-option :fitOption="$fitOption->id" :key="time().$fitOption->id" />

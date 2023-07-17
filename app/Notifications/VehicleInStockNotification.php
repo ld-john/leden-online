@@ -24,7 +24,7 @@ class VehicleInStockNotification extends Notification
         $broker_ref = $this->vehicle->order?->broker_ref ?? 'TBC';
         return [
             'vehicle' => $this->vehicle->id,
-            'type' => 'vehicle',
+            'type' => 'delivery',
             'message' =>
                 'A ' .
                 $this->vehicle->manufacturer->name .

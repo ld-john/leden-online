@@ -19,6 +19,7 @@ class DeleteOrder extends Component
     public $vehicleStatus;
     public $modalShow = false;
     public $vehicle;
+    public $vehicle_status;
 
     /**
      * Prepare the component with the details of the order and the vehicle
@@ -29,6 +30,8 @@ class DeleteOrder extends Component
     {
         $this->order = $order;
         $this->vehicle = $order->vehicle;
+        $this->vehicleStatus = $order->vehicle->vehicle_status;
+        $this->vehicle_status = Vehicle::statusList();
     }
 
     /**
