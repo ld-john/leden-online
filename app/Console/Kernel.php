@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('cleanVehicle')->dailyAt('23:50');
+        $schedule->command('cleanVehicle')->everyFiveMinutes();
+        //            ->dailyAt('23:50');
         $schedule
             ->command('checkReservationExpiry')
             ->weekdays()

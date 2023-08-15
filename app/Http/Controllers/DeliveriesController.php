@@ -6,6 +6,10 @@ use App\Models\Delivery;
 use App\Models\Order;
 use App\Models\User;
 use App\Notifications\DeliveryBookedNotification;
+use App\Notifications\DeliveryScheduledTomorrowEmailNotification;
+use App\Notifications\DeliveryScheduledYesterdayEmailNotification;
+use Illuminate\Database\Eloquent\Collection;
+use LaravelIdea\Helper\App\Models\_IH_Delivery_C;
 
 class DeliveriesController extends Controller
 {
@@ -49,5 +53,28 @@ class DeliveriesController extends Controller
     public function edit(Delivery $delivery)
     {
         return view('deliveries.edit', ['delivery' => $delivery]);
+    }
+
+    public function testDeliveryEmails()
+    {
+        $delivery = Delivery::latest()->first();
+
+        (new User())
+            ->forceFill([
+                'name' => 'Lee',
+                'email' => 'lee@leden.co.uk',
+            ])
+            ->notify(
+                new DeliveryScheduledYesterdayEmailNotification($delivery),
+            );
+
+        (new User())
+            ->forceFill([
+                'name' => 'Lee',
+                'email' => 'lee@leden.co.uk',
+            ])
+            ->notify(new DeliveryScheduledTomorrowEmailNotification($delivery));
+
+        return 'Test emails sent';
     }
 }

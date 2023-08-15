@@ -88,6 +88,7 @@ Route::middleware('auth')->group(function () {
             Route::get('accept/{delivery}', 'accept')->name('accept');
             Route::get('cancel/{delivery}', 'cancel')->name('cancel');
             Route::get('edit/{delivery}', 'edit')->name('edit');
+            Route::get('test-email', 'testDeliveryEmails')->name('test-email');
         });
 
     /* Reservation Controller Routes */

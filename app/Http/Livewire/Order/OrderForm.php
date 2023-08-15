@@ -504,7 +504,7 @@ class OrderForm extends Component
             ) {
                 $vehicle = Vehicle::create();
             } else {
-                $vehicle = Vehicle::firstOrNew([
+                $vehicle = Vehicle::firstOrCreate([
                     'orbit_number' => $this->orbit_number,
                 ]);
                 if ($vehicle->order) {
@@ -832,7 +832,6 @@ class OrderForm extends Component
     /**
      * Save the details to the Vehicle model
      * @param Vehicle $vehicle
-     * @param Order $order
      * @return void
      */
     public function saveVehicleDetails(Vehicle $vehicle): void

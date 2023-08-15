@@ -30,7 +30,9 @@ class DeliveryScheduledTomorrowEmailNotification extends Notification
                     $this->delivery->order->vehicle->model .
                     ', associated with Leden Order #' .
                     $this->delivery->order?->id .
-                    '. Please ensure that arrangements are made and paperwork is sent to Leden\'s offices.',
+                    '. This vehicle has the registration number: ' .
+                    $this->delivery->order?->vehicle?->reg .
+                    ' Please ensure that arrangements are made and paperwork is sent to Leden\'s offices.',
             )
             ->action(
                 'View the Order Here',

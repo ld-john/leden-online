@@ -201,7 +201,7 @@ class VehicleForm extends Component
         } elseif ($this->orbit_number === null) {
             $vehicle = Vehicle::create();
         } else {
-            $vehicle = Vehicle::firstOrNew([
+            $vehicle = Vehicle::firstOrCreate([
                 'orbit_number' => $this->orbit_number,
             ]);
         }
