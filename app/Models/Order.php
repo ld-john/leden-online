@@ -43,9 +43,10 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Comments;
  * @property mixed $fin_number
  * @property mixed $deal_number
  * @property mixed $order_ref
- * @property mixed $broker
+ * @property Company $broker
+ * @property Company $finance_broker
  * @property mixed $delivery
- * @property mixed $delivery_id;
+ * @property mixed $delivery_id
  * @property mixed $contract_confirmation
  */
 class Order extends Model

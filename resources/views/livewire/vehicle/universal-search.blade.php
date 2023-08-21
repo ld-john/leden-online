@@ -179,8 +179,8 @@
                 <td class="p-0">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">{{ $vehicle?->order->broker->company_name ?? ''}}</li>
-                        @if( $vehicle?->order->finance_broker )
-                            <li class="list-group-item">{{ $vehicle?->order->finance_broker->company_name ?? '' }}</li>
+                        @if( $vehicle?->order?->finance_broker )
+                            <li class="list-group-item">{{ $vehicle->order->finance_broker->company_name ?? '' }}</li>
                         @endif
                     </ul>
                 </td>
