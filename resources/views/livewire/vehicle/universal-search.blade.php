@@ -176,8 +176,13 @@
                     <td>{{ \Carbon\Carbon::parse($vehicle->due_date)->format('d/m/Y') }}</td>
                 @endif
                 <td>{{ $vehicle->status() }}</td>
-                <td>
-                    {{ $vehicle->broker?->company_name }}
+                <td class="p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ $vehicle?->order->broker->company_name ?? ''}}</li>
+                        @if( $vehicle?->order->finance_broker )
+                            <li class="list-group-item">{{ $vehicle?->order->finance_broker->company_name ?? '' }}</li>
+                        @endif
+                    </ul>
                 </td>
                 <td>{{ $vehicle->order?->broker_ref }}</td>
                 <td class="p-0">

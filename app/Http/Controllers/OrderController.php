@@ -85,6 +85,20 @@ class OrderController extends Controller
         ]);
     }
 
+    public function recycle()
+    {
+        $orders = Order::onlyTrashed()
+            ->latest()
+            ->with('vehicle')
+            ->paginate(10);
+
+        return view('order.deleted', [
+            'title' => 'Recycle Bin',
+            'active_page' => 'order-recycle-bin',
+            'orders' => $orders,
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -247,8 +261,18 @@ class OrderController extends Controller
 
         $created = new DateTime($order->created_at);
         $amended = new DateTime($order->updated_at);
-        $deliveryDate = new DateTime($order->delivery_date);
-        $deliveryDate = $deliveryDate->format('d/m/Y');
+        if ($order->delivery_date) {
+            $deliveryDate = new DateTime($order->delivery_date);
+            $deliveryDate = $deliveryDate->format('d/m/Y');
+        } else {
+            $deliveryDate = 'TBC';
+        }
+
+        $brokerName = $order->broker->company_name ?? '--';
+
+        if ($order->finance_broker) {
+            $brokerName .= ' | ' . $order->finance_broker->company_name;
+        }
 
         $vehicleDetails = [
             [
@@ -273,7 +297,7 @@ class OrderController extends Controller
             ],
             [
                 'Leden Order Ref' => $order->id,
-                'Broker' => $order->broker->company_name ?? '--',
+                'Broker' => $brokerName,
                 'Broker Ref No.' => $order->broker_ref ?? '',
             ],
             [

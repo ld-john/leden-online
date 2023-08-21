@@ -153,7 +153,14 @@
                         {{ $order->customer->customer_name ?? ''}}
                     </td>
                     <td>{{ $order->broker_ref ?? ''}}</td>
-                    <td>{{ $order->broker->company_name ?? ''}}</td>
+                    <td class="p-0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">{{ $order->broker->company_name ?? ''}}</li>
+                            @if( $order->finance_broker )
+                            <li class="list-group-item">{{ $order->finance_broker->company_name ?? '' }}</li>
+                            @endif
+                        </ul>
+                    </td>
                     <td>{{ $order->dealer->company_name ?? ''}}</td>
                     <td>{{ \Carbon\Carbon::parse($order->updated_at)->format('d/m/Y h:ia') }}</td>
                     <td width="120px">
@@ -379,7 +386,14 @@
                     <td>
                         {{ $order->broker_ref }}
                     </td>
-                    <td>{{ $order->broker->company_name ?? ''}}</td>
+                    <td class="p-0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">{{ $order->broker->company_name ?? ''}}</li>
+                            @if( $order->finance_broker )
+                                <li class="list-group-item">{{ $order->finance_broker->company_name ?? '' }}</li>
+                            @endif
+                        </ul>
+                    </td>
                     <td>{{ $order->dealer->company_name ?? ''}}</td>
                     <td>{{ \Carbon\Carbon::parse($order->updated_at)->format('d/m/Y h:ia') }}</td>
                     <td width="120px">

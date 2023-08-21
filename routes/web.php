@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
                     'broker_orders_export',
                 )->name('brokers_orders_export');
             });
+        Route::get('/order/recycle-bin', 'recycle')->name('order.recycle-bin');
         Route::prefix('orders')
             ->name('order.')
             ->group(function () {

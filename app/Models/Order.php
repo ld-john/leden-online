@@ -25,6 +25,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Comments;
  * @property mixed $comments
  * @property mixed $dealer_id
  * @property mixed $broker_id
+ * @property int $finance_broker_id
+ * @property bool $finance_broker_toggle
  * @property mixed $customer_id
  * @property mixed $vehicle_id
  * @property mixed $dealer_accepted
@@ -48,7 +50,6 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Comments;
  */
 class Order extends Model
 {
-    use HasFactory;
     use SoftDeletes;
 
     protected $guarded = [];
@@ -71,6 +72,11 @@ class Order extends Model
     public function broker(): HasOne
     {
         return $this->hasOne(Company::class, 'id', 'broker_id');
+    }
+
+    public function finance_broker(): HasOne
+    {
+        return $this->hasOne(Company::class, 'id', 'finance_broker_id');
     }
 
     public function invoice_company(): HasOne

@@ -412,7 +412,7 @@
                                     <p>Broker</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->broker->company_name ?? '--'}}</p>
+                                    <p class="font-weight-bold">{{ $order->broker->company_name ?? '--'}} @if($order->finance_broker) | {{ $order->finance_broker->company_name }} @endif</p>
                                 </div>
                             </div>
                             <div class="row">

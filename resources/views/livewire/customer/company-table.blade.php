@@ -18,6 +18,7 @@
           <thead>
           <tr class="blue-background text-white">
                <th>Leden ID</th>
+               <th>Fleet Procure Member</th>
                <th>Company Name</th>
                <th>Address</th>
                <th>Email</th>
@@ -27,6 +28,7 @@
                <th>Actions</th>
           </tr>
           <tr class="bg-light">
+               <th></th>
                <th></th>
                <th class="p-1">
                     <input wire:model.debounce:500ms="searchName" type="text" class="form-control" placeholder="Search Name">
@@ -57,6 +59,13 @@
           @forelse($companies as $company)
                <tr>
                     <td>{{ $company->id }}</td>
+                    <td class="d-flex justify-content-center align-center h-full">
+                         @if($company->fleet_procure_member)
+                              <i class="fa-regular fa-circle-check fa-2x text-success"></i>
+                         @else
+                              <i class="fa-regular fa-circle-xmark fa-2x text-danger"></i>
+                         @endif
+                    </td>
                     <td>{{ $company->company_name }}</td>
                     <td>{{ $company->company_address1 }} <br> {{ $company->company_address2 }} <br> {{ $company->company_city }}
                          <br> {{ $company->company_county }} <br> {{ $company->company_country }} <br> {{ $company->company_postcode }}</td>

@@ -107,6 +107,14 @@
                                            autocomplete="off" value="{{ $company->company_phone }}"/>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <div class="col-form-label">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="fleet_procure_member" id="fleet_procure_member" @if($company->fleet_procure_member) checked @endif>
+                                        <label class="form-check-label" for="fleet_procure_member">Fleet Procure Member</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- Card Footer -->
                         <div class="card-footer text-right">

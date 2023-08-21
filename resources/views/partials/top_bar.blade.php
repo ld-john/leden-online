@@ -270,11 +270,16 @@
                 </li>
             @endcan
             @can('admin')
-                <li class="nav-item @if($activePage=== 'vehicle-recycle-bin') active @endif">
-                    <a href="{{ route('vehicle.recycle_bin') }}" class="nav-link">
-                        <i class="fa-solid fa-trash"></i>
-                        <span>Vehicle Recycle Bin</span>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Recycle Bin
                     </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ route('vehicle.recycle_bin') }}"><i class="fa-solid fa-trash"></i>
+                                <span>Vehicle Recycle Bin</span></a></li>
+                        <li><a class="dropdown-item" href="{{ route('order.recycle-bin') }}"><i class="fa-solid fa-trash"></i>
+                                <span>Orders Recycle Bin</span></a></li>
+                    </ul>
                 </li>
             @endcan
             @can('admin')

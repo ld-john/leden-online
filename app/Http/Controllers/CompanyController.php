@@ -60,6 +60,7 @@ class CompanyController extends Controller
                 'company_city' => 'required',
                 'company_email' => 'sometimes|email',
                 'company_phone' => 'sometimes',
+                'fleet_procure_member' => 'sometimes',
             ],
             [
                 'company_name.required' =>
@@ -75,6 +76,12 @@ class CompanyController extends Controller
             ],
         );
 
+        if ($request->input('fleet_procure_member') === 'on') {
+            $fleet = true;
+        } else {
+            $fleet = false;
+        }
+
         Company::create([
             'company_name' => $request->input('company_name'),
             'company_address1' => $request->input('company_address_1'),
@@ -86,6 +93,7 @@ class CompanyController extends Controller
             'company_type' => $request->input('company_type'),
             'company_email' => $request->input('company_email'),
             'company_phone' => $request->input('company_phone'),
+            'fleet_procure_member' => $fleet,
         ]);
         notify()->success('A new company has been added', 'Company Added');
         return redirect()->route('company_manager');
@@ -94,7 +102,7 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Company $company
+     * @param Company $company
      * @return Application|Factory|View
      */
     public function edit(Company $company)
@@ -108,11 +116,16 @@ class CompanyController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param \App\Models\Company $company
+     * @param Company $company
      * @return RedirectResponse
      */
     public function update(Request $request, Company $company): RedirectResponse
     {
+        if ($request->input('fleet_procure_member') === 'on') {
+            $fleet = true;
+        } else {
+            $fleet = false;
+        }
         $company->update([
             'company_name' => $request->input('company_name'),
             'company_address1' => $request->input('company_address1'),
@@ -124,6 +137,7 @@ class CompanyController extends Controller
             'company_type' => $request->input('company_type'),
             'company_email' => $request->input('company_email'),
             'company_phone' => $request->input('company_phone'),
+            'fleet_procure_member' => $fleet,
         ]);
         notify()->success(
             'The company information has been updated',

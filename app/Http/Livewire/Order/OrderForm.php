@@ -128,6 +128,8 @@ class OrderForm extends Component
     public $finance_company_bonus_pay_date;
     public $fin_number = '65634';
     public $deal_number = '90191';
+    public $finance_broker_toggle = false;
+    public $finance_broker;
     public $ford_bonus_invoice;
     public $ford_bonus_pay_date;
     public $factoryFitSearch;
@@ -176,9 +178,13 @@ class OrderForm extends Component
         'invoice_broker_paid' => 'nullable|date',
         'commission_broker_paid' => 'nullable|date',
         'finance_commission_paid' => 'nullable|date',
+        'finance_broker' => 'nullable|numeric|different:broker',
+        'finance_broker' => 'nullable|numeric|different:broker',
     ];
     protected $messages = [
         'make.required_without' => 'No <strong>Make</strong> selected',
+        'finance_broker.different' =>
+            '<strong>Broker</strong> and <strong>Finance Broker</strong> need to be different brokers',
         'customer_name.required_without' =>
             'No <strong>Customer Name</strong> selected',
         'model.required' => 'No <strong>Model</strong> selected',
@@ -203,7 +209,7 @@ class OrderForm extends Component
      * Set up the basic information for the order form, and set the information from the Vehicle or Order if they are being given to the Order Form
      * @throws Exception
      */
-    public function mount()
+    public function mount(): void
     {
         $this->now = date('Y-m-d');
 
@@ -274,6 +280,8 @@ class OrderForm extends Component
                 $this->order->invoice->finance_company_bonus_pay_date;
             $this->ford_bonus_pay_date =
                 $this->order->invoice->ford_bonus_pay_date;
+            $this->finance_broker_toggle = $this->order->finance_broker_toggle;
+            $this->finance_broker = $this->order->finance_broker_id;
 
             $this->dealer_discount_override = true;
             $this->customer_id = $this->order->customer->id;
@@ -490,6 +498,7 @@ class OrderForm extends Component
         }
 
         $this->validate();
+
         if (!isset($this->order)) {
             if (isset($this->vehicle)) {
                 $vehicle = $this->vehicle;
@@ -524,6 +533,8 @@ class OrderForm extends Component
             $order->vehicle_id = $vehicle->id;
             $order->customer_id = $customer;
             $order->broker_id = $this->broker;
+            $order->finance_broker_toggle = $this->finance_broker_toggle;
+            $order->finance_broker_id = $this->finance_broker;
             $order->dealer_id = $this->dealership;
             $order->comments = $this->comments;
             $order->broker_ref = $this->broker_ref;
@@ -578,6 +589,8 @@ class OrderForm extends Component
                 'vehicle_id' => $vehicle->id,
                 'customer_id' => $customer->id,
                 'broker_id' => $this->broker,
+                'finance_broker_toggle' => $this->finance_broker_toggle,
+                'finance_broker_id' => $this->finance_broker,
                 'dealer_id' => $this->dealership,
                 'comments' => $this->comments,
                 'broker_ref' => $this->broker_ref,
@@ -627,6 +640,7 @@ class OrderForm extends Component
         }
         OrderController::setProvisionalRegDate($vehicle);
         Reservation::where('vehicle_id', $vehicle->id)->delete();
+
         return redirect(route('order.edit', $order->id));
     }
 

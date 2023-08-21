@@ -4,15 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Added Registration to Paper chase Notifications and other tweaks">
+      <change afterPath="$PROJECT_DIR$/database/migrations/2023_08_15_112906_add_finance_broker_id_to_orders_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2023_08_18_113644_add_fleet_procure_to_broker_companies_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/order/deleted.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DeliveriesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DeliveriesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledTomorrowEmailNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledTomorrowEmailNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledYesterdayNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledYesterdayNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/companies/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/companies/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/companies/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/companies/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/customer/company-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/customer/company-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/universal-search.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/universal-search.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/finance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/finance.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/top_bar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/top_bar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/deleted.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/deleted.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -193,10 +204,10 @@
       <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
     </include_path>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="1yGOd01KlxTowHiLnyYqA6dZo6t" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -515,7 +526,11 @@
       <workItem from="1690358341700" duration="600000" />
       <workItem from="1690371340319" duration="2094000" />
       <workItem from="1690377840823" duration="16000" />
-      <workItem from="1692092823117" duration="1297000" />
+      <workItem from="1692092823117" duration="9341000" />
+      <workItem from="1692106533883" duration="12000" />
+      <workItem from="1692260035771" duration="638000" />
+      <workItem from="1692354901115" duration="2812000" />
+      <workItem from="1692371973944" duration="3642000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -860,7 +875,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -879,7 +894,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Page Uniformity Changes - Manage Deliveries now Livewire&#10;&#10;Quick Edit added to Manage Deliveries&#10;&#10;Dealers and Brokers should have accurate numbers." />
     <MESSAGE value="Marking Orders Complete requires the vehicle to have a registration date that has passed." />
     <MESSAGE value="Changes to vehicle and order tables&#10;Addition of Company and User tables" />
     <MESSAGE value="Fixed an error with Transmission filtering on Vehicle Tables&#10;Fixed an error with the Order Number on Excel Exports from the dashboard." />
@@ -904,7 +918,8 @@
     <MESSAGE value="Added Quick Edit Ring Fence to allow Ring Fenced stock to transfer directly between brokers&#10;Added Notifications for adding the Registration Number and email notification for if the vehicle is in stock" />
     <MESSAGE value="Added Contract Confirmation button to order table which can be toggled by those with the manages deliveries permission&#10;Rearranged all buttons into a grid layout." />
     <MESSAGE value="Numerous Updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="Numerous Updates" />
+    <MESSAGE value="Added Registration to Paper chase Notifications and other tweaks" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Registration to Paper chase Notifications and other tweaks" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

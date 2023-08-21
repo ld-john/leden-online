@@ -43,7 +43,7 @@ class OrderTable extends Component
     public $filterDueDate;
     public $filterDeliveryDate;
 
-    public function mount($status, $view)
+    public function mount($status, $view): void
     {
         $this->now = date('Y-m-d h:i:s');
 
@@ -56,7 +56,7 @@ class OrderTable extends Component
         }
     }
 
-    public function markCompleted(Order $order)
+    public function markCompleted(Order $order): void
     {
         $vehicle = $order->vehicle;
 
@@ -180,13 +180,21 @@ class OrderTable extends Component
                 );
             })
             ->when($this->searchBroker, function ($query) {
-                $query->whereHas('broker', function ($query) {
-                    $query->where(
-                        'company_name',
-                        'like',
-                        '%' . $this->searchBroker . '%',
-                    );
-                });
+                $query
+                    ->whereHas('broker', function ($query) {
+                        $query->where(
+                            'company_name',
+                            'like',
+                            '%' . $this->searchBroker . '%',
+                        );
+                    })
+                    ->orWhereHas('finance_broker', function ($query) {
+                        $query->where(
+                            'company_name',
+                            'like',
+                            '%' . $this->searchBroker . '%',
+                        );
+                    });
             })
             ->when($this->searchDealer, function ($query) {
                 $query->whereHas('dealer', function ($query) {
