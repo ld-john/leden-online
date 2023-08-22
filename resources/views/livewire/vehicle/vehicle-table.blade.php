@@ -143,7 +143,7 @@
                         <br>(Orbit Number: {{ $vehicle->orbit_number }})
                     @endif
                 </td>
-                <td>{{$vehicle->manufacturer->name}}</td>
+                <td>{{$vehicle->manufacturer?->name}}</td>
                 <td>{{ $vehicle->model }}</td>
                 <td>{{ $vehicle->ford_order_number }}</td>
                 <td>{{ $vehicle->derivative }}</td>
