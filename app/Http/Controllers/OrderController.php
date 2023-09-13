@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\BrokersOrderDownload;
+use App\Models\Comment;
 use App\Models\Company;
 use App\Models\Finance\FinanceType;
 use App\Models\Finance\InitialPayment;
@@ -324,6 +325,27 @@ class OrderController extends Controller
             $vehicleDetailsHtml .= '</tr>';
         }
 
+        $comments = Comment::where('commentable_id', $order->id)
+            ->where('commentable_type', 'order')
+            ->where('dealer_comment', true)
+            ->orderBy('created_at')
+            ->get();
+        $comments_table =
+            '<table cellspacing="0" cellpadding="0" border="0" width="100%" class="contents" style="margin-top: 10px"><tr><th colspan="2">Comments</th></tr>';
+        if ($comments) {
+            foreach ($comments as $comment) {
+                $comments_table .=
+                    '<tr><td>' .
+                    $comment->user->firstname .
+                    ' ' .
+                    $comment->user->lastname .
+                    '</td><td>' .
+                    strip_tags($comment->content) .
+                    '</td></tr>';
+            }
+        }
+        $comments_table .= '</table>';
+
         $data = [
             'order' => $order,
             'deliveryAddress' => $deliveryAddress,
@@ -336,6 +358,7 @@ class OrderController extends Controller
             'subtotal' => $subtotal,
             'vat' => $vat,
             'total' => $total,
+            'comments_table' => $comments_table,
         ];
 
         $pdf = app('dompdf.wrapper');
@@ -370,6 +393,22 @@ class OrderController extends Controller
                 }
             }
         });
+    }
+
+    /**
+     * Forcibly remove a vehicle from the database, completely removing it rather than soft deleting.
+     * @param $order
+     * @return RedirectResponse
+     */
+    public function forceDelete($order): RedirectResponse
+    {
+        Order::withTrashed()
+            ->where('id', $order)
+            ->forceDelete();
+
+        notify()->success($order->id . ' successfully deleted');
+
+        return redirect()->route('order.recycle-bin');
     }
 
     /**

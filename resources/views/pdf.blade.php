@@ -249,6 +249,7 @@
                                 </td>
                             </tr>
                         </table>
+                        {!! $comments_table !!}
                     </td>
                     <td></td>
                     <td width="40%" valign="top">

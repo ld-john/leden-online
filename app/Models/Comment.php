@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property mixed $commentable_id
  * @property mixed $commentable_type
  * @property boolean $private
+ * @property bool|mixed $dealer_comment
  */
 class Comment extends Model
 {

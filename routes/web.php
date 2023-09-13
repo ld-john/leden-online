@@ -77,6 +77,9 @@ Route::middleware('auth')->group(function () {
                 Route::get('/{vehicle}', 'showReserveOrder')->name('reserve');
                 Route::get('/pdf/{order}', 'downloadPDF')->name('pdf');
                 Route::get('/delete/{order}', 'destroy')->name('destroy');
+                Route::get('/force-delete/{order}', 'forceDelete')->name(
+                    'force-delete',
+                );
             });
     });
 

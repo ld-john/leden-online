@@ -4,9 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Update to add Null check to Finance Broker check in Universal Search blade">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Added Nullification check to Manufacturer on the Vehicle Table">
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/RestoreOrder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/factories/CommentFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2023_09_12_143105_add_dealer_comments_to_comments_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/order/restore-order.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/CommentBox.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/CommentBox.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Comment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/comment-box.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/comment-box.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/deleted.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/deleted.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pdf.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pdf.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +39,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -184,6 +198,7 @@
       <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
       <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
       <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
+      <path value="$PROJECT_DIR$/vendor/psr/clock" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -203,6 +218,7 @@
     &quot;Project.color&quot;: &quot;082c62&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.laravel-idea.update-module-directories&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/rapidrenewables/wp-content/themes/rapid-theme&quot;,
@@ -515,7 +531,10 @@
       <workItem from="1692371973944" duration="3642000" />
       <workItem from="1692606518317" duration="2991000" />
       <workItem from="1692625971088" duration="76000" />
-      <workItem from="1692715194673" duration="52000" />
+      <workItem from="1692715194673" duration="5841000" />
+      <workItem from="1693824317209" duration="9170000" />
+      <workItem from="1694178158242" duration="1022000" />
+      <workItem from="1694511390710" duration="8684000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -860,7 +879,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -879,7 +898,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Fixed an error with Transmission filtering on Vehicle Tables&#10;Fixed an error with the Order Number on Excel Exports from the dashboard." />
     <MESSAGE value="Organise the Livewire Folder" />
     <MESSAGE value="Changes to the Fit Options" />
     <MESSAGE value="Changes to Invoices&#10;Added an options modal to the vehicle table" />
@@ -904,7 +922,8 @@
     <MESSAGE value="Added Registration to Paper chase Notifications and other tweaks" />
     <MESSAGE value="Added Finance Broker&#10;Added Fleet Procure to Companies&#10;Added Order Recycle Bin" />
     <MESSAGE value="Update to add Null check to Finance Broker check in Universal Search blade" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update to add Null check to Finance Broker check in Universal Search blade" />
+    <MESSAGE value="Added Nullification check to Manufacturer on the Vehicle Table" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Nullification check to Manufacturer on the Vehicle Table" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

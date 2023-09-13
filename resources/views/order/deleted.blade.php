@@ -72,7 +72,19 @@
                                             </ul>
                                         </td>
                                         <td>{{ $order->dealer->company_name ?? ''}}</td>
-                                        <td></td>
+                                        <td>
+                                            <div class="d-grid grid-cols-2 gap-2">
+                                                <livewire:order.restore-order :order="$order" ></livewire:order.restore-order>
+                                                <a
+                                                        href="{{ route('order.force-delete', $order->id) }}"
+                                                        class="btn btn-danger"
+                                                        data-toggle="tooltip"
+                                                        title="PERMANENTLY DELETE"
+                                                >
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </a>
+                                            </div>
+                                        </td>
                                     </tr>
 
                                 @endforeach

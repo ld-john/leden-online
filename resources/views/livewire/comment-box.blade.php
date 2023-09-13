@@ -9,10 +9,14 @@
                 <div id="commentEditor"></div>
             </div>
             @can('admin')
-            <div class="form-check">
-                <input wire:model="privacy" id="private" class="form-check-input" type="checkbox">
-                <label for="private" class="form-check-label">Mark Comment as Private</label>
-            </div>
+                <div class="form-check">
+                    <input wire:model="privacy" id="private" class="form-check-input" type="checkbox">
+                    <label for="private" class="form-check-label">Mark Comment as Private</label>
+                </div>
+                <div class="form-check">
+                    <input wire:model="dealer_comment" id="dealer_comment" class="form-check-input" type="checkbox">
+                    <label for="dealer_comment" class="form-check-label">Mark Comment as Dealer Comment</label>
+                </div>
             @endcan
             <button wire:click="saveComment" class="btn btn-primary mt-3">
                 Save

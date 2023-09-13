@@ -16,9 +16,10 @@ class CommentBox extends Component
     public $commentable_type;
     public $comments;
     public $private_comments;
+    public $dealer_comment = false;
     public $privacy = false;
 
-    public function mount()
+    public function mount(): void
     {
         $this->getComments();
     }
@@ -27,7 +28,7 @@ class CommentBox extends Component
         return view('livewire.comment-box');
     }
 
-    public function saveComment()
+    public function saveComment(): void
     {
         $comment = new Comment();
 
@@ -36,6 +37,7 @@ class CommentBox extends Component
         $comment->commentable_id = $this->commentable_id;
         $comment->commentable_type = $this->commentable_type;
         $comment->private = $this->privacy;
+        $comment->dealer_comment = $this->dealer_comment;
 
         $comment->save();
 
@@ -46,7 +48,7 @@ class CommentBox extends Component
         $this->emit('commentSaved');
     }
 
-    public function deleteComment($id)
+    public function deleteComment($id): void
     {
         $comment = Comment::find($id);
         $comment->delete();
@@ -54,7 +56,7 @@ class CommentBox extends Component
         $this->getComments();
     }
 
-    public function getComments()
+    public function getComments(): void
     {
         $this->comments = Comment::where(
             'commentable_id',
