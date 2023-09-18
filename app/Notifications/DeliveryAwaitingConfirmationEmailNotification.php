@@ -16,7 +16,7 @@ class DeliveryAwaitingConfirmationEmailNotification extends Notification
         $this->order = $order;
     }
 
-    public function via($notifiable): array
+    public function via(): array
     {
         return ['mail'];
     }
@@ -38,6 +38,9 @@ class DeliveryAwaitingConfirmationEmailNotification extends Notification
                     $this->order->vehicle->manufacturer->name .
                     ' ' .
                     $this->order->vehicle->model .
+                    ' - ' .
+                    $this->order->vehicle->reg .
+                    ' ' .
                     ' Orbit Number: ' .
                     $this->order->vehicle->orbit_number .
                     ' with a delivery date of ' .

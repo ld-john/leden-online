@@ -32,6 +32,9 @@ class DeliveryAwaitingConfirmationNotification extends Notification
                 $this->order->vehicle->manufacturer->name .
                 ' ' .
                 $this->order->vehicle->model .
+                ' - ' .
+                $this->order->vehicle->reg .
+                ' ' .
                 ' Orbit Number: ' .
                 $this->order->vehicle->orbit_number .
                 ' on ' .
