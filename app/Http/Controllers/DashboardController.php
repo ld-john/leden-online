@@ -215,12 +215,11 @@ class DashboardController extends Controller
     public function sendRequest(Request $request)
     {
         $user = (new User())->forceFill([
-            'name' => 'John',
-            'email' => 'john.gotobed@linkdigital.co.uk',
+            'name' => 'Availabilities',
+            'email' => 'availabilities@leden.co.uk ',
         ]);
         Mail::to($user)->send(new LoginRequest($request));
         notify()->success('Login Request Submitted');
         return redirect('/');
-        //        return (new LoginRequest($request))->render();
     }
 }

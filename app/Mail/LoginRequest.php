@@ -51,7 +51,7 @@ class LoginRequest extends Mailable
     {
         return new Content(
             markdown: 'mail.login-request',
-            with: ['data' => $this->data, 'url' => 'google.com'],
+            with: ['data' => $this->data],
         );
     }
 }
