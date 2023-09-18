@@ -13,6 +13,8 @@
 
 /* Auth routes */
 
+use App\Http\Controllers\CSVUploadController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeliveriesController;
 use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\OrderController;
@@ -22,6 +24,14 @@ use App\Http\Controllers\UpdatesController;
 Auth::routes();
 
 /* Dashboard Controller routes */
+
+Route::get('/request-login', [DashboardController::class, 'requestLogin'])
+    ->name('request-login')
+    ->withoutMiddleware('auth');
+
+Route::post('/request-login', [DashboardController::class, 'sendRequest'])
+    ->name('send-request')
+    ->withoutMiddleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::controller('DashboardController')->group(function () {
@@ -382,4 +392,7 @@ Route::middleware('auth')->group(function () {
                 'Finance\MileagesController@index',
             )->name('mileage.index');
         });
+    Route::get('api-test', [CSVUploadController::class, 'apiTest'])->name(
+        'api-test',
+    );
 });

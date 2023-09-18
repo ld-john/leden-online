@@ -14,11 +14,13 @@ use App\Models\Vehicle;
 use App\Models\VehicleModel;
 use App\Notifications\VehicleInStockNotification;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 
@@ -353,5 +355,23 @@ class CSVUploadController extends Controller
             }
         }
         return redirect()->route('meta.factoryfit.index');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function apiTest()
+    {
+        $username = '28.+HM9zvc/BE}5SSIs_1+u8z';
+        $pass = '(+oX+5H<££}["7z3q%26K\'F5lsq';
+        $response = Http::get(
+            'http://test.fleetprocure.com/portal/api/open-orders',
+            [
+                'username' => $username,
+                'password' => $pass,
+            ],
+        );
+        ddd($response);
+        return view('test-view');
     }
 }

@@ -4,7 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Add Dealer Comments that will appear on order PDF&#10;Add Order Recycle Bin with restore functionality" />
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Staging Branch Created">
+      <change afterPath="$PROJECT_DIR$/app/Mail/LoginRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/components/input-field.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/request-login.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/mail/login-request.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/test-view.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/html/button.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/html/footer.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/html/header.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/html/layout.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/html/message.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/html/panel.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/html/subcopy.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/html/table.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/html/themes/default.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/text/button.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/text/footer.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/text/header.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/text/layout.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/text/message.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/text/panel.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/text/subcopy.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/mail/text/table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/leden.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Leden.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/mail.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/mail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -204,7 +237,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.laravel-idea.update-module-directories&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;staging&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/rapidrenewables/wp-content/themes/rapid-theme&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -519,7 +552,9 @@
       <workItem from="1693824317209" duration="9170000" />
       <workItem from="1694178158242" duration="1022000" />
       <workItem from="1694511390710" duration="8684000" />
-      <workItem from="1694611324728" duration="397000" />
+      <workItem from="1694611324728" duration="1139000" />
+      <workItem from="1694614774647" duration="114000" />
+      <workItem from="1695029994876" duration="10468000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -864,7 +899,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -883,7 +918,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Changes to the Fit Options" />
     <MESSAGE value="Changes to Invoices&#10;Added an options modal to the vehicle table" />
     <MESSAGE value="Reservations Setup" />
     <MESSAGE value="New Fit Option Uploader&#10;Admin Override Reservation updates" />
@@ -908,7 +942,8 @@
     <MESSAGE value="Update to add Null check to Finance Broker check in Universal Search blade" />
     <MESSAGE value="Added Nullification check to Manufacturer on the Vehicle Table" />
     <MESSAGE value="Add Dealer Comments that will appear on order PDF&#10;Add Order Recycle Bin with restore functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Dealer Comments that will appear on order PDF&#10;Add Order Recycle Bin with restore functionality" />
+    <MESSAGE value="Staging Branch Created" />
+    <option name="LAST_COMMIT_MESSAGE" value="Staging Branch Created" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

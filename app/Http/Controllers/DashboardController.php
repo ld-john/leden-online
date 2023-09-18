@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\LoginRequest;
 use App\Models\Order;
 use App\Models\Updates;
+use App\Models\User;
 use App\Models\Vehicle;
+use Faker\Provider\Address;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Auth;
+use Mail;
+use ReflectionException;
 
 class DashboardController extends Controller
 {
@@ -61,7 +67,6 @@ class DashboardController extends Controller
                 'completed_orders' => $completed->count(),
             ]);
         } else {
-
             $data = Vehicle::where('vehicle_status', 1)
                 ->select(['id', 'make', 'model', 'reg', 'type'])
                 ->with('manufacturer:id,name')
@@ -197,5 +202,25 @@ class DashboardController extends Controller
         $notification->save();
 
         return redirect()->back();
+    }
+
+    public function requestLogin()
+    {
+        return view('dashboard.request-login');
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function sendRequest(Request $request)
+    {
+        $user = (new User())->forceFill([
+            'name' => 'John',
+            'email' => 'john.gotobed@linkdigital.co.uk',
+        ]);
+        Mail::to($user)->send(new LoginRequest($request));
+        notify()->success('Login Request Submitted');
+        return redirect('/');
+        //        return (new LoginRequest($request))->render();
     }
 }
