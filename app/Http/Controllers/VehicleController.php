@@ -520,7 +520,7 @@ class VehicleController extends Controller
         ]);
         Mail::to($mailUser)->send(new RequestOTR($user, $vehicle));
         notify()->success(
-            'A request has been sent to Leden for an OTR. Someone will be in touch with you within 3 working days.',
+            'A request has been sent to Leden for an OTR. Someone will be in touch with you shortly.',
             'OTR Requested',
         );
         return redirect(route('vehicle.show', $vehicle->id));
