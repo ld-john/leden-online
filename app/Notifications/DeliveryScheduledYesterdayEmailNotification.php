@@ -24,7 +24,7 @@ class DeliveryScheduledYesterdayEmailNotification extends Notification
     {
         return (new MailMessage())
             ->line(
-                'A delivery shipped yesterday for a ' .
+                'A delivery was made yesterday for a ' .
                     $this->delivery->order->vehicle->manufacturer->name .
                     ' ' .
                     $this->delivery->order->vehicle->model .
@@ -32,7 +32,7 @@ class DeliveryScheduledYesterdayEmailNotification extends Notification
                     $this->delivery->order?->id .
                     '. This vehicle has the registration number: ' .
                     $this->delivery->order?->vehicle?->reg .
-                    '. Please ensure that paperwork is sent to Leden\'s offices.',
+                    '. please ensure paperwork is sent to Leden at handovers@leden.co.uk.',
             )
             ->action(
                 'View the Order Here',

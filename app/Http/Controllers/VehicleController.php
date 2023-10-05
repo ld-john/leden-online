@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Exports\BrokersStockDownload;
 use App\Exports\DashboardExports;
+use App\Mail\LoginRequest;
+use App\Mail\RequestOTR;
 use App\Models\Company;
 use App\Models\Reservation;
+use App\Models\User;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
@@ -13,6 +16,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -504,5 +508,21 @@ class VehicleController extends Controller
             }
         });
         var_dump('Check Completed');
+    }
+
+    public function request_otr(Vehicle $vehicle)
+    {
+        $user = Auth::user();
+
+        $mailUser = (new User())->forceFill([
+            'name' => 'Availabilities',
+            'email' => 'availabilities@leden.co.uk ',
+        ]);
+        Mail::to($mailUser)->send(new RequestOTR($user, $vehicle));
+        notify()->success(
+            'A request has been sent to Leden for an OTR. Someone will be in touch with you within 3 working days.',
+            'OTR Requested',
+        );
+        return redirect(route('vehicle.show', $vehicle->id));
     }
 }

@@ -4,12 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Updated the Email Address for Login Requests">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Added the Reg Number to all Scheduled Delivery emails">
+      <change afterPath="$PROJECT_DIR$/app/Mail/RequestOTR.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/emails/request-o-t-r.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationEmailNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationEmailNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledTomorrowNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledTomorrowNotification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Vehicle.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledTomorrowEmailNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledTomorrowEmailNotification.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledYesterdayEmailNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledYesterdayEmailNotification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/test-view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/test-view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -528,7 +538,10 @@
       <workItem from="1694611324728" duration="1139000" />
       <workItem from="1694614774647" duration="114000" />
       <workItem from="1695029994876" duration="10913000" />
-      <workItem from="1695049219661" duration="266000" />
+      <workItem from="1695049219661" duration="1811000" />
+      <workItem from="1695117059125" duration="639000" />
+      <workItem from="1695820179335" duration="1700000" />
+      <workItem from="1696510090625" duration="4848000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -873,7 +886,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -892,7 +905,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="New Fit Option Uploader&#10;Admin Override Reservation updates" />
     <MESSAGE value="Updates" />
     <MESSAGE value="Minor Issue Fixes&#10;Added a page to edit, add and delete models and makes" />
     <MESSAGE value="Added Delivery Management Through the Website&#10;Added Private Comments" />
@@ -917,7 +929,8 @@
     <MESSAGE value="Staging Branch Created" />
     <MESSAGE value="Added new Request Login to homepage" />
     <MESSAGE value="Updated the Email Address for Login Requests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated the Email Address for Login Requests" />
+    <MESSAGE value="Added the Reg Number to all Scheduled Delivery emails" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the Reg Number to all Scheduled Delivery emails" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

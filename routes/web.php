@@ -128,6 +128,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/ford-pipeline', 'showFordPipeline')->name('pipeline.ford');
         Route::prefix('vehicle')->group(function () {
             Route::name('vehicle.')->group(function () {
+                Route::get('otr/{vehicle}', 'request_otr')->name('request-otr');
                 Route::get('/delete/{vehicle}', 'destroy')->name('delete');
                 Route::get('/view/{vehicle}', 'show')->name('show');
                 Route::get('/edit/{vehicle}', 'edit')->name('edit');

@@ -68,6 +68,7 @@
                     <option value="13">Awaiting Ship</option>
                     <option value="14">Recall</option>
                     <option value="16">Damaged/Recalled</option>
+                    <option value="17">In Stock (Awaiting Dealer Options)</option>
                 </select>
             </div>
             @if($errors->count())
