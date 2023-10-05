@@ -4,22 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Added the Reg Number to all Scheduled Delivery emails">
-      <change afterPath="$PROJECT_DIR$/app/Mail/RequestOTR.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/emails/request-o-t-r.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Vehicle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledTomorrowEmailNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledTomorrowEmailNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledYesterdayEmailNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryScheduledYesterdayEmailNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/test-view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/test-view.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Added Request OTR Button to Show Vehicle page&#10;Tweaks to the Delivery Scheduled Notification Emails&#10;Added new Status In Stock (Awaiting Dealer Options)">
+      <change beforePath="$PROJECT_DIR$/resources/views/emails/request-o-t-r.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/request-o-t-r.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -541,7 +527,7 @@
       <workItem from="1695049219661" duration="1811000" />
       <workItem from="1695117059125" duration="639000" />
       <workItem from="1695820179335" duration="1700000" />
-      <workItem from="1696510090625" duration="4848000" />
+      <workItem from="1696510090625" duration="5120000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -886,7 +872,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -905,7 +891,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Updates" />
     <MESSAGE value="Minor Issue Fixes&#10;Added a page to edit, add and delete models and makes" />
     <MESSAGE value="Added Delivery Management Through the Website&#10;Added Private Comments" />
     <MESSAGE value="Tweaks to the Comments system and the File Upload for Funder Confirmation" />
@@ -930,7 +915,8 @@
     <MESSAGE value="Added new Request Login to homepage" />
     <MESSAGE value="Updated the Email Address for Login Requests" />
     <MESSAGE value="Added the Reg Number to all Scheduled Delivery emails" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the Reg Number to all Scheduled Delivery emails" />
+    <MESSAGE value="Added Request OTR Button to Show Vehicle page&#10;Tweaks to the Delivery Scheduled Notification Emails&#10;Added new Status In Stock (Awaiting Dealer Options)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Request OTR Button to Show Vehicle page&#10;Tweaks to the Delivery Scheduled Notification Emails&#10;Added new Status In Stock (Awaiting Dealer Options)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
