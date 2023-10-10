@@ -14,11 +14,13 @@ use App\Models\Vehicle;
 use App\Models\VehicleModel;
 use App\Notifications\VehicleInStockNotification;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 
@@ -182,7 +184,7 @@ class CSVUploadController extends Controller
             );
             return redirect()->route('pipeline');
         } elseif ($request->input('upload_type') === 'ford_create') {
-            $exclude_status = [1, 3, 5, 6, 7, 14, 15];
+            $exclude_status = [1, 3, 5, 6, 7, 14, 15, 17];
 
             foreach ($vehicle_uploads as $ford_report) {
                 $vehicle = Vehicle::where(
@@ -353,5 +355,22 @@ class CSVUploadController extends Controller
             }
         }
         return redirect()->route('meta.factoryfit.index');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function apiTest()
+    {
+        $username = '28.+HM9zvc/BE}5SSIs_1+u8z';
+        $pass = 'Og7f/3<MgbfHw,(_1GsL9V(gT';
+        $response = Http::get(
+            'http://test.fleetprocure.com/portal/api/open-orders',
+            [
+                'username' => $username,
+                'password' => $pass,
+            ],
+        );
+        return view('test-view', ['response' => $response]);
     }
 }

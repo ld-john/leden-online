@@ -202,19 +202,20 @@
                                     @can('admin')
                                         <a class="btn btn-warning" href="{{ route('order.reserve', $vehicle->id ) }}">Place Order with Vehicle #{{ $vehicle->id }}</a>
                                     @endcan
-                                    @can('broker')
-                                        @if ($reservation_allowed)
-                                            <a class="btn btn-secondary" href="{{ route('reservation.create', $vehicle->id ) }}">Reserve Vehicle #{{ $vehicle->id }}</a>
-                                        @endif
-                                    @endcan
                                 @endif
-
                                 @if (!$vehicle->order)
                                     @can('broker')
-                                        @if (Auth::user()->company_id === $vehicle->reservation?->broker_id)
-                                            {{ $vehicle->reservation->customer->fullName }} has reserved this vehicle until {{ \Carbon\Carbon::parse($vehicle->reservation->expiry_date)->format('d/m/Y') }}
+                                        @if($vehicle->reservation)
+                                            @if (Auth::user()->company_id === $vehicle->reservation?->broker_id)
+                                                {{ $vehicle->reservation->customer->fullName }} has reserved this vehicle until {{ \Carbon\Carbon::parse($vehicle->reservation->expiry_date)->format('d/m/Y') }}
+                                            @else
+                                                Vehicle is on order or reserved by a different company
+                                            @endif
                                         @else
-                                            Vehicle is on order or reserved by a different company
+                                            @if ($reservation_allowed)
+                                                <a class="btn btn-secondary" href="{{ route('reservation.create', $vehicle->id ) }}">Reserve Vehicle #{{ $vehicle->id }}</a>
+                                            @endif
+                                                <a class="btn btn-warning" href="{{ route('vehicle.request-otr', $vehicle->id) }}">Request OTR for Vehicle #{{ $vehicle->id }}</a>
                                         @endif
                                     @endcan
                                     @can('admin')

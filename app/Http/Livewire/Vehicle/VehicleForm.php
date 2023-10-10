@@ -36,7 +36,6 @@ class VehicleForm extends Component
         return [];
     }
     public $vehicle;
-
     public $make;
     public $orbit_number;
     public $model;

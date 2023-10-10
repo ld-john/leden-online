@@ -4,22 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Added Nullification check to Manufacturer on the Vehicle Table">
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/RestoreOrder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/CommentFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2023_09_12_143105_add_dealer_comments_to_comments_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/order/restore-order.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Tweak to the OTR Request Email">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/CommentBox.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/CommentBox.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Comment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/comment-box.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/comment-box.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/deleted.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/deleted.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pdf.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pdf.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +206,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.laravel-idea.update-module-directories&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;staging&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/rapidrenewables/wp-content/themes/rapid-theme&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -535,6 +521,13 @@
       <workItem from="1693824317209" duration="9170000" />
       <workItem from="1694178158242" duration="1022000" />
       <workItem from="1694511390710" duration="8684000" />
+      <workItem from="1694611324728" duration="1139000" />
+      <workItem from="1694614774647" duration="114000" />
+      <workItem from="1695029994876" duration="10913000" />
+      <workItem from="1695049219661" duration="1811000" />
+      <workItem from="1695117059125" duration="639000" />
+      <workItem from="1695820179335" duration="1700000" />
+      <workItem from="1696510090625" duration="5639000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -879,7 +872,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -898,13 +891,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Organise the Livewire Folder" />
-    <MESSAGE value="Changes to the Fit Options" />
-    <MESSAGE value="Changes to Invoices&#10;Added an options modal to the vehicle table" />
-    <MESSAGE value="Reservations Setup" />
-    <MESSAGE value="New Fit Option Uploader&#10;Admin Override Reservation updates" />
-    <MESSAGE value="Updates" />
-    <MESSAGE value="Minor Issue Fixes&#10;Added a page to edit, add and delete models and makes" />
     <MESSAGE value="Added Delivery Management Through the Website&#10;Added Private Comments" />
     <MESSAGE value="Tweaks to the Comments system and the File Upload for Funder Confirmation" />
     <MESSAGE value="Tweaks to the Delivery Booking form to allow Brokers to see it&#10;Broker Dashboard now features an In Stock Orders View." />
@@ -923,7 +909,14 @@
     <MESSAGE value="Added Finance Broker&#10;Added Fleet Procure to Companies&#10;Added Order Recycle Bin" />
     <MESSAGE value="Update to add Null check to Finance Broker check in Universal Search blade" />
     <MESSAGE value="Added Nullification check to Manufacturer on the Vehicle Table" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Nullification check to Manufacturer on the Vehicle Table" />
+    <MESSAGE value="Add Dealer Comments that will appear on order PDF&#10;Add Order Recycle Bin with restore functionality" />
+    <MESSAGE value="Staging Branch Created" />
+    <MESSAGE value="Added new Request Login to homepage" />
+    <MESSAGE value="Updated the Email Address for Login Requests" />
+    <MESSAGE value="Added the Reg Number to all Scheduled Delivery emails" />
+    <MESSAGE value="Added Request OTR Button to Show Vehicle page&#10;Tweaks to the Delivery Scheduled Notification Emails&#10;Added new Status In Stock (Awaiting Dealer Options)" />
+    <MESSAGE value="Tweak to the OTR Request Email" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tweak to the OTR Request Email" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

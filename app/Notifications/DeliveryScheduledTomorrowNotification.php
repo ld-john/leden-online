@@ -14,12 +14,12 @@ class DeliveryScheduledTomorrowNotification extends Notification
         $this->delivery = $delivery;
     }
 
-    public function via($notifiable): array
+    public function via(): array
     {
         return ['database'];
     }
 
-    public function toArray($notifiable): array
+    public function toArray(): array
     {
         return [
             'delivery' => $this->delivery->id,
@@ -31,6 +31,8 @@ class DeliveryScheduledTomorrowNotification extends Notification
                 $this->delivery->order->vehicle->model .
                 ', associated with Leden Order #' .
                 $this->delivery->order?->id .
+                '. The vehicle was registration number: ' .
+                $this->delivery->order->vehicle->reg .
                 '. Please ensure that arrangements are made and paperwork is sent to Leden\'s offices.',
         ];
     }
