@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Tweak to the OTR Request Email">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Tweak to the OTR Requested Notification">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -527,7 +528,8 @@
       <workItem from="1695049219661" duration="1811000" />
       <workItem from="1695117059125" duration="639000" />
       <workItem from="1695820179335" duration="1700000" />
-      <workItem from="1696510090625" duration="5639000" />
+      <workItem from="1696510090625" duration="7990000" />
+      <workItem from="1696928987952" duration="2012000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -872,7 +874,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -883,7 +885,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -891,7 +905,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Added Delivery Management Through the Website&#10;Added Private Comments" />
     <MESSAGE value="Tweaks to the Comments system and the File Upload for Funder Confirmation" />
     <MESSAGE value="Tweaks to the Delivery Booking form to allow Brokers to see it&#10;Broker Dashboard now features an In Stock Orders View." />
     <MESSAGE value="Vehicle Meta now related to the Vehicle Model. Old Meta models removed." />
@@ -916,7 +929,8 @@
     <MESSAGE value="Added the Reg Number to all Scheduled Delivery emails" />
     <MESSAGE value="Added Request OTR Button to Show Vehicle page&#10;Tweaks to the Delivery Scheduled Notification Emails&#10;Added new Status In Stock (Awaiting Dealer Options)" />
     <MESSAGE value="Tweak to the OTR Request Email" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tweak to the OTR Request Email" />
+    <MESSAGE value="Tweak to the OTR Requested Notification" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tweak to the OTR Requested Notification" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
