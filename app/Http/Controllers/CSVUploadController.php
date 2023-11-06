@@ -184,7 +184,7 @@ class CSVUploadController extends Controller
             );
             return redirect()->route('pipeline');
         } elseif ($request->input('upload_type') === 'ford_create') {
-            $exclude_status = [1, 3, 5, 6, 7, 14, 15, 17];
+            $exclude_status = [1, 3, 5, 6, 7, 14, 15, 17, 18];
 
             foreach ($vehicle_uploads as $ford_report) {
                 $vehicle = Vehicle::where(
@@ -362,15 +362,18 @@ class CSVUploadController extends Controller
      */
     public function apiTest()
     {
-        $username = '28.+HM9zvc/BE}5SSIs_1+u8z';
-        $pass = 'Og7f/3<MgbfHw,(_1GsL9V(gT';
-        $response = Http::get(
+        $username = 'cars';
+        $pass = 'vans';
+        $response = Http::post(
             'http://test.fleetprocure.com/portal/api/open-orders',
             [
                 'username' => $username,
                 'password' => $pass,
             ],
         );
+
+        $response = $response->json();
+
         return view('test-view', ['response' => $response]);
     }
 }

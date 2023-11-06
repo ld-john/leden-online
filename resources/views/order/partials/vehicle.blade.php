@@ -279,6 +279,7 @@
                 <option value="14">Recall</option>
                 <option value="16">Damaged/Recalled</option>
                 <option value="17">In Stock (Awaiting Dealer Options)</option>
+                <option value="18">Dealer Transfer</option>
             </select>
         </div>
     </div>

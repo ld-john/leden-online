@@ -30,12 +30,12 @@ class DeleteOrder extends Component
     {
         $this->order = $order;
         $this->vehicle = $order->vehicle;
-        $this->vehicleStatus = $order->vehicle->vehicle_status;
+        $this->vehicleStatus = $order->vehicle?->vehicle_status;
         $this->vehicle_status = Vehicle::statusList();
     }
 
     /**
-     * Show or hide the Delete Modal based on it's current state
+     * Show or hide the Delete Modal based on its current state
      * @return void
      */
     public function toggleDeleteModal(): void

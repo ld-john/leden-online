@@ -15,6 +15,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Mail;
 use ReflectionException;
@@ -41,7 +42,7 @@ class DashboardController extends Controller
         $factory_order = $this->GetVehicleByStatus(4, Auth::user()->role);
         $euro_vhc = $this->GetVehicleByStatus(10, Auth::user()->role);
         $uk_vhc = $this->GetVehicleByStatus(11, Auth::user()->role);
-        $in_stock = $this->GetVehicleByStatus(1, Auth::user()->role);
+        $in_stock = $this->GetVehicleByStatus([1, 15, 17], Auth::user()->role);
         $ready_for_delivery = $this->GetVehicleByStatus(3, Auth::user()->role);
         $delivery_booked = $this->GetVehicleByStatus(6, Auth::user()->role);
         $completed = $this->GetVehicleByStatus(7, Auth::user()->role);
@@ -97,12 +98,13 @@ class DashboardController extends Controller
         $factory_order = $this->GetVehicleByStatus(4);
         $euro_vhc = $this->GetVehicleByStatus(10);
         $uk_vhc = $this->GetVehicleByStatus(11);
-        $in_stock = $this->GetVehicleByStatus(1);
+        $in_stock = $this->GetVehicleByStatus([1, 15, 17]);
         $ready_for_delivery = $this->GetVehicleByStatus(3);
         $delivery_booked = $this->GetVehicleByStatus(6);
         $awaiting_ship = $this->GetVehicleByStatus(13);
         $converter = $this->GetVehicleByStatus(12);
-        $registered = $this->GetVehicleByStatus(15);
+        $damaged = $this->getVehicleByStatus(16);
+        $dealer_transfer = $this->getVehicleByStatus(18);
 
         $completed = $this->GetVehicleByStatus(7);
         $live_orders =
@@ -113,7 +115,8 @@ class DashboardController extends Controller
             $ready_for_delivery->count() +
             $delivery_booked->count() +
             $awaiting_ship->count() +
-            $converter->count();
+            $converter->count() +
+            $dealer_transfer->count();
 
         return view('dashboard.dashboard-admin', [
             'in_stock' => $in_stock->count(),
@@ -123,16 +126,18 @@ class DashboardController extends Controller
             'europe_vhc' => $euro_vhc->count(),
             'uk_vhc' => $uk_vhc->count(),
             'delivery_booked' => $delivery_booked->count(),
-            'registered' => $registered->count(),
             'live_orders' => $live_orders,
             'awaiting_ship' => $awaiting_ship->count(),
             'at_converter' => $converter->count(),
+            'damaged' => $damaged->count(),
+            'dealer_transfer' => $dealer_transfer->count(),
         ]);
     }
 
     public static function GetVehicleByStatus($vehicle_status, $role = null)
     {
-        $vehicles = Vehicle::where('vehicle_status', $vehicle_status);
+        $vehicle_status = Arr::wrap($vehicle_status);
+        $vehicles = Vehicle::whereIn('vehicle_status', $vehicle_status);
 
         if ($role === 'dealer') {
             $vehicles->where('dealer_id', Auth::user()->company_id);

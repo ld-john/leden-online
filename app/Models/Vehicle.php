@@ -198,6 +198,7 @@ class Vehicle extends Model
             15 => 'In Stock (Registered)',
             16 => 'Damaged/Recalled',
             17 => 'In Stock (Awaiting Dealer Options)',
+            18 => 'Dealer Transfer',
         ];
     }
 
