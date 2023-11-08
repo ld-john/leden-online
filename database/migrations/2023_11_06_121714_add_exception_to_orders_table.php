@@ -11,7 +11,7 @@ class AddExceptionToOrdersTable extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table
                 ->boolean('exception')
-                ->default(true)
+                ->default(false)
                 ->after('completed_date');
         });
     }

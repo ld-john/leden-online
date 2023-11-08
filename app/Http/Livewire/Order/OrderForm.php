@@ -128,6 +128,8 @@ class OrderForm extends Component
     public $finance_company_bonus_pay_date;
     public $fin_number = '65634';
     public $deal_number = '90191';
+
+    public bool $exception;
     public $finance_broker_toggle = false;
     public $finance_broker;
     public $ford_bonus_invoice;
@@ -398,6 +400,7 @@ class OrderForm extends Component
             $this->rental_value = $this->order->rental;
             $this->maintenance_rental_value = $this->order->maintenance_rental;
             $this->renewal_date = $this->order->renewal_date;
+            $this->exception = $this->order->exception;
         }
     }
 
@@ -553,6 +556,7 @@ class OrderForm extends Component
             $order->rental = $this->rental_value;
             $order->maintenance_rental = $this->maintenance_rental_value;
             $order->renewal_date = $this->renewal_date;
+            $order->exception = $this->exception;
             $order->save();
 
             $this->saveVehicleDetails($vehicle);
@@ -610,6 +614,7 @@ class OrderForm extends Component
                 'rental' => $this->rental_value,
                 'maintenance_rental' => $this->maintenance_rental_value,
                 'renewal_date' => $this->renewal_date,
+                'exception' => $this->exception,
             ]);
 
             if ($order->wasChanged('delivery_date')) {

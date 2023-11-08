@@ -364,13 +364,20 @@ class CSVUploadController extends Controller
     {
         $username = 'cars';
         $pass = 'vans';
-        $response = Http::post(
-            'http://test.fleetprocure.com/portal/api/open-orders',
-            [
-                'username' => $username,
-                'password' => $pass,
-            ],
-        );
+
+        $date = '2023-11-27';
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+        ])
+            ->withBody(json_encode(['stock_eta' => $date]), 'application/json')
+            ->post(
+                'http://test.fleetprocure.com/portal/api/updateorder/8996155',
+                [
+                    'username' => $username,
+                    'password' => $pass,
+                ],
+            );
 
         $response = $response->json();
 

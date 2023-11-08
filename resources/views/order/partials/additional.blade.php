@@ -39,3 +39,11 @@
                class="form-control" autocomplete="off" />
     </div>
 </div>
+
+{{-- Exception --}}
+<div class="form-group row">
+    <label for="exception" class="col-md-2 col-form-label">Exception</label>
+    <div class="col-md-6 form-check form-switch">
+        <input wire:model="exception" class="form-check-input" type="checkbox" id="exception">
+    </div>
+</div>
