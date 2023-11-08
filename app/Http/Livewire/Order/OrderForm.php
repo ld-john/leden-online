@@ -93,6 +93,7 @@ class OrderForm extends Component
     public $first_reg_fee;
     public $rfl_cost;
     public $onward_delivery;
+    public float $leden_discount;
     public $invoice_funder_for;
     public $show_discount = '0'; // Vehicle
     public $show_offer = '0'; // Vehicle
@@ -180,7 +181,6 @@ class OrderForm extends Component
         'invoice_broker_paid' => 'nullable|date',
         'commission_broker_paid' => 'nullable|date',
         'finance_commission_paid' => 'nullable|date',
-        'finance_broker' => 'nullable|numeric|different:broker',
         'finance_broker' => 'nullable|numeric|different:broker',
     ];
     protected $messages = [
@@ -298,6 +298,7 @@ class OrderForm extends Component
 
             $this->invoice_finance =
                 $this->order->invoice->commission_to_finance_company;
+            $this->leden_discount = $this->order->invoice->leden_discount;
             $this->invoice_finance_number =
                 $this->order->invoice->finance_commission_invoice_number;
             $this->invoice_value_to_broker =
@@ -797,6 +798,7 @@ class OrderForm extends Component
         $invoice->finance_commission_invoice_number =
             $this->invoice_finance_number;
         $invoice->update([
+            'leden_discount' => $this->leden_discount,
             'finance_commission_invoice_number' =>
                 $this->invoice_finance_number,
             'broker_invoice_number' => $this->invoice_broker_number,

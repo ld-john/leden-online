@@ -150,7 +150,8 @@ class Order extends Model
     {
         return $this->basicSubTotal() -
             $this->basicDealerDiscount() -
-            $this->basicManufacturerSupport();
+            $this->basicManufacturerSupport() -
+            $this->invoice->leden_discount;
     }
 
     public function totalDiscount()
