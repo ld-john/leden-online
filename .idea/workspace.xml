@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Added new Status to Order Bank">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2023_11_06_121714_add_exception_to_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2023_11_06_121714_add_exception_to_orders_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/exports/finance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/finance.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/exports/reports.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/reports.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/exports/universal.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/universal.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/additional.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/additional.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/reporting/reporting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/reporting/reporting.blade.php" afterDir="false" />
-    </list>
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Add exception to Orders and pull into Reporting" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -541,7 +531,7 @@
       <workItem from="1699269883643" duration="2783000" />
       <workItem from="1699272697368" duration="7020000" />
       <workItem from="1699286022914" duration="54000" />
-      <workItem from="1699438508568" duration="1418000" />
+      <workItem from="1699438508568" duration="1678000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -886,7 +876,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -917,7 +907,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Tweaks to the Delivery Booking form to allow Brokers to see it&#10;Broker Dashboard now features an In Stock Orders View." />
     <MESSAGE value="Vehicle Meta now related to the Vehicle Model. Old Meta models removed." />
     <MESSAGE value="Tweaks" />
     <MESSAGE value="Added Updates for Broker Dashboard (Promotional Banners and News Updates)&#10;Added Laravel Notify to replaced Session flash messages&#10;Tidied all controllers" />
@@ -942,7 +931,8 @@
     <MESSAGE value="Tweak to the OTR Request Email" />
     <MESSAGE value="Tweak to the OTR Requested Notification" />
     <MESSAGE value="Added new Status to Order Bank" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added new Status to Order Bank" />
+    <MESSAGE value="Add exception to Orders and pull into Reporting" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add exception to Orders and pull into Reporting" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
