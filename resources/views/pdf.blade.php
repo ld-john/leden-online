@@ -7,7 +7,7 @@
     <style>
         body {
             font-family:Arial, Helvetica, sans-serif;
-            color: #858796;
+            color: #464646;
             font-size: 10px;
         }
         .contents tr th, .details tr th {

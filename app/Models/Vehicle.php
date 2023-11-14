@@ -141,7 +141,8 @@ class Vehicle extends Model
                 $this->vehicle_status === 14 ||
                 $this->vehicle_status === 15 ||
                 $this->vehicle_status === 16 ||
-                $this->vehicle_status === 17
+                $this->vehicle_status === 17 ||
+                $this->vehicle_status === 18
             ) {
                 $data['location'] = 'Order Bank';
                 $data['route'] = 'order_bank';

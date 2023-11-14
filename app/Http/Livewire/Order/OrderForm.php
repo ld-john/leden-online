@@ -93,7 +93,7 @@ class OrderForm extends Component
     public $first_reg_fee;
     public $rfl_cost;
     public $onward_delivery;
-    public float $leden_discount;
+    public string|float $leden_discount;
     public $invoice_funder_for;
     public $show_discount = '0'; // Vehicle
     public $show_offer = '0'; // Vehicle

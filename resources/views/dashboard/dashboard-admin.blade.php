@@ -71,12 +71,12 @@
                             @endif
                             @if($damaged)
                                 <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100">Damaged/Recalled</a>
+                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.damaged')}}">Damaged/Recalled</a>
                                 </div>
                             @endif
                             @if($dealer_transfer)
                                 <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100">Dealer Transfer</a>
+                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.dealer_transfer')}}">Dealer Transfer</a>
                                 </div>
                             @endif
                         </div>
