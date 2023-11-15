@@ -130,7 +130,7 @@ class OrderForm extends Component
     public $fin_number = '65634';
     public $deal_number = '90191';
 
-    public bool $exception;
+    public bool $exclusion = false;
     public $finance_broker_toggle = false;
     public $finance_broker;
     public $ford_bonus_invoice;
@@ -401,7 +401,7 @@ class OrderForm extends Component
             $this->rental_value = $this->order->rental;
             $this->maintenance_rental_value = $this->order->maintenance_rental;
             $this->renewal_date = $this->order->renewal_date;
-            $this->exception = $this->order->exception;
+            $this->exclusion = $this->order->exception;
         }
     }
 
@@ -557,7 +557,7 @@ class OrderForm extends Component
             $order->rental = $this->rental_value;
             $order->maintenance_rental = $this->maintenance_rental_value;
             $order->renewal_date = $this->renewal_date;
-            $order->exception = $this->exception;
+            $order->exception = $this->exclusion;
             $order->save();
 
             $this->saveVehicleDetails($vehicle);
