@@ -239,6 +239,9 @@
                                 <div class="col">
                                     @include('partials.view-order-cost-section', ['name' => 'Manufacturer Delivery Cost', 'value' => $order->invoice->manufacturer_delivery_cost])
                                     @include('partials.view-order-cost-section', ['name' => 'Onward Delivery', 'value' => $order->invoice->onward_delivery])
+                                    @if($order->invoice?->leden_discount)
+                                        @include('partials.view-order-cost-section', ['name' => 'Flat Discount', 'value' => $order->invoice->leden_discount])
+                                    @endif
                                     @include('partials.view-order-cost-section', ['name' => 'Sub Total', 'value' => $order->invoiceSubTotal()])
                                     @include('partials.view-order-cost-section', ['name' => 'VAT @ 20%', 'value' => $order->invoiceVat()])
 

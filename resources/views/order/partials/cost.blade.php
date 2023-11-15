@@ -69,6 +69,9 @@
         </div>
     </div>
 </div>
+
+
+
 {{-- Total Discount --}}
 <div class="form-group row">
     <label for="total_discount" class="col-md-2 col-form-label">Total Discount</label>
@@ -89,6 +92,21 @@
         </div>
     </div>
 </div>
+
+{{-- Leden Flat Discount --}}
+<div class="form-group row">
+    <label for="leden_discount" class="col-md-2 col-form-label">Leden Discount</label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <div class="input-group-text">
+                £
+            </div>
+            <input wire:model="leden_discount" type="number" name="leden_discount" id="leden_discount" step=".01"
+                   class="form-control" autocomplete="off" />
+        </div>
+    </div>
+</div>
+
 {{-- Manufacturer Delivery Cost --}}
 <div class="form-group row">
     <label for="manufacturer_delivery_cost" class="col-md-2 col-form-label">Manufacturer Delivery Cost</label>

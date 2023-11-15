@@ -14,6 +14,7 @@
         <th>Customer</th>
         <th>Registration Company</th>
         <th>Invoice Company</th>
+        <th>Exception</th>
     </tr>
     </thead>
     <tbody>
@@ -36,6 +37,11 @@
             <td>{{ $order->customer->name() }}</td>
             <td>{{ $order->registration_company?->company_name }}</td>
             <td>{{ $order->invoice_company?->company_name }}</td>
+            @if($order->exception)
+                <td>Yes</td>
+            @else
+                <td>No</td>
+            @endif
         </tr>
     @endforeach
     </tbody>

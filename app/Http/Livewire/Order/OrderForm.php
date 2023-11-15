@@ -93,6 +93,7 @@ class OrderForm extends Component
     public $first_reg_fee;
     public $rfl_cost;
     public $onward_delivery;
+    public string|float $leden_discount;
     public $invoice_funder_for;
     public $show_discount = '0'; // Vehicle
     public $show_offer = '0'; // Vehicle
@@ -128,6 +129,8 @@ class OrderForm extends Component
     public $finance_company_bonus_pay_date;
     public $fin_number = '65634';
     public $deal_number = '90191';
+
+    public bool $exception;
     public $finance_broker_toggle = false;
     public $finance_broker;
     public $ford_bonus_invoice;
@@ -178,7 +181,6 @@ class OrderForm extends Component
         'invoice_broker_paid' => 'nullable|date',
         'commission_broker_paid' => 'nullable|date',
         'finance_commission_paid' => 'nullable|date',
-        'finance_broker' => 'nullable|numeric|different:broker',
         'finance_broker' => 'nullable|numeric|different:broker',
     ];
     protected $messages = [
@@ -296,6 +298,7 @@ class OrderForm extends Component
 
             $this->invoice_finance =
                 $this->order->invoice->commission_to_finance_company;
+            $this->leden_discount = $this->order->invoice->leden_discount;
             $this->invoice_finance_number =
                 $this->order->invoice->finance_commission_invoice_number;
             $this->invoice_value_to_broker =
@@ -398,6 +401,7 @@ class OrderForm extends Component
             $this->rental_value = $this->order->rental;
             $this->maintenance_rental_value = $this->order->maintenance_rental;
             $this->renewal_date = $this->order->renewal_date;
+            $this->exception = $this->order->exception;
         }
     }
 
@@ -553,6 +557,7 @@ class OrderForm extends Component
             $order->rental = $this->rental_value;
             $order->maintenance_rental = $this->maintenance_rental_value;
             $order->renewal_date = $this->renewal_date;
+            $order->exception = $this->exception;
             $order->save();
 
             $this->saveVehicleDetails($vehicle);
@@ -610,6 +615,7 @@ class OrderForm extends Component
                 'rental' => $this->rental_value,
                 'maintenance_rental' => $this->maintenance_rental_value,
                 'renewal_date' => $this->renewal_date,
+                'exception' => $this->exception,
             ]);
 
             if ($order->wasChanged('delivery_date')) {
@@ -792,6 +798,7 @@ class OrderForm extends Component
         $invoice->finance_commission_invoice_number =
             $this->invoice_finance_number;
         $invoice->update([
+            'leden_discount' => $this->leden_discount,
             'finance_commission_invoice_number' =>
                 $this->invoice_finance_number,
             'broker_invoice_number' => $this->invoice_broker_number,

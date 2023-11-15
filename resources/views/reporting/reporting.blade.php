@@ -14,7 +14,7 @@
                 <h6 class="m-0 font-weight-bold">Downloads</h6>
             </div>
             <div class="card-body">
-                <h5>Registered - Month</h5>
+                <h5>Registered—Month</h5>
                 <div class="row">
                     <div class="accordion" id="reportingMonths">
                         @foreach($registeredMonths as $year => $months)

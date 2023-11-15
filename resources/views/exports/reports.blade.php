@@ -21,6 +21,7 @@
         <th>Broker</th>
         <th>Commission to Broker</th>
         <th>Leden Commission</th>
+        <th>Exception</th>
     </tr>
     </thead>
     <tbody>
@@ -93,7 +94,13 @@
                 <td></td>
             @endif
             <td>
-                £{{ number_format(($invoice_diff + $vehicle->order?->invoice->commission_to_finance_company + $vehicle->order?->invoice->invoice_value_to_broker ) - $vehicle->order?->invoice->commission_to_broker, 2) }}</td>
+                £{{ number_format(($invoice_diff + $vehicle->order?->invoice->commission_to_finance_company + $vehicle->order?->invoice->invoice_value_to_broker ) - $vehicle->order?->invoice->commission_to_broker, 2) }}
+            </td>
+            @if($vehicle->order?->exception)
+                <td>Yes</td>
+            @else
+                <td>No</td>
+            @endif
         </tr>
         @endforeach
     </tbody>

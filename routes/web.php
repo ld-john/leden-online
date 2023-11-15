@@ -172,10 +172,11 @@ Route::middleware('auth')->group(function () {
                     Route::get('/atconverter/', 'at_converter_export')->name(
                         'at_converter',
                     );
+                    Route::get('/damaged/', 'damaged_export')->name('damaged');
                     Route::get(
-                        '/registered/',
-                        'in_stock_registered_export',
-                    )->name('registered');
+                        '/dealertransfer',
+                        'dealer_transfer_export',
+                    )->name('dealer_transfer');
                 });
         });
     });

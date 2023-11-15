@@ -69,9 +69,14 @@
                                     <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.at_converter')}}">Download At Converter</a>
                                 </div>
                             @endif
-                            @if($registered)
+                            @if($damaged)
                                 <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.registered')}}">Download In Stock (Registered)</a>
+                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.damaged')}}">Damaged/Recalled</a>
+                                </div>
+                            @endif
+                            @if($dealer_transfer)
+                                <div class="col col-3">
+                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.dealer_transfer')}}">Dealer Transfer</a>
                                 </div>
                             @endif
                         </div>
@@ -113,7 +118,8 @@
                     "Delivery Booked - {{ $delivery_booked }}",
                     "Awaiting Ship - {{ $awaiting_ship }}",
                     "At Converter - {{ $at_converter }}",
-                    "In Stock (Registered) - {{ $registered }}"
+                    "Damaged - {{ $damaged }}",
+                    "Dealer Transfer - {{ $dealer_transfer }}"
                 ],
                 datasets: [{
                     backgroundColor: [
@@ -127,7 +133,7 @@
                         "#1abaff",
                         "#33c2ff"
                     ],
-                    data: [{{ $factory_order }}, {{ $europe_vhc }}, {{ $uk_vhc }}, {{ $in_stock }}, {{ $ready_for_delivery }}, {{ $delivery_booked }}, {{ $awaiting_ship }}, {{ $at_converter }}, {{ $registered }} ]
+                    data: [{{ $factory_order }}, {{ $europe_vhc }}, {{ $uk_vhc }}, {{ $in_stock }}, {{ $ready_for_delivery }}, {{ $delivery_booked }}, {{ $awaiting_ship }}, {{ $at_converter }}, {{ $damaged }}, {{ $dealer_transfer }} ]
                 }]
             },
             options: {

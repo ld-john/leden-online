@@ -23,6 +23,7 @@
         <th>Factory Fit Options</th>
         <th>Dealer Fit Options</th>
         <th>Website Location</th>
+        <th>Exclusion</th>
     </tr>
     </thead>
     <tbody>
@@ -69,6 +70,11 @@
                 @endphp
                 {{ $button['location'] }}
             </td>
+            @if($vehicle->order?->exception)
+                <td>Yes</td>
+            @else
+                <td>No</td>
+            @endif
         </tr>
     @endforeach
     </tbody>
