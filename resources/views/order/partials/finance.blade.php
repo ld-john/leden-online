@@ -71,19 +71,6 @@
         </select>
     </div>
 </div>
-{{-- Leden Flat Discount --}}
-<div class="form-group row">
-    <label for="leden_discount" class="col-md-2 col-form-label">Leden Discount</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <div class="input-group-text">
-                £
-            </div>
-            <input wire:model="leden_discount" type="number" name="leden_discount" id="leden_discount" step=".01"
-                   class="form-control" autocomplete="off" />
-        </div>
-    </div>
-</div>
 {{-- Rental --}}
 <div class="form-group row">
     <label for="rental_value" class="col-md-2 col-form-label">Rental</label>

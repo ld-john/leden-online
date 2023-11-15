@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Add a Flat Leden Discount to Invoices and show on the total of orders without showing the amount.">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Moved Leden Discount into the Cost Breakdown section&#10;&#10;Added Dealer Transfer to the Quick Order Edit status list">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/UniversalSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/UniversalSearch.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Vehicle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/dashboard-admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/dashboard-admin.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/additional.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/additional.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pdf.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pdf.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/finance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/finance.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -541,7 +537,9 @@
       <workItem from="1699272697368" duration="7020000" />
       <workItem from="1699286022914" duration="54000" />
       <workItem from="1699438508568" duration="5659000" />
-      <workItem from="1699969648087" duration="2082000" />
+      <workItem from="1699969648087" duration="2884000" />
+      <workItem from="1700041263440" duration="1026000" />
+      <workItem from="1700057348726" duration="675000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -886,7 +884,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -917,8 +915,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Tweaks" />
-    <MESSAGE value="Added Updates for Broker Dashboard (Promotional Banners and News Updates)&#10;Added Laravel Notify to replaced Session flash messages&#10;Tidied all controllers" />
     <MESSAGE value="Updates to Reporting View" />
     <MESSAGE value="Tweaks to the reporting" />
     <MESSAGE value="Add Locations to match with the Ford Report" />
@@ -942,7 +938,9 @@
     <MESSAGE value="Added new Status to Order Bank" />
     <MESSAGE value="Add exception to Orders and pull into Reporting" />
     <MESSAGE value="Add a Flat Leden Discount to Invoices and show on the total of orders without showing the amount." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add a Flat Leden Discount to Invoices and show on the total of orders without showing the amount." />
+    <MESSAGE value="Changed Exception name, added new Status downloads and Universal Search, altered colour of text on Order PDF." />
+    <MESSAGE value="Moved Leden Discount into the Cost Breakdown section&#10;&#10;Added Dealer Transfer to the Quick Order Edit status list" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved Leden Discount into the Cost Breakdown section&#10;&#10;Added Dealer Transfer to the Quick Order Edit status list" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
