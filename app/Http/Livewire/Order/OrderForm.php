@@ -615,7 +615,7 @@ class OrderForm extends Component
                 'rental' => $this->rental_value,
                 'maintenance_rental' => $this->maintenance_rental_value,
                 'renewal_date' => $this->renewal_date,
-                'exception' => $this->exception,
+                'exception' => $this->exclusion,
             ]);
 
             if ($order->wasChanged('delivery_date')) {
