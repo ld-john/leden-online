@@ -284,9 +284,17 @@ class ReportingController extends Controller
      */
     public function registeredQuarters()
     {
-        $start_date = $this->registeredMonths()[2021][0]['label'];
+        $registeredMonths = collect($this->registeredMonths())->flatten(1);
+
+        $latestMonth = Carbon::createFromFormat(
+            'F Y',
+            $registeredMonths->pop()['label'],
+        )->addMonths(3);
+
+        $start_date = $registeredMonths->take(1)[0]['label'];
+
         $start = Carbon::createFromFormat('F Y', $start_date)->monthsUntil(
-            now(),
+            $latestMonth,
             3,
         );
         $data = [];
@@ -318,7 +326,14 @@ class ReportingController extends Controller
                 return $value !== '-0001 11';
             })
             ->map(function ($item) {
-                return ['label' => Carbon::createFromFormat('Y m', $item)->format('F Y'), 'year' => Carbon::createFromFormat('Y m', $item)->format('Y')];
+                return [
+                    'label' => Carbon::createFromFormat('Y m', $item)->format(
+                        'F Y',
+                    ),
+                    'year' => Carbon::createFromFormat('Y m', $item)->format(
+                        'Y',
+                    ),
+                ];
             })
             ->unique()
             ->groupBy('year')
@@ -349,7 +364,14 @@ class ReportingController extends Controller
                 return $value !== '-0001 11';
             })
             ->map(function ($item) {
-                return ['label' => Carbon::createFromFormat('Y m', $item)->format('F Y'), 'year' => Carbon::createFromFormat('Y m', $item)->format('Y')];
+                return [
+                    'label' => Carbon::createFromFormat('Y m', $item)->format(
+                        'F Y',
+                    ),
+                    'year' => Carbon::createFromFormat('Y m', $item)->format(
+                        'Y',
+                    ),
+                ];
             })
             ->unique()
             ->groupBy('year')
@@ -400,7 +422,7 @@ class ReportingController extends Controller
     }
 
     /**
-     * Get the last 4 quarters based on the current date
+     * Get the last four quarters based on the current date
      * @return array
      */
     public function quarters(): array
@@ -515,7 +537,7 @@ class ReportingController extends Controller
      * When given a report type and a selection of dates, prepare the data for a report.
      * @param string $type
      * @param array $dates
-     * @return _IH_Vehicle_C|Builder|\Illuminate\Database\Eloquent\Collection|Vehicle
+     * @return Builder[]|\Illuminate\Database\Eloquent\Collection|\LaravelIdea\Helper\App\Models\_IH_Vehicle_C|Vehicle[]
      */
     public function returnDataForReports(string $type, array $dates)
     {

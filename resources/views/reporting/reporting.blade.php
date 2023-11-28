@@ -47,9 +47,6 @@
                             <a href="{{ route('quarter-registered', [$quarter['quarter'], $quarter['year']]) }}" class="btn btn-secondary h-100 w-full">Q{{ $quarter['quarter'] }} {{ $quarter['year'] }}</a>
                         </div>
                     @endforeach
-                    <div class="col col-3 mb-4">
-                        <a href="{{ route('quarter-registered' ) }}" class="btn btn-secondary h-100 w-full">Current</a>
-                    </div>
                 </div>
                 <hr>
                 <h5 class="mt-4">Renewal Reports</h5>
@@ -206,7 +203,7 @@
                     </a>
                 @endforeach
             </div>
-        </div>
+</div>
         @endsection
 
         @push('custom-scripts')

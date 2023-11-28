@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Solving the problem... step 2">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Hiding the Flat Discount">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/reporting/reporting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/reporting/reporting.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -541,7 +542,8 @@
       <workItem from="1700062286283" duration="192000" />
       <workItem from="1700066279095" duration="322000" />
       <workItem from="1700125633579" duration="317000" />
-      <workItem from="1700225105550" duration="42000" />
+      <workItem from="1700225105550" duration="203000" />
+      <workItem from="1701172031876" duration="6467000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -886,7 +888,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -917,7 +919,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Add Finance Information and Renewal Report&#10;Added Options to add new Finance Information&#10;Added Migrations" />
     <MESSAGE value="Moved all Models to a Models Folder" />
     <MESSAGE value="Added Quick Edit Ring Fence to allow Ring Fenced stock to transfer directly between brokers&#10;Added Notifications for adding the Registration Number and email notification for if the vehicle is in stock" />
     <MESSAGE value="Added Contract Confirmation button to order table which can be toggled by those with the manages deliveries permission&#10;Rearranged all buttons into a grid layout." />
@@ -942,7 +943,8 @@
     <MESSAGE value="Add Dealer Transfer to Order Bank" />
     <MESSAGE value="Changed Exception to Exclusion to see if that solves problem" />
     <MESSAGE value="Solving the problem... step 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Solving the problem... step 2" />
+    <MESSAGE value="Hiding the Flat Discount" />
+    <option name="LAST_COMMIT_MESSAGE" value="Hiding the Flat Discount" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
