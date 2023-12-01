@@ -45,7 +45,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col me-2">
                         <div class="text-xs font-weight-bold text-l-blue text-uppercase mb-1">In Stock Orders</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $in_stock }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $vehicle_statuses['In Stock'] }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-receipt fa-2x text-gray-300"></i>
@@ -62,7 +62,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col me-2">
                         <div class="text-xs font-weight-bold text-l-blue text-uppercase mb-1">Completed Orders</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $completed_orders }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $vehicle_statuses['Completed Orders'] }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-check fa-2x text-gray-300"></i>
@@ -95,7 +95,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col me-2">
                         <div class="text-xs font-weight-bold text-l-blue text-uppercase mb-1">In Stock Orders</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $in_stock }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $vehicle_statuses['In Stock'] }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-receipt fa-2x text-gray-300"></i>
@@ -111,7 +111,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col me-2">
                         <div class="text-xs font-weight-bold text-l-blue text-uppercase mb-1">Completed Orders</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $completed_orders }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $vehicle_statuses['Completed Orders'] }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-check fa-2x text-gray-300"></i>

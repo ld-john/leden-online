@@ -39,33 +39,26 @@ class DashboardController extends Controller
      */
     public function index(): Renderable
     {
-        $factory_order = $this->GetVehicleByStatus(4, Auth::user()->role);
-        $euro_vhc = $this->GetVehicleByStatus(10, Auth::user()->role);
-        $uk_vhc = $this->GetVehicleByStatus(11, Auth::user()->role);
-        $in_stock = $this->GetVehicleByStatus([1, 15, 17], Auth::user()->role);
-        $ready_for_delivery = $this->GetVehicleByStatus(3, Auth::user()->role);
-        $delivery_booked = $this->GetVehicleByStatus(6, Auth::user()->role);
-        $completed = $this->GetVehicleByStatus(7, Auth::user()->role);
-        $awaiting_delivery_confirmation = $this->GetVehicleByStatus(
-            5,
-            Auth::user()->role,
-        );
+        $statuses = $this->GetAllVehiclesByStatus(Auth::user()->role);
         $live_orders =
-            $factory_order->count() +
-            $euro_vhc->count() +
-            $uk_vhc->count() +
-            $in_stock->count() +
-            $ready_for_delivery->count() +
-            $delivery_booked->count() +
-            $awaiting_delivery_confirmation->count();
+            $statuses['Factory Order'] +
+            $statuses['Europe VHC'] +
+            $statuses['UK VHC'] +
+            $statuses['In Stock'] +
+            $statuses['In Stock (Registered)'] +
+            $statuses['In Stock (Awaiting Dealer Options)'] +
+            $statuses['Ready for Delivery'] +
+            $statuses['Delivery Booked'] +
+            $statuses['Awaiting Ship'] +
+            $statuses['At Converter'] +
+            $statuses['Dealer Transfer'];
 
         if (Auth::user()->role == 'admin') {
             return $this->adminDashboard();
         } elseif (Auth::user()->role === 'dealer') {
             return view('dashboard.dashboard-dealer', [
                 'live_orders' => $live_orders,
-                'in_stock' => $in_stock->count(),
-                'completed_orders' => $completed->count(),
+                'vehicle_statuses' => $statuses,
             ]);
         } else {
             $data = Vehicle::where('vehicle_status', 1)
@@ -87,40 +80,15 @@ class DashboardController extends Controller
                 'banners' => $banners,
                 'data' => $data,
                 'live_orders' => $live_orders,
-                'in_stock' => $in_stock->count(),
-                'completed_orders' => $completed->count(),
+                'vehicle_statuses' => $statuses,
             ]);
         }
     }
 
     protected function adminDashboard(): Factory|View|Application
     {
-        $vehicles = collect(Vehicle::all());
+        $statuses = $this->GetAllVehiclesByStatus();
 
-        $vehicle_statuses = $vehicles->groupBy('vehicle_status')->all();
-
-        $statuses = collect(Vehicle::statusList())
-            ->mapWithKeys(function ($item, $key) {
-                return [$item => 0];
-            })
-            ->toArray();
-
-        foreach ($vehicle_statuses as $key => $status) {
-            $statuses[Vehicle::statusMatch($key)] = $status->count();
-        }
-
-        $factory_order = $this->GetVehicleByStatus(4);
-        $euro_vhc = $this->GetVehicleByStatus(10);
-        $uk_vhc = $this->GetVehicleByStatus(11);
-        $in_stock = $this->GetVehicleByStatus(1);
-        $ready_for_delivery = $this->GetVehicleByStatus(3);
-        $delivery_booked = $this->GetVehicleByStatus(6);
-        $awaiting_ship = $this->GetVehicleByStatus(13);
-        $converter = $this->GetVehicleByStatus(12);
-        $damaged = $this->getVehicleByStatus(16);
-        $dealer_transfer = $this->getVehicleByStatus(18);
-
-        $completed = $this->GetVehicleByStatus(7);
         $live_orders =
             $statuses['Factory Order'] +
             $statuses['Europe VHC'] +
@@ -137,40 +105,44 @@ class DashboardController extends Controller
         $pie_labels = collect($statuses)
             ->except(['Completed Orders'])
             ->map(function ($item, $key) {
-                return $key . ' - ' . $item;
+                return ['label' => $key . ' - ' . $item, 'value' => $item];
             });
 
         return view('dashboard.dashboard-admin', [
             'vehicle_statuses' => $statuses,
             'pie_labels' => $pie_labels,
-            'in_stock' => $in_stock->count(),
-            'ready_for_delivery' => $ready_for_delivery->count(),
-            'factory_order' => $factory_order->count(),
-            'completed_orders' => $completed->count(),
-            'europe_vhc' => $euro_vhc->count(),
-            'uk_vhc' => $uk_vhc->count(),
-            'delivery_booked' => $delivery_booked->count(),
             'live_orders' => $live_orders,
-            'awaiting_ship' => $awaiting_ship->count(),
-            'at_converter' => $converter->count(),
-            'damaged' => $damaged->count(),
-            'dealer_transfer' => $dealer_transfer->count(),
         ]);
     }
 
-    public static function GetVehicleByStatus($vehicle_status, $role = null)
+    public function GetAllVehiclesByStatus($role = 'admin')
     {
-        $vehicle_status = Arr::wrap($vehicle_status);
-        $vehicles = Vehicle::whereIn('vehicle_status', $vehicle_status);
-
-        if ($role === 'dealer') {
-            $vehicles->where('dealer_id', Auth::user()->company_id);
+        $vehicles = collect([]);
+        if ($role === 'admin') {
+            $vehicles = collect(Vehicle::all());
+        } elseif ($role === 'broker') {
+            $vehicles = collect(
+                Vehicle::where('dealer_id', Auth::user()->company_id)->get(),
+            );
+        } elseif ($role === 'dealer') {
+            $vehicles = collect(
+                Vehicle::where('broker_id', Auth::user()->company_id)->get(),
+            );
         }
-        if ($role === 'broker') {
-            $vehicles->where('broker_id', Auth::user()->company_id);
+
+        $vehicle_statuses = $vehicles->groupBy('vehicle_status')->all();
+
+        $statuses = collect(Vehicle::statusList())
+            ->mapWithKeys(function ($item, $key) {
+                return [$item => 0];
+            })
+            ->toArray();
+
+        foreach ($vehicle_statuses as $key => $status) {
+            $statuses[Vehicle::statusMatch($key)] = $status->count();
         }
 
-        return $vehicles->get();
+        return $statuses;
     }
 
     public static function GetOrdersByVehicleStatus($status)
@@ -189,7 +161,7 @@ class DashboardController extends Controller
         return $orders->count();
     }
 
-    /* Show all notifications page */
+    /* Show all notification page */
     public function showNotifications()
     {
         $user = Auth::user();

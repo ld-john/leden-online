@@ -26,7 +26,7 @@
                     <!-- Card Body -->
                     <div class="card-body">
                         <div class="chart-area pb-3">
-                            <canvas id="runReport"></canvas>
+                            <canvas id="runReport" style="height: 350px"></canvas>
                         </div>
                         <div class="row g-1 row-cols-4">
                             @if($vehicle_statuses['Factory Order'] != 0)
@@ -116,21 +116,23 @@
     <script>
         // Pie Chart Example
         let ctx = document.getElementById("runReport");
+
+        let labels = [
+            @foreach($pie_labels as $label)
+            '{{$label['label']}}',
+            @endforeach
+        ]
+
+        let data = [
+            @foreach($pie_labels as $label)
+                '{{$label['value']}}',
+            @endforeach
+        ]
+
         let runReport = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: [
-                    "Factory Order - {{ $factory_order }}",
-                    "Europe VHC - {{ $europe_vhc }}",
-                    "UK VHC - {{ $uk_vhc }}",
-                    "In Stock - {{ $in_stock }}",
-                    "Ready For Delivery - {{ $ready_for_delivery }}",
-                    "Delivery Booked - {{ $delivery_booked }}",
-                    "Awaiting Ship - {{ $awaiting_ship }}",
-                    "At Converter - {{ $at_converter }}",
-                    "Damaged - {{ $damaged }}",
-                    "Dealer Transfer - {{ $dealer_transfer }}"
-                ],
+                labels: labels,
                 datasets: [{
                     backgroundColor: [
                         "#004766",
@@ -143,7 +145,7 @@
                         "#1abaff",
                         "#33c2ff"
                     ],
-                    data: [{{ $factory_order }}, {{ $europe_vhc }}, {{ $uk_vhc }}, {{ $in_stock }}, {{ $ready_for_delivery }}, {{ $delivery_booked }}, {{ $awaiting_ship }}, {{ $at_converter }}, {{ $damaged }}, {{ $dealer_transfer }} ]
+                    data: data
                 }]
             },
             options: {
