@@ -146,6 +146,10 @@ Route::middleware('auth')->group(function () {
                         '/brokers-stock/{broker}',
                         'brokers_stock_export',
                     )->name('brokers_stock_export');
+                    Route::get(
+                        '/{export}/dashboard-download',
+                        'dashboard_download',
+                    )->name('dashboardDownload');
                     Route::get('/foexport/', 'factory_order_export')->name(
                         'factory_order',
                     );
@@ -158,6 +162,14 @@ Route::middleware('auth')->group(function () {
                     Route::get('/instockexport/', 'in_stock_export')->name(
                         'in_stock',
                     );
+                    Route::get(
+                        '/instockregisteredexport/',
+                        'in_stock_registered_export',
+                    )->name('in_stock_registered');
+                    Route::get(
+                        '/instockdealerexport/',
+                        'in_stock_dealer_export',
+                    )->name('in_stock_awaiting_dealer');
                     Route::get(
                         '/readyfordeliveryexport/',
                         'ready_for_delivery_export',

@@ -95,10 +95,24 @@ class DashboardController extends Controller
 
     protected function adminDashboard(): Factory|View|Application
     {
+        $vehicles = collect(Vehicle::all());
+
+        $vehicle_statuses = $vehicles->groupBy('vehicle_status')->all();
+
+        $statuses = collect(Vehicle::statusList())
+            ->mapWithKeys(function ($item, $key) {
+                return [$item => 0];
+            })
+            ->toArray();
+
+        foreach ($vehicle_statuses as $key => $status) {
+            $statuses[Vehicle::statusMatch($key)] = $status->count();
+        }
+
         $factory_order = $this->GetVehicleByStatus(4);
         $euro_vhc = $this->GetVehicleByStatus(10);
         $uk_vhc = $this->GetVehicleByStatus(11);
-        $in_stock = $this->GetVehicleByStatus([1, 15, 17]);
+        $in_stock = $this->GetVehicleByStatus(1);
         $ready_for_delivery = $this->GetVehicleByStatus(3);
         $delivery_booked = $this->GetVehicleByStatus(6);
         $awaiting_ship = $this->GetVehicleByStatus(13);
@@ -108,17 +122,27 @@ class DashboardController extends Controller
 
         $completed = $this->GetVehicleByStatus(7);
         $live_orders =
-            $factory_order->count() +
-            $euro_vhc->count() +
-            $uk_vhc->count() +
-            $in_stock->count() +
-            $ready_for_delivery->count() +
-            $delivery_booked->count() +
-            $awaiting_ship->count() +
-            $converter->count() +
-            $dealer_transfer->count();
+            $statuses['Factory Order'] +
+            $statuses['Europe VHC'] +
+            $statuses['UK VHC'] +
+            $statuses['In Stock'] +
+            $statuses['In Stock (Registered)'] +
+            $statuses['In Stock (Awaiting Dealer Options)'] +
+            $statuses['Ready for Delivery'] +
+            $statuses['Delivery Booked'] +
+            $statuses['Awaiting Ship'] +
+            $statuses['At Converter'] +
+            $statuses['Dealer Transfer'];
+
+        $pie_labels = collect($statuses)
+            ->except(['Completed Orders'])
+            ->map(function ($item, $key) {
+                return $key . ' - ' . $item;
+            });
 
         return view('dashboard.dashboard-admin', [
+            'vehicle_statuses' => $statuses,
+            'pie_labels' => $pie_labels,
             'in_stock' => $in_stock->count(),
             'ready_for_delivery' => $ready_for_delivery->count(),
             'factory_order' => $factory_order->count(),

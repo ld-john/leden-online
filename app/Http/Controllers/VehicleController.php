@@ -254,6 +254,50 @@ class VehicleController extends Controller
     }
 
     /**
+     * Download an Excel file of the Vehicles in the In Stock
+     * @return BinaryFileResponse
+     */
+    public function in_stock_registered_export(): BinaryFileResponse
+    {
+        $vehicles = Vehicle::where('vehicle_status', 15)
+            ->with('manufacturer:id,name')
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
+            ->with('broker')
+            ->get();
+
+        $date = Carbon::now()->format('Y-m-d');
+
+        return Excel::download(
+            new DashboardExports($vehicles),
+            'in-stock-registered-orders-' . $date . '.xlsx',
+        );
+    }
+
+    /**
+     * Download an Excel file of the Vehicles in the In Stock
+     * @return BinaryFileResponse
+     */
+    public function in_stock_dealer_export(): BinaryFileResponse
+    {
+        $vehicles = Vehicle::where('vehicle_status', 17)
+            ->with('manufacturer:id,name')
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
+            ->with('broker')
+            ->get();
+
+        $date = Carbon::now()->format('Y-m-d');
+
+        return Excel::download(
+            new DashboardExports($vehicles),
+            'in-stock-awaiting-dealer-orders-' . $date . '.xlsx',
+        );
+    }
+
+    /**
      * Download an Excel file of the Vehicles in the Ready for Delivery status
      * @return BinaryFileResponse
      */
