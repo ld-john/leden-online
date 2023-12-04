@@ -112,9 +112,11 @@
                     <input wire:model.debounce:500ms="searchBrokerRef" type="text" class="form-control"
                            placeholder="Search Broker Order Ref">
                 </th>
-                <th class="p-1">
+                <th class="p-1 flex flex-col gap-1">
                     <input wire:model.debounce:500ms="searchBroker" type="text" class="form-control"
                            placeholder="Search Broker">
+                    <input wire:model.debounce:500ms="searchFinanceBroker" type="text" class="form-control"
+                           placeholder="Search Finance Broker">
                 </th>
                 <th class="p-1">
                     <input wire:model.debounce:500ms="searchDealer" type="text" class="form-control"
@@ -147,7 +149,9 @@
                         <td>{{ \Carbon\Carbon::parse($order->vehicle->due_date )->format( 'd/m/Y' )}}</td>
                     @endif
 
-                    <td>{{ $order->vehicle->status() }}</td>
+                    <td>{{ $order->vehicle->status() }}
+                    {{ $order->vehicle->vehicle_status }}
+                    </td>
 
                     <td>
                         {{ $order->customer->customer_name ?? ''}}

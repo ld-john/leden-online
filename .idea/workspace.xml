@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Updated adminDashboard method and related views&#10;&#10;The adminDashboard method in DashboardController has been updated to more accurately track vehicle statuses. The vehicle statuses are now dynamically computed and categorised for ease of use in the dashboard. Additional functions have been added to VehicleController to handle specific status exports. This change streamlines data handling and enhances the usability of the admin dashboard. &#10;&#10;Also, unnecessary comments were removed from the .idea/workspace.xml for improved code">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Enhanced DashboardController for dynamic status tracking&#10;&#10;Refactored adminDashboard method in DashboardController to track vehicle statuses more accurately by dynamically computing and categorising them for efficient usage in the dashboard. Added functions in VehicleController for status exports aiding in streamlined data handling and enhancing the admin dashboard usability. Also purged unnecessary comments from .idea/workspace.xml to improve code readability.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/dashboard-admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/dashboard-admin.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/partials/boxes.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/partials/boxes.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -545,7 +544,8 @@
       <workItem from="1700125633579" duration="317000" />
       <workItem from="1700225105550" duration="203000" />
       <workItem from="1701172031876" duration="8675000" />
-      <workItem from="1701438134337" duration="8502000" />
+      <workItem from="1701438134337" duration="9820000" />
+      <workItem from="1701682004330" duration="5206000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -890,7 +890,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -921,7 +921,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Numerous Updates" />
     <MESSAGE value="Added Registration to Paper chase Notifications and other tweaks" />
     <MESSAGE value="Added Finance Broker&#10;Added Fleet Procure to Companies&#10;Added Order Recycle Bin" />
     <MESSAGE value="Update to add Null check to Finance Broker check in Universal Search blade" />
@@ -946,7 +945,8 @@
     <MESSAGE value="Updated ReportingController's registeredQuarters method and related views&#10;&#10;The ReportingController's registeredQuarters method is updated to dynamically compute the start date for generating reports based on the latest date in registered months instead of using the first month of current year and the matching view reporting/reporting.blade.php is adjusted accordingly. This provides a more accurate baseline for report generation and makes the application flexible for future year changes. &#10;&#10;In addition, few minor enhancements have been made to improve the code readibility and some unused comments were removed from the .idea/workspace.xml." />
     <MESSAGE value="Updated ReportingController's registeredQuarters method and related views&#10;&#10;The ReportingController's registeredQuarters method is updated to dynamically compute the start date for generating reports based on the latest date in registered months instead of using the first month of the current year. The matching view reporting/reporting.blade.php is adjusted accordingly. This provides a more accurate baseline for report generation and makes the application flexible for future year changes. &#10;&#10;In addition, few minor enhancements have been made to improve the code readibility, and some unused comments were removed from the .idea/workspace.xml." />
     <MESSAGE value="Updated adminDashboard method and related views&#10;&#10;The adminDashboard method in DashboardController has been updated to more accurately track vehicle statuses. The vehicle statuses are now dynamically computed and categorised for ease of use in the dashboard. Additional functions have been added to VehicleController to handle specific status exports. This change streamlines data handling and enhances the usability of the admin dashboard. &#10;&#10;Also, unnecessary comments were removed from the .idea/workspace.xml for improved code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated adminDashboard method and related views&#10;&#10;The adminDashboard method in DashboardController has been updated to more accurately track vehicle statuses. The vehicle statuses are now dynamically computed and categorised for ease of use in the dashboard. Additional functions have been added to VehicleController to handle specific status exports. This change streamlines data handling and enhances the usability of the admin dashboard. &#10;&#10;Also, unnecessary comments were removed from the .idea/workspace.xml for improved code" />
+    <MESSAGE value="Enhanced DashboardController for dynamic status tracking&#10;&#10;Refactored adminDashboard method in DashboardController to track vehicle statuses more accurately by dynamically computing and categorising them for efficient usage in the dashboard. Added functions in VehicleController for status exports aiding in streamlined data handling and enhancing the admin dashboard usability. Also purged unnecessary comments from .idea/workspace.xml to improve code readability." />
+    <option name="LAST_COMMIT_MESSAGE" value="Enhanced DashboardController for dynamic status tracking&#10;&#10;Refactored adminDashboard method in DashboardController to track vehicle statuses more accurately by dynamically computing and categorising them for efficient usage in the dashboard. Added functions in VehicleController for status exports aiding in streamlined data handling and enhancing the admin dashboard usability. Also purged unnecessary comments from .idea/workspace.xml to improve code readability." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
