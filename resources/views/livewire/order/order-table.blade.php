@@ -112,9 +112,11 @@
                     <input wire:model.debounce:500ms="searchBrokerRef" type="text" class="form-control"
                            placeholder="Search Broker Order Ref">
                 </th>
-                <th class="p-1">
+                <th class="p-1 flex flex-col gap-1">
                     <input wire:model.debounce:500ms="searchBroker" type="text" class="form-control"
                            placeholder="Search Broker">
+                    <input wire:model.debounce:500ms="searchFinanceBroker" type="text" class="form-control"
+                           placeholder="Search Finance Broker">
                 </th>
                 <th class="p-1">
                     <input wire:model.debounce:500ms="searchDealer" type="text" class="form-control"

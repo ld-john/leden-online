@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Solving the problem... step 2">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Improve order search functionality in OrderTable&#10;&#10;Introduced separate search functionality for Broker and Finance Broker in OrderTable to enhance the user interface. Prior to this change, both Broker and Finance Broker were under a common search functionality that was not user-friendly. Additionally, updated DashboardController for dynamic vehicle status tracking and removed unnecessary comments from .idea/workspace.xml to maintain code cleanliness.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -541,7 +541,11 @@
       <workItem from="1700062286283" duration="192000" />
       <workItem from="1700066279095" duration="322000" />
       <workItem from="1700125633579" duration="317000" />
-      <workItem from="1700225105550" duration="42000" />
+      <workItem from="1700225105550" duration="203000" />
+      <workItem from="1701172031876" duration="8675000" />
+      <workItem from="1701438134337" duration="9820000" />
+      <workItem from="1701682004330" duration="5784000" />
+      <workItem from="1701694717392" duration="412000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -886,7 +890,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -917,12 +921,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Add Finance Information and Renewal Report&#10;Added Options to add new Finance Information&#10;Added Migrations" />
-    <MESSAGE value="Moved all Models to a Models Folder" />
-    <MESSAGE value="Added Quick Edit Ring Fence to allow Ring Fenced stock to transfer directly between brokers&#10;Added Notifications for adding the Registration Number and email notification for if the vehicle is in stock" />
-    <MESSAGE value="Added Contract Confirmation button to order table which can be toggled by those with the manages deliveries permission&#10;Rearranged all buttons into a grid layout." />
-    <MESSAGE value="Numerous Updates" />
-    <MESSAGE value="Added Registration to Paper chase Notifications and other tweaks" />
     <MESSAGE value="Added Finance Broker&#10;Added Fleet Procure to Companies&#10;Added Order Recycle Bin" />
     <MESSAGE value="Update to add Null check to Finance Broker check in Universal Search blade" />
     <MESSAGE value="Added Nullification check to Manufacturer on the Vehicle Table" />
@@ -942,7 +940,13 @@
     <MESSAGE value="Add Dealer Transfer to Order Bank" />
     <MESSAGE value="Changed Exception to Exclusion to see if that solves problem" />
     <MESSAGE value="Solving the problem... step 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Solving the problem... step 2" />
+    <MESSAGE value="Hiding the Flat Discount" />
+    <MESSAGE value="Updated ReportingController's registeredQuarters method and related views&#10;&#10;The ReportingController's registeredQuarters method is updated to dynamically compute the start date for generating reports based on the latest date in registered months instead of using the first month of current year and the matching view reporting/reporting.blade.php is adjusted accordingly. This provides a more accurate baseline for report generation and makes the application flexible for future year changes. &#10;&#10;In addition, few minor enhancements have been made to improve the code readibility and some unused comments were removed from the .idea/workspace.xml." />
+    <MESSAGE value="Updated ReportingController's registeredQuarters method and related views&#10;&#10;The ReportingController's registeredQuarters method is updated to dynamically compute the start date for generating reports based on the latest date in registered months instead of using the first month of the current year. The matching view reporting/reporting.blade.php is adjusted accordingly. This provides a more accurate baseline for report generation and makes the application flexible for future year changes. &#10;&#10;In addition, few minor enhancements have been made to improve the code readibility, and some unused comments were removed from the .idea/workspace.xml." />
+    <MESSAGE value="Updated adminDashboard method and related views&#10;&#10;The adminDashboard method in DashboardController has been updated to more accurately track vehicle statuses. The vehicle statuses are now dynamically computed and categorised for ease of use in the dashboard. Additional functions have been added to VehicleController to handle specific status exports. This change streamlines data handling and enhances the usability of the admin dashboard. &#10;&#10;Also, unnecessary comments were removed from the .idea/workspace.xml for improved code" />
+    <MESSAGE value="Enhanced DashboardController for dynamic status tracking&#10;&#10;Refactored adminDashboard method in DashboardController to track vehicle statuses more accurately by dynamically computing and categorising them for efficient usage in the dashboard. Added functions in VehicleController for status exports aiding in streamlined data handling and enhancing the admin dashboard usability. Also purged unnecessary comments from .idea/workspace.xml to improve code readability." />
+    <MESSAGE value="Improve order search functionality in OrderTable&#10;&#10;Introduced separate search functionality for Broker and Finance Broker in OrderTable to enhance the user interface. Prior to this change, both Broker and Finance Broker were under a common search functionality that was not user-friendly. Additionally, updated DashboardController for dynamic vehicle status tracking and removed unnecessary comments from .idea/workspace.xml to maintain code cleanliness." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve order search functionality in OrderTable&#10;&#10;Introduced separate search functionality for Broker and Finance Broker in OrderTable to enhance the user interface. Prior to this change, both Broker and Finance Broker were under a common search functionality that was not user-friendly. Additionally, updated DashboardController for dynamic vehicle status tracking and removed unnecessary comments from .idea/workspace.xml to maintain code cleanliness." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -3,6 +3,9 @@
 namespace App\Http\Livewire\Order;
 
 use App\Models\Order;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -33,6 +36,7 @@ class OrderTable extends Component
     public $searchCustomer;
     public $searchBrokerRef;
     public $searchBroker;
+    public $searchFinanceBroker;
     public $searchDealer;
     public $paginate = 10;
     public $brokerID;
@@ -48,6 +52,7 @@ class OrderTable extends Component
         $this->now = date('Y-m-d h:i:s');
 
         $this->status = $status;
+
         $this->view = $view;
         if (Auth::user()->role === 'broker') {
             $this->brokerID = Auth::user()->company_id;
@@ -65,7 +70,7 @@ class OrderTable extends Component
         $order->update(['completed_date' => $this->now]);
     }
 
-    public function render()
+    public function render(): Factory|View|Application
     {
         $orders = Order::whereHas('vehicle', function ($q) {
             $q->whereIn('vehicle_status', $this->status);
@@ -75,6 +80,7 @@ class OrderTable extends Component
                 'vehicle.manufacturer',
                 'customer:id,customer_name',
                 'broker:id,company_name',
+                'finance_broker:id,company_name',
                 'dealer:id,company_name',
                 'delivery',
             ])
@@ -180,21 +186,22 @@ class OrderTable extends Component
                 );
             })
             ->when($this->searchBroker, function ($query) {
-                $query
-                    ->whereHas('broker', function ($query) {
-                        $query->where(
-                            'company_name',
-                            'like',
-                            '%' . $this->searchBroker . '%',
-                        );
-                    })
-                    ->orWhereHas('finance_broker', function ($query) {
-                        $query->where(
-                            'company_name',
-                            'like',
-                            '%' . $this->searchBroker . '%',
-                        );
-                    });
+                $query->whereHas('broker', function ($query) {
+                    $query->where(
+                        'company_name',
+                        'like',
+                        '%' . $this->searchBroker . '%',
+                    );
+                });
+            })
+            ->when($this->searchFinanceBroker, function ($query) {
+                $query->WhereHas('finance_broker', function ($query) {
+                    $query->where(
+                        'company_name',
+                        'like',
+                        '%' . $this->searchFinanceBroker . '%',
+                    );
+                });
             })
             ->when($this->searchDealer, function ($query) {
                 $query->whereHas('dealer', function ($query) {
