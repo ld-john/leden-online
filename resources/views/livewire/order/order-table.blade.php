@@ -149,9 +149,7 @@
                         <td>{{ \Carbon\Carbon::parse($order->vehicle->due_date )->format( 'd/m/Y' )}}</td>
                     @endif
 
-                    <td>{{ $order->vehicle->status() }}
-                    {{ $order->vehicle->vehicle_status }}
-                    </td>
+                    <td>{{ $order->vehicle->status() }}</td>
 
                     <td>
                         {{ $order->customer->customer_name ?? ''}}
