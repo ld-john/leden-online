@@ -237,7 +237,7 @@ class VehicleController extends Controller
      */
     public function in_stock_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::whereIn('vehicle_status', [1, 15, 17])
+        $vehicles = Vehicle::where('vehicle_status', 1)
             ->with('manufacturer:id,name')
             ->with('order')
             ->with('order.customer')
