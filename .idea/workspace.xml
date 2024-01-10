@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Refine in-stock export query in VehicleController&#10;&#10;Updated the query for in-stock export in VehicleController to exclusively target vehicles with status '1'. This eliminates the redundancy and inefficiency of the previous implementation which considered vehicles with statuses of '1', '15', and '17'.">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Change to the additional.blade.php swapping exception for exclusion to match the phrasing on the parent class.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/additional.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/additional.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -557,7 +556,7 @@
       <workItem from="1702299179158" duration="3577000" />
       <workItem from="1703762379271" duration="1225000" />
       <workItem from="1703862235701" duration="1325000" />
-      <workItem from="1704883374624" duration="229000" />
+      <workItem from="1704883374624" duration="2562000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -902,7 +901,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -933,7 +932,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Add Dealer Comments that will appear on order PDF&#10;Add Order Recycle Bin with restore functionality" />
     <MESSAGE value="Staging Branch Created" />
     <MESSAGE value="Added new Request Login to homepage" />
     <MESSAGE value="Updated the Email Address for Login Requests" />
@@ -958,7 +956,8 @@
     <MESSAGE value="Updated OrderTable and cleaned workspace.xml&#10;&#10;Implemented separate search for Broker and Finance Broker in OrderTable for better user experience. Updated DashboardController for improved vehicle status tracking. Removed superfluous comments from .idea/workspace.xml for maintaining clean code." />
     <MESSAGE value="Refined VehicleController query for in-stock export&#10;&#10;The query for in-stock export in the VehicleController now only targets vehicles with a status of 1. Prior implementation considered vehicles with a status of 1, 15, and 17, which is redundant and has been optimized for efficiency." />
     <MESSAGE value="Refine in-stock export query in VehicleController&#10;&#10;Updated the query for in-stock export in VehicleController to exclusively target vehicles with status '1'. This eliminates the redundancy and inefficiency of the previous implementation which considered vehicles with statuses of '1', '15', and '17'." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refine in-stock export query in VehicleController&#10;&#10;Updated the query for in-stock export in VehicleController to exclusively target vehicles with status '1'. This eliminates the redundancy and inefficiency of the previous implementation which considered vehicles with statuses of '1', '15', and '17'." />
+    <MESSAGE value="Change to the additional.blade.php swapping exception for exclusion to match the phrasing on the parent class." />
+    <option name="LAST_COMMIT_MESSAGE" value="Change to the additional.blade.php swapping exception for exclusion to match the phrasing on the parent class." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
