@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Refined VehicleController query for in-stock export&#10;&#10;The query for in-stock export in the VehicleController now only targets vehicles with a status of 1. Prior implementation considered vehicles with a status of 1, 15, and 17, which is redundant and has been optimized for efficiency.">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Refine in-stock export query in VehicleController&#10;&#10;Updated the query for in-stock export in VehicleController to exclusively target vehicles with status '1'. This eliminates the redundancy and inefficiency of the previous implementation which considered vehicles with statuses of '1', '15', and '17'.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/additional.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/additional.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,7 +261,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-php-predefined-ba97393d7c68-74080bdb84d3-com.jetbrains.php.sharedIndexes-PS-233.11799.232" />
+        <option value="bundled-php-predefined-ba97393d7c68-b4dcf6bb9de9-com.jetbrains.php.sharedIndexes-PS-233.13135.108" />
       </set>
     </attachedChunks>
   </component>
@@ -554,7 +554,10 @@
       <workItem from="1701682004330" duration="5784000" />
       <workItem from="1701694717392" duration="1262000" />
       <workItem from="1701697710937" duration="55000" />
-      <workItem from="1702299179158" duration="1093000" />
+      <workItem from="1702299179158" duration="3577000" />
+      <workItem from="1703762379271" duration="1225000" />
+      <workItem from="1703862235701" duration="1325000" />
+      <workItem from="1704883374624" duration="229000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -899,7 +902,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -930,7 +933,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Added Nullification check to Manufacturer on the Vehicle Table" />
     <MESSAGE value="Add Dealer Comments that will appear on order PDF&#10;Add Order Recycle Bin with restore functionality" />
     <MESSAGE value="Staging Branch Created" />
     <MESSAGE value="Added new Request Login to homepage" />
@@ -955,7 +957,8 @@
     <MESSAGE value="Improve order search functionality in OrderTable&#10;&#10;Introduced separate search functionality for Broker and Finance Broker in OrderTable to enhance the user interface. Prior to this change, both Broker and Finance Broker were under a common search functionality that was not user-friendly. Additionally, updated DashboardController for dynamic vehicle status tracking and removed unnecessary comments from .idea/workspace.xml to maintain code cleanliness." />
     <MESSAGE value="Updated OrderTable and cleaned workspace.xml&#10;&#10;Implemented separate search for Broker and Finance Broker in OrderTable for better user experience. Updated DashboardController for improved vehicle status tracking. Removed superfluous comments from .idea/workspace.xml for maintaining clean code." />
     <MESSAGE value="Refined VehicleController query for in-stock export&#10;&#10;The query for in-stock export in the VehicleController now only targets vehicles with a status of 1. Prior implementation considered vehicles with a status of 1, 15, and 17, which is redundant and has been optimized for efficiency." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refined VehicleController query for in-stock export&#10;&#10;The query for in-stock export in the VehicleController now only targets vehicles with a status of 1. Prior implementation considered vehicles with a status of 1, 15, and 17, which is redundant and has been optimized for efficiency." />
+    <MESSAGE value="Refine in-stock export query in VehicleController&#10;&#10;Updated the query for in-stock export in VehicleController to exclusively target vehicles with status '1'. This eliminates the redundancy and inefficiency of the previous implementation which considered vehicles with statuses of '1', '15', and '17'." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refine in-stock export query in VehicleController&#10;&#10;Updated the query for in-stock export in VehicleController to exclusively target vehicles with status '1'. This eliminates the redundancy and inefficiency of the previous implementation which considered vehicles with statuses of '1', '15', and '17'." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
