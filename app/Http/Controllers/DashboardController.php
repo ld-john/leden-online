@@ -122,11 +122,11 @@ class DashboardController extends Controller
             $vehicles = collect(Vehicle::all());
         } elseif ($role === 'broker') {
             $vehicles = collect(
-                Vehicle::where('dealer_id', Auth::user()->company_id)->get(),
+                Vehicle::where('broker_id', Auth::user()->company_id)->get(),
             );
         } elseif ($role === 'dealer') {
             $vehicles = collect(
-                Vehicle::where('broker_id', Auth::user()->company_id)->get(),
+                Vehicle::where('dealer_id', Auth::user()->company_id)->get(),
             );
         }
 
