@@ -54,7 +54,17 @@ class DashboardController extends Controller
             $statuses['Dealer Transfer'];
 
         if (Auth::user()->role == 'admin') {
-            return $this->adminDashboard();
+            $pie_labels = collect($statuses)
+                ->except(['Completed Orders'])
+                ->map(function ($item, $key) {
+                    return ['label' => $key . ' - ' . $item, 'value' => $item];
+                });
+
+            return view('dashboard.dashboard-admin', [
+                'vehicle_statuses' => $statuses,
+                'pie_labels' => $pie_labels,
+                'live_orders' => $live_orders,
+            ]);
         } elseif (Auth::user()->role === 'dealer') {
             return view('dashboard.dashboard-dealer', [
                 'live_orders' => $live_orders,
@@ -83,36 +93,6 @@ class DashboardController extends Controller
                 'vehicle_statuses' => $statuses,
             ]);
         }
-    }
-
-    protected function adminDashboard(): Factory|View|Application
-    {
-        $statuses = $this->GetAllVehiclesByStatus();
-
-        $live_orders =
-            $statuses['Factory Order'] +
-            $statuses['Europe VHC'] +
-            $statuses['UK VHC'] +
-            $statuses['In Stock'] +
-            $statuses['In Stock (Registered)'] +
-            $statuses['In Stock (Awaiting Dealer Options)'] +
-            $statuses['Ready for Delivery'] +
-            $statuses['Delivery Booked'] +
-            $statuses['Awaiting Ship'] +
-            $statuses['At Converter'] +
-            $statuses['Dealer Transfer'];
-
-        $pie_labels = collect($statuses)
-            ->except(['Completed Orders'])
-            ->map(function ($item, $key) {
-                return ['label' => $key . ' - ' . $item, 'value' => $item];
-            });
-
-        return view('dashboard.dashboard-admin', [
-            'vehicle_statuses' => $statuses,
-            'pie_labels' => $pie_labels,
-            'live_orders' => $live_orders,
-        ]);
     }
 
     public function GetAllVehiclesByStatus($role = 'admin')

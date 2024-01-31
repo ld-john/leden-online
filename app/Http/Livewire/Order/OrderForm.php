@@ -857,6 +857,10 @@ class OrderForm extends Component
      */
     public function saveVehicleDetails(Vehicle $vehicle): void
     {
+        if ($this->due_date === '') {
+            $this->due_date = null;
+        }
+
         $vehicle->update([
             'vehicle_status' => $this->status,
             'reg' => $this->registration,
