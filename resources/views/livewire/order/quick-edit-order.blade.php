@@ -38,12 +38,12 @@
                     />
                     @if($vehicleStatus === 1)
                         <label for="delivery_date" class="mb-0 mt-2">Proposed Delivery Date</label>
-                        <input wire:model="delivery_date" type="date" name="delivery_date" class="form-control" autocomplete="off">
+                        <input wire:model="delivery_date" id="delivery_date" type="date" name="delivery_date" class="form-control" autocomplete="off">
                     @endif
                 @endif
                 @if($view === 'delivery')
                     <label for="delivery_date" class="mb-0 mt-2">Proposed Delivery Date</label>
-                    <input wire:model="delivery_date" type="date" name="delivery_date" class="form-control" autocomplete="off">
+                    <input wire:model="delivery_date" id="delivery_date" type="date" name="delivery_date" class="form-control" autocomplete="off">
                     <label for="registration_date" class="mb-0 mt-2">Registration Date</label>
                     <input wire:model="registered_date" type="date" name="registration_date" id="registration_date" class="form-control"
                            autocomplete="off" />
@@ -70,6 +70,7 @@
                     <option value="16">Damaged/Recalled</option>
                     <option value="17">In Stock (Awaiting Dealer Options)</option>
                     <option value="18">Dealer Transfer</option>
+                    <option value="19">Order in Query</option>
 
                 </select>
             </div>

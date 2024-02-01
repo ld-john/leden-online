@@ -327,6 +327,7 @@
                                 <option value="16">Damaged/Recalled</option>
                                 <option value="17">In Stock (Awaiting Dealer Options)</option>
                                 <option value="18">Dealer Transfer</option>
+                                <option value="19">Order in Query</option>
                             </select>
                         </div>
 

@@ -154,10 +154,10 @@ Route::middleware('auth')->group(function () {
                         'factory_order',
                     );
                     Route::get('/eurovhcexport/', 'europe_vhc_export')->name(
-                        'europe_vhc',
+                        'europe_v_h_c',
                     );
                     Route::get('/ukvhcexport/', 'uk_vhc_export')->name(
-                        'uk_vhc',
+                        'u_k_v_h_c',
                     );
                     Route::get('/instockexport/', 'in_stock_export')->name(
                         'in_stock',
@@ -169,7 +169,7 @@ Route::middleware('auth')->group(function () {
                     Route::get(
                         '/instockdealerexport/',
                         'in_stock_dealer_export',
-                    )->name('in_stock_awaiting_dealer');
+                    )->name('in_stock_awaiting_dealer_options');
                     Route::get(
                         '/readyfordeliveryexport/',
                         'ready_for_delivery_export',
@@ -189,6 +189,9 @@ Route::middleware('auth')->group(function () {
                         '/dealertransfer',
                         'dealer_transfer_export',
                     )->name('dealer_transfer');
+                    Route::get('/orderinquery', 'query_export')->name(
+                        'order_in_query',
+                    );
                 });
         });
     });
