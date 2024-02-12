@@ -184,7 +184,9 @@ Route::middleware('auth')->group(function () {
                     Route::get('/atconverter/', 'at_converter_export')->name(
                         'at_converter',
                     );
-                    Route::get('/damaged/', 'damaged_export')->name('damaged');
+                    Route::get('/damaged/', 'damaged_export')->name(
+                        'damaged/_recalled',
+                    );
                     Route::get(
                         '/dealertransfer',
                         'dealer_transfer_export',
