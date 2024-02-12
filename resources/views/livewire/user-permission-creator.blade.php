@@ -17,7 +17,7 @@
                                 </tr>
                                 @foreach($permissions as $permission)
                                     <tr>
-                                        <td><input type="checkbox" value="{{ $permission->id }}" wire:model="assigned_permissions" @if(in_array($permission->id, $assigned_permissions)) checked @endif></td>
+                                        <td><input type="checkbox" value="{{ $permission->id }}" wire:model.live="assigned_permissions" @if(in_array($permission->id, $assigned_permissions)) checked @endif></td>
                                         <td>{{ $permission->label }}</td>
                                         <td>
                                             <ul>
@@ -50,7 +50,7 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label" for="name">Permission Name</label>
                             <div class="col-md-8">
-                                <input type="text" wire:model="permission_name" name="name" id="name" class="form-control" autocomplete="off"/>
+                                <input type="text" wire:model.live="permission_name" name="name" id="name" class="form-control" autocomplete="off"/>
                             </div>
                         </div>
                     </div>

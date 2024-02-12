@@ -1,14 +1,14 @@
 <div>
     <div class="container-xxl mb-4">
         <h2>Add New {{ ucfirst($metatype) }} </h2>
-        <form wire:submit.prevent="new">
+        <form wire:submit="new">
             <div class="input-group">
                 <span class="input-group-text">{{ ucfirst($metatype) }} name:</span>
 
                 <input
                         type="text"
                         class="form-control"
-                        wire:model="new_name"
+                        wire:model.live="new_name"
 
                 >
                 <button class="btn btn-primary"
@@ -70,14 +70,14 @@
                 </div>
                 <div class="modal-body">
                     <label for="meta_name" class="mb-0 mt-2">{{ ucfirst($metatype) }} Name</label>
-                    <input wire:model="edit_meta_name" type="text" name="meta_name" id="meta_name" class="form-control"
+                    <input wire:model.live="edit_meta_name" type="text" name="meta_name" id="meta_name" class="form-control"
                            autocomplete="off"
                     />
                     <label for="meta_models" class="mb-0 mt-2">Associated Models</label>
                     <div class="card p-2" style="max-height: 400px; overflow: scroll">
                         @foreach($models as $model)
                             <div class="form-check">
-                                <input wire:model="edit_meta_models" type="checkbox" class="form-check-input" value="{{ $model->id }}" id="modelCheck{{$loop->index}}">
+                                <input wire:model.live="edit_meta_models" type="checkbox" class="form-check-input" value="{{ $model->id }}" id="modelCheck{{$loop->index}}">
                                 <label for="modelCheck{{$loop->index}}" class="form-check-label">{{ $model->name }}</label>
                             </div>
                         @endforeach

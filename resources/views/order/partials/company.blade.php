@@ -6,7 +6,7 @@
         @error('dealership')
             <label class="input-group-text bg-danger text-white" for="inputGroupSelectDealership"><i class="fa fa-exclamation-triangle"></i></label>
         @enderror
-        <select wire:model="dealership" name="dealership" id="inputGroupSelectDealership" class="form-control">
+        <select wire:model.live="dealership" name="dealership" id="inputGroupSelectDealership" class="form-control">
             <option value="">Select Dealership</option>
             @foreach ($dealers as $dealer)
                 <option value="{{ $dealer->id }}">{{ $dealer->company_name }}</option>
@@ -19,7 +19,7 @@
 <div class="form-group row">
     <label for="dealership" class="col-md-2 col-form-label">Registration Company</label>
     <div class="col-md-6">
-        <select wire:model="registration_company" name="registration_company" id="registration_company" class="form-control">
+        <select wire:model.live="registration_company" name="registration_company" id="registration_company" class="form-control">
             <option value="">Select Registration Company</option>
 
             @if ( $registration_companies )
@@ -38,7 +38,7 @@
 <div class="form-group row">
     <label for="invoice_company" class="col-md-2 col-form-label">Invoice Company</label>
     <div class="col-md-6">
-        <select wire:model="invoice_company" name="invoice_company" id="invoice_company" class="form-control">
+        <select wire:model.live="invoice_company" name="invoice_company" id="invoice_company" class="form-control">
             <option value="">Select Invoice Company</option>
 
             @if ( $invoice_companies )
@@ -62,7 +62,7 @@
             @error('broker')
                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectBroker"><i class="fa fa-exclamation-triangle"></i></label>
             @enderror
-            <select wire:model="broker" class="form-select" id="inputGroupSelectBroker">
+            <select wire:model.live="broker" class="form-select" id="inputGroupSelectBroker">
                 <option selected>Choose...</option>
 
                 @if ( $brokers )
@@ -81,7 +81,7 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="broker_order_ref">Broker Order Ref</label>
     <div class="col-md-6">
-        <input wire:model="broker_ref" type="text" name="broker_order_ref" id="broker_order_ref" class="form-control" autocomplete="off" />
+        <input wire:model.live="broker_ref" type="text" name="broker_order_ref" id="broker_order_ref" class="form-control" autocomplete="off" />
     </div>
 </div>
 {{-- Order Ref --}}
@@ -92,7 +92,7 @@
             @error('order_ref')
             <label class="input-group-text bg-danger text-white" for="inputGroupSelectBroker"><i class="fa fa-exclamation-triangle"></i></label>
             @enderror
-            <input wire:model="order_ref" type="text" name="order_ref" id="order_ref" class="form-control" autocomplete="off" />
+            <input wire:model.live="order_ref" type="text" name="order_ref" id="order_ref" class="form-control" autocomplete="off" />
         </div>
 
     </div>

@@ -1,12 +1,12 @@
 <div>
-    <form class="mb-4" wire:submit.prevent="new">
+    <form class="mb-4" wire:submit="new">
         <div class="input-group">
             <span class="input-group-text">Finance type name:</span>
 
             <input
                     type="text"
                     class="form-control"
-                    wire:model="new_name"
+                    wire:model.live="new_name"
 
             >
             <button class="btn btn-primary"
@@ -60,7 +60,7 @@
                         id="edit_name"
                         type="text"
                         class="form-control"
-                        wire:model="edit_name"
+                        wire:model.live="edit_name"
 
                 >
                 <div class="my-4">

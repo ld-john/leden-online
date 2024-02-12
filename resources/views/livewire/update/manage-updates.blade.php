@@ -17,7 +17,7 @@
         <div class="d-flex">
             <div class="w-100 me-2">
                 <label for="text" class="form-label">Text</label>
-                <input wire:model="text" maxlength="150" id="text" type="text" class="form-control">
+                <input wire:model.live="text" maxlength="150" id="text" type="text" class="form-control">
                 @error('text')
                 <div class="alert alert-danger mt-2">{{ $errors->first('text')}}</div>
                 @enderror
@@ -38,18 +38,18 @@
         <div class="d-flex">
             <div class="w-100 me-2">
                 <label for="heading" class="form-label">Heading *</label>
-                <input wire:model="heading" type="text" maxlength="50" id="heading" class="form-control">
+                <input wire:model.live="heading" type="text" maxlength="50" id="heading" class="form-control">
                 @error('heading')
                 <div class="alert alert-danger mt-2">{{ $errors->first('heading')}}</div>
                 @enderror
             </div>
             <div class="w-100 me-2">
                 <label for="text" class="form-label">Text</label>
-                <input wire:model="text" maxlength="150" id="text" type="text" class="form-control">
+                <input wire:model.live="text" maxlength="150" id="text" type="text" class="form-control">
             </div>
             <div class="w-100 me-2">
                 <label for="image" class="form-label">Image *</label><br>
-                <input class="form-control" wire:model="image" id="image" type="file">
+                <input class="form-control" wire:model.live="image" id="image" type="file">
                 <p class="small">Image must be 1600px x 500px</p>
                 @error('image')
                 <div class="alert alert-danger mt-2">{{ $errors->first('image')}}</div>

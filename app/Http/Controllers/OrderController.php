@@ -271,8 +271,16 @@ class OrderController extends Controller
 
         $brokerName = $order->broker->company_name ?? '--';
 
+        $vehicle_status = Vehicle::statusMatch($order->vehicle->vehicle_status);
+
         if ($order->finance_broker) {
             $brokerName .= ' | ' . $order->finance_broker->company_name;
+        }
+
+        if ($order->vehicle?->orbit_number) {
+            $orbit_number = $order->vehicle->orbit_number;
+        } else {
+            $orbit_number = '';
         }
 
         $vehicleDetails = [
@@ -359,6 +367,8 @@ class OrderController extends Controller
             'vat' => $vat,
             'total' => $total,
             'comments_table' => $comments_table,
+            'orbit_number' => $orbit_number,
+            'status' => $vehicle_status,
         ];
 
         $pdf = app('dompdf.wrapper');

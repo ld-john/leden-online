@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between">
         <div class="w-25 pb-3 d-flex align-items-center">
             Show
-            <select wire:model="paginate" class="form-control mx-2">
+            <select wire:model.live="paginate" class="form-control mx-2">
                 <option value='10'>10</option>
                 <option value='25'>25</option>
                 <option value='50'>50</option>

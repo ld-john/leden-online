@@ -2,7 +2,7 @@
      <div class="d-flex justify-content-between">
           <div class="w-25 p-3 d-flex align-items-center">
                Show
-               <select wire:model="paginate" name="" id="" class="form-control mx-2">
+               <select wire:model.live="paginate" name="" id="" class="form-control mx-2">
                     <option value='10'>10</option>
                     <option value='25'>25</option>
                     <option value='50'>50</option>
@@ -35,7 +35,7 @@
           <tbody>
           @foreach($customers as $customer)
                <tr>
-                    <td><input type="checkbox" value="{{ $customer->id }}" wire:model="checked"></td>
+                    <td><input type="checkbox" value="{{ $customer->id }}" wire:model.live="checked"></td>
                     <td>{{ $customer->customer_name }}</td>
                     <td>{{ $customer->address_1 }}</td>
                     <td>{{ $customer->address_2 }}</td>

@@ -2,7 +2,7 @@
      <div class="d-flex justify-content-between align-items-center">
           <div class="w-25 p-3 d-flex align-items-center">
                Show
-               <select wire:model="paginate" name="" id="" class="form-control mx-2">
+               <select wire:model.live="paginate" name="" id="" class="form-control mx-2">
                     <option value='10'>10</option>
                     <option value='25'>25</option>
                     <option value='50'>50</option>
@@ -27,22 +27,22 @@
           </tr>
           <tr class="bg-light">
                <th class="p-1">
-                    <input wire:model.debounce:500ms="searchID" type="text" class="form-control" placeholder="Search ID">
+                    <input wire:model.live.debounce:500ms="searchID" type="text" class="form-control" placeholder="Search ID">
                </th>
                <th class="p-1">
-                    <input wire:model.debounce:500ms="searchFirstName" type="text" class="form-control" placeholder="Search First Name">
+                    <input wire:model.live.debounce:500ms="searchFirstName" type="text" class="form-control" placeholder="Search First Name">
                </th>
                <th class="p-1">
-                    <input wire:model.debounce:500ms="searchLastName" type="text" class="form-control" placeholder="Search Last Name">
+                    <input wire:model.live.debounce:500ms="searchLastName" type="text" class="form-control" placeholder="Search Last Name">
                </th>
                <th class="p-1">
-                    <input wire:model.debounce:500ms="searchEmail" type="text" class="form-control" placeholder="Search Email">
+                    <input wire:model.live.debounce:500ms="searchEmail" type="text" class="form-control" placeholder="Search Email">
                </th>
                <th class="p-1">
-                    <input wire:model.debounce:500ms="searchCompany" type="text" class="form-control" placeholder="Search Company">
+                    <input wire:model.live.debounce:500ms="searchCompany" type="text" class="form-control" placeholder="Search Company">
                </th>
                <th class="p-1">
-                    <select wire:model.debounce:500ms="searchRole" name="role" id="role" class="form-control" >
+                    <select wire:model.live.debounce:500ms="searchRole" name="role" id="role" class="form-control" >
                          <option value="">Search by Role</option>
                          <option value="admin">Admin</option>
                          <option value="dealer">Dealer</option>

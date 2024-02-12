@@ -74,7 +74,7 @@
             <table cellspacing="0" cellpadding="0" border="0" width="100%" class="details">
                 <tr>
                     <th colspan="3" style="text-align: left;">
-                        Vehicle Details
+                        Vehicle Details - Status: {{ $status }}
                     </th>
                 </tr>
                 {!! $vehicleDetailsHtml !!}
@@ -233,7 +233,7 @@
                             </tr>
                             <tr>
                                 <td>AOC:</td>
-                                <td>Orbit:</td>
+                                <td>Orbit: {{ $orbit_number }}</td>
                             </tr>
                         </table>
                         <table cellspacing="0" cellpadding="0" border="0" width="100%" class="contents" style="margin-top: 10px">

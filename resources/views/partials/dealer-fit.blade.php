@@ -13,7 +13,7 @@
     </div>
     <div class="col-md-4">
         <div><strong>Search</strong></div>
-        <input type="text" class="form-control" wire:model="dealerFitSearch">
+        <input type="text" class="form-control" wire:model.live="dealerFitSearch">
     </div>
 </div>
 @if($model && $dealership)
@@ -28,7 +28,7 @@
         <tbody>
         @forelse($dealer_options as $option)
             <tr>
-                <td><input type="checkbox" value="{{$option->id}}" wire:model="dealerFitOptions"></td>
+                <td><input type="checkbox" value="{{$option->id}}" wire:model.live="dealerFitOptions"></td>
                 <td>{{$option->option_name}}</td>
                 <td>£{{ number_format($option->option_price, 2, '.', '') }}</td>
             </tr>

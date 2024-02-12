@@ -7,11 +7,11 @@
     </div>
     <div class="col-md-4">
         <div><strong>Model Year:</strong></div>
-        <input type="text" disabled wire:model="model_year" class="form-control">
+        <input type="text" disabled wire:model.live="model_year" class="form-control">
     </div>
     <div class="col-md-4">
         <div><strong>Search</strong></div>
-        <input type="text" class="form-control" wire:model="factoryFitSearch">
+        <input type="text" class="form-control" wire:model.live="factoryFitSearch">
     </div>
 </div>
 @if($model && $model_year)
@@ -26,7 +26,7 @@
         <tbody>
         @forelse($factory_options as $option)
             <tr>
-                <td><input type="checkbox" value="{{$option->id}}" wire:model="factoryFitOptions"></td>
+                <td><input type="checkbox" value="{{$option->id}}" wire:model.live="factoryFitOptions"></td>
                 <td>{{$option->option_name}}</td>
                 <td>£{{ number_format($option->option_price, 2, '.', '') }}</td>
             </tr>

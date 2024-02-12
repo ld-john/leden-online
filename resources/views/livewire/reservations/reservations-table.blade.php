@@ -2,7 +2,7 @@
      <div class="d-flex justify-content-between align-items-center">
           <div class="w-25 p-3 d-flex align-items-center">
                Show
-               <select wire:model="paginate" name="" id="" class="form-control mx-2">
+               <select wire:model.live="paginate" name="" id="" class="form-control mx-2">
                     <option value='10'>10</option>
                     <option value='25'>25</option>
                     <option value='50'>50</option>
@@ -12,7 +12,7 @@
           </div>
           @can('admin')
                <div class="form-check">
-                    <input class="form-check-input" wire:model="hideDeleted" type="checkbox" value="true" >
+                    <input class="form-check-input" wire:model.live="hideDeleted" type="checkbox" value="true" >
                     <label class="form-check-label" for="defaultCheck1">
                          Show Completed Reservations
                     </label>

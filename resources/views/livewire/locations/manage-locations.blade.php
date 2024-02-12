@@ -7,14 +7,14 @@
     <div class="row align-items-end">
         <div class="col-md-5">
             <label class="form-label" for="location">Location</label>
-            <input wire:model="location" type="text" class="form-control" name="location" id="location">
+            <input wire:model.live="location" type="text" class="form-control" name="location" id="location">
             @error('location')
             <div class="alert alert-danger mt-2">{{ $errors->first('location')}}</div>
             @enderror
         </div>
         <div class="col-md-5">
             <label class="form-label" for="status">Status</label>
-            <select wire:model="status" name="status" id="status" class="form-select">
+            <select wire:model.live="status" name="status" id="status" class="form-select">
                 <option value="">--</option>
                 @foreach($statuses as $key => $status)
                     <option value="{{$key}}">{{ $status }}</option>

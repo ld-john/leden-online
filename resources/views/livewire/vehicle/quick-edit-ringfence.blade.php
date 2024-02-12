@@ -14,7 +14,7 @@
             <div class="form-group row">
                 <label for="broker">Select Broker</label>
                 <div class="mb-3">
-                    <select wire:model="broker" name="broker" id="broker" class="form-select">
+                    <select wire:model.live="broker" name="broker" id="broker" class="form-select">
                         <option value="">Select Broker</option>
                         @foreach($brokers as $broker)
                             <option value="{{ $broker->id }}">{{ $broker->company_name }}</option>

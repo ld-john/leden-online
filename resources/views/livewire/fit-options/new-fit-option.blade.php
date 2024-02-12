@@ -9,7 +9,7 @@
                     <label class="input-group-text bg-danger text-white" for="option_name"><i class="fa fa-exclamation-triangle"></i></label>
                 </div>
                 @enderror
-                <input type="text" class="form-control" id="option_name" wire:model="option_name">
+                <input type="text" class="form-control" id="option_name" wire:model.live="option_name">
             </div>
         </div>
         <div class="form-group mr-2">
@@ -20,7 +20,7 @@
                     <label class="input-group-text bg-danger text-white" for="model"><i class="fa fa-exclamation-triangle"></i></label>
                 </div>
                 @enderror
-                <input type="text" class="form-control" id="model" wire:model="model">
+                <input type="text" class="form-control" id="model" wire:model.live="model">
             </div>
 
         </div>
@@ -32,13 +32,13 @@
                     <label class="input-group-text bg-danger text-white" for="model_year_input"><i class="fa fa-exclamation-triangle"></i></label>
                 </div>
                 @enderror
-                <input type="text" class="form-control model_year" id="model_year_input" wire:model="model_year" onchange="this.dispatchEvent(new InputEvent('input'))">
+                <input type="text" class="form-control model_year" id="model_year_input" wire:model.live="model_year" onchange="this.dispatchEvent(new InputEvent('input'))">
             </div>
         </div>
         @if($fitType === 'dealer')
             <div class="form-group mr-2">
                 <label for="dealer">Dealer</label>
-                <select name="dealer" id="dealer" wire:model="dealer" class="form-control">
+                <select name="dealer" id="dealer" wire:model.live="dealer" class="form-control">
                     <option value=""></option>
                     @foreach($dealers as $option)
                         <option value="{{ $option->id }}">{{ $option->company_name }}</option>
@@ -54,7 +54,7 @@
                     <label class="input-group-text bg-danger text-white" for="price"><i class="fa fa-exclamation-triangle"></i></label>
                 </div>
                 @enderror
-                <input type="text" class="form-control" id="price" wire:model="price">
+                <input type="text" class="form-control" id="price" wire:model.live="price">
             </div>
 
         </div>
