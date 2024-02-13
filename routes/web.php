@@ -311,7 +311,7 @@ Route::middleware('auth')->group(function () {
         'company.update',
     );
 
-    /* Vehicle Meta CRUD Routes
+    /* Vehicle Meta-CRUD Routes
      * Added 04.05.2021 - By Link
      */
 

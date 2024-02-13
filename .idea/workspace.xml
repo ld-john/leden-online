@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Update to Order Controller and PDF">
+      <change afterPath="$PROJECT_DIR$/database/migrations/2024_02_13_152536_add_metallic_paint_discount_to_dealer_discounts_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Customer/DealerDiscountField.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/DealerDiscountField.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/companies/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/companies/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/customer/dealer-discount-field.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/customer/dealer-discount-field.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -570,7 +574,8 @@
       <workItem from="1707496328112" duration="1838000" />
       <workItem from="1707734778359" duration="487000" />
       <workItem from="1707735280889" duration="2364000" />
-      <workItem from="1707821881398" duration="500000" />
+      <workItem from="1707821881398" duration="1784000" />
+      <workItem from="1707835235202" duration="2945000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -915,7 +920,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -946,7 +951,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Tweak to the OTR Requested Notification" />
     <MESSAGE value="Added new Status to Order Bank" />
     <MESSAGE value="Add exception to Orders and pull into Reporting" />
     <MESSAGE value="Add a Flat Leden Discount to Invoices and show on the total of orders without showing the amount." />
@@ -971,7 +975,8 @@
     <MESSAGE value="Added Order In Query to the excluded list for the Importer." />
     <MESSAGE value="Added Order in Query to Order Bank&#10;&#10;Added Dealer to the download of Universal Search&#10;&#10;Added Finance Broker to the download of Universal Search" />
     <MESSAGE value="Update Laravel to v10&#10;Update Livewire to v3&#10;Assorted other package updates&#10;Added Vehicle Status to Order PDF&#10;Added Orbit Number to Order PDF" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Laravel to v10&#10;Update Livewire to v3&#10;Assorted other package updates&#10;Added Vehicle Status to Order PDF&#10;Added Orbit Number to Order PDF" />
+    <MESSAGE value="Update to Order Controller and PDF" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update to Order Controller and PDF" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
