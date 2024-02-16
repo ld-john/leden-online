@@ -15,7 +15,7 @@ class FinanceTypeEditor extends Component
     public $edit;
     public $edit_name;
 
-    public function mount()
+    public function mount(): void
     {
         $this->metadata = FinanceType::with('orders')->get();
     }
@@ -25,7 +25,7 @@ class FinanceTypeEditor extends Component
         $financeType = new FinanceType();
         $financeType->option = $this->new_name;
         $financeType->save();
-        Notify()->success('Finance Type added successfully');
+        Notify()->success('Finance Type added successfully', 'Added!');
         return redirect(route('finance.finance-type.index'));
     }
 
@@ -38,7 +38,7 @@ class FinanceTypeEditor extends Component
     public function delete(FinanceType $type)
     {
         $type->delete();
-        Notify()->success('Finance Type deleted successfully');
+        Notify()->success('Finance Type deleted successfully', 'Deleted');
         return redirect(route('finance.finance-type.index'));
     }
 
@@ -48,7 +48,7 @@ class FinanceTypeEditor extends Component
         $financeType->update([
             'option' => $this->edit_name,
         ]);
-        Notify()->success('Finance Type Edited Successfully');
+        Notify()->success('Finance Type Edited Successfully', 'Type Edited');
         return redirect(route('finance.finance-type.index'));
     }
 

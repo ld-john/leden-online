@@ -16,7 +16,6 @@
 
   <!-- Styles -->
   @notifyCss
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/bootstrap-select.css') }}" rel="stylesheet">
   <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet">
   <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -53,8 +52,9 @@
 <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
 <script src="{{ asset('js/jquery-easing/jquery.easing.min.js') }}"></script>
 <script src="{{ asset('js/Chart.min.js') }}"></script>
+@vite(['resources/sass/app.scss', 'resources/js/app.js'])
+@livewireScriptConfig
 @notifyJs
-<livewire:scripts />
 
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('js/dashboard.js') }}"></script>

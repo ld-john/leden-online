@@ -132,7 +132,7 @@ class VehicleTable extends Component
             })
             ->when($this->searchChassis, function ($query) {
                 $query->where(
-                    'derivative',
+                    'chassis',
                     'like',
                     '%' . $this->searchChassis . '%',
                 );

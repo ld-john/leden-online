@@ -16,6 +16,13 @@
 
 .blue-background {
   background: $leden-dark-blue;
+  th {
+    background: $leden-dark-blue;
+  }
+}
+
+.text-white th {
+  color: white;
 }
 
 .sidebar {
