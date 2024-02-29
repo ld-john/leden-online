@@ -101,6 +101,7 @@ class CSVUploadController extends Controller
             $upload[1]['broker_id'] = $broker;
             $upload[1]['updated_at'] = Carbon::now();
             $upload[1]['created_at'] = Carbon::now();
+
             $upload[1]['dealer_id'] = $dealer->id;
 
             Vehicle::updateOrInsert($upload[0], $upload[1]);
@@ -233,6 +234,10 @@ class CSVUploadController extends Controller
                                 $ford_report['ETA_DATE'],
                             )->format('Y-m-d h:i:s');
                         } else {
+                            $due_date = null;
+                        }
+
+                        if ($location === 1) {
                             $due_date = null;
                         }
 

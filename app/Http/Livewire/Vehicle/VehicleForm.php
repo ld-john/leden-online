@@ -184,6 +184,14 @@ class VehicleForm extends Component
      */
     public function orderFormSubmit()
     {
+        if (
+            $this->due_date === '-0001-11-30' ||
+            $this->due_date === '' ||
+            $this->due_date === '0000-00-00'
+        ) {
+            $this->due_date = null;
+        }
+
         $this->validate();
 
         if ($this->orbit_number === '') {

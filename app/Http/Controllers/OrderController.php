@@ -416,7 +416,10 @@ class OrderController extends Controller
             ->where('id', $order)
             ->forceDelete();
 
-        notify()->success($order->id . ' successfully deleted');
+        notify()->success(
+            'Order  #' . $order . ' has been successfully deleted',
+            'Order Deleted',
+        );
 
         return redirect()->route('order.recycle-bin');
     }

@@ -16,7 +16,6 @@
 
   <!-- Styles -->
   @notifyCss
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/bootstrap-select.css') }}" rel="stylesheet">
   <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet">
   <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -30,6 +29,25 @@
 </head>
 
 <body id="page-top">
+
+<div class="preloader" style="position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+  background-color: #ffffff;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; gap: 10px">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <img src="{{ asset('images/leden-group-ltd.png') }}"  alt="Leden Logo"/>
+</div>
 
 
 <!-- Content Wrapper -->
@@ -53,8 +71,9 @@
 <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
 <script src="{{ asset('js/jquery-easing/jquery.easing.min.js') }}"></script>
 <script src="{{ asset('js/Chart.min.js') }}"></script>
+@vite(['resources/sass/app.scss', 'resources/js/app.js'])
+@livewireScriptConfig
 @notifyJs
-<livewire:scripts />
 
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('js/dashboard.js') }}"></script>
@@ -69,6 +88,14 @@
     });
     $('.select2').select2({});
   });
+</script>
+
+<script>
+  $(window).on('load', function () {
+    if ($('.preloader').length) {
+      $('.preloader').delay(200).fadeOut(500);
+    }
+  })
 </script>
 
 </body>
