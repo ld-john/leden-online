@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Added Bootstrap.scss files">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Tweaks to the Order Table to try and resolve search/filter Issues.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -580,7 +581,7 @@
       <workItem from="1708439787604" duration="262000" />
       <workItem from="1708440501415" duration="1284000" />
       <workItem from="1708966001701" duration="2884000" />
-      <workItem from="1709214160148" duration="5391000" />
+      <workItem from="1709214160148" duration="6289000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -925,7 +926,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -956,7 +957,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Add a Flat Leden Discount to Invoices and show on the total of orders without showing the amount." />
     <MESSAGE value="Changed Exception name, added new Status downloads and Universal Search, altered colour of text on Order PDF." />
     <MESSAGE value="Moved Leden Discount into the Cost Breakdown section&#10;&#10;Added Dealer Transfer to the Quick Order Edit status list" />
     <MESSAGE value="Add Dealer Transfer to Order Bank" />
@@ -981,7 +981,8 @@
     <MESSAGE value="Update to Order Controller and PDF" />
     <MESSAGE value="Remove Mix &#10;Add Vite&#10;Updates to the Vehicle Form to allow removal of Due Dute&#10;Remove Due Date when an import marks the vehicle as In Stock." />
     <MESSAGE value="Added Bootstrap.scss files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Bootstrap.scss files" />
+    <MESSAGE value="Tweaks to the Order Table to try and resolve search/filter Issues." />
+    <option name="LAST_COMMIT_MESSAGE" value="Tweaks to the Order Table to try and resolve search/filter Issues." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

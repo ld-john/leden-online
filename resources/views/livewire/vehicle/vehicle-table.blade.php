@@ -90,33 +90,33 @@
             </th>
             <th></th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchType" type="text" class="form-control"
+                <input wire:model.blur="searchType" type="text" class="form-control"
                        placeholder="Search Type">
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchChassis" type="text" class="form-control"
+                <input wire:model.blur="searchChassis" type="text" class="form-control"
                        placeholder="Search Chassis">
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchRegistration" type="text" class="form-control"
+                <input wire:model.blur="searchRegistration" type="text" class="form-control"
                        placeholder="Search Registration">
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchBuildDate" type="date" class="form-control"
+                <input wire:model.blur="searchBuildDate" type="date" class="form-control"
                        placeholder="Search Planned Build Date">
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchDueDate" class="form-control" placeholder="Search Due Date"
+                <input wire:model.blur="searchDueDate" class="form-control" placeholder="Search Due Date"
                        type="date">
 
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchDealer" type="text" class="form-control"
+                <input wire:model.blur="searchDealer" type="text" class="form-control"
                        placeholder="Search Dealer">
             </th>
             @if($ringfenced)
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchBroker" type="text" class="form-control"
+                    <input wire:model.blur="searchBroker" type="text" class="form-control"
                            placeholder="Search Broker">
                 </th>
             @endif
