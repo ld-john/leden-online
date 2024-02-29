@@ -189,21 +189,21 @@
                                         data-toggle="tooltip"
                                         title="Copy Order"
                                 >
-                                    <livewire:order.duplicate-order :order="$order->id" :key="time().$order->id"/>
+                                    <livewire:order.duplicate-order :order="$order->id" :wire:key="'duplicate' . time().$order->id"/>
                                 </a>
                                 <a
                                         class="btn btn-danger"
                                         data-toggle="tooltip"
                                         title="Delete Order"
                                 >
-                                    <livewire:order.delete-order :order="$order->id" :vehicle="$order->vehicle" :key="time().$order->id"/>
+                                    <livewire:order.delete-order :order="$order->id" :vehicle="$order->vehicle" :wire:key="'delete'. time().$order->id"/>
                                 </a>
                                 <a
                                         class="btn btn-warning"
                                         data-toggle="tooltip"
                                         title="Quick Edit"
                                 >
-                                    <livewire:order.quick-edit-order :order="$order->id" :vehicle="$order->vehicle" view="order" :key="time().$order->id"/>
+                                    <livewire:order.quick-edit-order :order="$order->id" :vehicle="$order->vehicle" view="order" :wire:key="'quick-edit'.time().$order->id"/>
                                 </a>
                                 @if($order->delivery_date && $order->delivery_date !== '0000-00-00 00:00:00' && $order->vehicle->vehicle_status === 1)
                                     <a
@@ -230,7 +230,7 @@
                             @endcan
                         </div>
                         @can('admin')
-                            <livewire:order.contract-confirmation-checkbox :order="$order->id" :key="time().$order->id"></livewire:order.contract-confirmation-checkbox>
+                            <livewire:order.contract-confirmation-checkbox :order="$order->id" :wire:key="'contract-confirmation'.time().$order->id"></livewire:order.contract-confirmation-checkbox>
                         @endcan
                     </td>
                 </tr>
