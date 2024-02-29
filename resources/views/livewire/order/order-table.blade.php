@@ -60,38 +60,38 @@
             </tr>
             <tr class="bg-light">
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchID" type="text" class="form-control"
+                    <input wire:model.blur="searchID" type="text" class="form-control"
                            placeholder="Search ID">
                 </th>
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchModel" type="text" class="form-control"
+                    <input wire:model.blur="searchModel" type="text" class="form-control"
                            placeholder="Search Model">
                 </th>
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchDerivative" type="text" class="form-control"
+                    <input wire:model.blur="searchDerivative" type="text" class="form-control"
                            placeholder="Search Derivatives">
                 </th>
                 @can('broker')
                     <th></th>
                 @endcan
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchOrderNumber" type="text" class="form-control"
+                    <input wire:model.blur="searchOrderNumber" type="text" class="form-control"
                            placeholder="Search Ford Order Number">
                 </th>
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchOrbitNumber" type="text" class="form-control"
+                    <input wire:model.blur="searchOrbitNumber" type="text" class="form-control"
                            placeholder="Search Orbit Number">
                 </th>
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchReg" type="text" class="form-control"
+                    <input wire:model.blur="searchReg" type="text" class="form-control"
                            placeholder="Search Registration">
                 </th>
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchBuildDate" type="date" class="form-control"
+                    <input wire:model.blur="searchBuildDate" type="date" class="form-control"
                            placeholder="Search Build Date">
                 </th>
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchDueDate" type="date" class="form-control"
+                    <input wire:model.blur="searchDueDate" type="date" class="form-control"
                            placeholder="Search Due Date">
                 </th>
                 <th class="p-1">
@@ -105,21 +105,21 @@
                     </select>
                 </th>
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchCustomer" type="text" class="form-control"
+                    <input wire:model.blur="searchCustomer" type="text" class="form-control"
                            placeholder="Search Customer">
                 </th>
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchBrokerRef" type="text" class="form-control"
+                    <input wire:model.blur="searchBrokerRef" type="text" class="form-control"
                            placeholder="Search Broker Order Ref">
                 </th>
                 <th class="p-1 flex flex-col gap-1">
-                    <input wire:model.live.debounce:500ms="searchBroker" type="text" class="form-control"
+                    <input wire:model.blur="searchBroker" type="text" class="form-control"
                            placeholder="Search Broker">
-                    <input wire:model.live.debounce:500ms="searchFinanceBroker" type="text" class="form-control"
+                    <input wire:model.blur="searchFinanceBroker" type="text" class="form-control"
                            placeholder="Search Finance Broker">
                 </th>
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchDealer" type="text" class="form-control"
+                    <input wire:model.blur="searchDealer" type="text" class="form-control"
                            placeholder="Search Dealer">
                 </th>
                 <th></th>
