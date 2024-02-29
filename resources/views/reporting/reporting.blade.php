@@ -29,7 +29,7 @@
                                         <div class="row">
                                             @foreach($months as $month)
                                                 <div class="col col-3 mb-4">
-                                                    <a href="{{ route('monthly-registered', [\Carbon\Carbon::parse($month['label'])->format('m'), \Carbon\Carbon::parse($month['label'])->format('Y')]) }}" class="btn btn-primary h-100 w-full">{{ $month['label'] }}</a>
+                                                    <a href="{{ route('monthly-registered', [\Carbon\Carbon::createFromFormat('Y m d', $month)->format('m'), \Carbon\Carbon::createFromFormat('Y m d', $month)->format('Y')]) }}" class="btn btn-primary h-100 w-full">{{ \Carbon\Carbon::createFromFormat('Y m d', $month)->format('F') }}</a>
                                                 </div>
                                             @endforeach
                                         </div>

@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-body">
                     <label for="target">Who Should this car be ring-fenced for?</label>
-                    <select name=target" id="target" wire:model="target" class="form-control mb-4">
+                    <select name=target" id="target" wire:model.live="target" class="form-control mb-4">
                         @foreach($brokers as $broker)
                             <option value="{{ $broker->id }}">{{$broker->company_name}}</option>
                         @endforeach

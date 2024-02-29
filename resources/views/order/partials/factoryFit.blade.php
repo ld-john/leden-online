@@ -1,6 +1,6 @@
 <div class="form-group row">
     <div class="col-md-5">
-        <select wire:model.lazy="factory_fit_options" class="form-select" multiple>
+        <select wire:model.blur="factory_fit_options" class="form-select" multiple>
             @foreach ($factory_options as $factory_option)
 
                 <option data-cost="{{ $factory_option->option_price }}" value="{{ $factory_option->id }}" >{{ $factory_option->option_name }} -
@@ -12,12 +12,12 @@
         <div class="row">
             <div class="col-md-6">
                 <label>Name</label>
-                <input wire:model="factory_fit_name_manual_add" type="text" class="form-control" />
+                <input wire:model.live="factory_fit_name_manual_add" type="text" class="form-control" />
                 @error('factory_fit_name_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror
             </div>
             <div class="col-md-6">
                 <label>Price</label>
-                <input wire:model="factory_fit_price_manual_add" type="number" step=".01" class="form-control" />
+                <input wire:model.live="factory_fit_price_manual_add" type="number" step=".01" class="form-control" />
                 @error('factory_fit_price_manual_add') <div class="alert alert-danger">{!! $message !!} </div> @enderror
             </div>
         </div>

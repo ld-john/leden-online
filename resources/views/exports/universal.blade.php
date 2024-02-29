@@ -19,6 +19,8 @@
         <th>Due Date</th>
         <th>Status</th>
         <th>Broker</th>
+        <th>Finance Broker</th>
+        <th>Dealer</th>
         <th>Broker Reference</th>
         <th>Factory Fit Options</th>
         <th>Dealer Fit Options</th>
@@ -56,6 +58,12 @@
             <td>{{ $vehicle->status() }}</td>
             <td>
                 {{ $vehicle->broker?->company_name }}
+            </td>
+            <td>
+                {{ $vehicle->order?->finance_broker?->company_name }}
+            </td>
+            <td>
+                {{ $vehicle->dealer?->company_name }}
             </td>
             <td>{{ $vehicle->order?->broker_ref }}</td>
             <td>

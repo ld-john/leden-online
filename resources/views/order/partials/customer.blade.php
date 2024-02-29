@@ -1,5 +1,5 @@
 <label class="col-md-2 col-form-label" for="customer_name">Customer Name</label>
-<input type="text" wire:model="customer_name" name="customer_name" id="customer_name" class="form-control">
+<input type="text" wire:model.live="customer_name" name="customer_name" id="customer_name" class="form-control">
 
 <table class="table table-bordered mt-4">
     <thead>
@@ -12,7 +12,7 @@
     <tbody>
     @forelse ( $customers as $customer )
         <tr>
-            <td><input type="radio" value="{{$customer->id}}" wire:model="customer_id"></td>
+            <td><input type="radio" value="{{$customer->id}}" wire:model.live="customer_id"></td>
             <td>{{ $customer->name() }}</td>
             <td>{{ $customer->address_1 }}</td>
         </tr>

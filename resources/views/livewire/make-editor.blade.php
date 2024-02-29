@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-6 mb-5">
             <h2>Add New Make </h2>
-            <form wire:submit.prevent="newMake">
+            <form wire:submit="newMake">
                 <div class="input-group">
                     <div class="input-group-text">
                         Make:
@@ -10,7 +10,7 @@
                     <input
                             type="text"
                             class="form-control"
-                            wire:model="newMakeName"
+                            wire:model.live="newMakeName"
 
                     >
                     <button
@@ -25,11 +25,11 @@
         </div>
         <div class="col-6 mb-5">
             <h2>Add New Model</h2>
-            <form wire:submit.prevent="newModel">
+            <form wire:submit="newModel">
                 <div class="input-group mb-3">
                     <div class="input-group-text">Make
                     </div>
-                    <select wire:model="newModelMake" class="form-select" id="inputGroupSelect01">
+                    <select wire:model.live="newModelMake" class="form-select" id="inputGroupSelect01">
                         <option selected>Choose...</option>
                         @foreach($makes as $make)
                             <option value="{{ $make->id }}">{{ $make->name }}</option>
@@ -42,7 +42,7 @@
                     <input
                             type="text"
                             class="form-control"
-                            wire:model="newModelName"
+                            wire:model.live="newModelName"
 
                     >
                     <button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i> Add</button>
@@ -57,7 +57,7 @@
             <p>Changes to the Make name WILL affect existing vehicles. Model Name will not.</p>
 
 
-            <form wire:submit.prevent="save">
+            <form wire:submit="save">
                 <ul>
                     @foreach($makes as $make)
                         <livewire:make-name-editor :make="$make" :key="$loop->index" />

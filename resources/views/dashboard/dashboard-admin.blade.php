@@ -29,66 +29,16 @@
                             <canvas id="runReport" style="height: 350px"></canvas>
                         </div>
                         <div class="row g-1 row-cols-4">
-                            @if($vehicle_statuses['Factory Order'] != 0)
-                                <div class="col col-3">
-                                    <a class="btn btn-primary w-100 h-100 btn-sm" href="{{route('export.factory_order')}}">Download Factory Orders</a>
-                                </div>
-                            @endif
-                            @if($vehicle_statuses['Europe VHC'] != 0)
-                                <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.europe_vhc')}}">Download Europe VHC</a>
-                                </div>
-                            @endif
-                            @if($vehicle_statuses['UK VHC'] != 0)
-                                <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.uk_vhc')}}">Download UK VHC</a>
-                                </div>
-                            @endif
-                            @if($vehicle_statuses['In Stock'] != 0)
-                                <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.in_stock')}}">Download In Stock Orders</a>
-                                </div>
-                            @endif
-                            @if($vehicle_statuses['In Stock (Registered)'] != 0)
-                                <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.in_stock_registered')}}">Download In Stock (Registered) Orders</a>
-                                </div>
-                            @endif
-                            @if($vehicle_statuses['In Stock (Awaiting Dealer Options)'] != 0)
-                                <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.in_stock_awaiting_dealer')}}">Download In Stock (Awaiting Dealer Options) Orders</a>
-                                </div>
-                            @endif
-                            @if($vehicle_statuses['Ready for Delivery'] != 0)
-                                <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.ready_for_delivery')}}">Download Ready for Delivery</a>
-                                </div>
-                            @endif
-                            @if($vehicle_statuses['Delivery Booked'] != 0)
-                                <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.delivery_booked')}}">Download Delivery Booked</a>
-                                </div>
-                            @endif
-                            @if($vehicle_statuses['Awaiting Ship'] != 0)
-                                <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.awaiting_ship')}}">Download Awaiting Ship</a>
-                                </div>
-                            @endif
-                            @if($vehicle_statuses['At Converter'] != 0)
-                                <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.at_converter')}}">Download At Converter</a>
-                                </div>
-                            @endif
-                            @if($vehicle_statuses['Damaged/Recalled'] != 0)
-                                <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.damaged')}}">Download Damaged/Recalled</a>
-                                </div>
-                            @endif
-                            @if($vehicle_statuses['Dealer Transfer'] != 0)
-                                <div class="col col-3">
-                                    <a class="btn btn-primary btn-sm w-100 h-100" href="{{route('export.dealer_transfer')}}">Download Dealer Transfer</a>
-                                </div>
-                            @endif
+                            @foreach($vehicle_statuses as $key => $status)
+
+                                @continue($key === 'Awaiting Delivery Confirmation' || $key === 'Completed Orders' || $key === 'Recall')
+
+                                @if($status !== 0)
+                                    <div class="col col-3">
+                                        <a class="btn btn-primary w-100 h-100 btn-sm" href="{{ route('export.' . Str::replace(')', '', Str::replace('(', '',Str::snake($key)))) }}">Download {{ $key }}</a>
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>

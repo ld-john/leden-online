@@ -5,7 +5,7 @@
             <a href="{{ route('order.show', $order->id) }}" class="btn btn-primary">View Order</a>
         </div>
     @endif
-    <form wire:submit.prevent="orderFormSubmit" method="POST" enctype="multipart/form-data">
+    <form wire:submit="orderFormSubmit" method="POST" enctype="multipart/form-data">
         @if($errors->count())
             <div class="alert alert-danger alert-dismissible fade show m-5">
                 <h4 class="alert-heading"><i class="fa fa-exclamation-triangle"></i> There are some issues.</h4>

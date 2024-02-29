@@ -27,7 +27,6 @@ use App\Notifications\RegistrationNumberAddedEmailNotification;
 use App\Notifications\RegistrationNumberAddedNotification;
 use App\Notifications\VehicleInStockEmailNotification;
 use App\Notifications\VehicleInStockNotification;
-use Carbon\Carbon;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -93,7 +92,7 @@ class OrderForm extends Component
     public $first_reg_fee;
     public $rfl_cost;
     public $onward_delivery;
-    public string|float $leden_discount;
+    public string|float $leden_discount = 0;
     public $invoice_funder_for;
     public $show_discount = '0'; // Vehicle
     public $show_offer = '0'; // Vehicle
@@ -857,6 +856,10 @@ class OrderForm extends Component
      */
     public function saveVehicleDetails(Vehicle $vehicle): void
     {
+        if ($this->due_date === '') {
+            $this->due_date = null;
+        }
+
         $vehicle->update([
             'vehicle_status' => $this->status,
             'reg' => $this->registration,
@@ -992,7 +995,7 @@ class OrderForm extends Component
                         ->where('dealer_id', '=', $this->dealership)
                         ->first()?->discount,
                 ) ?? 0;
-            $this->dispatchBrowserEvent('dealerDiscountChanged');
+            $this->dispatch('dealerDiscountChanged');
         }
     }
 

@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between">
         <div class="w-25 p-3 d-flex align-items-center">
             Show
-            <select wire:model="paginate" class="form-control mx-2" name="" id="">
+            <select wire:model.live="paginate" class="form-control mx-2" name="" id="">
                 <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
@@ -14,12 +14,12 @@
             <a wire:click="downloadCurrentData" class="btn btn-success text-white">Download Current View</a>
             <div class="form-check form-switch">
                 <label for="deliveriesBookedFilter" class="form-check-label">Include Deliveries Booked</label>
-                <input wire:model="deliveriesBookedFilter" type="checkbox" id="deliveriesBookedFilter"
+                <input wire:model.live="deliveriesBookedFilter" type="checkbox" id="deliveriesBookedFilter"
                        class="form-check-input" role="switch">
             </div>
             <div class="form-check form-switch">
                 <label for="completedOrdersFilter" class="form-check-label">Include Completed Orders</label>
-                <input wire:model="completedOrdersFilter" type="checkbox" id="completedOrdersFilter"
+                <input wire:model.live="completedOrdersFilter" type="checkbox" id="completedOrdersFilter"
                        class="form-check-input" role="switch">
             </div>
         </div>
@@ -40,7 +40,7 @@
             <th>
                 <label for="BuildDateFilter" class="form-check-label small">Filter Build Date</label>
                 <div class="form-check form-switch">
-                    <input wire:model="filterBuildDate" type="checkbox" id="BuildDateFilter" class="form-check-input"
+                    <input wire:model.live="filterBuildDate" type="checkbox" id="BuildDateFilter" class="form-check-input"
                            role="switch">
                 </div>
                 Planned Build Date
@@ -48,7 +48,7 @@
             <th>
                 <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>
                 <div class="form-check form-switch">
-                    <input wire:model="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
+                    <input wire:model.live="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
                            role="switch">
                 </div>
                 Due Date
@@ -61,23 +61,23 @@
         </tr>
         <tr class="bg-light">
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchOrder" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchOrder" type="text" class="form-control"
                        placeholder="Search Order">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchCustomer" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchCustomer" type="text" class="form-control"
                        placeholder="Search Customer">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchFordOrderNumber" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchFordOrderNumber" type="text" class="form-control"
                        placeholder="Search Ford Order Number">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchOrbitNumber" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchOrbitNumber" type="text" class="form-control"
                        placeholder="Search Orbit Number">
             </th>
             <th class="p-1">
-                <select wire:model="searchType" name="type" id="type" class="form-select">
+                <select wire:model.live="searchType" name="type" id="type" class="form-select">
                     <option value="">Select Type</option>
                     @foreach($type as $item)
                         <option value="{{ $item }}">
@@ -87,35 +87,35 @@
                 </select>
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchMake" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchMake" type="text" class="form-control"
                        placeholder="Search Make">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchDetails" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchDetails" type="text" class="form-control"
                        placeholder="Search Details">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchChassisPrefix" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchChassisPrefix" type="text" class="form-control"
                        placeholder="Search Chassis Prefix">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchChassis" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchChassis" type="text" class="form-control"
                        placeholder="Search Chassis">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchRegistration" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchRegistration" type="text" class="form-control"
                        placeholder="Search Registration">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchBuildDate" type="date" class="form-control"
+                <input wire:model.live.debounce:500ms="searchBuildDate" type="date" class="form-control"
                        placeholder="Search Build Date">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchDueDate" type="date" class="form-control"
+                <input wire:model.live.debounce:500ms="searchDueDate" type="date" class="form-control"
                        placeholder="Search Due Date">
             </th>
             <th class="p-1">
-                <select wire:model="searchStatus" name="status" id="status" class="form-select">
+                <select wire:model.live="searchStatus" name="status" id="status" class="form-select">
                     <option value="">Select Status</option>
                     @foreach($status as $item)
                         <option value="{{ $item }}">
@@ -125,11 +125,11 @@
                 </select>
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchBroker" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchBroker" type="text" class="form-control"
                        placeholder="Search Broker">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchBrokerRef" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchBrokerRef" type="text" class="form-control"
                        placeholder="Search Broker Reference">
             </th>
             <th></th>

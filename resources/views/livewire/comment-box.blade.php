@@ -10,11 +10,11 @@
             </div>
             @can('admin')
                 <div class="form-check">
-                    <input wire:model="privacy" id="private" class="form-check-input" type="checkbox">
+                    <input wire:model.live="privacy" id="private" class="form-check-input" type="checkbox">
                     <label for="private" class="form-check-label">Mark Comment as Private</label>
                 </div>
                 <div class="form-check">
-                    <input wire:model="dealer_comment" id="dealer_comment" class="form-check-input" type="checkbox">
+                    <input wire:model.live="dealer_comment" id="dealer_comment" class="form-check-input" type="checkbox">
                     <label for="dealer_comment" class="form-check-label">Mark Comment as Dealer Comment</label>
                 </div>
             @endcan
@@ -113,7 +113,7 @@
                 @this.content = commentEditor.trumbowyg('html');
             });
 
-        document.addEventListener('livewire:load', () => {
+        document.addEventListener('livewire:init', () => {
             window.livewire.on('commentSaved', event => {
                 commentEditor.trumbowyg('empty');
             })

@@ -1,7 +1,7 @@
 <div>
     <div class="input-group mb-2">
         <button class="btn btn-outline-secondary" type="button" wire:click.prevent="saveMakeModal()"><i class="fa-solid fa-floppy-disk"></i></button>
-        <input type="text" class="form-control" wire:model="makeName">
+        <input type="text" class="form-control" wire:model.live="makeName">
         @if(!$make->vehicles()->exists())
             <button class="btn btn-outline-danger" type="button" wire:click="deleteMake()" ><i class="fa-solid fa-trash"></i></button>
         @endif

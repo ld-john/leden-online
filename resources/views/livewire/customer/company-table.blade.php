@@ -2,7 +2,7 @@
      <div class="d-flex justify-content-between align-items-center">
           <div class="w-25 p-3 d-flex align-items-center">
                Show
-               <select wire:model="paginate" name="" id="" class="form-control mx-2">
+               <select wire:model.live="paginate" name="" id="" class="form-control mx-2">
                     <option value='10'>10</option>
                     <option value='25'>25</option>
                     <option value='50'>50</option>
@@ -31,19 +31,19 @@
                <th></th>
                <th></th>
                <th class="p-1">
-                    <input wire:model.debounce:500ms="searchName" type="text" class="form-control" placeholder="Search Name">
+                    <input wire:model.live.debounce:500ms="searchName" type="text" class="form-control" placeholder="Search Name">
                </th>
                <th class="p-1">
-                    <input wire:model.debounce:500ms="searchAddress" type="text" class="form-control" placeholder="Search Address">
+                    <input wire:model.live.debounce:500ms="searchAddress" type="text" class="form-control" placeholder="Search Address">
                </th>
                <th class="p-1">
-                    <input wire:model.debounce:500ms="searchEmail" type="text" class="form-control" placeholder="Search Email">
+                    <input wire:model.live.debounce:500ms="searchEmail" type="text" class="form-control" placeholder="Search Email">
                </th>
                <th class="p-1">
-                    <input wire:model.debounce:500ms="searchPhone" type="text" class="form-control" placeholder="Search Phone">
+                    <input wire:model.live.debounce:500ms="searchPhone" type="text" class="form-control" placeholder="Search Phone">
                </th>
                <th class="p-1">
-                    <select wire:model.debounce:500ms="searchType" name="type" id="type" class="form-control" >
+                    <select wire:model.live.debounce:500ms="searchType" name="type" id="type" class="form-control" >
                          <option value="">Search by Type</option>
                          <option value="broker">Broker</option>
                          <option value="dealer">Dealer</option>

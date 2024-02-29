@@ -134,7 +134,7 @@
                         <h6 class="m-0 font-weight-bold text-l-blue">Edit Dealer Discount</h6>
                     </div>
                     <div class="card-body">
-                        <livewire:customer.dealer-discount-editor :dealer="$company->id"></livewire:customer.dealer-discount-editor>
+                        @livewire('customer.dealer-discount-editor', ['dealer' => $company->id])
                     </div>
                 </div>
             </div>

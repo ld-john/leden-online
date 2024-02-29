@@ -45,7 +45,7 @@ class CommentBox extends Component
 
         $this->content = '';
 
-        $this->emit('commentSaved');
+        $this->dispatch('commentSaved');
     }
 
     public function deleteComment($id): void

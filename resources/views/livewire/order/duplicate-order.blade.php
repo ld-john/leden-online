@@ -12,7 +12,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="copy">How many copies</label>
-                        <input wire:model="duplicateQty" type="text" name="copy" class="form-control">
+                        <input wire:model.live="duplicateQty" type="text" name="copy" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">

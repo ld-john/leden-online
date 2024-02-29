@@ -10,13 +10,13 @@
                         <label class="input-group-text bg-danger text-white" for="option_name"><i class="fa fa-exclamation-triangle"></i></label>
                     </div>
                     @enderror
-                    <input type="text" class="form-control" id="option_name" wire:model="option_name">
+                    <input type="text" class="form-control" id="option_name" wire:model.live="option_name">
                 </div>
             </div>
             <div class="form-group me-2 w-100">
                 <label for="model">Model</label>
                 <div class="input-group">
-                    <select wire:model="model" name="model" id="model" class="form-select">
+                    <select wire:model.live="model" name="model" id="model" class="form-select">
                         <option value="">Please Select...</option>
                         @foreach($vehicle_models as $vehicle_model)
                             <option value="{{ $vehicle_model->id }}">{{ $vehicle_model->name }}</option>
@@ -33,13 +33,13 @@
                         <label class="input-group-text bg-danger text-white" for="model_year_input"><i class="fa fa-exclamation-triangle"></i></label>
                     </div>
                     @enderror
-                    <input type="text" class="form-control model_year" id="model_year_input" wire:model="model_year" onchange="this.dispatchEvent(new InputEvent('input'))">
+                    <input type="text" class="form-control model_year" id="model_year_input" wire:model.live="model_year" onchange="this.dispatchEvent(new InputEvent('input'))">
                 </div>
             </div>
             @if($fitType === 'dealer')
                 <div class="form-group me-2 w-100">
                     <label for="dealer">Dealer</label>
-                    <select name="dealer" id="dealer" wire:model="dealer" class="form-select">
+                    <select name="dealer" id="dealer" wire:model.live="dealer" class="form-select">
                         <option value=""></option>
                         @foreach($dealers as $option)
                             <option value="{{ $option->id }}">{{ $option->company_name }}</option>
@@ -55,7 +55,7 @@
                         <label class="input-group-text bg-danger text-white" for="price"><i class="fa fa-exclamation-triangle"></i></label>
                     </div>
                     @enderror
-                    <input type="text" class="form-control" id="price" wire:model="price">
+                    <input type="text" class="form-control" id="price" wire:model.live="price">
                 </div>
 
             </div>
@@ -65,7 +65,7 @@
     <div class="d-flex justify-content-between align-items-center">
         <div class="w-25 p-3 d-flex align-items-center">
             Show
-            <select wire:model="paginate" name="" id="" class="form-control mx-2">
+            <select wire:model.live="paginate" name="" id="" class="form-control mx-2">
                 <option value='10'>10</option>
                 <option value='25'>25</option>
                 <option value='50'>50</option>
@@ -75,7 +75,7 @@
         </div>
         <div class="w-25 p-3 d-flex align-items-center">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" wire:model="showArchive" >
+                <input class="form-check-input" type="checkbox" wire:model.live="showArchive" >
                 <label class="form-check-label" for="flexCheckDefault">
                     Show Archived Items
                 </label>
@@ -96,10 +96,10 @@
         </tr>
         <tr class="bg-light">
             <th class="p-1">
-                <input wire:model.debounce="option_name" type="text" class="form-control" placeholder="Search Option Name">
+                <input wire:model.live.debounce="option_name" type="text" class="form-control" placeholder="Search Option Name">
             </th>
             <th class="p-1">
-                <select wire:model="model" name="model" id="" class="form-select">
+                <select wire:model.live="model" name="model" id="" class="form-select">
                     <option value="">Please Select...</option>
                     @foreach($vehicle_models as $vehicle_model)
                         <option value="{{ $vehicle_model->id }}">{{ $vehicle_model->name }}</option>
@@ -107,11 +107,11 @@
                 </select>
             </th>
             <th class="p-1">
-                <input type="text" class="form-control model_year" id="model_year_input" wire:model="model_year" onchange="this.dispatchEvent(new InputEvent('input'))" placeholder="Search Year">
+                <input type="text" class="form-control model_year" id="model_year_input" wire:model.live="model_year" onchange="this.dispatchEvent(new InputEvent('input'))" placeholder="Search Year">
             </th>
             @if($fitType === 'dealer')
                 <th class="p-1">
-                    <select name="dealer" id="dealer" wire:model="dealer" class="form-select">
+                    <select name="dealer" id="dealer" wire:model.live="dealer" class="form-select">
                         <option value="">Search Dealer</option>
                         @foreach($dealers as $option)
                             <option value="{{ $option->id }}">{{ $option->company_name }}</option>
@@ -120,7 +120,7 @@
                 </th>
             @endif
             <th class="p-1">
-                <input wire:model.debounce="price" type="text" class="form-control" placeholder="Search Price">
+                <input wire:model.live.debounce="price" type="text" class="form-control" placeholder="Search Price">
             </th>
             <th></th>
         </tr>

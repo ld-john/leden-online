@@ -6,7 +6,7 @@
             <div class="input-group-text">
                 £
             </div>
-            <input wire:model="list_price" type="number" name="list_price" id="list_price" step=".01" class="form-control" autocomplete="off" onchange="invoiceValueChange()"/>
+            <input wire:model.live="list_price" type="number" name="list_price" id="list_price" step=".01" class="form-control" autocomplete="off" onchange="invoiceValueChange()"/>
         </div>
     </div>
 </div>
@@ -18,7 +18,7 @@
             <div class="input-group-text">
                 £
             </div>
-            <input wire:model="metallic_paint" type="number" name="metallic_paint" id="metallic_paint" step=".01" class="form-control" autocomplete="off" onchange="invoiceValueChange()" />
+            <input wire:model.live="metallic_paint" type="number" name="metallic_paint" id="metallic_paint" step=".01" class="form-control" autocomplete="off" onchange="invoiceValueChange()" />
         </div>
     </div>
 </div>
@@ -29,10 +29,10 @@
         <div class="input-group">
             <div class="input-group-text">
                 <span class="form-check-label me-2">Override?</span>
-                <input type="checkbox" class="form-check" aria-label="Checkbox for Invoice Value Override" wire:model="dealer_discount_override">
+                <input type="checkbox" class="form-check" aria-label="Checkbox for Invoice Value Override" wire:model.live="dealer_discount_override">
             </div>
             <input
-                    wire:model="dealer_discount"
+                    wire:model.live="dealer_discount"
                     type="number"
                     name="dealer_discount"
                     id="dealer_discount"
@@ -54,7 +54,7 @@
     <div class="col-md-6">
         <div class="input-group">
             <input
-                    wire:model="manufacturer_discount"
+                    wire:model.live="manufacturer_discount"
                     type="number"
                     name="manufacturer_discount"
                     id="manufacturer_discount"
@@ -101,7 +101,7 @@
             <div class="input-group-text">
                 £
             </div>
-            <input wire:model="leden_discount" type="number" name="leden_discount" id="leden_discount" step=".01"
+            <input wire:model.live="leden_discount" type="number" name="leden_discount" id="leden_discount" step=".01"
                    class="form-control" autocomplete="off" />
         </div>
     </div>
@@ -116,7 +116,7 @@
                 £
             </div>
             <input
-                    wire:model="manufacturer_delivery_cost"
+                    wire:model.live="manufacturer_delivery_cost"
                     type="number"
                     name="manufacturer_delivery_cost"
                     id="manufacturer_delivery_cost"
@@ -137,7 +137,7 @@
                 £
             </div>
             <input
-                    wire:model="first_reg_fee"
+                    wire:model.live="first_reg_fee"
                     type="number"
                     name="first_reg_fee"
                     id="first_reg_fee"
@@ -158,7 +158,7 @@
                 £
             </div>
             <input
-                    wire:model="rfl_cost"
+                    wire:model.live="rfl_cost"
                     type="number"
                     name="rfl_cost"
                     id="rfl_cost"
@@ -179,7 +179,7 @@
                 £
             </div>
             <input
-                    wire:model="onward_delivery"
+                    wire:model.live="onward_delivery"
                     type="number"
                     name="onward_delivery"
                     id="onward_delivery"
@@ -200,7 +200,7 @@
                 £
             </div>
             <input
-                    wire:model="invoice_funder_for"
+                    wire:model.live="invoice_funder_for"
                     type="number"
                     name="invoice_funder_for"
                     id="invoice_funder_for"
@@ -228,7 +228,7 @@
 <div class="form-group row">
     <label for="show_discount" class="col-md-2 col-form-label">Show Discount Applied</label>
     <div class="col-md-6">
-        <select wire:model="show_discount" name="show_discount" id="show_discount" class="form-control">
+        <select wire:model.live="show_discount" name="show_discount" id="show_discount" class="form-control">
             <option value="0">No
             </option>
             <option value="1">Yes
@@ -240,7 +240,7 @@
 <div class="form-group row">
     <label for="show_offer" class="col-md-2 col-form-label">Show as Offer</label>
     <div class="col-md-6">
-        <select wire:model="show_offer" name="show_offer" id="show_offer" class="form-control">
+        <select wire:model.live="show_offer" name="show_offer" id="show_offer" class="form-control">
             <option value="0">No
             </option>
             <option value="1">Yes
@@ -252,7 +252,7 @@
 <div class="form-group row">
     <label for="hide_from_broker" class="col-md-2 col-form-label">Hide From Broker List</label>
     <div class="col-md-6">
-        <select wire:model="hide_from_broker" name="hide_from_broker" id="hide_from_broker" class="form-control">
+        <select wire:model.live="hide_from_broker" name="hide_from_broker" id="hide_from_broker" class="form-control">
             <option value="0">
                 No
             </option>
@@ -266,7 +266,7 @@
 <div class="form-group row">
     <label for="hide_from_dealer" class="col-md-2 col-form-label">Hide From Dealer List</label>
     <div class="col-md-6">
-        <select wire:model="hide_from_dealer" name="hide_from_dealer" id="hide_from_dealer" class="form-control">
+        <select wire:model.live="hide_from_dealer" name="hide_from_dealer" id="hide_from_dealer" class="form-control">
             <option value="0">
                 No
             </option>

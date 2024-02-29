@@ -401,6 +401,23 @@ class VehicleController extends Controller
             'damaged-' . $date . '.xlsx',
         );
     }
+
+    public function query_export()
+    {
+        $vehicles = Vehicle::where('vehicle_status', 19)
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
+            ->with('manufacturer:id,name')
+            ->with('broker')
+            ->get();
+        $date = Carbon::now()->format('Y-m-d');
+
+        return Excel::download(
+            new DashboardExports($vehicles),
+            'order-query-' . $date . '.xlsx',
+        );
+    }
     public function dealer_transfer_export()
     {
         $vehicles = Vehicle::where('vehicle_status', 18)

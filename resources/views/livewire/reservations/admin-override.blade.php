@@ -17,17 +17,17 @@
         <tr class="bg-light">
             <th class="p-1"></th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchName" type="text" class="form-control" placeholder="Search Name">
+                <input wire:model.live.debounce:500ms="searchName" type="text" class="form-control" placeholder="Search Name">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchCompany" class="form-control" placeholder="Search Company" type="text">
+                <input wire:model.live.debounce:500ms="searchCompany" class="form-control" placeholder="Search Company" type="text">
             </th>
         </tr>
         </thead>
         <tbody>
     @forelse ( $brokers as $broker )
         <tr>
-            <td><input type="radio" value="{{$broker->id}}" wire:model="broker_id"></td>
+            <td><input type="radio" value="{{$broker->id}}" wire:model.live="broker_id"></td>
             <td>{{ $broker->fullName }}</td>
             @if ($broker->company)
             <td>{{ $broker->company->company_name }}</td>

@@ -110,6 +110,10 @@ class QuickEditOrder extends Component
             $this->delivery_date = null;
         }
 
+        if ($this->due_date === '-0001-11-30' || $this->due_date === '') {
+            $this->due_date = null;
+        }
+
         $this->validate();
 
         $this->vehicle->update([

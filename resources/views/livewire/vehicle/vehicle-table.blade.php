@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between">
         <div class="w-25 p-3 d-flex align-items-center">
             Show
-            <select wire:model="paginate" name="" id="" class="form-control mx-2">
+            <select wire:model.live="paginate" name="" id="" class="form-control mx-2">
                 <option value='10'>10</option>
                 <option value='25'>25</option>
                 <option value='50'>50</option>
@@ -17,7 +17,7 @@
             <th>
                 <label for="orbitNumberMissing" class="form-check-label small">Filter Missing Orbit Numbers</label>
                 <div class="form-check form-switch">
-                    <input wire:model="filterMissingOrbitNumber" type="checkbox" id="orbitNumberMissing"
+                    <input wire:model.live="filterMissingOrbitNumber" type="checkbox" id="orbitNumberMissing"
                            class="form-check-input" role="switch">
                 </div>
                 ID
@@ -36,7 +36,7 @@
             <th>
                 <label for="BuildDateFilter" class="form-check-label small">Filter Build Date</label>
                 <div class="form-check form-switch">
-                    <input wire:model="filterBuildDate" type="checkbox" id="BuildDateFilter" class="form-check-input"
+                    <input wire:model.live="filterBuildDate" type="checkbox" id="BuildDateFilter" class="form-check-input"
                            role="switch">
                 </div>
                 Planned Build Date
@@ -44,7 +44,7 @@
             <th>
                 <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>
                 <div class="form-check form-switch">
-                    <input wire:model="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input" role="switch">
+                    <input wire:model.live="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input" role="switch">
                 </div>
                 Due Date
             </th>
@@ -58,70 +58,70 @@
         </tr>
         <tr class="bg-light">
             <th class="p-1">
-                <input wire:model="searchID" type="text" class="form-control" placeholder="Search ID">
+                <input wire:model.live="searchID" type="text" class="form-control" placeholder="Search ID">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchMake" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchMake" type="text" class="form-control"
                        placeholder="Search Make">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchModel" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchModel" type="text" class="form-control"
                        placeholder="Search Model">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchOrderNumber" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchOrderNumber" type="text" class="form-control"
                        placeholder="Search Ford Order Number">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchDerivative" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchDerivative" type="text" class="form-control"
                        placeholder="Search Derivative">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchEngine" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchEngine" type="text" class="form-control"
                        placeholder="Search Engine">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchTransmission" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchTransmission" type="text" class="form-control"
                        placeholder="Search Transmission">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchColour" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchColour" type="text" class="form-control"
                        placeholder="Search Colour">
             </th>
             <th></th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchType" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchType" type="text" class="form-control"
                        placeholder="Search Type">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchChassis" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchChassis" type="text" class="form-control"
                        placeholder="Search Chassis">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchRegistration" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchRegistration" type="text" class="form-control"
                        placeholder="Search Registration">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchBuildDate" type="date" class="form-control"
+                <input wire:model.live.debounce:500ms="searchBuildDate" type="date" class="form-control"
                        placeholder="Search Planned Build Date">
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchDueDate" class="form-control" placeholder="Search Due Date"
+                <input wire:model.live.debounce:500ms="searchDueDate" class="form-control" placeholder="Search Due Date"
                        type="date">
 
             </th>
             <th class="p-1">
-                <input wire:model.debounce:500ms="searchDealer" type="text" class="form-control"
+                <input wire:model.live.debounce:500ms="searchDealer" type="text" class="form-control"
                        placeholder="Search Dealer">
             </th>
             @if($ringfenced)
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchBroker" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchBroker" type="text" class="form-control"
                            placeholder="Search Broker">
                 </th>
             @endif
             <th class="p-1">
-                <select wire:model="searchStatus" name="status" id="status" class="form-select">
+                <select wire:model.live="searchStatus" name="status" id="status" class="form-select">
                     <option value="">Select Status</option>
                     @foreach($status as $item)
                         <option value="{{ $item }}">

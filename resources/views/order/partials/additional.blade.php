@@ -4,7 +4,7 @@
     </label>
     <div class="col-md-6">
         @for($i = 0; $i < $fields; $i++)
-            <input wire:model="attachments"
+            <input wire:model.live="attachments"
                    type="file"
                    class="form-control"
                    accept=".pdf, application/pdf, image/png, .png, image/jpg, .jpg, image/jpeg, .jpeg, .doc, .docx, application/msword"
@@ -27,7 +27,7 @@
 <div class="form-group row">
     <label for="fin_number" class="col-md-2 col-form-label">FIN</label>
     <div class="col-md-6">
-        <input wire:model="fin_number" type="text" name="fin_number" id="fin_number"
+        <input wire:model.live="fin_number" type="text" name="fin_number" id="fin_number"
                class="form-control" autocomplete="off" />
     </div>
 </div>
@@ -35,7 +35,7 @@
 <div class="form-group row">
     <label for="deal_number" class="col-md-2 col-form-label">Deal Number</label>
     <div class="col-md-6">
-        <input wire:model="deal_number" type="text" name="deal_number" id="deal_number"
+        <input wire:model.live="deal_number" type="text" name="deal_number" id="deal_number"
                class="form-control" autocomplete="off" />
     </div>
 </div>
@@ -44,6 +44,6 @@
 <div class="form-group row">
     <label for="exception" class="col-md-2 col-form-label">Exception to Leden Terms</label>
     <div class="col-md-6 form-check form-switch">
-        <input wire:model="exclusion" class="form-check-input" type="checkbox" id="exception">
+        <input wire:model.live="exclusion" class="form-check-input" type="checkbox" id="exception">
     </div>
 </div>

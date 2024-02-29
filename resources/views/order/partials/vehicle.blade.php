@@ -6,7 +6,7 @@
             @error('make')
             <label class="input-group-text bg-danger text-white" for="inputGroupSelectMake"><i class="fa fa-exclamation-triangle"></i></label>
             @enderror
-            <select wire:model="make" class="form-select" id="inputGroupSelectMake">
+            <select wire:model.live="make" class="form-select" id="inputGroupSelectMake">
                 <option selected>Choose...</option>
                 @foreach ( $manufacturers as $manufacturer )
                     <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
@@ -32,7 +32,7 @@
             @error('model')
             <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
             @enderror
-            <select class="form-control value-change" @if(count($vehicle_models) === 0) disabled @endif field-parent="vehicle_model" wire:model="model" id="inputGroupSelectModel">
+            <select class="form-control value-change" @if(count($vehicle_models) === 0) disabled @endif field-parent="vehicle_model" wire:model.live="model" id="inputGroupSelectModel">
                 <option value="" selected>Choose...</option>
                 @foreach($vehicle_models as $vehicle_model)
                     <option value="{{$vehicle_model->id}}">{{ $vehicle_model->name }}</option>
@@ -50,7 +50,7 @@
             <label for="inputGroupOrbitNumberText" class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
         </div>
         @enderror
-        <input wire:model="orbit_number" type="text" name="orbit_number" id="orbit_number" class="form-control"
+        <input wire:model.live="orbit_number" type="text" name="orbit_number" id="orbit_number" class="form-control"
                autocomplete="off" />
     </div>
 </div>
@@ -62,7 +62,7 @@
             @error('type')
             <label class="input-group-text bg-danger text-white" for="inputGroupSelectType"><i class="fa fa-exclamation-triangle"></i></label>
             @enderror
-            <select wire:model="type" @if(count($types) === 0) disabled @endif class="form-select" id="inputGroupSelectType">
+            <select wire:model.live="type" @if(count($types) === 0) disabled @endif class="form-select" id="inputGroupSelectType">
                 <option selected>Choose...</option>
                 @foreach ($types as $type)
                     <option value="{{$type->name}}">{{$type->name}}</option>
@@ -75,7 +75,7 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="vehicle_reg">Registration Number</label>
     <div class="col-md-6 mb-3">
-        <input wire:model="registration" type="text" name="vehicle_reg" id="vehicle_reg" class="form-control"/>
+        <input wire:model.live="registration" type="text" name="vehicle_reg" id="vehicle_reg" class="form-control"/>
     </div>
 </div>
 {{-- Derivative (Required) --}}
@@ -87,7 +87,7 @@
                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectDerivatives"><i class="fa fa-exclamation-triangle"></i></label>
                 @enderror
 
-                <select wire:model="derivative" @if(count($derivatives) === 0) disabled @endif class="form-select" id="inputGroupSelectDerivatives">
+                <select wire:model.live="derivative" @if(count($derivatives) === 0) disabled @endif class="form-select" id="inputGroupSelectDerivatives">
                     <option selected>Choose...</option>
                     @foreach ($derivatives as $vehicle_derivative)
                         <option value="{{ $vehicle_derivative->name }}">{{ $vehicle_derivative->name }}</option>
@@ -113,7 +113,7 @@
                 @error('engine')
                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectEngine"><i class="fa fa-exclamation-triangle"></i></label>
                 @enderror
-                <select wire:model="engine" @if(count($engines) === 0) disabled @endif class="form-select" id="inputGroupSelectEngine">
+                <select wire:model.live="engine" @if(count($engines) === 0) disabled @endif class="form-select" id="inputGroupSelectEngine">
                     <option selected>Choose...</option>
                     @foreach ($engines as $vehicle_engine)
                         <option value="{{ $vehicle_engine->name }}">{{ $vehicle_engine->name }}</option>
@@ -139,7 +139,7 @@
                 @error('transmission')
                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectTransmission"><i class="fa fa-exclamation-triangle"></i></label>
                 @enderror
-                <select wire:model="transmission" @if(count($transmissions) === 0) disabled @endif class="form-select" id="inputGroupSelectTransmission">
+                <select wire:model.live="transmission" @if(count($transmissions) === 0) disabled @endif class="form-select" id="inputGroupSelectTransmission">
                     <option selected>Choose...</option>
                     @foreach ($transmissions as $vehicle_trans)
                         <option value="{{ $vehicle_trans->name }}">{{ $vehicle_trans->name }}</option>
@@ -165,7 +165,7 @@
                 @error('fuel_type')
                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
                 @enderror
-                <select wire:model="fuel_type" @if(count($fuel_types) === 0) disabled @endif class="form-select" id="inputGroupSelectFuel">
+                <select wire:model.live="fuel_type" @if(count($fuel_types) === 0) disabled @endif class="form-select" id="inputGroupSelectFuel">
                     <option selected>Choose...</option>
                     @foreach ($fuel_types as $vehicle_fuel_type)
                         <option value="{{ $vehicle_fuel_type->name }}">{{ $vehicle_fuel_type->name }}</option>
@@ -191,7 +191,7 @@
                 @error('colour')
                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
                 @enderror
-                <select wire:model="colour" @if(count($colours) === 0) disabled @endif class="form-select" id="inputGroupSelectColour">
+                <select wire:model.live="colour" @if(count($colours) === 0) disabled @endif class="form-select" id="inputGroupSelectColour">
                     <option selected >Choose...</option>
                     @foreach ($colours as $vehicle_colour)
                         <option value="{{ $vehicle_colour->name }}">{{ $vehicle_colour->name }}</option>
@@ -217,7 +217,7 @@
                 @error('trim')
                 <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
                 @enderror
-                <select wire:model="trim" @if(count($trims) === 0) disabled @endif class="form-select" id="inputGroupSelectTrim">
+                <select wire:model.live="trim" @if(count($trims) === 0) disabled @endif class="form-select" id="inputGroupSelectTrim">
                     <option selected>Choose...</option>
                     @foreach ($trims as $vehicle_trim)
                         <option value="{{ $vehicle_trim->name }}">{{ $vehicle_trim->name }}</option>
@@ -239,7 +239,7 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="chassis_prefix">Chassis Prefix</label>
     <div class="col-md-6">
-        <input wire:model="chassis_prefix" type="text" name="chassis_prefix" id="chassis_prefix" class="form-control"
+        <input wire:model.live="chassis_prefix" type="text" name="chassis_prefix" id="chassis_prefix" class="form-control"
                autocomplete="off"/>
     </div>
 </div>
@@ -247,7 +247,7 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="chassis">Chassis</label>
     <div class="col-md-6">
-        <input wire:model="chassis" type="text" name="chassis" id="chassis" class="form-control"
+        <input wire:model.live="chassis" type="text" name="chassis" id="chassis" class="form-control"
                autocomplete="off" />
     </div>
 </div>
@@ -259,7 +259,7 @@
             @error('status')
             <label class="input-group-text bg-danger text-white" for="inputGroupSelectStatus"><i class="fa fa-exclamation-triangle"></i></label>
             @enderror
-            <select wire:model="status" class="form-select" name="vehicle_status" id="inputGroupSelectStatus">
+            <select wire:model.live="status" class="form-select" name="vehicle_status" id="inputGroupSelectStatus">
                 <option value="">Please Select Status</option>
                 <option value="4">Factory Order</option>
                 @if ($registered_date)
@@ -280,6 +280,7 @@
                 <option value="16">Damaged/Recalled</option>
                 <option value="17">In Stock (Awaiting Dealer Options)</option>
                 <option value="18">Dealer Transfer</option>
+                <option value="19">Order in Query</option>
             </select>
         </div>
     </div>
@@ -288,7 +289,7 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="due_date">Due Date to Dealer</label>
     <div class="col-md-6">
-        <input wire:model="due_date" type="date" name="due_date" id="due_date" class="form-control"
+        <input wire:model.live="due_date" type="date" name="due_date" id="due_date" class="form-control"
                autocomplete="off"
                onchange="this.dispatchEvent(new InputEvent('input'))"
         />
@@ -298,7 +299,7 @@
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="build_date">Proposed Build Date</label>
     <div class="col-md-6">
-        <input wire:model="build_date" type="date" name="build_date" id="build_date" class="form-control" autocomplete="off" />
+        <input wire:model.live="build_date" type="date" name="build_date" id="build_date" class="form-control" autocomplete="off" />
     </div>
 </div>
 @if($status === 1 || $status === 3 || $status === 5 || $status === 6 || $status === 15 )
@@ -307,7 +308,7 @@
         <label class="col-md-2 col-form-label" for="delivery_date">Delivery Date</label>
         <div class="col-md-6">
             <input type="date" name="delivery_date" class="form-control"
-                   autocomplete="off" wire:model="delivery_date" />
+                   autocomplete="off" wire:model.live="delivery_date" />
         </div>
     </div>
 @endif
@@ -317,7 +318,7 @@
     <label class="col-md-2 col-form-label" for="model_year">Model Year</label>
     <div class="col-md-6">
         <input type="text" name="model_year" id="model_year" class="form-control"
-               autocomplete="off" wire:model="model_year"
+               autocomplete="off" wire:model.live="model_year"
                onchange="this.dispatchEvent(new InputEvent('input'))"/>
     </div>
 </div>
@@ -327,7 +328,7 @@
         Registered</label>
     <div class="col-md-6">
         <input type="date" name="registered_date" class="form-control"
-               autocomplete="off" wire:model="registered_date" />
+               autocomplete="off" wire:model.live="registered_date" />
     </div>
 </div>
 {{-- Show in Ford Pipeline --}}
@@ -335,7 +336,7 @@
     <label for="show_in_ford_pipeline" class="col-md-2 col-form-label">Show in Ford
         Pipeline</label>
     <div class="col-md-6">
-        <select wire:model="ford_pipeline" name="show_in_ford_pipeline" id="show_in_ford_pipeline"
+        <select wire:model.live="ford_pipeline" name="show_in_ford_pipeline" id="show_in_ford_pipeline"
                 class="form-control">
             <option value="0">No
             </option>

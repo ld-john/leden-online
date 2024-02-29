@@ -142,7 +142,8 @@ class Vehicle extends Model
                 $this->vehicle_status === 15 ||
                 $this->vehicle_status === 16 ||
                 $this->vehicle_status === 17 ||
-                $this->vehicle_status === 18
+                $this->vehicle_status === 18 ||
+                $this->vehicle_status === 19
             ) {
                 $data['location'] = 'Order Bank';
                 $data['route'] = 'order_bank';
@@ -200,6 +201,7 @@ class Vehicle extends Model
             16 => 'Damaged/Recalled',
             17 => 'In Stock (Awaiting Dealer Options)',
             18 => 'Dealer Transfer',
+            19 => 'Order In Query',
         ];
     }
 

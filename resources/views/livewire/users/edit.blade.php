@@ -10,14 +10,14 @@
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="firstname">First name</label>
                     <div class="col-md-4">
-                        <input type="text" wire:model="first_name" name="firstname" id="firstname" required class="form-control" autocomplete="off"/>
+                        <input type="text" wire:model.live="first_name" name="firstname" id="firstname" required class="form-control" autocomplete="off"/>
                         @error('first_name')
                         <div class="alert alert-danger mt-2">{{ $errors->first('first_name')}}</div>
                         @enderror
                     </div>
                     <label class="col-md-2 col-form-label" for="lastname">Last name</label>
                     <div class="col-md-4">
-                        <input type="text" wire:model="last_name" name="lastname" id="lastname" required class="form-control" autocomplete="off"/>
+                        <input type="text" wire:model.live="last_name" name="lastname" id="lastname" required class="form-control" autocomplete="off"/>
                         @error('last_name')
                         <div class="alert alert-danger mt-2">{{ $errors->first('last_name')}}</div>
                         @enderror
@@ -26,11 +26,11 @@
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="email">Email</label>
                     <div class="col-md-4">
-                        <input type="text" wire:model="email" name="email" disabled id="email" required class="form-control" autocomplete="off" />
+                        <input type="text" wire:model.live="email" name="email" disabled id="email" required class="form-control" autocomplete="off" />
                     </div>
                     <label class="col-md-2 col-form-label" for="phone">Phone</label>
                     <div class="col-md-4">
-                        <input type="tel" wire:model="phone" name="phone" id="phone" class="form-control" autocomplete="off" placeholder="e.g. 07123 456789" />
+                        <input type="tel" wire:model.live="phone" name="phone" id="phone" class="form-control" autocomplete="off" placeholder="e.g. 07123 456789" />
                         @error('phone')
                         <div class="alert alert-danger mt-2">{{ $errors->first('phone')}}</div>
                         @enderror
@@ -39,7 +39,7 @@
                 <div class="form-group row">
                     <label for="avatar" class="col-md-2 col-form-label">Avatar</label>
                     <div class="col-md-4">
-                        <input wire:model="avatar" type="file" class="form-control">
+                        <input wire:model.live="avatar" type="file" class="form-control">
                         @error('avatar')
                         <div class="alert alert-danger mt-2">{{ $errors->first('avatar')}}</div>
                         @enderror
@@ -69,14 +69,14 @@
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="password">New Password</label>
                     <div class="col-md-4">
-                        <input wire:model="password" type="password" name="password" id="password" class="form-control" autocomplete="off"/>
+                        <input wire:model.live="password" type="password" name="password" id="password" class="form-control" autocomplete="off"/>
                         @error('password')
                         <div class="alert alert-danger mt-2">{{ $errors->first('password')}}</div>
                         @enderror
                     </div>
                     <label class="col-md-2 col-form-label" for="password_confirmation">Confirm New Password</label>
                     <div class="col-md-4">
-                        <input wire:model="password_confirmation" type="password" name="password_confirmation" id="password_confirmation" class="form-control" autocomplete="off"/>
+                        <input wire:model.live="password_confirmation" type="password" name="password_confirmation" id="password_confirmation" class="form-control" autocomplete="off"/>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                         @error('first_name')
                         <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
                         @enderror
-                        <input wire:model="first_name" type="text" name="firstname" id="firstname" required class="form-control" autocomplete="off"/>
+                        <input wire:model.live="first_name" type="text" name="firstname" id="firstname" required class="form-control" autocomplete="off"/>
                     </div>
                 </div>
                 <label class="col-md-2 col-form-label" for="lastname">Last name</label>
@@ -117,14 +117,14 @@
                         @error('last_name')
                         <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
                         @enderror
-                        <input wire:model="last_name" type="text" name="lastname" id="lastname" required class="form-control" autocomplete="off" >
+                        <input wire:model.live="last_name" type="text" name="lastname" id="lastname" required class="form-control" autocomplete="off" >
                     </div>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label" for="email">Email</label>
                 <div class="col-md-4">
-                    <input wire:model="email" type="text" name="email" id="email" required class="form-control" autocomplete="off"/>
+                    <input wire:model.live="email" type="text" name="email" id="email" required class="form-control" autocomplete="off"/>
                     @error('email')
                     <p class="text-danger">{{ $message }}</p>
                     @enderror
@@ -135,7 +135,7 @@
                         @error('phone')
                         <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
                         @enderror
-                        <input wire:model="phone" type="text" name="phone" id="phone" class="form-control" autocomplete="off" placeholder="e.g. 07123 456789"/>
+                        <input wire:model.live="phone" type="text" name="phone" id="phone" class="form-control" autocomplete="off" placeholder="e.g. 07123 456789"/>
                     </div>
 
                 </div>
@@ -143,7 +143,7 @@
             <div class="form-group row">
                 <label class="col-md-2 col-form-label" for="company_id">Company</label>
                 <div class="col-md-4">
-                    <select wire:model="company_id" name="company_id" id="company_id" class="form-control" required autocomplete="off">
+                    <select wire:model.live="company_id" name="company_id" id="company_id" class="form-control" required autocomplete="off">
                         <option value="">Please select</option>
                         @foreach ($companies as $company)
                             <option value="{{ $company->id }}" @if ($user->company_id == $company->id) selected @endif>{{ $company->company_name }}</option>
@@ -152,7 +152,7 @@
                 </div>
                 <label class="col-md-2 col-form-label" for="role">User Role</label>
                 <div class="col-md-4">
-                    <select wire:model="role" name="role" id="role" class="form-control" required autocomplete="off">
+                    <select wire:model.live="role" name="role" id="role" class="form-control" required autocomplete="off">
                         <option value="">Please select</option>
                         <option value="admin">Admin</option>
                         <option value="dealer">Dealer</option>
@@ -163,7 +163,7 @@
             <div class="form-group row">
                 <label for="avatar" class="col-md-2 col-form-label">Avatar</label>
                 <div class="col-md-4">
-                    <input wire:model="avatar" type="file" class="form-control">
+                    <input wire:model.live="avatar" type="file" class="form-control">
                     @error('avatar')
                     <div class="alert alert-danger mt-2">{{ $errors->first('avatar')}}</div>
                     @enderror
@@ -197,12 +197,12 @@
                             @error('password')
                             <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
                             @enderror
-                            <input wire:model="password" type="password" name="password" id="password" class="form-control" autocomplete="off"/>
+                            <input wire:model.live="password" type="password" name="password" id="password" class="form-control" autocomplete="off"/>
                         </div>
                     </div>
                     <label class="col-md-2 col-form-label" for="password_confirmation">Confirm New Password</label>
                     <div class="col-md-4">
-                        <input wire:model="password_confirmation" type="password" name="password_confirmation" id="password_confirmation" class="form-control" autocomplete="off"/>
+                        <input wire:model.live="password_confirmation" type="password" name="password_confirmation" id="password_confirmation" class="form-control" autocomplete="off"/>
                     </div>
                 </div>
             </div>

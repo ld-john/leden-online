@@ -44,7 +44,7 @@ class Contact extends Component
     public function setActiveContact()
     {
         $this->activeContact = $this->contact;
-        $this->emit('sendActiveContact', $this->activeContact);
+        $this->dispatch('sendActiveContact', $this->activeContact);
     }
 
     public function render(): Factory|View|Application

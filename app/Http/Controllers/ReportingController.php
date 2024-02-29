@@ -114,7 +114,7 @@ class ReportingController extends Controller
     }
 
     /**
-     * Get the orders which have been created in the last 4 annual quarters and count them
+     * Get the orders which have been created in the last four annual quarters and count them
      * @throws Exception
      */
     public function getRecordsByQuarter(): Collection
@@ -185,7 +185,7 @@ class ReportingController extends Controller
     }
 
     /**
-     * Get the vehicles which have been registered in the last 4 annual quarters
+     * Get the vehicles which have been registered in the last four annual quarters
      * @throws Exception
      */
     public function getRegisteredByQuarter(): Collection
@@ -254,7 +254,7 @@ class ReportingController extends Controller
     }
 
     /**
-     * Get a count of the orders which have been completed in the last 4 annual quarters
+     * Get a count of the orders which have been completed in the last four annual quarters
      * @throws Exception
      */
     public function getCompletedByQuarter(): Collection
@@ -287,13 +287,13 @@ class ReportingController extends Controller
         $registeredMonths = collect($this->registeredMonths())->flatten(1);
 
         $latestMonth = Carbon::createFromFormat(
-            'F Y',
-            $registeredMonths->pop()['label'],
+            'Y m d',
+            $registeredMonths->pop(),
         )->addMonths(3);
 
-        $start_date = $registeredMonths->take(1)[0]['label'];
+        $start_date = $registeredMonths->take(1)[0];
 
-        $start = Carbon::createFromFormat('F Y', $start_date)->monthsUntil(
+        $start = Carbon::createFromFormat('Y m d', $start_date)->monthsUntil(
             $latestMonth,
             3,
         );
@@ -342,7 +342,7 @@ class ReportingController extends Controller
 
     /**
      * Get the vehicles which have been registered each month since the website started collecting information.
-     * @return mixed
+     * @return array
      */
     public function registeredMonths()
     {
@@ -351,30 +351,23 @@ class ReportingController extends Controller
                 ->where('vehicle_status', '7')
                 ->orWhere('vehicle_status', '6')
                 ->orWhere('vehicle_status', '15');
-        })->get();
+        })
+            ->with('order')
+            ->get();
         $data1 = $data->pluck('vehicle_registered_on');
         $data2 = $data->pluck('order.delivery_date');
         $data = $data1->merge($data2);
+
         return $data
             ->map(function ($item) {
-                return Carbon::parse($item)->format('Y m');
+                return Carbon::parse($item)->format('Y m 01');
             })
             ->sort()
             ->filter(function ($value) {
-                return $value !== '-0001 11';
-            })
-            ->map(function ($item) {
-                return [
-                    'label' => Carbon::createFromFormat('Y m', $item)->format(
-                        'F Y',
-                    ),
-                    'year' => Carbon::createFromFormat('Y m', $item)->format(
-                        'Y',
-                    ),
-                ];
+                return $value !== '-0001 11 01';
             })
             ->unique()
-            ->groupBy('year')
+            ->groupBy(fn($item) => substr($item, 0, 4))
             ->toArray();
     }
 

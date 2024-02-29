@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between">
         <div class="w-25 p-3 d-flex align-items-center">
             Show
-            <select wire:model="paginate" name="" id="" class="form-control mx-2">
+            <select wire:model.live="paginate" name="" id="" class="form-control mx-2">
                 <option value='10'>10</option>
                 <option value='25'>25</option>
                 <option value='50'>50</option>
@@ -28,7 +28,7 @@
                 <th>
                     <label for="orbitNumberMissing" class="form-check-label small">Filter Missing Orbit Numbers</label>
                     <div class="form-check form-switch">
-                        <input wire:model="filterMissingOrbitNumber" type="checkbox" id="orbitNumberMissing"
+                        <input wire:model.live="filterMissingOrbitNumber" type="checkbox" id="orbitNumberMissing"
                                class="form-check-input" role="switch">
                     </div>
                     Orbit Number
@@ -37,7 +37,7 @@
                 <th>
                     <label for="BuildDateFilter" class="form-check-label small">Filter Build Date</label>
                     <div class="form-check form-switch">
-                        <input wire:model="filterBuildDate" type="checkbox" id="BuildDateFilter"
+                        <input wire:model.live="filterBuildDate" type="checkbox" id="BuildDateFilter"
                                class="form-check-input" role="switch">
                     </div>
                     Planned Build Date
@@ -45,7 +45,7 @@
                 <th>
                     <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>
                     <div class="form-check form-switch">
-                        <input wire:model="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
+                        <input wire:model.live="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
                                role="switch">
                     </div>
                     Due Date
@@ -60,42 +60,42 @@
             </tr>
             <tr class="bg-light">
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchID" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchID" type="text" class="form-control"
                            placeholder="Search ID">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchModel" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchModel" type="text" class="form-control"
                            placeholder="Search Model">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchDerivative" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchDerivative" type="text" class="form-control"
                            placeholder="Search Derivatives">
                 </th>
                 @can('broker')
                     <th></th>
                 @endcan
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchOrderNumber" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchOrderNumber" type="text" class="form-control"
                            placeholder="Search Ford Order Number">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchOrbitNumber" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchOrbitNumber" type="text" class="form-control"
                            placeholder="Search Orbit Number">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchReg" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchReg" type="text" class="form-control"
                            placeholder="Search Registration">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchBuildDate" type="date" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchBuildDate" type="date" class="form-control"
                            placeholder="Search Build Date">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchDueDate" type="date" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchDueDate" type="date" class="form-control"
                            placeholder="Search Due Date">
                 </th>
                 <th class="p-1">
-                    <select wire:model="searchStatus" name="status" id="status" class="form-select">
+                    <select wire:model.live="searchStatus" name="status" id="status" class="form-select">
                         <option value="">Select Status</option>
                         @foreach($status as $item)
                             <option value="{{ $item }}">
@@ -105,21 +105,21 @@
                     </select>
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchCustomer" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchCustomer" type="text" class="form-control"
                            placeholder="Search Customer">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchBrokerRef" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchBrokerRef" type="text" class="form-control"
                            placeholder="Search Broker Order Ref">
                 </th>
                 <th class="p-1 flex flex-col gap-1">
-                    <input wire:model.debounce:500ms="searchBroker" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchBroker" type="text" class="form-control"
                            placeholder="Search Broker">
-                    <input wire:model.debounce:500ms="searchFinanceBroker" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchFinanceBroker" type="text" class="form-control"
                            placeholder="Search Finance Broker">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchDealer" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchDealer" type="text" class="form-control"
                            placeholder="Search Dealer">
                 </th>
                 <th></th>
@@ -252,7 +252,7 @@
                 <th>
                     <label for="orbitNumberMissing" class="form-check-label small">Filter Missing Orbit Numbers</label>
                     <div class="form-check form-switch">
-                        <input wire:model="filterMissingOrbitNumber" type="checkbox" id="orbitNumberMissing"
+                        <input wire:model.live="filterMissingOrbitNumber" type="checkbox" id="orbitNumberMissing"
                                class="form-check-input" role="switch">
                     </div>
                     Orbit Number
@@ -261,7 +261,7 @@
                 <th>
                     <label for="BuildDateFilter" class="form-check-label small">Filter Build Date</label>
                     <div class="form-check form-switch">
-                        <input wire:model="filterBuildDate" type="checkbox" id="BuildDateFilter"
+                        <input wire:model.live="filterBuildDate" type="checkbox" id="BuildDateFilter"
                                class="form-check-input" role="switch">
                     </div>
                     Planned Build Date
@@ -269,7 +269,7 @@
                 <th>
                     <label for="DeliveryDateFilter" class="form-check-label small">Filter Delivery Date</label>
                     <div class="form-check form-switch">
-                        <input wire:model="filterDeliveryDate" type="checkbox" id="DeliveryDateFilter"
+                        <input wire:model.live="filterDeliveryDate" type="checkbox" id="DeliveryDateFilter"
                                class="form-check-input" role="switch">
                     </div>
                     Delivery Date
@@ -277,7 +277,7 @@
                 <th>
                     <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>
                     <div class="form-check form-switch">
-                        <input wire:model="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
+                        <input wire:model.live="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
                                role="switch">
                     </div>
                     Due Date
@@ -292,43 +292,43 @@
             </tr>
             <tr class="bg-light">
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchID" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchID" type="text" class="form-control"
                            placeholder="Search ID">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchModel" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchModel" type="text" class="form-control"
                            placeholder="Search Model">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchDerivative" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchDerivative" type="text" class="form-control"
                            placeholder="Search Derivatives">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchOrderNumber" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchOrderNumber" type="text" class="form-control"
                            placeholder="Search Ford Order Number">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchOrbitNumber" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchOrbitNumber" type="text" class="form-control"
                            placeholder="Search Orbit Number">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchReg" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchReg" type="text" class="form-control"
                            placeholder="Search Registration">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchBuildDate" type="date" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchBuildDate" type="date" class="form-control"
                            placeholder="Search Build Date">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchDeliveryDate" type="date" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchDeliveryDate" type="date" class="form-control"
                            placeholder="Search Delivery Date">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchDueDate" type="date" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchDueDate" type="date" class="form-control"
                            placeholder="Search Due Date">
                 </th>
                 <th class="p-1">
-                    <select wire:model="searchStatus" name="status" id="status" class="form-select">
+                    <select wire:model.live="searchStatus" name="status" id="status" class="form-select">
                         <option value="">Select Status</option>
                         @foreach($status as $item)
                             <option value="{{ $item }}">
@@ -338,19 +338,19 @@
                     </select>
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchCustomer" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchCustomer" type="text" class="form-control"
                            placeholder="Search Customer">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchBrokerRef" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchBrokerRef" type="text" class="form-control"
                            placeholder="Search Broker Order Ref">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchBroker" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchBroker" type="text" class="form-control"
                            placeholder="Search Broker">
                 </th>
                 <th class="p-1">
-                    <input wire:model.debounce:500ms="searchDealer" type="text" class="form-control"
+                    <input wire:model.live.debounce:500ms="searchDealer" type="text" class="form-control"
                            placeholder="Search Dealer">
                 </th>
                 <th></th>
