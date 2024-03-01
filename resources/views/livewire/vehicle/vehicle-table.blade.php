@@ -58,34 +58,34 @@
         </tr>
         <tr class="bg-light">
             <th class="p-1">
-                <input wire:model.live="searchID" type="text" class="form-control" placeholder="Search ID">
+                <input wire:model.blur="searchID" type="text" class="form-control" placeholder="Search ID">
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchMake" type="text" class="form-control"
+                <input wire:model.blur="searchMake" type="text" class="form-control"
                        placeholder="Search Make">
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchModel" type="text" class="form-control"
+                <input wire:model.blur="searchModel" type="text" class="form-control"
                        placeholder="Search Model">
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchOrderNumber" type="text" class="form-control"
+                <input wire:model.blur="searchOrderNumber" type="text" class="form-control"
                        placeholder="Search Ford Order Number">
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchDerivative" type="text" class="form-control"
+                <input wire:model.blur="searchDerivative" type="text" class="form-control"
                        placeholder="Search Derivative">
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchEngine" type="text" class="form-control"
+                <input wire:model.blur="searchEngine" type="text" class="form-control"
                        placeholder="Search Engine">
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchTransmission" type="text" class="form-control"
+                <input wire:model.blur="searchTransmission" type="text" class="form-control"
                        placeholder="Search Transmission">
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchColour" type="text" class="form-control"
+                <input wire:model.blur="searchColour" type="text" class="form-control"
                        placeholder="Search Colour">
             </th>
             <th></th>
@@ -184,7 +184,7 @@
                     {{ \Carbon\Carbon::parse($vehicle->updated_at)->format( 'd/m/Y h:ia') }}
                 </td>
                 <td width="120px">
-                    <div class="d-grid grid-cols-2 gap-2">
+                    <div wire:loading.remove class="d-grid grid-cols-2 gap-2">
                     <a
                             href="{{route('vehicle.show', $vehicle->id)}}"
                             class="btn btn-primary"
