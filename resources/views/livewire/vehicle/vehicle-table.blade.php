@@ -151,7 +151,7 @@
                 <td>{{ $vehicle->transmission }}</td>
                 <td>{{ $vehicle->colour }}</td>
                 <td>
-                    <livewire:vehicle.fit-options-modal :vehicle="$vehicle->id" :key="time().$vehicle->id"/>
+                    <livewire:vehicle.fit-options-modal :vehicle="$vehicle->id" :wire:key="'fit-options'.time().$vehicle->id"/>
                 </td>
                 <td>{{ $vehicle->type }}</td>
                 <td>{{ $vehicle->chassis }}</td>
@@ -215,7 +215,7 @@
                                 title="Delete Vehicle"
                                 class="btn btn-danger"
                         >
-                            <livewire:vehicle.delete-vehicle :vehicle="$vehicle->id" :key="time().$vehicle->id"/>
+                            <livewire:vehicle.delete-vehicle :vehicle="$vehicle->id" :wire:key="'delete' . time().$vehicle->id"/>
                         </a>
                         @if($vehicle->ring_fenced_stock === 1)
                             <a
@@ -223,7 +223,7 @@
                                     title="Move Broker"
                                     class="btn btn-warning"
                             >
-                                <livewire:vehicle.quick-edit-ringfence :vehicle="$vehicle->id" :key="time().$vehicle->id" />
+                                <livewire:vehicle.quick-edit-ringfence :vehicle="$vehicle->id" :wire:key="'quick-edit' . time().$vehicle->id" />
                             </a>
                             <a
                                     wire:click="unRingFenceVehicle({{ $vehicle->id }})"
@@ -239,7 +239,7 @@
                                         data-toggle="tooltip"
                                         title="Move to Ring Fenced Stock"
                                 >
-                                    <livewire:vehicle.ring-fence-modal :vehicle="$vehicle->id" :key="time().$vehicle->id"/>
+                                    <livewire:vehicle.ring-fence-modal :vehicle="$vehicle->id" :wire:key="'ring-fence'.time().$vehicle->id"/>
                                 </a>
                         @endif
                     @endcan
