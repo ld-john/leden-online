@@ -42,6 +42,8 @@ class OrderForm extends Component
 
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap';
+
     public bool $showAdditionalInformation = false;
     public bool $showDeliveryInformation = false;
     public bool $showInvoicingInformation = false;
