@@ -43,7 +43,7 @@
             <p>Showing {{ $dealer_options->firstItem() }} - {{ $dealer_options->lastItem() }}
                 of {{$dealer_options->total()}}</p>
         @endif
-        {{ $dealer_options->links('pagination.dealer-order-form-pagination') }}
+        {{ $dealer_options->links(data: ['scrollTo' => '#dealer-fit']) }}
     </div>
 @else
     Please select the Model and Dealership above

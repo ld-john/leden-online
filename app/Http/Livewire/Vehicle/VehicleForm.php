@@ -399,7 +399,7 @@ class VehicleForm extends Component
                         '%' . $this->factoryFitSearch . '%',
                     );
                 })
-                ->paginate(5),
+                ->paginate(5, ['*'], 'factory_options'),
             'dealer_options' => FitOption::latest()
                 ->where('option_type', 'dealer')
                 ->whereNull('archived_at')
@@ -416,9 +416,18 @@ class VehicleForm extends Component
                         '%' . $this->dealerFitSearch . '%',
                     );
                 })
-                ->paginate(5),
+                ->paginate(5, ['*'], 'dealer_options'),
         ];
         return view('livewire.vehicle.vehicle-form', $options);
+    }
+
+    public function updatingFactoryFitSearch(): void
+    {
+        $this->resetPage('factory_options');
+    }
+    public function updatingDealerFitOptions(): void
+    {
+        $this->resetPage('dealer_options');
     }
 
     /**

@@ -42,7 +42,7 @@
                 of {{$factory_options->total()}}</p>
         @endif
 
-        {{ $factory_options->links('pagination.factory-order-form-pagination') }}
+        {{ $factory_options->links(data: ['scrollTo' => '#factory-fit']) }}
 
     </div>
 @else
