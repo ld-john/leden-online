@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Tweaks to the Vehicle Table to hopefully fix the Livewire issue." />
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Tweaks to the Order form to ensure the correct pagination details are being used.">
+      <change afterPath="$PROJECT_DIR$/database/migrations/2024_03_06_135555_add_delivery_month_to_orders.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Customer/CustomerTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/CustomerTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/exports/universal.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/universal.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/customer/customer-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/customer/customer-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/delivery.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/delivery.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/console.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/console.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -579,7 +593,11 @@
       <workItem from="1708966001701" duration="2884000" />
       <workItem from="1709214160148" duration="8295000" />
       <workItem from="1709294674811" duration="2390000" />
-      <workItem from="1709297847032" duration="8375000" />
+      <workItem from="1709297847032" duration="9557000" />
+      <workItem from="1709561257997" duration="621000" />
+      <workItem from="1709568510178" duration="4668000" />
+      <workItem from="1709721606278" duration="974000" />
+      <workItem from="1709732856273" duration="9566000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -924,7 +942,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -955,7 +973,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Moved Leden Discount into the Cost Breakdown section&#10;&#10;Added Dealer Transfer to the Quick Order Edit status list" />
     <MESSAGE value="Add Dealer Transfer to Order Bank" />
     <MESSAGE value="Changed Exception to Exclusion to see if that solves problem" />
     <MESSAGE value="Solving the problem... step 2" />
@@ -980,7 +997,8 @@
     <MESSAGE value="Added Bootstrap.scss files" />
     <MESSAGE value="Tweaks to the Order Table to try and resolve search/filter Issues." />
     <MESSAGE value="Tweaks to the Vehicle Table to hopefully fix the Livewire issue." />
-    <option name="LAST_COMMIT_MESSAGE" value="Tweaks to the Vehicle Table to hopefully fix the Livewire issue." />
+    <MESSAGE value="Tweaks to the Order form to ensure the correct pagination details are being used." />
+    <option name="LAST_COMMIT_MESSAGE" value="Tweaks to the Order form to ensure the correct pagination details are being used." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -24,6 +24,7 @@
         <th>Broker Reference</th>
         <th>Factory Fit Options</th>
         <th>Dealer Fit Options</th>
+        <th>Desired Delivery Month</th>
         <th>Website Location</th>
         <th>Exclusion</th>
     </tr>
@@ -71,6 +72,9 @@
             </td>
             <td>
                 {{ implode(', ', $vehicle->dealerFitOptions()->pluck('option_name')->toArray()) }}
+            </td>
+            <td>
+                {{ $vehicle->order?->delivery_month }}
             </td>
             <td>
                 @php

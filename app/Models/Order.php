@@ -7,11 +7,13 @@ use App\Models\Finance\InitialPayment;
 use App\Models\Finance\Maintenance;
 use App\Models\Finance\Mileage;
 use App\Models\Finance\Term;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use LaravelIdea\Helper\App\Models\_IH_FitOption_QB;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Comments;
 
 /**
@@ -126,30 +128,59 @@ class Order extends Model
         return $this->hasOne(Mileage::class, 'id', 'mileage');
     }
 
-    public function basicCost()
-    {
-        return $this->vehicle->list_price;
-    }
-
-    public function basicSubTotal()
-    {
-        return $this->basicCost() + $this->vehicle->metallic_paint;
-    }
-
     public function basicDealerDiscount(): float|int
     {
-        return ($this->basicSubTotal() / 100) * $this->invoice->dealer_discount;
+        return ($this->vehicle->list_price / 100) *
+            $this->invoice->dealer_discount;
     }
 
     public function basicManufacturerSupport(): float|int
     {
-        return ($this->basicSubTotal() / 100) *
+        return ($this->vehicle->list_price / 100) *
             $this->invoice->manufacturer_discount;
+    }
+
+    public function metallicPaintDiscount(): float|int
+    {
+        $metallic_paint_discount = DealerDiscount::where(
+            'model_id',
+            VehicleModel::where('name', '=', $this->vehicle->model)->first()
+                ->id,
+        )
+            ->where('dealer_id', $this->dealer->id)
+            ->first()->paint_discount;
+
+        $metallic_paint_value = $this->vehicle->metallic_paint;
+
+        $metallic_paint_manufacturer_discount =
+            ($metallic_paint_value / 100) *
+            $this->invoice->manufacturer_discount;
+
+        if ($metallic_paint_discount !== 0) {
+            $metallic_paint_discount =
+                ($metallic_paint_value / 100) * $metallic_paint_discount;
+
+            $metallicDiscountedTotal =
+                $metallic_paint_value -
+                $metallic_paint_manufacturer_discount -
+                $metallic_paint_discount -
+                $this->invoice->leden_discount;
+        } else {
+            $metallic_paint_discount =
+                ($metallic_paint_value / 100) * $this->invoice->dealer_discount;
+            $metallicDiscountedTotal =
+                $metallic_paint_value -
+                $metallic_paint_discount -
+                $metallic_paint_manufacturer_discount -
+                $this->invoice->leden_discount;
+        }
+
+        return $metallicDiscountedTotal;
     }
 
     public function basicDiscountedTotal(): float|int
     {
-        return $this->basicSubTotal() -
+        return $this->vehicle->list_price -
             $this->basicDealerDiscount() -
             $this->basicManufacturerSupport() -
             $this->invoice->leden_discount;
@@ -161,18 +192,18 @@ class Order extends Model
             $this->invoice->manufacturer_discount;
     }
 
-    public function factoryOptions()
+    public function factoryOptions(): Collection|BelongsToMany|_IH_FitOption_QB
     {
         return $this->vehicle->factoryFitOptions();
     }
-    public function dealerOptions()
+    public function dealerOptions(): Collection|BelongsToMany|_IH_FitOption_QB
     {
         return $this->vehicle->dealerFitOptions();
     }
 
     public function factoryOptionsSubTotal()
     {
-        return $this->vehicle->factoryFitOptions()->sum('option_price');
+        return $this->factoryOptions()->sum('option_price');
     }
 
     public function factoryOptionsDiscount(): float|int
@@ -194,6 +225,7 @@ class Order extends Model
     public function invoiceSubTotal(): float|int
     {
         return $this->basicDiscountedTotal() +
+            $this->metallicPaintDiscount() +
             $this->factoryOptionsTotal() +
             $this->dealerOptionsTotal() +
             $this->invoice->manufacturer_delivery_cost +

@@ -157,6 +157,7 @@ class OrderForm extends Component
     public $rental_value;
     public $maintenance_rental_value;
     public $renewal_date;
+    public $delivery_month;
     public $now;
     protected $rules = [
         'make' => 'required_without:newmake',
@@ -285,6 +286,7 @@ class OrderForm extends Component
                 $this->order->invoice->ford_bonus_pay_date;
             $this->finance_broker_toggle = $this->order->finance_broker_toggle;
             $this->finance_broker = $this->order->finance_broker_id;
+            $this->delivery_month = $this->order->delivery_month;
 
             $this->dealer_discount_override = true;
             $this->customer_id = $this->order->customer->id;
@@ -559,6 +561,7 @@ class OrderForm extends Component
             $order->maintenance_rental = $this->maintenance_rental_value;
             $order->renewal_date = $this->renewal_date;
             $order->exception = $this->exclusion;
+            $order->delivery_month = $this->delivery_month;
             $order->save();
 
             $this->saveVehicleDetails($vehicle);
@@ -617,6 +620,7 @@ class OrderForm extends Component
                 'maintenance_rental' => $this->maintenance_rental_value,
                 'renewal_date' => $this->renewal_date,
                 'exception' => $this->exclusion,
+                'delivery_month' => $this->delivery_month,
             ]);
 
             if ($order->wasChanged('delivery_date')) {
@@ -648,7 +652,7 @@ class OrderForm extends Component
         OrderController::setProvisionalRegDate($vehicle);
         Reservation::where('vehicle_id', $vehicle->id)->delete();
 
-        return redirect(route('order.edit', $order->id));
+        return to_route('order.edit', $order->id);
     }
 
     /**
@@ -669,6 +673,13 @@ class OrderForm extends Component
         $companies = Company::orderBy('company_name')->get();
 
         $options = [
+            'metallic_paint_discount' => DealerDiscount::where(
+                'model_id',
+                $this->model,
+            )
+                ->where('dealer_id', $this->dealership)
+                ->get()
+                ->pluck('paint_discount')[0],
             'customers' => Customer::orderBy('customer_name')
                 ->when($this->customer_name, function ($query) {
                     $query->where(

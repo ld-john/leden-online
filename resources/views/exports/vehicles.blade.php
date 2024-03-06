@@ -10,6 +10,7 @@
         <th>Registration</th>
         <th>Planned Build Date</th>
         <th>Due Date</th>
+        <th>Desired Delivery Month</th>
         <th>Broker</th>
         <th>Broker Reference</th>
     </tr>
@@ -53,6 +54,7 @@
                     N/a
                 @endif
             </td>
+            <td>{{ $vehicle->order?->delivery_month }}</td>
             <td>
                 @if($vehicle->order)
                     {{ $vehicle->order->broker->company_name }}
@@ -63,7 +65,7 @@
                 @endif
 
             </td>
-            <td>{{ $vehicle->order->broker_ref ?? '' }}</td>
+            <td>{{ $vehicle->order?->broker_ref ?? '' }}</td>
         </tr>
     @endforeach
     </tbody>
