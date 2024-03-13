@@ -156,7 +156,7 @@ class Order extends Model
             ($metallic_paint_value / 100) *
             $this->invoice->manufacturer_discount;
 
-        if ($metallic_paint_discount !== 0) {
+        if ($metallic_paint_discount !== '0') {
             $metallic_paint_discount =
                 ($metallic_paint_value / 100) * $metallic_paint_discount;
 

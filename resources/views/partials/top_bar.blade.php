@@ -279,6 +279,8 @@
                                 <span>Vehicle Recycle Bin</span></a></li>
                         <li><a class="dropdown-item" href="{{ route('order.recycle-bin') }}"><i class="fa-solid fa-trash"></i>
                                 <span>Orders Recycle Bin</span></a></li>
+                        <li><a class="dropdown-item" href="{{ route('customer.recycle-bin') }}"><i class="fa-solid fa-trash"></i>
+                                <span>Customer Recycle Bin</span></a></li>
                     </ul>
                 </li>
             @endcan

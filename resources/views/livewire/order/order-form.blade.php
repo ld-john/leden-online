@@ -291,7 +291,10 @@
 
         let discountSum = parseFloat(dealer_discount.value) + parseFloat(manufacturer_discount.value)
         let discountMetallicPaint = parseFloat(dealer_discount.value) + parseFloat(manufacturer_discount.value)
-        if (metallic_paint_raw.value !== 0) {
+
+        console.log(typeof (metallic_paint_raw.value))
+
+        if (metallic_paint_raw.value !== '0') {
           discountMetallicPaint = parseFloat(metallic_paint_raw.value) + parseFloat(manufacturer_discount.value)
         }
 

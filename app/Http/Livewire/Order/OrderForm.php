@@ -672,14 +672,19 @@ class OrderForm extends Component
     {
         $companies = Company::orderBy('company_name')->get();
 
+        $metallicPaintDiscount = DealerDiscount::where('model_id', $this->model)
+            ->where('dealer_id', $this->dealership)
+            ->get()
+            ->pluck('paint_discount');
+
+        if ($metallicPaintDiscount->isNotEmpty()) {
+            $metallicPaintDiscount = $metallicPaintDiscount[0];
+        } else {
+            $metallicPaintDiscount = 0;
+        }
+
         $options = [
-            'metallic_paint_discount' => DealerDiscount::where(
-                'model_id',
-                $this->model,
-            )
-                ->where('dealer_id', $this->dealership)
-                ->get()
-                ->pluck('paint_discount')[0],
+            'metallic_paint_discount' => $metallicPaintDiscount,
             'customers' => Customer::orderBy('customer_name')
                 ->when($this->customer_name, function ($query) {
                     $query->where(

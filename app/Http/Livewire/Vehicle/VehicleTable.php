@@ -3,6 +3,9 @@
 namespace App\Http\Livewire\Vehicle;
 
 use App\Models\Vehicle;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -44,19 +47,19 @@ class VehicleTable extends Component
     public $filterBuildDate;
     public $searchID;
 
-    public function mount($ringfenced, $fordpipeline)
+    public function mount($ringfenced, $fordpipeline): void
     {
         $this->ringfenced = $ringfenced;
         $this->fordpipeline = $fordpipeline;
         $this->role = Auth::user()->role;
     }
 
-    public function unRingFenceVehicle(Vehicle $vehicle)
+    public function unRingFenceVehicle(Vehicle $vehicle): void
     {
         $vehicle->update(['ring_fenced_stock' => 0, 'broker_id' => null]);
     }
 
-    public function render()
+    public function render(): View|Application|Factory|\Illuminate\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $data = Vehicle::with('manufacturer:id,name')
             ->with('order:id,vehicle_id')

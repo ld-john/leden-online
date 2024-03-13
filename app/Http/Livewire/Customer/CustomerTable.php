@@ -24,17 +24,36 @@ class CustomerTable extends Component
     public $paginate;
     public $checked = [];
     public $modalShow = false;
+    public $searchCustomerName;
 
     public function render(): View|Application|Factory|\Illuminate\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $customers = Customer::orderBy('customer_name')
             ->withCount('orders')
             ->with('orders')
+            ->when($this->searchCustomerName, function ($query) {
+                $query->where(
+                    'customer_name',
+                    'like',
+                    '%' . $this->searchCustomerName . '%',
+                );
+            })
             ->paginate($this->paginate);
+
+        $duplicates = Customer::get()
+            ->toBase()
+            ->duplicates('customer_name')
+            ->unique();
 
         return view('livewire.customer.customer-table', [
             'customers' => $customers,
+            'duplicates' => $duplicates,
         ]);
+    }
+
+    public function updatingSearchCustomerName(): void
+    {
+        $this->resetPage();
     }
 
     public function mergeSelected(): void
