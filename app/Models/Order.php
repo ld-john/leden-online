@@ -147,7 +147,7 @@ class Order extends Model
             VehicleModel::where('name', $this->vehicle->model)->first()->id,
         )
             ->where('dealer_id', $this->dealer->id)
-            ->first()->paint_discount;
+            ->first()?->paint_discount;
 
         $metallic_paint_value = $this->vehicle->metallic_paint;
 
