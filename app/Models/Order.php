@@ -144,8 +144,7 @@ class Order extends Model
     {
         $metallic_paint_discount = DealerDiscount::where(
             'model_id',
-            VehicleModel::where('name', '=', $this->vehicle->model)->first()
-                ->id,
+            VehicleModel::where('name', $this->vehicle->model)->first()->id,
         )
             ->where('dealer_id', $this->dealer->id)
             ->first()->paint_discount;
@@ -162,7 +161,6 @@ class Order extends Model
 
             $metallicDiscountedTotal =
                 $metallic_paint_value -
-                $metallic_paint_manufacturer_discount -
                 $metallic_paint_discount -
                 $this->invoice->leden_discount;
         } else {
@@ -176,6 +174,11 @@ class Order extends Model
         }
 
         return $metallicDiscountedTotal;
+    }
+
+    public function basicSubTotal()
+    {
+        return $this->vehicle->list_price + $this->vehicle->metallic_paint;
     }
 
     public function basicDiscountedTotal(): float|int
