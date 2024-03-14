@@ -1,3 +1,24 @@
+{{-- Customer Desired Delivery Month --}}
+<div class="form-group row">
+    <label for="delivery_month" class="col-md-2 col-form-label">Desired Delivery Month</label>
+    <div class="col-md-6">
+        <select wire:model.live="delivery_month" id="delivery_month" class="form-control">
+            <option value="">---</option>
+            <option value="Jan">January</option>
+            <option value="Feb">February</option>
+            <option value="Mar">March</option>
+            <option value="Apr">April</option>
+            <option value="May">May</option>
+            <option value="Jun">June</option>
+            <option value="Jul">July</option>
+            <option value="Aug">August</option>
+            <option value="Sep">September</option>
+            <option value="Oct">October</option>
+            <option value="Nov">November</option>
+            <option value="Dec">December</option>
+        </select>
+    </div>
+</div>
 {{-- Customer Phone Number --}}
 <div class="form-group row">
     <label for="customer_phone" class="col-md-2 col-form-label">Customer Phone Number</label>

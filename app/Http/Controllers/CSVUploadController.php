@@ -373,10 +373,16 @@ class CSVUploadController extends Controller
         $date = '2023-11-27';
 
         $response = Http::acceptJson()
-            ->post('http://test.fleetprocure.com/portal/api/updateorder/8996155', [
-                'username' => $username,
-                'password' => $pass,
-            ]);
+            ->withHeader('stock_eta', $date)
+            ->post(
+                'http://test.fleetprocure.com/portal/api/updateorder/8996155',
+                [
+                    'username' => $username,
+                    'password' => $pass,
+                ],
+            );
+
+        ddd($response);
 
         $response = $response->json();
 

@@ -145,6 +145,7 @@
                         wire:ignore.self
                 >
                     <div class="accordion-body">
+
                         @include('order.partials.cost')
                     </div>
                 </div>
@@ -256,52 +257,66 @@
 @push('custom-scripts')
 
     <script>
-        $( function (){
-            $('#goButton').click(function(){
-                window.scrollTo(0,0);
-            });
+      $( function (){
+        $('#goButton').click(function(){
+          window.scrollTo(0,0);
+        });
 
-        })
+      })
     </script>
 
     <script>
-        let dealer_discount = document.querySelector('#dealer_discount')
-        let manufacturer_discount = document.querySelector('#manufacturer_discount')
-        let total_discount = document.querySelector('#total_discount')
-        let list_price = document.querySelector('#list_price')
-        let metallic_paint = document.querySelector('#metallic_paint')
-        let manufacturer_delivery_cost = document.querySelector('#manufacturer_delivery_cost')
-        let first_reg_fee = document.querySelector('#first_reg_fee')
-        let rfl_cost = document.querySelector('#rfl_cost')
-        let onward_delivery = document.querySelector('#onward_delivery')
-        let invoice_funder_for = document.querySelector('#invoice_funder_for')
-        let invoiceValue = document.querySelector('#invoice_value')
+      let dealer_discount = document.querySelector('#dealer_discount')
+      let manufacturer_discount = document.querySelector('#manufacturer_discount')
+      let total_discount = document.querySelector('#total_discount')
+      let list_price = document.querySelector('#list_price')
+      let metallic_paint = document.querySelector('#metallic_paint')
+      let manufacturer_delivery_cost = document.querySelector('#manufacturer_delivery_cost')
+      let first_reg_fee = document.querySelector('#first_reg_fee')
+      let rfl_cost = document.querySelector('#rfl_cost')
+      let onward_delivery = document.querySelector('#onward_delivery')
+      let invoice_funder_for = document.querySelector('#invoice_funder_for')
+      let invoiceValue = document.querySelector('#invoice_value')
+      let metallic_paint_discount = document.querySelector('#metallic_paint_discount')
+      let metallic_paint_raw = document.querySelector('#metallic_paint_discount_raw')
 
-        window.addEventListener('dealerDiscountChanged', invoiceValueChange)
+      window.addEventListener('dealerDiscountChanged', invoiceValueChange)
 
-        function invoiceValueChange()
-        {
+      document.addEventListener('DOMContentLoaded', invoiceValueChange)
 
-            let vatRate = 20;
+      function invoiceValueChange()
+      {
 
-            let discountSum = parseFloat(dealer_discount.value) + parseFloat(manufacturer_discount.value)
-            total_discount.value = discountSum
+        let vatRate = 20;
 
-            let InvoiceSum1 = parseInt(list_price.value)+parseInt(metallic_paint.value)
-            let InvoiceSum2 = ( parseInt( InvoiceSum1 ) / 100) * parseInt(discountSum)
-            let InvoiceSum3 =
-                InvoiceSum1 -
-                InvoiceSum2 +
-                parseInt(onward_delivery.value) +
-                parseInt(manufacturer_delivery_cost.value);
-            let InvoiceSum4 =
-                parseInt(first_reg_fee.value) +
-                parseInt(rfl_cost.value);
-            if (InvoiceSum3) {
-                invoiceValue.value = ( ( InvoiceSum3 / 100 ) * vatRate ) + InvoiceSum3 + InvoiceSum4;
-            }
+        let discountSum = parseFloat(dealer_discount.value) + parseFloat(manufacturer_discount.value)
+        let discountMetallicPaint = parseFloat(dealer_discount.value) + parseFloat(manufacturer_discount.value)
 
+        if (metallic_paint_raw.value !== '0') {
+          discountMetallicPaint = parseFloat(metallic_paint_raw.value)
         }
+
+        metallic_paint_discount.value = discountMetallicPaint
+        total_discount.value = discountSum
+
+        let InvoiceListPrice = parseInt(list_price.value)
+        let InvoiceMetallicPaint = parseInt(metallic_paint.value)
+        let InvoiceListPriceDiscount = ( parseInt( InvoiceListPrice ) / 100) * parseInt(discountSum)
+        let InvoiceMetallicPaintDiscount = ( parseInt( InvoiceMetallicPaint ) / 100 ) * parseInt(discountMetallicPaint)
+        let InvoiceSum3 =
+          (InvoiceListPrice -
+            InvoiceListPriceDiscount) +
+          ( InvoiceMetallicPaint - InvoiceMetallicPaintDiscount ) +
+          parseInt(onward_delivery.value) +
+          parseInt(manufacturer_delivery_cost.value);
+        let InvoiceSum4 =
+          parseInt(first_reg_fee.value) +
+          parseInt(rfl_cost.value);
+        if (InvoiceSum3) {
+          invoiceValue.value = ( ( InvoiceSum3 / 100 ) * vatRate ) + InvoiceSum3 + InvoiceSum4;
+        }
+
+      }
 
     </script>
 

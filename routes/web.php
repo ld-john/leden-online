@@ -247,9 +247,19 @@ Route::middleware('auth')->group(function () {
     });
 
     /* Customer Controller Routes */
-    Route::get('/customers', 'CustomerController@index')->name(
-        'customer.index',
-    );
+    Route::controller('CustomerController')
+        ->name('customer.')
+        ->prefix('customers')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/recycle-bin', 'recycle')->name('recycle-bin');
+            Route::get('/restore/{customer}', 'restore')
+                ->name('restore')
+                ->withTrashed();
+            Route::get('/force-delete/{customer}', 'forceDelete')
+                ->name('force-delete')
+                ->withTrashed();
+        });
 
     /* MessagesController routes */
     Route::controller('MessagesController')
