@@ -48,16 +48,16 @@
                     <td>
                          {{ $reservation->id }}
                     </td>
-                    <td>{{ $reservation->vehicle->ford_order_number }}</td>
+                    <td>{{ $reservation->vehicle?->ford_order_number }}</td>
                     <td>
-                         {{ $reservation->customer->full_name }}
+                         {{ $reservation->customer?->full_name }}
                     </td>
                     <td>
-                         {{ $reservation->company->company_name }}
+                         {{ $reservation->company?->company_name }}
                     </td>
                     <td>
-                         {{ $reservation->vehicle->manufacturer->name }} {{ $reservation->vehicle->model }} @if($reservation->vehicle->orbit_number) (Orbit Number: {{ $reservation->vehicle->orbit_number }}) @endif
-                         <a href="{{ route('vehicle.show', $reservation->vehicle->id) }}" class="btn btn-primary ms-4"> View</a>
+                         {{ $reservation->vehicle?->manufacturer?->name }} {{ $reservation->vehicle?->model }} @if($reservation->vehicle && $reservation->vehicle->orbit_number) (Orbit Number: {{ $reservation->vehicle->orbit_number }}) @endif
+                         <a href="{{ route('vehicle.show', $reservation?->vehicle->id) }}" class="btn btn-primary ms-4"> View</a>
                     </td>
                     <td>
                          {{ ucwords(str_replace("_", " ", $reservation->status)) }}
