@@ -160,17 +160,14 @@ class Order extends Model
                 ($metallic_paint_value / 100) * $metallic_paint_discount;
 
             $metallicDiscountedTotal =
-                $metallic_paint_value -
-                $metallic_paint_discount -
-                $this->invoice->leden_discount;
+                $metallic_paint_value - $metallic_paint_discount;
         } else {
             $metallic_paint_discount =
                 ($metallic_paint_value / 100) * $this->invoice->dealer_discount;
             $metallicDiscountedTotal =
                 $metallic_paint_value -
                 $metallic_paint_discount -
-                $metallic_paint_manufacturer_discount -
-                $this->invoice->leden_discount;
+                $metallic_paint_manufacturer_discount;
         }
 
         return $metallicDiscountedTotal;
