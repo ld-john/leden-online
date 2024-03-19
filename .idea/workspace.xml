@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Added Null Handling to Reservation Table">
-      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Removed double application of Leden Discount.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/reservations/reservations-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/reservations/reservations-table.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -592,7 +593,8 @@
       <workItem from="1710326282529" duration="7603000" />
       <workItem from="1710423548029" duration="651000" />
       <workItem from="1710432679135" duration="902000" />
-      <workItem from="1710840277846" duration="910000" />
+      <workItem from="1710840277846" duration="1553000" />
+      <workItem from="1710861309174" duration="16000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -937,7 +939,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -968,7 +970,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Updated ReportingController's registeredQuarters method and related views&#10;&#10;The ReportingController's registeredQuarters method is updated to dynamically compute the start date for generating reports based on the latest date in registered months instead of using the first month of the current year. The matching view reporting/reporting.blade.php is adjusted accordingly. This provides a more accurate baseline for report generation and makes the application flexible for future year changes. &#10;&#10;In addition, few minor enhancements have been made to improve the code readibility, and some unused comments were removed from the .idea/workspace.xml." />
     <MESSAGE value="Updated adminDashboard method and related views&#10;&#10;The adminDashboard method in DashboardController has been updated to more accurately track vehicle statuses. The vehicle statuses are now dynamically computed and categorised for ease of use in the dashboard. Additional functions have been added to VehicleController to handle specific status exports. This change streamlines data handling and enhances the usability of the admin dashboard. &#10;&#10;Also, unnecessary comments were removed from the .idea/workspace.xml for improved code" />
     <MESSAGE value="Enhanced DashboardController for dynamic status tracking&#10;&#10;Refactored adminDashboard method in DashboardController to track vehicle statuses more accurately by dynamically computing and categorising them for efficient usage in the dashboard. Added functions in VehicleController for status exports aiding in streamlined data handling and enhancing the admin dashboard usability. Also purged unnecessary comments from .idea/workspace.xml to improve code readability." />
     <MESSAGE value="Improve order search functionality in OrderTable&#10;&#10;Introduced separate search functionality for Broker and Finance Broker in OrderTable to enhance the user interface. Prior to this change, both Broker and Finance Broker were under a common search functionality that was not user-friendly. Additionally, updated DashboardController for dynamic vehicle status tracking and removed unnecessary comments from .idea/workspace.xml to maintain code cleanliness." />
@@ -993,7 +994,8 @@
     <MESSAGE value="Tweaks to the Order Model&#10;&#10;Tweaks to the Console Commands" />
     <MESSAGE value="Added Null Handling to Metallic Paint Discount" />
     <MESSAGE value="Added Null Handling to Reservation Table" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Null Handling to Reservation Table" />
+    <MESSAGE value="Removed double application of Leden Discount." />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed double application of Leden Discount." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
