@@ -57,7 +57,9 @@
                     </td>
                     <td>
                          {{ $reservation->vehicle?->manufacturer?->name }} {{ $reservation->vehicle?->model }} @if($reservation->vehicle && $reservation->vehicle->orbit_number) (Orbit Number: {{ $reservation->vehicle->orbit_number }}) @endif
-                         <a href="{{ route('vehicle.show', $reservation->vehicle?->id) }}" class="btn btn-primary ms-4"> View</a>
+                         @if($reservation->vehicle)
+                              <a href="{{ route('vehicle.show', $reservation->vehicle->id) }}" class="btn btn-primary ms-4"> View</a>
+                         @endif
                     </td>
                     <td>
                          {{ ucwords(str_replace("_", " ", $reservation->status)) }}
