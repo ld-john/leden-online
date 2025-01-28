@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Log Viewer
@@ -73,6 +72,8 @@ return [
 
     'middleware' => [
         'web',
+        'auth',
+        'logviewer.access',
         \Opcodes\LogViewer\Http\Middleware\AuthorizeLogViewer::class,
     ],
 
@@ -90,7 +91,9 @@ return [
         \Opcodes\LogViewer\Http\Middleware\AuthorizeLogViewer::class,
     ],
 
-    'api_stateful_domains' => env('LOG_VIEWER_API_STATEFUL_DOMAINS') ? explode(',', env('LOG_VIEWER_API_STATEFUL_DOMAINS')) : null,
+    'api_stateful_domains' => env('LOG_VIEWER_API_STATEFUL_DOMAINS')
+        ? explode(',', env('LOG_VIEWER_API_STATEFUL_DOMAINS'))
+        : null,
 
     /*
     |--------------------------------------------------------------------------
