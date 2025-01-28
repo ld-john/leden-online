@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Updates to the latest version of Laravel and Livewire among other packages.">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Rework the Logging View">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/log-viewer.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/log-viewer/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/log-viewer/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/log-viewer/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/log-viewer/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/log-viewer/app.js.LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/log-viewer/app.js.LICENSE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/log-viewer/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/log-viewer/mix-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,34 +219,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Project.color&quot;: &quot;082c62&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.laravel-idea.update-module-directories&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;staging&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/wamp64/bin/php/php8.2.0/php.exe&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;php.override.implement.member.chooser.php.doc&quot;: &quot;NONE&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\wamp64\\www\\leden\\node_modules\\prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php.composer&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PhpStorm 2023.1.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Project.color": "082c62",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.laravel-idea.update-module-directories": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "staging",
+    "last_opened_file_path": "C:/wamp64/bin/php/php8.2.0/php.exe",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "php.override.implement.member.chooser.php.doc": "NONE",
+    "prettierjs.PrettierConfiguration.Package": "C:\\wamp64\\www\\leden\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php.composer",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PhpStorm 2023.1.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;HTML&quot;,
-      &quot;CSS&quot;,
-      &quot;PHP&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "HTML",
+      "CSS",
+      "PHP"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\wamp64\www\leden\resources\views\pagination" />
@@ -288,12 +282,10 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PS-242.23339.16" />
-        <option value="bundled-php-predefined-a98d8de5180a-90914f2295cb-com.jetbrains.php.sharedIndexes-PS-242.23339.16" />
-        <option value="php-maennchen_zipstream_php-970fd879c5a4-2112e5c4" />
-        <option value="php-markbaker_matrix-970fd879c5a4-117e3209" />
-        <option value="php-nunomaduro_termwind-970fd879c5a4-acb1f1be" />
-        <option value="php-phpoffice_phpspreadsheet-970fd879c5a4-6ac70ee9" />
+        <option value="bundled-php-predefined-a98d8de5180a-4c3855d0ab16-com.jetbrains.php.sharedIndexes-PS-243.23654.168" />
+        <option value="php-maennchen_zipstream_php-5543a6ebd44f-b1428b0f" />
+        <option value="php-markbaker_matrix-5543a6ebd44f-366b8431" />
+        <option value="php-phpoffice_phpspreadsheet-5543a6ebd44f-f874df27" />
       </set>
     </attachedChunks>
   </component>
@@ -629,7 +621,8 @@
       <workItem from="1728463553148" duration="226000" />
       <workItem from="1728463800241" duration="926000" />
       <workItem from="1728466587212" duration="1523000" />
-      <workItem from="1729689173383" duration="1164000" />
+      <workItem from="1729689173383" duration="3007000" />
+      <workItem from="1738066725415" duration="429000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -974,7 +967,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <option name="localTasksCounter" value="118" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1005,7 +998,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Updated OrderTable and cleaned workspace.xml&#10;&#10;Implemented separate search for Broker and Finance Broker in OrderTable for better user experience. Updated DashboardController for improved vehicle status tracking. Removed superfluous comments from .idea/workspace.xml for maintaining clean code." />
     <MESSAGE value="Refined VehicleController query for in-stock export&#10;&#10;The query for in-stock export in the VehicleController now only targets vehicles with a status of 1. Prior implementation considered vehicles with a status of 1, 15, and 17, which is redundant and has been optimized for efficiency." />
     <MESSAGE value="Refine in-stock export query in VehicleController&#10;&#10;Updated the query for in-stock export in VehicleController to exclusively target vehicles with status '1'. This eliminates the redundancy and inefficiency of the previous implementation which considered vehicles with statuses of '1', '15', and '17'." />
     <MESSAGE value="Change to the additional.blade.php swapping exception for exclusion to match the phrasing on the parent class." />
@@ -1030,7 +1022,8 @@
     <MESSAGE value="Corrected the Null Handling for vehicle on reservations-table.blade.php" />
     <MESSAGE value="Checks if there is a vehicle before rendering a view button on reservations-table.blade.php" />
     <MESSAGE value="Updates to the latest version of Laravel and Livewire among other packages." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updates to the latest version of Laravel and Livewire among other packages." />
+    <MESSAGE value="Rework the Logging View" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rework the Logging View" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
