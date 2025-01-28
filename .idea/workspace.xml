@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Checks if there is a vehicle before rendering a view button on reservations-table.blade.php">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Updates to the latest version of Laravel and Livewire among other packages.">
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/log-viewer.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/log-viewer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/log-viewer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/log-viewer/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/log-viewer/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/log-viewer/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/log-viewer/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/log-viewer/app.js.LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/log-viewer/app.js.LICENSE.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/log-viewer/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/log-viewer/mix-manifest.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +191,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/uid" />
       <path value="$PROJECT_DIR$/vendor/rap2hpoutre/laravel-log-viewer" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/uri-template" />
-      <path value="$PROJECT_DIR$/vendor/opcodesio/log-viewer" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php83" />
       <path value="$PROJECT_DIR$/vendor/phpstan/phpdoc-parser" />
       <path value="$PROJECT_DIR$/vendor/league/flysystem-local" />
@@ -209,6 +208,7 @@
       <path value="$PROJECT_DIR$/vendor/spatie/error-solutions" />
       <path value="$PROJECT_DIR$/vendor/symfony/clock" />
       <path value="$PROJECT_DIR$/vendor/opcodesio/mail-parser" />
+      <path value="$PROJECT_DIR$/vendor/opcodesio/log-viewer" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -628,6 +628,8 @@
       <workItem from="1728462147913" duration="1367000" />
       <workItem from="1728463553148" duration="226000" />
       <workItem from="1728463800241" duration="926000" />
+      <workItem from="1728466587212" duration="1523000" />
+      <workItem from="1729689173383" duration="1164000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -972,7 +974,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1003,7 +1005,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Improve order search functionality in OrderTable&#10;&#10;Introduced separate search functionality for Broker and Finance Broker in OrderTable to enhance the user interface. Prior to this change, both Broker and Finance Broker were under a common search functionality that was not user-friendly. Additionally, updated DashboardController for dynamic vehicle status tracking and removed unnecessary comments from .idea/workspace.xml to maintain code cleanliness." />
     <MESSAGE value="Updated OrderTable and cleaned workspace.xml&#10;&#10;Implemented separate search for Broker and Finance Broker in OrderTable for better user experience. Updated DashboardController for improved vehicle status tracking. Removed superfluous comments from .idea/workspace.xml for maintaining clean code." />
     <MESSAGE value="Refined VehicleController query for in-stock export&#10;&#10;The query for in-stock export in the VehicleController now only targets vehicles with a status of 1. Prior implementation considered vehicles with a status of 1, 15, and 17, which is redundant and has been optimized for efficiency." />
     <MESSAGE value="Refine in-stock export query in VehicleController&#10;&#10;Updated the query for in-stock export in VehicleController to exclusively target vehicles with status '1'. This eliminates the redundancy and inefficiency of the previous implementation which considered vehicles with statuses of '1', '15', and '17'." />
@@ -1028,7 +1029,8 @@
     <MESSAGE value="Removed double application of Leden Discount." />
     <MESSAGE value="Corrected the Null Handling for vehicle on reservations-table.blade.php" />
     <MESSAGE value="Checks if there is a vehicle before rendering a view button on reservations-table.blade.php" />
-    <option name="LAST_COMMIT_MESSAGE" value="Checks if there is a vehicle before rendering a view button on reservations-table.blade.php" />
+    <MESSAGE value="Updates to the latest version of Laravel and Livewire among other packages." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updates to the latest version of Laravel and Livewire among other packages." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,6 +1,7 @@
 <?php
 
 return [
+
     /*
     |--------------------------------------------------------------------------
     | Log Viewer
@@ -10,7 +11,10 @@ return [
     */
 
     'enabled' => env('LOG_VIEWER_ENABLED', true),
-    'show_support_link' => false,
+
+    'api_only' => env('LOG_VIEWER_API_ONLY', false),
+
+    'require_auth_in_production' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -50,13 +54,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Log Viewer time zone.
+    |--------------------------------------------------------------------------
+    | The time zone in which to display the times in the UI. Defaults to
+    | the application's timezone defined in config/app.php.
+    |
+    */
+
+    'timezone' => null,
+
+    /*
+    |--------------------------------------------------------------------------
     | Log Viewer route middleware.
     |--------------------------------------------------------------------------
     | Optional middleware to use when loading the initial Log Viewer page.
     |
     */
 
-    'middleware' => ['web', 'auth:web'],
+    'middleware' => [
+        'web',
+        \Opcodes\LogViewer\Http\Middleware\AuthorizeLogViewer::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +85,48 @@ return [
     |
     */
 
-    'api_middleware' => [],
+    'api_middleware' => [
+        \Opcodes\LogViewer\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        \Opcodes\LogViewer\Http\Middleware\AuthorizeLogViewer::class,
+    ],
+
+    'api_stateful_domains' => env('LOG_VIEWER_API_STATEFUL_DOMAINS') ? explode(',', env('LOG_VIEWER_API_STATEFUL_DOMAINS')) : null,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Log Viewer Remote hosts.
+    |--------------------------------------------------------------------------
+    | Log Viewer supports viewing Laravel logs from remote hosts. They must
+    | be running Log Viewer as well. Below you can define the hosts you
+    | would like to show in this Log Viewer instance.
+    |
+    */
+
+    'hosts' => [
+        'local' => [
+            'name' => ucfirst(env('APP_ENV', 'local')),
+        ],
+
+        // 'staging' => [
+        //     'name' => 'Staging',
+        //     'host' => 'https://staging.example.com/log-viewer',
+        //     'auth' => [      // Example of HTTP Basic auth
+        //         'username' => 'username',
+        //         'password' => 'password',
+        //     ],
+        // ],
+        //
+        // 'production' => [
+        //     'name' => 'Production',
+        //     'host' => 'https://example.com/log-viewer',
+        //     'auth' => [      // Example of Bearer token auth
+        //         'token' => env('LOG_VIEWER_PRODUCTION_TOKEN'),
+        //     ],
+        //     'headers' => [
+        //         'X-Foo' => 'Bar',
+        //     ],
+        // ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -79,6 +138,19 @@ return [
     'include_files' => [
         '*.log',
         '**/*.log',
+
+        // You can include paths to other log types as well, such as apache, nginx, and more.
+        '/var/log/httpd/*',
+        '/var/log/nginx/*',
+
+        // MacOS Apple Silicon logs
+        '/opt/homebrew/var/log/nginx/*',
+        '/opt/homebrew/var/log/httpd/*',
+        '/opt/homebrew/var/log/php-fpm.log',
+        '/opt/homebrew/var/log/postgres*log',
+        '/opt/homebrew/var/log/redis*log',
+        '/opt/homebrew/var/log/supervisor*log',
+
         // '/absolute/paths/supported',
     ],
 
@@ -93,6 +165,18 @@ return [
     'exclude_files' => [
         // 'my_secret.log'
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hide unknown files.
+    |--------------------------------------------------------------------------
+    | The include/exclude options above might catch files which are not
+    | logs supported by Log Viewer. In that case, you can hide them
+    | from the UI and API calls by setting this to true.
+    |
+    */
+
+    'hide_unknown_files' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -122,11 +206,26 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Cache key prefix
+    |--------------------------------------------------------------------------
+    | Log Viewer prefixes all the cache keys created with this value. If for
+    | some reason you would like to change this prefix, you can do so here.
+    | The format of Log Viewer cache keys is:
+    | {prefix}:{version}:{rest-of-the-key}
+    |
+    */
+
+    'cache_key_prefix' => 'lv',
+
+    /*
+    |--------------------------------------------------------------------------
     | Chunk size when scanning log files lazily
     |--------------------------------------------------------------------------
     | The size in MB of files to scan before updating the progress bar when searching across all files.
     |
     */
 
-    'lazy_scan_chunk_size_in_mb' => 200,
+    'lazy_scan_chunk_size_in_mb' => 50,
+
+    'strip_extracted_context' => true,
 ];
