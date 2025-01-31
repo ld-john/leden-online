@@ -11,7 +11,7 @@ class LogViewerAccessMiddleware
     public function handle(Request $request, Closure $next)
     {
         // Replace this with your authorization logic
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        if (Auth::user()->role === 'admin') {
             // Adjust this as per your application's needs
             return $next($request);
         }
