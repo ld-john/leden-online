@@ -32,6 +32,7 @@ class QuickEditOrder extends Component
     public $order_date;
     public $delivery_date;
     public $registered_date;
+    public $delivery_month;
     public $view;
     public $now;
     public $return;
@@ -68,6 +69,8 @@ class QuickEditOrder extends Component
             $this->registered_date = null;
         }
 
+        $this->delivery_month = $order->delivery_month;
+
         $this->order_number = $vehicle->ford_order_number;
         $this->registration = $vehicle->reg;
         $this->orbit_number = $vehicle->orbit_number;
@@ -97,7 +100,7 @@ class QuickEditOrder extends Component
         $this->vehicleStatus = $vehicle->vehicle_status;
     }
 
-    public function saveOrder()
+    public function saveOrder(): null
     {
         if ($this->orbit_number === '') {
             $this->orbit_number = null;
@@ -124,6 +127,7 @@ class QuickEditOrder extends Component
             'build_date' => $this->build_date,
             'due_date' => $this->due_date,
             'vehicle_registered_on' => $this->registered_date,
+            'delivery_month' => $this->delivery_month,
         ]);
         $order = $this->order;
 

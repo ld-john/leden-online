@@ -185,7 +185,7 @@ class CSVUploadController extends Controller
             );
             return redirect()->route('pipeline');
         } elseif ($request->input('upload_type') === 'ford_create') {
-            $exclude_status = [1, 3, 5, 6, 7, 14, 15, 17, 18, 19];
+            $exclude_status = [1, 3, 5, 6, 7, 14, 15, 16, 17, 18, 19];
 
             foreach ($vehicle_uploads as $ford_report) {
                 $vehicle = Vehicle::where(

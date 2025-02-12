@@ -16,12 +16,12 @@ class DuplicateOrder extends Component
     public $modalShow = false;
     public $duplicateQty;
 
-    public function mount(Order $order)
+    public function mount(Order $order): void
     {
         $this->order = $order;
     }
 
-    public function toggleDuplicateModal()
+    public function toggleDuplicateModal(): void
     {
         $this->modalShow = !$this->modalShow;
     }
@@ -44,6 +44,9 @@ class DuplicateOrder extends Component
             $newCar->ford_order_number =
                 $vehicle->ford_order_number . '-copy-' . $i;
             $newCar->save();
+
+            $newCar->fitOptions()->attach($vehicle->fitOptions);
+
             $newInvoice = $invoice->replicate();
             $newInvoice->save();
             $newOrder = $this->order->replicate();

@@ -313,6 +313,14 @@
     </div>
 @endif
 
+<div class="form-group row">
+    <label for="order_date" class="col-md-2 col-form-label">Order Date</label>
+    <div class="col-md-6">
+        <input wire:model.live="order_date" type="date" name="order_date" id="order_date" class="form-control"
+               autocomplete="off" />
+    </div>
+</div>
+
 {{-- Model Year --}}
 <div class="form-group row">
     <label class="col-md-2 col-form-label" for="model_year">Model Year</label>
