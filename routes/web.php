@@ -349,6 +349,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('type', 'typeIndex')->name('type.index');
                 // Make
                 Route::get('make', 'makeIndex')->name('make.index');
+                Route::get('compound', 'compoundIndex')->name('compound.index');
             });
             Route::controller('FitOptionsController')->group(function () {
                 // Factory Fit Options

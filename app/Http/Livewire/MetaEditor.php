@@ -12,6 +12,7 @@ use Livewire\Component;
 class MetaEditor extends Component
 {
     public $metatype;
+    public $universal;
     public $metadata;
     public $new_name;
     public $editModel = false;
@@ -34,6 +35,7 @@ class MetaEditor extends Component
         $meta->name = $this->new_name;
         $meta->type = $this->metatype;
         $meta->save();
+        return redirect()->route('meta.' . $this->metatype . '.index');
     }
 
     public function showEditMetaModal(VehicleMeta $meta)
@@ -55,7 +57,7 @@ class MetaEditor extends Component
         $meta->vehicle_model()->sync($this->edit_meta_models);
         notify()->success(ucfirst($this->metatype) . ' Edited Successfully');
         $this->hideModal();
-        return redirect(route('meta.' . $this->metatype . '.index'));
+        return redirect()->route('meta.' . $this->metatype . '.index');
     }
 
     public function delete(VehicleMeta $meta)
@@ -63,9 +65,9 @@ class MetaEditor extends Component
         $meta->delete();
         notify()->success(
             ucfirst($this->metatype) . ' Deleted Successfully',
-            ucfirst($this->metatype) . 'Deleted',
+            ucfirst($this->metatype) . ' Deleted',
         );
-        return redirect(route('meta.' . $this->metatype . '.index'));
+        return redirect()->route('meta.' . $this->metatype . '.index');
     }
 
     public function render(): Factory|View|Application

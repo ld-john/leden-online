@@ -42,6 +42,13 @@
                         <option value="Nov">November</option>
                         <option value="Dec">December</option>
                     </select>
+                    <label for="compound">Compound</label>
+                    <select name="compound" id="compound" wire:model.live="compound" class="form-control">
+                        <option value="">---</option>
+                        @foreach($compounds as $vehicle_compound)
+                            <option value="{{ $vehicle_compound->name }}">{{ $vehicle_compound->name }}</option>
+                        @endforeach
+                    </select>
                     <label for="order_date" class="mb-0 mt-2">Order Date</label>
                     <input wire:model.live="order_date" type="date" name="order_date" id="order_date" class="form-control"
                            autocomplete="off" />

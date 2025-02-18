@@ -118,9 +118,12 @@
                     <input wire:model.blur="searchFinanceBroker" type="text" class="form-control"
                            placeholder="Search Finance Broker">
                 </th>
-                <th class="p-1">
-                    <input wire:model.blur="searchDealer" type="text" class="form-control"
-                           placeholder="Search Dealer">
+                <th class="p-1 ">
+                    <div class="flex flex-col gap-1">
+                        <input wire:model.blur="searchDealer" type="text" class="form-control"
+                               placeholder="Search Dealer">
+                        <input wire:model.blur="searchCompound" type="text" class="form-control" placeholder="Search Compound">
+                    </div>
                 </th>
                 <th></th>
                 <th class="p-1"></th>
@@ -163,7 +166,18 @@
                             @endif
                         </ul>
                     </td>
-                    <td>{{ $order->dealer->company_name ?? ''}}</td>
+                    <td class="p-0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                {{ $order->dealer->company_name ?? ''}}
+                            </li>
+                            @if($order->vehicle->compound)
+                                <li class="list-group-item">
+                                    {{ $order->vehicle->compound }}
+                                </li>
+                            @endif
+                        </ul>
+                    </td>
                     <td>{{ \Carbon\Carbon::parse($order->updated_at)->format('d/m/Y h:ia') }}</td>
                     <td width="120px">
                         <div class="d-grid grid-cols-2 gap-2">
@@ -258,14 +272,14 @@
                     Orbit Number
                 </th>
                 <th>Registration</th>
-                <th>
-                    <label for="BuildDateFilter" class="form-check-label small">Filter Build Date</label>
-                    <div class="form-check form-switch">
-                        <input wire:model.live="filterBuildDate" type="checkbox" id="BuildDateFilter"
-                               class="form-check-input" role="switch">
-                    </div>
-                    Planned Build Date
-                </th>
+{{--                <th>--}}
+{{--                    <label for="BuildDateFilter" class="form-check-label small">Filter Build Date</label>--}}
+{{--                    <div class="form-check form-switch">--}}
+{{--                        <input wire:model.live="filterBuildDate" type="checkbox" id="BuildDateFilter"--}}
+{{--                               class="form-check-input" role="switch">--}}
+{{--                    </div>--}}
+{{--                    Planned Build Date--}}
+{{--                </th>--}}
                 <th>
                     <label for="DeliveryDateFilter" class="form-check-label small">Filter Delivery Date</label>
                     <div class="form-check form-switch">
@@ -274,13 +288,16 @@
                     </div>
                     Delivery Date
                 </th>
+{{--                <th>--}}
+{{--                    <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>--}}
+{{--                    <div class="form-check form-switch">--}}
+{{--                        <input wire:model.live="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"--}}
+{{--                               role="switch">--}}
+{{--                    </div>--}}
+{{--                    Due Date--}}
+{{--                </th>--}}
                 <th>
-                    <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>
-                    <div class="form-check form-switch">
-                        <input wire:model.live="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
-                               role="switch">
-                    </div>
-                    Due Date
+                    <div>Registration Date</div>
                 </th>
                 <th>Status</th>
                 <th>Customer</th>
@@ -315,18 +332,21 @@
                     <input wire:model.live.debounce:500ms="searchReg" type="text" class="form-control"
                            placeholder="Search Registration">
                 </th>
-                <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchBuildDate" type="date" class="form-control"
-                           placeholder="Search Build Date">
-                </th>
+{{--                <th class="p-1">--}}
+{{--                    <input wire:model.live.debounce:500ms="searchBuildDate" type="date" class="form-control"--}}
+{{--                           placeholder="Search Build Date">--}}
+{{--                </th>--}}
                 <th class="p-1">
                     <input wire:model.live.debounce:500ms="searchDeliveryDate" type="date" class="form-control"
                            placeholder="Search Delivery Date">
                 </th>
                 <th class="p-1">
-                    <input wire:model.live.debounce:500ms="searchDueDate" type="date" class="form-control"
-                           placeholder="Search Due Date">
+                    <input wire:model.live.debounce:500ms="searchRegistrationDate" type="date" class="form-control" placeholder="Search Registration Date">
                 </th>
+{{--                <th class="p-1">--}}
+{{--                    <input wire:model.live.debounce:500ms="searchDueDate" type="date" class="form-control"--}}
+{{--                           placeholder="Search Due Date">--}}
+{{--                </th>--}}
                 <th class="p-1">
                     <select wire:model.live="searchStatus" name="status" id="status" class="form-select">
                         <option value="">Select Status</option>
@@ -366,20 +386,25 @@
                     <td>{{ $order->vehicle->ford_order_number ?? ''}}</td>
                     <td>{{ $order->vehicle->orbit_number }}</td>
                     <td>{{ $order->vehicle->reg ?? ''}}</td>
-                    @if ( empty( $order->vehicle->build_date) || $order->vehicle->build_date == '0000-00-00 00:00:00')
-                        <td></td>
-                    @else
-                        <td>{{ \Carbon\Carbon::parse($order->vehicle->build_date ?? '')->format( 'd/m/Y' )}}</td>
-                    @endif
+{{--                    @if ( empty( $order->vehicle->build_date) || $order->vehicle->build_date == '0000-00-00 00:00:00')--}}
+{{--                        <td></td>--}}
+{{--                    @else--}}
+{{--                        <td>{{ \Carbon\Carbon::parse($order->vehicle->build_date ?? '')->format( 'd/m/Y' )}}</td>--}}
+{{--                    @endif--}}
                     @if ( empty( $order->delivery_date) || $order->delivery_date == '0000-00-00 00:00:00')
                         <td></td>
                     @else
                         <td>{{ \Carbon\Carbon::parse($order->delivery_date ?? '')->format( 'd/m/Y' )}}</td>
                     @endif
-                    @if ( empty( $order->due_date) || $order->due_date == '0000-00-00 00:00:00')
+{{--                    @if ( empty( $order->due_date) || $order->due_date == '0000-00-00 00:00:00')--}}
+{{--                        <td></td>--}}
+{{--                    @else--}}
+{{--                        <td>{{ \Carbon\Carbon::parse($order->due_date ?? '')->format( 'd/m/Y' )}}</td>--}}
+{{--                    @endif--}}
+                    @if(empty($order->vehicle->vehicle_registered_on) || $order->vehicle->vehicle_registered_on == '0000-00-00 00:00:00')
                         <td></td>
                     @else
-                        <td>{{ \Carbon\Carbon::parse($order->due_date ?? '')->format( 'd/m/Y' )}}</td>
+                        <td>{{ \Carbon\Carbon::parse($order->vehicle->vehicle_registered_on ?? '')->format('d/m/Y') }}</td>
                     @endif
                     <td>{{ $order->vehicle->status() }}</td>
                     <td>

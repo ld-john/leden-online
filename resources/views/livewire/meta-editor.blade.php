@@ -29,7 +29,9 @@
             <table class="table table-bordered">
                 <tr class="blue-background text-white">
                     <th>Name</th>
-                    <th>Associated Models</th>
+                    @if(!$universal)
+                        <th>Associated Models</th>
+                    @endif
                     <th>Action</th>
                 </tr>
                 @foreach($metadata as $name)
@@ -37,6 +39,7 @@
                         <td>
                             {{ $name->name }}
                         </td>
+                        @if(!$universal)
                         <td class="p-0">
                             <ul class="list-group list-group-flush">
                                 @forelse( $name->vehicle_model as $model)
@@ -46,6 +49,7 @@
                                 @endforelse
                             </ul>
                         </td>
+                        @endif
                         <td>
                             <div class="btn-group">
                                 <a data-toggle="tooltip" title="Edit {{ ucfirst($metatype) }}" wire:click="showEditMetaModal({{ $name->id }})" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>

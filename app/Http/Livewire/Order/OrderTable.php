@@ -26,6 +26,7 @@ class OrderTable extends Component
     public $searchID;
     public $searchModel;
     public $searchDerivative;
+    public $searchCompound;
     public $searchOrderNumber;
     public $searchOrbitNumber;
     public $searchReg;
@@ -34,6 +35,7 @@ class OrderTable extends Component
     public $searchDeliveryDate;
     public $searchStatus;
     public $searchCustomer;
+    public $searchRegistrationDate;
     public $searchBrokerRef;
     public $searchBroker;
     public $searchFinanceBroker;
@@ -141,6 +143,15 @@ class OrderTable extends Component
                     '%' . $this->searchDueDate . '%',
                 );
             })
+            ->when($this->searchRegistrationDate, function ($query) {
+                $query->whereHas('vehicle', function ($query) {
+                    $query->where(
+                        'vehicle_registered_on',
+                        'like',
+                        '%' . $this->searchRegistrationDate . '%',
+                    );
+                });
+            })
             ->when($this->searchDeliveryDate, function ($query) {
                 $query->where(
                     'delivery_date',
@@ -209,6 +220,15 @@ class OrderTable extends Component
                         'company_name',
                         'like',
                         '%' . $this->searchDealer . '%',
+                    );
+                });
+            })
+            ->when($this->searchCompound, function ($query) {
+                $query->whereHas('vehicle', function ($query) {
+                    $query->where(
+                        'compound',
+                        'like',
+                        '%' . $this->searchCompound . '%',
                     );
                 });
             })
