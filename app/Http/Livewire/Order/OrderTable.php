@@ -23,6 +23,10 @@ class OrderTable extends Component
 
     public $status;
     public $view;
+    public $showBuildDate = false;
+    public $showDueDate = false;
+    public $showRegDate = false;
+    public $showDeliveryDate = false;
     public $searchID;
     public $searchModel;
     public $searchDerivative;
@@ -48,8 +52,10 @@ class OrderTable extends Component
     public $filterBuildDate;
     public $filterDueDate;
     public $filterDeliveryDate;
+    public $filterRegDate;
+    public $active_page;
 
-    public function mount($status, $view): void
+    public function mount($status, $view, $active_page = null): void
     {
         $this->now = date('Y-m-d h:i:s');
 
@@ -60,6 +66,14 @@ class OrderTable extends Component
             $this->brokerID = Auth::user()->company_id;
         } elseif (Auth::user()->role === 'dealer') {
             $this->dealerID = Auth::user()->company_id;
+        }
+        $this->active_page = $active_page;
+        if ($active_page === 'order-bank') {
+            $this->showBuildDate = true;
+            $this->showDueDate = true;
+        } elseif ($active_page === 'completed-orders') {
+            $this->showDeliveryDate = true;
+            $this->showRegDate = true;
         }
     }
 
@@ -168,7 +182,7 @@ class OrderTable extends Component
                     );
                 });
             })
-            ->when($this->searchBuildDate, function ($query) {
+            ->when($this->searchDueDate, function ($query) {
                 $query->where(
                     'due_date',
                     'like',
@@ -249,6 +263,11 @@ class OrderTable extends Component
             })
             ->when($this->filterDeliveryDate, function ($query) {
                 $query->whereNotNull('delivery_date');
+            })
+            ->when($this->filterRegDate, function ($query) {
+                $query->whereHas('vehicle', function ($query) {
+                    $query->whereNotNull('vehicle_registered_on');
+                });
             })
             ->orderBy('created_at')
             ->paginate($this->paginate);

@@ -10,6 +10,34 @@
             </select>
             entries
         </div>
+        @if($active_page && $active_page !== 'deliveries')
+            <div class="p-3 d-flex flex-col">
+                <label for="showBuildDate" class="d-flex align-items-center">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" wire:model.live="showBuildDate" id="showBuildDate" role="switch">
+                    </div>
+                    Show Build Date
+                </label>
+                <label for="showDueDate" class="d-flex align-items-center">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" wire:model.live="showDueDate" id="showDueDate" role="switch">
+                    </div>
+                    Show Due Date
+                </label>
+                <label for="showRegDate" class="d-flex align-items-center">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" wire:model.live="showRegDate" id="showRegDate" role="switch">
+                    </div>
+                    Show Registration Date
+                </label>
+                <label for="showDeliveryDate" class="d-flex align-items-center">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" wire:model.live="showDeliveryDate" id="showDeliveryDate" role="switch">
+                    </div>
+                    Show Delivery Date
+                </label>
+            </div>
+        @endif
     </div>
     @if( $view === 'order')
         <table class="table table-bordered">
@@ -34,22 +62,46 @@
                     Orbit Number
                 </th>
                 <th>Registration</th>
-                <th>
-                    <label for="BuildDateFilter" class="form-check-label small">Filter Build Date</label>
-                    <div class="form-check form-switch">
-                        <input wire:model.live="filterBuildDate" type="checkbox" id="BuildDateFilter"
-                               class="form-check-input" role="switch">
-                    </div>
-                    Planned Build Date
-                </th>
-                <th>
-                    <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>
-                    <div class="form-check form-switch">
-                        <input wire:model.live="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
-                               role="switch">
-                    </div>
-                    Due Date
-                </th>
+                @if($showBuildDate)
+                    <th>
+                        <label for="BuildDateFilter" class="form-check-label small">Filter Build Date</label>
+                        <div class="form-check form-switch">
+                            <input wire:model.live="filterBuildDate" type="checkbox" id="BuildDateFilter"
+                                   class="form-check-input" role="switch">
+                        </div>
+                        Planned Build Date
+                    </th>
+                @endif
+                @if($showDueDate)
+                    <th>
+                        <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>
+                        <div class="form-check form-switch">
+                            <input wire:model.live="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
+                                   role="switch">
+                        </div>
+                        Due Date
+                    </th>
+                @endif
+                @if($showRegDate)
+                    <th>
+                        <label for="RegDateFilter" class="form-check-label small">Filter Registration Date</label>
+                        <div class="form-check form-switch">
+                            <input wire:model.live="filterRegDate" type="checkbox" id="RegDateFilter" class="form-check-input"
+                                   role="switch">
+                        </div>
+                        Registration Date
+                    </th>
+                @endif
+                @if($showDeliveryDate)
+                    <th>
+                        <label for="FilterDeliveryDate" class="form-check-label small">Filter Delivery Date</label>
+                        <div class="form-check form-switch">
+                            <input wire:model.live="filterDeliveryDate" type="checkbox" id="FilterDeliveryDate" class="form-check-input"
+                                   role="switch">
+                        </div>
+                        Delivery Date
+                    </th>
+                @endif
                 <th>Status</th>
                 <th>Customer</th>
                 <th>Broker Order Ref</th>
@@ -86,14 +138,30 @@
                     <input wire:model.blur="searchReg" type="text" class="form-control"
                            placeholder="Search Registration">
                 </th>
+                @if($showBuildDate)
                 <th class="p-1">
                     <input wire:model.blur="searchBuildDate" type="date" class="form-control"
                            placeholder="Search Build Date">
                 </th>
-                <th class="p-1">
-                    <input wire:model.blur="searchDueDate" type="date" class="form-control"
-                           placeholder="Search Due Date">
-                </th>
+                @endif
+                @if($showDueDate)
+                    <th class="p-1">
+                        <input wire:model.blur="searchDueDate" type="date" class="form-control"
+                               placeholder="Search Due Date">
+                    </th>
+                @endif
+                @if($showRegDate)
+                    <th class="p-1">
+                        <input wire:model.blur="searchRegistrationDate" type="date" class="form-control"
+                               placeholder="Search Registration Date">
+                    </th>
+                @endif
+                @if($showDeliveryDate)
+                    <th class="p-1">
+                        <input wire:model.blur="searchDeliveryDate" type="date" class="form-control"
+                               placeholder="Search Delivery Date">
+                    </th>
+                @endif
                 <th class="p-1">
                     <select wire:model.live="searchStatus" name="status" id="status" class="form-select">
                         <option value="">Select Status</option>
@@ -141,15 +209,33 @@
                     <td>{{ $order->vehicle->ford_order_number ?? ''}}</td>
                     <td>{{ $order->vehicle->orbit_number }}</td>
                     <td>{{ $order->vehicle->reg ?? ''}}</td>
-                    @if ( empty( $order->vehicle->build_date) || $order->vehicle->build_date == '0000-00-00 00:00:00')
-                        <td></td>
-                    @else
-                        <td>{{ \Carbon\Carbon::parse($order->vehicle->build_date ?? '')->format( 'd/m/Y' )}}</td>
+                    @if($showBuildDate)
+                        @if ( empty( $order->vehicle->build_date) || $order->vehicle->build_date == '0000-00-00 00:00:00')
+                            <td></td>
+                        @else
+                            <td>{{ \Carbon\Carbon::parse($order->vehicle->build_date ?? '')->format( 'd/m/Y' )}}</td>
+                        @endif
                     @endif
-                    @if ( empty( $order->vehicle->due_date) || $order->vehicle->due_date == '0000-00-00 00:00:00')
-                        <td></td>
-                    @else
-                        <td>{{ \Carbon\Carbon::parse($order->vehicle->due_date )->format( 'd/m/Y' )}}</td>
+                    @if($showDueDate)
+                        @if ( empty( $order->vehicle->due_date) || $order->vehicle->due_date == '0000-00-00 00:00:00')
+                            <td></td>
+                        @else
+                            <td>{{ \Carbon\Carbon::parse($order->vehicle->due_date )->format( 'd/m/Y' )}}</td>
+                        @endif
+                    @endif
+                    @if($showRegDate)
+                        @if(empty($order->vehicle->vehicle_registered_on || $order->vehicle->vehicle_registered_on == '0000-00-00 00:00:00'))
+                            <td></td>
+                        @else
+                            <td>{{ \Carbon\Carbon::parse($order->vehicle->vehicle_registered_on)->format('d/m/Y') }}</td>
+                        @endif
+                    @endif
+                    @if($showDeliveryDate)
+                        @if(empty($order->delivery_date) || $order->delivery_date == '0000-00-00 00:00:00')
+                            <td></td>
+                        @else
+                            <td>{{ \Carbon\Carbon::parse($order->delivery_date)->format('d/m/y') }}</td>
+                        @endif
                     @endif
 
                     <td>{{ $order->vehicle->status() }}</td>
@@ -297,7 +383,14 @@
 {{--                    Due Date--}}
 {{--                </th>--}}
                 <th>
-                    <div>Registration Date</div>
+                    <div>
+                        <label for="RegDateFilter" class="form-check-label small">Filter Registration Date</label>
+                        <div class="form-check form-switch">
+                            <input wire:model.live="filterRegDate" type="checkbox" id="RegDateFilter"
+                                   class="form-check-input" role="switch">
+                        </div>
+                        Registration Date
+                    </div>
                 </th>
                 <th>Status</th>
                 <th>Customer</th>
