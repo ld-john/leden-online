@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Rework the Logging View - Again">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/deliveries.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/deliveries.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/exports/finance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/finance.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/exports/reports.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/reports.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/exports/universal.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/universal.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,7 +284,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-php-predefined-a98d8de5180a-fbeb0b58ac0f-com.jetbrains.php.sharedIndexes-PS-243.24978.50" />
+        <option value="bundled-php-predefined-a98d8de5180a-1ec7b7818973-com.jetbrains.php.sharedIndexes-PS-243.25659.45" />
         <option value="php-maennchen_zipstream_php-5543a6ebd44f-b1428b0f" />
         <option value="php-markbaker_matrix-5543a6ebd44f-366b8431" />
         <option value="php-phpoffice_phpspreadsheet-5543a6ebd44f-f874df27" />
@@ -631,6 +631,7 @@
       <workItem from="1739974136111" duration="1604000" />
       <workItem from="1740136865272" duration="6387000" />
       <workItem from="1740151743279" duration="2344000" />
+      <workItem from="1741171092718" duration="928000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
