@@ -144,7 +144,7 @@ class Order extends Model
     {
         $metallic_paint_discount = DealerDiscount::where(
             'model_id',
-            VehicleModel::where('name', $this->vehicle->model)->first()->id,
+            VehicleModel::where('name', $this->vehicle->model)->first()?->id,
         )
             ->where('dealer_id', $this->dealer->id)
             ->first()?->paint_discount;
