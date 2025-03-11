@@ -49,6 +49,7 @@ class VehicleForm extends Component
     public $fuel_type;
     public $colour;
     public $trim;
+    public $compound;
     public $order_ref;
     public $chassis_prefix;
     public $chassis;
@@ -142,6 +143,7 @@ class VehicleForm extends Component
             $this->fuel_type = $this->vehicle->fuel_type;
             $this->colour = $this->vehicle->colour;
             $this->trim = $this->vehicle->trim;
+            $this->compound = $this->vehicle->compound;
             $this->chassis_prefix = $this->vehicle->chassis_prefix;
             $this->chassis = $this->vehicle->chassis;
             $this->status = $this->vehicle->vehicle_status;
@@ -229,6 +231,7 @@ class VehicleForm extends Component
             'dealer_id' => $this->dealership,
             'broker_id' => $this->broker,
             'trim' => $this->trim,
+            'compound' => $this->compound,
             'chassis_prefix' => $this->chassis_prefix,
             'type' => $this->type,
             'metallic_paint' => $this->metallic_paint,
@@ -383,6 +386,7 @@ class VehicleForm extends Component
                     $this->model,
                 )
                 ->get(),
+            'compounds' => VehicleMeta::where('type', 'compound')->get(),
             'factory_options' => FitOption::latest()
                 ->where('option_type', 'factory')
                 ->whereNull('archived_at')

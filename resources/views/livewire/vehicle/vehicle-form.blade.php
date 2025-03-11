@@ -272,6 +272,31 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="compound">Compound</label>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            @error('compound')
+                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectCompound"><i class="fa fa-exclamation-triangle"></i></label>
+                            @enderror
+                            <select wire:model.live="compound" @if(count($compounds) === 0) disabled @endif class="form-select" id="inputGroupSelectCompound">
+                                <option selected>Choose...</option>
+                                @foreach ($compounds as $vehicle_compound)
+                                    <option value="{{ $vehicle_compound->name }}">{{ $vehicle_compound->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-secondary remove-selected"
+                           data-toggle="tooltip"
+                           title="Add or Edit Compounds"
+                           href="{{ route('meta.compound.index') }}"
+                        >
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
                 @if($vehicle)
                     @if($vehicle->ring_fenced_stock)
                         <div class="form-group row">

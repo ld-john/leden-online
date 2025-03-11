@@ -19,6 +19,7 @@
         </select>
     </div>
 </div>
+
 {{-- Customer Phone Number --}}
 <div class="form-group row">
     <label for="customer_phone" class="col-md-2 col-form-label">Customer Phone Number</label>

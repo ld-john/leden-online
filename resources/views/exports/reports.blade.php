@@ -12,6 +12,7 @@
         <th>Model</th>
         <th>Derivative</th>
         <th>Type</th>
+        <th>Fuel Type</th>
         <th>Funder</th>
         <th>Dealer</th>
         <th>Invoice Total</th>
@@ -65,6 +66,7 @@
             <td>{{ $vehicle->model }}</td>
             <td>{{ $vehicle->derivative }}</td>
             <td>{{ $vehicle->simplified_type() }}</td>
+            <td>{{ $vehicle->fuel_type }}</td>
             <td>{{ $vehicle->order?->invoice_company?->company_name }}</td>
             <td>{{ $vehicle->order?->dealer->company_name }}</td>
             @if($vehicle->order)

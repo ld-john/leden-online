@@ -300,6 +300,7 @@
                         <li><a class="dropdown-item" href="{{ route('meta.transmission.index') }}">Transmissions</a></li>
                         <li><a class="dropdown-item" href="{{ route('meta.trim.index') }}">Trims</a></li>
                         <li><a class="dropdown-item" href="{{ route('meta.type.index') }}">Types</a></li>
+                        <li><a class="dropdown-item" href="{{route('meta.compound.index')}}">Compound</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a href="{{ route('finance.finance-type.index') }}" class="dropdown-item">Finance Type</a></li>
                         <li><a href="{{ route('finance.maintenance.index') }}" class="dropdown-item">Maintenance</a></li>

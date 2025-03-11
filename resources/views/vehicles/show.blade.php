@@ -192,7 +192,9 @@
                             </div>
                         </div>
                     </div>
-                    @livewire('comment-box', ['commentable_id' => $vehicle->id, 'commentable_type' => 'vehicle'])
+                    @can('admin')
+                        @livewire('comment-box', ['commentable_id' => $vehicle->id, 'commentable_type' => 'vehicle'])
+                    @endcan
                     <div class="card-footer text-right">
                         <div class="row">
                             <div class="col-md-12">

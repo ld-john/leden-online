@@ -14,7 +14,7 @@
                 <div class="card shadow mb-4">
                     <!-- Card Body -->
                     <div class="card-body">
-                        @livewire('order.order-table', ['status' => $status, 'view' => 'order'])
+                        @livewire('order.order-table', ['status' => $status, 'view' => 'order', 'active_page' => $active_page])
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@
         <th>Order ID</th>
         <th>Finance Type</th>
         <th>Maintenance</th>
+        <th>Vehicle Fuel Type</th>
         <th>Term</th>
         <th>Initial Payment</th>
         <th>Terminal Pause</th>
@@ -23,6 +24,7 @@
             <td>{{ $order->id }}</td>
             <td>{{ $order->FinanceType?->option }}</td>
             <td>{{ $order->Maintenance?->option }}</td>
+            <td>{{ $order->vehicle?->fuel_type }}</td>
             <td>{{ $order->Term?->option }}</td>
             <td>{{ $order->InitialPayment?->option }}</td>
             @if($order->terminal_pause)

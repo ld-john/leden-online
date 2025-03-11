@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Permission;
 use App\Models\User;
 use App\Models\Vehicle;
+use App\Models\VehicleMeta;
 use App\Notifications\DeliveryDateSetNotification;
 use App\Notifications\RegistrationNumberAddedEmailNotification;
 use App\Notifications\RegistrationNumberAddedNotification;
@@ -27,11 +28,13 @@ class QuickEditOrder extends Component
     public $due_date;
     public $orbit_number;
     public $registration;
+    public $compound;
     public $order_number;
     public $build_date;
     public $order_date;
     public $delivery_date;
     public $registered_date;
+    public $delivery_month;
     public $view;
     public $now;
     public $return;
@@ -68,6 +71,10 @@ class QuickEditOrder extends Component
             $this->registered_date = null;
         }
 
+        $this->delivery_month = $order->delivery_month;
+
+        $this->compound = $vehicle->compound;
+
         $this->order_number = $vehicle->ford_order_number;
         $this->registration = $vehicle->reg;
         $this->orbit_number = $vehicle->orbit_number;
@@ -97,7 +104,7 @@ class QuickEditOrder extends Component
         $this->vehicleStatus = $vehicle->vehicle_status;
     }
 
-    public function saveOrder()
+    public function saveOrder(): null
     {
         if ($this->orbit_number === '') {
             $this->orbit_number = null;
@@ -124,8 +131,13 @@ class QuickEditOrder extends Component
             'build_date' => $this->build_date,
             'due_date' => $this->due_date,
             'vehicle_registered_on' => $this->registered_date,
+            'compound' => $this->compound,
         ]);
         $order = $this->order;
+
+        $order->update([
+            'delivery_month' => $this->delivery_month,
+        ]);
 
         $brokers = User::where('company_id', $order->broker->id)->get();
         $permission = Permission::where('name', 'receive-emails')->first();
@@ -196,6 +208,9 @@ class QuickEditOrder extends Component
 
     public function render(): Factory|View|Application
     {
-        return view('livewire.order.quick-edit-order');
+        $options = [
+            'compounds' => VehicleMeta::where('type', 'compound')->get(),
+        ];
+        return view('livewire.order.quick-edit-order', $options);
     }
 }

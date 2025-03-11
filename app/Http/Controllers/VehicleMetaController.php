@@ -36,4 +36,8 @@ class VehicleMetaController extends Controller
     {
         return view('dashboard.meta.make.index');
     }
+    public function compoundIndex()
+    {
+        return view('dashboard.meta.compound.index');
+    }
 }

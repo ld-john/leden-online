@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Rework the Logging View">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/LogViewerAccessMiddleware.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/LogViewerAccessMiddleware.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
-    </list>
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Rework the Logging View - Again" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -73,10 +69,8 @@
       <path value="$PROJECT_DIR$/vendor/nunomaduro/collision" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
       <path value="$PROJECT_DIR$/vendor/phenx/php-font-lib" />
-      <path value="$PROJECT_DIR$/vendor/phpdocumentor/type-resolver" />
       <path value="$PROJECT_DIR$/vendor/phenx/php-svg-lib" />
       <path value="$PROJECT_DIR$/vendor/mockery/mockery" />
-      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
       <path value="$PROJECT_DIR$/vendor/sabberworm/php-css-parser" />
       <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
@@ -186,7 +180,6 @@
       <path value="$PROJECT_DIR$/vendor/rap2hpoutre/laravel-log-viewer" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/uri-template" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php83" />
-      <path value="$PROJECT_DIR$/vendor/phpstan/phpdoc-parser" />
       <path value="$PROJECT_DIR$/vendor/league/flysystem-local" />
       <path value="$PROJECT_DIR$/vendor/myclabs/php-enum" />
       <path value="$PROJECT_DIR$/vendor/maennchen/zipstream-php" />
@@ -203,10 +196,12 @@
       <path value="$PROJECT_DIR$/vendor/symfony/clock" />
       <path value="$PROJECT_DIR$/vendor/opcodesio/mail-parser" />
       <path value="$PROJECT_DIR$/vendor/opcodesio/log-viewer" />
+      <path value="$PROJECT_DIR$/vendor/league/uri" />
+      <path value="$PROJECT_DIR$/vendor/league/uri-interfaces" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -229,7 +224,7 @@
     &quot;RunOnceActivity.laravel-idea.update-module-directories&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;staging&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/wamp64/bin/php/php8.2.0/php.exe&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/majesticTrade&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -283,7 +278,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-php-predefined-a98d8de5180a-4c3855d0ab16-com.jetbrains.php.sharedIndexes-PS-243.23654.168" />
+        <option value="bundled-php-predefined-a98d8de5180a-1ec7b7818973-com.jetbrains.php.sharedIndexes-PS-243.25659.45" />
         <option value="php-maennchen_zipstream_php-5543a6ebd44f-b1428b0f" />
         <option value="php-markbaker_matrix-5543a6ebd44f-366b8431" />
         <option value="php-phpoffice_phpspreadsheet-5543a6ebd44f-f874df27" />
@@ -624,7 +619,13 @@
       <workItem from="1728466587212" duration="1523000" />
       <workItem from="1729689173383" duration="3007000" />
       <workItem from="1738066725415" duration="3553000" />
-      <workItem from="1738328901053" duration="2006000" />
+      <workItem from="1738328901053" duration="4365000" />
+      <workItem from="1739367177160" duration="7492000" />
+      <workItem from="1739805451144" duration="10268000" />
+      <workItem from="1739974136111" duration="1604000" />
+      <workItem from="1740136865272" duration="6387000" />
+      <workItem from="1740151743279" duration="2344000" />
+      <workItem from="1741171092718" duration="1867000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -969,7 +970,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="118" />
+    <option name="localTasksCounter" value="119" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1000,7 +1001,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Refined VehicleController query for in-stock export&#10;&#10;The query for in-stock export in the VehicleController now only targets vehicles with a status of 1. Prior implementation considered vehicles with a status of 1, 15, and 17, which is redundant and has been optimized for efficiency." />
     <MESSAGE value="Refine in-stock export query in VehicleController&#10;&#10;Updated the query for in-stock export in VehicleController to exclusively target vehicles with status '1'. This eliminates the redundancy and inefficiency of the previous implementation which considered vehicles with statuses of '1', '15', and '17'." />
     <MESSAGE value="Change to the additional.blade.php swapping exception for exclusion to match the phrasing on the parent class." />
     <MESSAGE value="Reporting fix for missing February." />
@@ -1025,7 +1025,8 @@
     <MESSAGE value="Checks if there is a vehicle before rendering a view button on reservations-table.blade.php" />
     <MESSAGE value="Updates to the latest version of Laravel and Livewire among other packages." />
     <MESSAGE value="Rework the Logging View" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rework the Logging View" />
+    <MESSAGE value="Rework the Logging View - Again" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rework the Logging View - Again" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

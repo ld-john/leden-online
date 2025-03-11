@@ -12,6 +12,7 @@
         <th>Engine</th>
         <th>Transmission</th>
         <th>Colour</th>
+        <th>Fuel Type</th>
         <th>Chassis Prefix</th>
         <th>Chassis</th>
         <th>Registration</th>
@@ -43,6 +44,7 @@
             <td>{{ $vehicle->engine }}</td>
             <td>{{ $vehicle->transmission }}</td>
             <td>{{ $vehicle->colour }}</td>
+            <td>{{ $vehicle->fuel_type }}</td>
             <td>{{ $vehicle->chassis_prefix }}</td>
             <td>{{ $vehicle->chassis }}</td>
             <td>{{ $vehicle->reg }}</td>
