@@ -21,6 +21,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 
@@ -239,7 +240,7 @@ class CSVUploadController extends Controller
 
                 if ($vehicle) {
                     if (in_array($vehicle->vehicle_status, $exclude_status)) {
-                        \Log::debug(
+                        Log::debug(
                             $vehicle->id .
                                 ' ' .
                                 $vehicle->niceName() .
