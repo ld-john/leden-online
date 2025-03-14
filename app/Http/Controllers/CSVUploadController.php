@@ -140,7 +140,7 @@ class CSVUploadController extends Controller
 
                 $values = [];
 
-                $values[$i]['vehicle_status'] = 1;
+                $values[$i]['vehicle_status'] = 4;
                 $values[$i]['reg'] = $vehicle_upload['registration'];
                 $values[$i]['make'] = $upload_manufacturer->id;
                 $values[$i]['model'] = $vehicle_upload['model'];

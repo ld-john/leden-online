@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Rework the Logging View - Again">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Add some additional verification to import vehicles&#10;Change the Customer Edit Screen to actually work better.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/customer/quick-edit-customer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/customer/quick-edit-customer.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -631,7 +628,7 @@
       <workItem from="1740136865272" duration="6387000" />
       <workItem from="1740151743279" duration="2344000" />
       <workItem from="1741171092718" duration="3994000" />
-      <workItem from="1741955483298" duration="2446000" />
+      <workItem from="1741955483298" duration="4760000" />
     </task>
     <task id="LOCAL-00011" summary="Debug - Soft Delete Orders added">
       <created>1637230242542</created>
@@ -976,7 +973,7 @@
       <option name="project" value="LOCAL" />
       <updated>1675683302008</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <option name="localTasksCounter" value="120" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1007,7 +1004,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Refine in-stock export query in VehicleController&#10;&#10;Updated the query for in-stock export in VehicleController to exclusively target vehicles with status '1'. This eliminates the redundancy and inefficiency of the previous implementation which considered vehicles with statuses of '1', '15', and '17'." />
     <MESSAGE value="Change to the additional.blade.php swapping exception for exclusion to match the phrasing on the parent class." />
     <MESSAGE value="Reporting fix for missing February." />
     <MESSAGE value="Nulling Due Dates should work properly now. &#10;&#10;Clearing the dashboard so the admin dashboard doesn't have to load every single vehicle in the system twice." />
@@ -1032,7 +1028,8 @@
     <MESSAGE value="Updates to the latest version of Laravel and Livewire among other packages." />
     <MESSAGE value="Rework the Logging View" />
     <MESSAGE value="Rework the Logging View - Again" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rework the Logging View - Again" />
+    <MESSAGE value="Add some additional verification to import vehicles&#10;Change the Customer Edit Screen to actually work better." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add some additional verification to import vehicles&#10;Change the Customer Edit Screen to actually work better." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
