@@ -24,6 +24,7 @@ class FitOptionsEditor extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $fitType;
+    public $option_id;
     public $option_name;
     public $model;
     public $model_year;
@@ -56,6 +57,13 @@ class FitOptionsEditor extends Component
                 ->with('vehicle_model')
                 ->with('vehicles')
                 ->with('dealer')
+                ->when($this->option_id, function ($query) {
+                    $query->where(
+                        'option_id',
+                        'like',
+                        '%' . $this->option_id . '%',
+                    );
+                })
                 ->when($this->option_name, function ($query) {
                     $query->where(
                         'option_name',

@@ -21,6 +21,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
@@ -70,6 +71,36 @@ class CSVUploadController extends Controller
                 $vehicle_upload['make'],
             )->firstOrCreate();
 
+            if (
+                isset($vehicle_upload['factory_options']) ||
+                $vehicle_upload['dealer_options']
+            ) {
+                if (isset($vehicle_upload['factory_options'])) {
+                    $factory_options = Str::of(
+                        $vehicle_upload['factory_options'],
+                    )
+                        ->remove('"')
+                        ->trim()
+                        ->explode(', ')
+                        ->toArray();
+                } else {
+                    $factory_options = [];
+                }
+                if (isset($vehicle_upload['dealer_options'])) {
+                    $dealer_options = Str::of($vehicle_upload['dealer_options'])
+                        ->remove('"')
+                        ->trim()
+                        ->explode(', ')
+                        ->toArray();
+                } else {
+                    $dealer_options = [];
+                }
+
+                $fit_options = array_merge($factory_options, $dealer_options);
+            } else {
+                $fit_options = [];
+            }
+
             $upload_status = match ($vehicle_upload['status']) {
                 'In Stock' => 1,
                 'Ready for Delivery' => 3,
@@ -100,12 +131,12 @@ class CSVUploadController extends Controller
             $upload[1]['fuel_type'] = $vehicle_upload['fuel_type'];
             $upload[1]['ring_fenced_stock'] = 1;
             $upload[1]['broker_id'] = $broker;
-            $upload[1]['updated_at'] = Carbon::now();
-            $upload[1]['created_at'] = Carbon::now();
 
             $upload[1]['dealer_id'] = $dealer->id;
 
-            Vehicle::updateOrInsert($upload[0], $upload[1]);
+            $vehicle = Vehicle::firstOrCreate($upload[0], $upload[1]);
+
+            $vehicle->fitOptions()->sync($fit_options);
         }
         notify()->success(
             'Your vehicles have been added to the system. You can edit any extra information below.',

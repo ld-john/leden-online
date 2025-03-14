@@ -85,6 +85,7 @@
     <table class="table table-bordered">
         <thead>
         <tr class="blue-background text-white">
+            <th>ID</th>
             <th>Option Name</th>
             <th>Model</th>
             <th>Model Year</th>
@@ -95,6 +96,9 @@
             <th>Actions</th>
         </tr>
         <tr class="bg-light">
+            <th class="p-1">
+                <input wire:model.live.debounce="option_id" type="text" class="form-control" placeholder="Search ID">
+            </th>
             <th class="p-1">
                 <input wire:model.live.debounce="option_name" type="text" class="form-control" placeholder="Search Option Name">
             </th>
@@ -128,6 +132,7 @@
         <tbody>
         @forelse($fitOptions as $fitOption)
             <tr>
+                <td>{{ $fitOption->id }}</td>
                 <td>{{ $fitOption->option_name }}</td>
                 <td>{{ $fitOption->vehicle_model?->name }}</td>
                 <td>{{ $fitOption->model_year }}MY</td>
