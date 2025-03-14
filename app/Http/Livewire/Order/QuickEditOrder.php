@@ -48,7 +48,7 @@ class QuickEditOrder extends Component
     /**
      * @throws Exception
      */
-    public function mount(Order $order, Vehicle $vehicle, $view)
+    public function mount(Order $order, Vehicle $vehicle, $view): void
     {
         $this->order = $order;
         $this->vehicle = $vehicle;

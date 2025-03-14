@@ -113,6 +113,9 @@ class CSVUploadController extends Controller
         return redirect()->route('ring_fenced_stock');
     }
 
+    /**
+     * @throws Exception
+     */
     public function executeCsvUpload(
         Request $request,
     ): bool|RedirectResponse|View {
@@ -144,28 +147,68 @@ class CSVUploadController extends Controller
                 $values[$i]['engine'] = $vehicle_upload['engine'];
                 $values[$i]['transmission'] = $vehicle_upload['transmission'];
                 $values[$i]['fuel_type'] = $vehicle_upload['fuel_type'];
-                $values[$i]['doors'] = $vehicle_upload['doors'];
                 $values[$i]['colour'] = $vehicle_upload['colour'];
                 $values[$i]['trim'] = $vehicle_upload['trim'];
-                $values[$i]['chassis_prefix'] =
-                    $vehicle_upload['chassis_prefix'];
-                $values[$i]['chassis'] = $vehicle_upload['chassis'];
-                $values[$i]['model_year'] = $vehicle_upload['model_year'];
-                $values[$i]['list_price'] = $vehicle_upload['list_price'];
-                $values[$i]['metallic_paint'] =
-                    $vehicle_upload['metallic_paint'];
-                $values[$i]['first_reg_fee'] = $vehicle_upload['first_reg_fee'];
-                $values[$i]['rfl_cost'] = $vehicle_upload['rfl_cost'];
-                $values[$i]['onward_delivery'] =
-                    $vehicle_upload['onward_delivery'];
-                $values[$i]['dealer_id'] = $vehicle_upload['dealer_id'];
+                if (isset($vehicle_upload['ford_order_number'])) {
+                    $values[$i]['ford_order_number'] =
+                        $vehicle_upload['ford_order_number'];
+                }
+
+                if (isset($vehicle_upload['chassis_prefix'])) {
+                    $values[$i]['chassis_prefix'] =
+                        $vehicle_upload['chassis_prefix'];
+                }
+
+                if (isset($vehicle_upload['chassis'])) {
+                    $values[$i]['chassis'] = $vehicle_upload['chassis'];
+                }
+                if (isset($vehicle_upload['model_year'])) {
+                    $values[$i]['model_year'] = $vehicle_upload['model_year'];
+                }
+                if (isset($vehicle_upload['list_price'])) {
+                    $values[$i]['list_price'] = $vehicle_upload['list_price'];
+                }
+                if (isset($vehicle_upload['metallic_paint'])) {
+                    $values[$i]['metallic_paint'] =
+                        $vehicle_upload['metallic_paint'];
+                }
+                if (isset($vehicle_upload['first_reg_fee'])) {
+                    $values[$i]['first_reg_fee'] =
+                        $vehicle_upload['first_reg_fee'];
+                }
+                if (isset($vehicle_upload['rfl_cost'])) {
+                    $values[$i]['rfl_cost'] = $vehicle_upload['rfl_cost'];
+                }
+                if (isset($vehicle_upload['onward_delivery'])) {
+                    $values[$i]['onward_delivery'] =
+                        $vehicle_upload['onward_delivery'];
+                }
+                if (isset($vehicle_upload['dealer_id'])) {
+                    $values[$i]['dealer_id'] = $vehicle_upload['dealer_id'];
+                } elseif (isset($vehicle_upload['dealer'])) {
+                    $values[$i]['dealer_id'] = Company::where(
+                        'company_name',
+                        $vehicle_upload['dealer'],
+                    )
+                        ->firstOrCreate()
+                        ->pluck('id');
+                } else {
+                    throw new Exception('Dealer ID or name is missing');
+                }
                 $values[$i]['show_in_ford_pipeline'] =
                     $request->show_in_ford_pipeline;
 
-                Vehicle::insert($values[$i]);
+                if (isset($vehicle_upload['orbit_number'])) {
+                    Vehicle::updateOrCreate(
+                        ['orbit_number' => $vehicle_upload['orbit_number']],
+                        $values[$i],
+                    );
+                } else {
+                    Vehicle::insert($values[$i]);
+                }
             }
             notify()->success(
-                'Your orders have been added to the system. You can edit any extra information below.',
+                'Your vehicles have been added to the system. You can edit any extra information below.',
                 'Import Successful',
             );
             if ($request->show_in_ford_pipeline === '0') {

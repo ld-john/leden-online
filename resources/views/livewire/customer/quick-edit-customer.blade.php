@@ -3,7 +3,7 @@
         <i class="fa-solid fa-pencil"></i>
     </button>
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCustomer{{ $customer->id }}" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCustomer{{ $customer->id }}" aria-labelledby="offcanvasExampleLabel" wire:ignore.self>
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Quick Edit Customer Record - {{ $customer->id }}</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
