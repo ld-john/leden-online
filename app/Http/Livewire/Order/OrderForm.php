@@ -27,6 +27,7 @@ use App\Notifications\RegistrationNumberAddedEmailNotification;
 use App\Notifications\RegistrationNumberAddedNotification;
 use App\Notifications\VehicleInStockEmailNotification;
 use App\Notifications\VehicleInStockNotification;
+use DateTime;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -78,6 +79,7 @@ class OrderForm extends Component
     public $build_date; //Vehicle
     public $due_date; // Vehicle
     public $delivery_date; // Order
+    public $order_date;
     public $model_year;
     public $registered_date;
     public $ford_pipeline = '0';
@@ -178,12 +180,14 @@ class OrderForm extends Component
         'delivery_date' => 'nullable|date',
         'build_date' => 'nullable|date',
         'due_date' => 'nullable|date',
+        'order_date' => 'nullable|date',
         'registered_date' => 'nullable|date',
         'dealer_pay_date' => 'nullable|date',
         'invoice_broker_paid' => 'nullable|date',
         'commission_broker_paid' => 'nullable|date',
         'finance_commission_paid' => 'nullable|date',
-        'finance_broker' => 'nullable|numeric|different:broker',
+        'finance_broker' =>
+            'required_if_accepted:finance_broker_toggle|nullable|different:broker',
     ];
     protected $messages = [
         'make.required_without' => 'No <strong>Make</strong> selected',
@@ -273,6 +277,8 @@ class OrderForm extends Component
         }
         if (isset($this->order)) {
             $this->dealer_pay_date = $this->order->invoice->dealer_pay_date;
+            $orderDate = new DateTime($this->order->created_at);
+            $this->order_date = $orderDate->format('Y-m-d');
             $this->invoice_broker_paid = $this->order->invoice->broker_pay_date;
             $this->commission_broker_paid =
                 $this->order->invoice->broker_commission_pay_date;
@@ -541,7 +547,11 @@ class OrderForm extends Component
             $order->customer_id = $customer;
             $order->broker_id = $this->broker;
             $order->finance_broker_toggle = $this->finance_broker_toggle;
-            $order->finance_broker_id = $this->finance_broker;
+            if ($this->finance_broker_toggle) {
+                $order->finance_broker_id = $this->finance_broker;
+            } else {
+                $order->finance_broker_id = null;
+            }
             $order->dealer_id = $this->dealership;
             $order->comments = $this->comments;
             $order->broker_ref = $this->broker_ref;
@@ -562,6 +572,7 @@ class OrderForm extends Component
             $order->renewal_date = $this->renewal_date;
             $order->exception = $this->exclusion;
             $order->delivery_month = $this->delivery_month;
+            $order->created_at = $this->order_date;
             $order->save();
 
             $this->saveVehicleDetails($vehicle);
@@ -594,6 +605,9 @@ class OrderForm extends Component
 
             //Update Order
             $order = $this->order;
+            if (!$this->finance_broker_toggle) {
+                $this->finance_broker = null;
+            }
             $order->update([
                 'vehicle_id' => $vehicle->id,
                 'customer_id' => $customer->id,
@@ -621,6 +635,7 @@ class OrderForm extends Component
                 'renewal_date' => $this->renewal_date,
                 'exception' => $this->exclusion,
                 'delivery_month' => $this->delivery_month,
+                'created_at' => $this->order_date,
             ]);
 
             if ($order->wasChanged('delivery_date')) {

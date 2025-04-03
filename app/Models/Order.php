@@ -263,4 +263,11 @@ class Order extends Model
     {
         return $this->morphMany(Comments::class, 'commentable');
     }
+
+    public function casts(): array
+    {
+        return [
+            'finance_broker_toggle' => 'boolean',
+        ];
+    }
 }
