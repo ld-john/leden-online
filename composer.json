@@ -13,7 +13,7 @@
         "barryvdh/laravel-dompdf": "^v3.1.1",
         "doctrine/dbal": "^3.3",
         "guzzlehttp/guzzle": "^7.4.2",
-        "laravel/framework": "12.1.1.0",
+        "laravel/framework": "12.13.*",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^4.0",
         "livewire/livewire": "^3.4",

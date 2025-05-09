@@ -71,35 +71,7 @@ class CSVUploadController extends Controller
                 $vehicle_upload['make'],
             )->firstOrCreate();
 
-            if (
-                isset($vehicle_upload['factory_options']) ||
-                $vehicle_upload['dealer_options']
-            ) {
-                if (isset($vehicle_upload['factory_options'])) {
-                    $factory_options = Str::of(
-                        $vehicle_upload['factory_options'],
-                    )
-                        ->remove('"')
-                        ->trim()
-                        ->explode(',')
-                        ->toArray();
-                } else {
-                    $factory_options = [];
-                }
-                if (isset($vehicle_upload['dealer_options'])) {
-                    $dealer_options = Str::of($vehicle_upload['dealer_options'])
-                        ->remove('"')
-                        ->trim()
-                        ->explode(',')
-                        ->toArray();
-                } else {
-                    $dealer_options = [];
-                }
-
-                $fit_options = array_merge($factory_options, $dealer_options);
-            } else {
-                $fit_options = [];
-            }
+            $fit_options = $this->getFitOptions($vehicle_upload);
 
             $upload_status = match ($vehicle_upload['status']) {
                 'In Stock' => 1,
@@ -171,6 +143,8 @@ class CSVUploadController extends Controller
 
                 $values = [];
 
+                $fit_options = $this->getFitOptions($vehicle_upload);
+
                 $values[$i]['vehicle_status'] = 4;
                 $values[$i]['reg'] = $vehicle_upload['registration'];
                 $values[$i]['make'] = $upload_manufacturer->id;
@@ -231,13 +205,21 @@ class CSVUploadController extends Controller
                     $request->show_in_ford_pipeline;
 
                 if (isset($vehicle_upload['orbit_number'])) {
-                    Vehicle::updateOrCreate(
-                        ['orbit_number' => $vehicle_upload['orbit_number']],
-                        $values[$i],
-                    );
+                    $vehicle = where(
+                        'orbit_number',
+                        '=',
+                        $vehicle_upload['orbit_number'],
+                    )->first();
+                    if (!$vehicle) {
+                        $vehicle = new Vehicle();
+                    }
+                    $vehicle->update($values[$i]);
+                    $vehicle->save();
                 } else {
-                    Vehicle::insert($values[$i]);
+                    $vehicle = Vehicle::create($values[$i]);
                 }
+
+                $vehicle->fitOptions()->sync($fit_options);
             }
             notify()->success(
                 'Your vehicles have been added to the system. You can edit any extra information below.',
@@ -462,5 +444,36 @@ class CSVUploadController extends Controller
         $response = $response->json();
 
         return view('test-view', ['response' => $response]);
+    }
+
+    private function getFitOptions(mixed $vehicle_upload): array
+    {
+        if (
+            isset($vehicle_upload['factory_options']) ||
+            $vehicle_upload['dealer_options']
+        ) {
+            if (isset($vehicle_upload['factory_options'])) {
+                $factory_options = Str::of($vehicle_upload['factory_options'])
+                    ->remove('"')
+                    ->trim()
+                    ->explode(',')
+                    ->toArray();
+            } else {
+                $factory_options = [];
+            }
+            if (isset($vehicle_upload['dealer_options'])) {
+                $dealer_options = Str::of($vehicle_upload['dealer_options'])
+                    ->remove('"')
+                    ->trim()
+                    ->explode(',')
+                    ->toArray();
+            } else {
+                $dealer_options = [];
+            }
+
+            return array_merge($factory_options, $dealer_options);
+        } else {
+            return [];
+        }
     }
 }
