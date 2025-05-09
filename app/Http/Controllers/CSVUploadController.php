@@ -64,7 +64,7 @@ class CSVUploadController extends Controller
         foreach ($vehicle_uploads as $vehicle_upload) {
             $dealer = Company::where('company_name', $vehicle_upload['dealer'])
                 ->where('company_type', 'dealer')
-                ->first();
+                ->firstOrFail();
 
             $upload_manufacturer = Manufacturer::where(
                 'name',
@@ -81,7 +81,7 @@ class CSVUploadController extends Controller
                     )
                         ->remove('"')
                         ->trim()
-                        ->explode(', ')
+                        ->explode(',')
                         ->toArray();
                 } else {
                     $factory_options = [];
@@ -90,7 +90,7 @@ class CSVUploadController extends Controller
                     $dealer_options = Str::of($vehicle_upload['dealer_options'])
                         ->remove('"')
                         ->trim()
-                        ->explode(', ')
+                        ->explode(',')
                         ->toArray();
                 } else {
                     $dealer_options = [];
