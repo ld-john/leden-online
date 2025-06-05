@@ -58,11 +58,7 @@ class FitOptionsEditor extends Component
                 ->with('vehicles')
                 ->with('dealer')
                 ->when($this->option_id, function ($query) {
-                    $query->where(
-                        'option_id',
-                        'like',
-                        '%' . $this->option_id . '%',
-                    );
+                    $query->where('id', 'like', '%' . $this->option_id . '%');
                 })
                 ->when($this->option_name, function ($query) {
                     $query->where(

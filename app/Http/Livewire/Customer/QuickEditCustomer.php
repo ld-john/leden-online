@@ -3,6 +3,9 @@
 namespace App\Http\Livewire\Customer;
 
 use App\Models\Customer;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Livewire\Component;
 
 class QuickEditCustomer extends Component
@@ -16,13 +19,13 @@ class QuickEditCustomer extends Component
     public $county;
     public $postcode;
     public $phone_number;
-    protected $rules = array(
+    protected $rules = [
         'customer_name' => 'required',
         'address_1' => 'required',
-        'phone_number' => 'required|numeric'
-    );
+        'phone_number' => 'required|numeric',
+    ];
 
-    public function mount(Customer $customer)
+    public function mount(Customer $customer): void
     {
         $this->customer = $customer;
         $this->customer_name = $customer->customer_name;
@@ -39,18 +42,24 @@ class QuickEditCustomer extends Component
     {
         $customer = $this->customer;
         $customer->update([
-           'customer_name' => $this->customer_name,
-           'address_1' => $this->address_1,
-           'address_2' => $this->address_2,
-           'town' => $this->town,
-           'city' => $this->city,
-           'county' => $this->county,
-           'postcode' => $this->postcode,
-           'phone_number' => $this->phone_number,
+            'customer_name' => $this->customer_name,
+            'address_1' => $this->address_1,
+            'address_2' => $this->address_2,
+            'town' => $this->town,
+            'city' => $this->city,
+            'county' => $this->county,
+            'postcode' => $this->postcode,
+            'phone_number' => $this->phone_number,
         ]);
+        notify()->success(
+            'Customer details updated successfully',
+            'Customer Updated',
+        );
+
+        return $this->redirect(route('customer.index'));
     }
 
-    public function render()
+    public function render(): View|Application|Factory
     {
         return view('livewire.customer.quick-edit-customer');
     }

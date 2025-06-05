@@ -1,1 +1,1 @@
-make,model,type,registration,derivative,engine,transmission,fuel_type,doors,colour,trim,chassis_prefix,chassis,model_year,list_price,metallic_paint,first_reg_fee,rfl_cost,onward_delivery,dealer_id
+make,model,type,registration,derivative,engine,transmission,fuel_type,doors,colour,trim,chassis_prefix,chassis,model_year,list_price,metallic_paint,first_reg_fee,rfl_cost,onward_delivery,dealer_id,factory_options,dealer_options,dealer,reg
