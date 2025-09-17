@@ -69,7 +69,7 @@ class UniversalSearch extends Component
 
     public function downloadCurrentData(): BinaryFileResponse
     {
-        $data = $this->filterVehiclesForDisplay()->get();
+        $data = $this->filterVehiclesForDisplay();
 
         return Excel::download(
             new UniversalExport($data),

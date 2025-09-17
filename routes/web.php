@@ -187,6 +187,9 @@ Route::middleware('auth')->group(function () {
                     Route::get('/damaged/', 'damaged_export')->name(
                         'damaged/_recalled',
                     );
+                    Route::get('/deferred/', 'deferred_export')->name(
+                        'deferred',
+                    );
                     Route::get(
                         '/dealertransfer',
                         'dealer_transfer_export',

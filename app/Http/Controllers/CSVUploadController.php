@@ -155,6 +155,11 @@ class CSVUploadController extends Controller
                 $values[$i]['fuel_type'] = $vehicle_upload['fuel_type'];
                 $values[$i]['colour'] = $vehicle_upload['colour'];
                 $values[$i]['trim'] = $vehicle_upload['trim'];
+
+                if (isset($vehicle_upload['type'])) {
+                    $values[$i]['type'] = $vehicle_upload['type'];
+                }
+
                 if (isset($vehicle_upload['ford_order_number'])) {
                     $values[$i]['ford_order_number'] =
                         $vehicle_upload['ford_order_number'];
@@ -192,12 +197,12 @@ class CSVUploadController extends Controller
                 if (isset($vehicle_upload['dealer_id'])) {
                     $values[$i]['dealer_id'] = $vehicle_upload['dealer_id'];
                 } elseif (isset($vehicle_upload['dealer'])) {
-                    $values[$i]['dealer_id'] = Company::where(
+                    $dealer = Company::where(
                         'company_name',
+                        '=',
                         $vehicle_upload['dealer'],
-                    )
-                        ->firstOrCreate()
-                        ->pluck('id');
+                    )->first();
+                    $values[$i]['dealer_id'] = $dealer->id;
                 } else {
                     throw new Exception('Dealer ID or name is missing');
                 }
@@ -205,13 +210,15 @@ class CSVUploadController extends Controller
                     $request->show_in_ford_pipeline;
 
                 if (isset($vehicle_upload['orbit_number'])) {
-                    $vehicle = where(
+                    $vehicle = Vehicle::where(
                         'orbit_number',
                         '=',
                         $vehicle_upload['orbit_number'],
                     )->first();
                     if (!$vehicle) {
-                        $vehicle = new Vehicle();
+                        $vehicle = Vehicle::create([
+                            'orbit_number' => $vehicle_upload['orbit_number'],
+                        ]);
                     }
                     $vehicle->update($values[$i]);
                     $vehicle->save();
@@ -450,7 +457,7 @@ class CSVUploadController extends Controller
     {
         if (
             isset($vehicle_upload['factory_options']) ||
-            $vehicle_upload['dealer_options']
+            isset($vehicle_upload['dealer_options'])
         ) {
             if (isset($vehicle_upload['factory_options'])) {
                 $factory_options = Str::of($vehicle_upload['factory_options'])

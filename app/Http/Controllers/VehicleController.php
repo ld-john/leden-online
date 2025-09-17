@@ -171,18 +171,17 @@ class VehicleController extends Controller
      */
     public function factory_order_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 4)
+        $query = Vehicle::where('vehicle_status', 4)
             ->with('manufacturer:id,name')
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
-            ->with('broker')
-            ->get();
+            ->with('broker');
 
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new DashboardExports($query),
             'factory-orders-' . $date . '.xlsx',
         );
     }
@@ -193,18 +192,17 @@ class VehicleController extends Controller
      */
     public function europe_vhc_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 10)
+        $query = Vehicle::where('vehicle_status', 10)
             ->with('manufacturer:id,name')
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
-            ->with('broker')
-            ->get();
+            ->with('broker');
 
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new DashboardExports($query),
             'europe-vhc-orders-' . $date . '.xlsx',
         );
     }
@@ -215,18 +213,17 @@ class VehicleController extends Controller
      */
     public function uk_vhc_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 11)
+        $query = Vehicle::where('vehicle_status', 11)
             ->with('manufacturer:id,name')
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
-            ->with('broker')
-            ->get();
+            ->with('broker');
 
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new DashboardExports($query),
             'uk-vhc-orders-' . $date . '.xlsx',
         );
     }
@@ -237,18 +234,17 @@ class VehicleController extends Controller
      */
     public function in_stock_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 1)
+        $query = Vehicle::where('vehicle_status', 1)
             ->with('manufacturer:id,name')
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
-            ->with('broker')
-            ->get();
+            ->with('broker');
 
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new DashboardExports($query),
             'in-stock-orders-' . $date . '.xlsx',
         );
     }
@@ -264,8 +260,7 @@ class VehicleController extends Controller
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
-            ->with('broker')
-            ->get();
+            ->with('broker');
 
         $date = Carbon::now()->format('Y-m-d');
 
@@ -281,18 +276,17 @@ class VehicleController extends Controller
      */
     public function in_stock_dealer_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 17)
+        $query = Vehicle::where('vehicle_status', 17)
             ->with('manufacturer:id,name')
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
-            ->with('broker')
-            ->get();
+            ->with('broker');
 
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new DashboardExports($query),
             'in-stock-awaiting-dealer-orders-' . $date . '.xlsx',
         );
     }
@@ -303,18 +297,17 @@ class VehicleController extends Controller
      */
     public function ready_for_delivery_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 3)
+        $query = Vehicle::where('vehicle_status', 3)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
             ->with('broker')
-            ->with('manufacturer:id,name')
-            ->get();
+            ->with('manufacturer:id,name');
 
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new DashboardExports($query),
             'ready-for-delivery-orders-' . $date . '.xlsx',
         );
     }
@@ -325,18 +318,17 @@ class VehicleController extends Controller
      */
     public function delivery_booked_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 6)
+        $query = Vehicle::where('vehicle_status', 6)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
             ->with('manufacturer:id,name')
-            ->with('broker')
-            ->get();
+            ->with('broker');
 
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new DashboardExports($query),
             'delivery-booked-orders-' . $date . '.xlsx',
         );
     }
@@ -347,18 +339,17 @@ class VehicleController extends Controller
      */
     public function awaiting_ship_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 13)
+        $query = Vehicle::where('vehicle_status', 13)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
             ->with('manufacturer:id,name')
-            ->with('broker')
-            ->get();
+            ->with('broker');
 
         $date = Carbon::now()->format('Y-m_d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new DashboardExports($query),
             'awaiting-ship-orders-' . $date . '.xlsx',
         );
     }
@@ -369,68 +360,84 @@ class VehicleController extends Controller
      */
     public function at_converter_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 12)
+        $query = Vehicle::where('vehicle_status', 12)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
             ->with('manufacturer:id,name')
-            ->with('broker')
-            ->get();
+            ->with('broker');
 
         $date = Carbon::now()->format('Y-m_d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new DashboardExports($query),
             'awaiting-ship-orders-' . $date . '.xlsx',
         );
     }
 
     public function damaged_export()
     {
-        $vehicles = Vehicle::where('vehicle_status', 16)
+        $query = Vehicle::where('vehicle_status', 16)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
             ->with('manufacturer:id,name')
-            ->with('broker')
-            ->get();
+            ->with('broker');
+
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new DashboardExports($query),
             'damaged-' . $date . '.xlsx',
+        );
+    }
+
+    public function deferred_export()
+    {
+        $query = Vehicle::where('vehicle_status', 20)
+            ->with('order')
+            ->with('order.customer')
+            ->with('order.broker')
+            ->with('manufacturer:id,name')
+            ->with('broker');
+
+        $date = Carbon::now()->format('Y-m-d');
+
+        return Excel::download(
+            new DashboardExports($query),
+            'deferred-' . $date . '.xlsx',
         );
     }
 
     public function query_export()
     {
-        $vehicles = Vehicle::where('vehicle_status', 19)
+        $query = Vehicle::where('vehicle_status', 19)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
             ->with('manufacturer:id,name')
-            ->with('broker')
-            ->get();
+            ->with('broker');
+
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new DashboardExports($query),
             'order-query-' . $date . '.xlsx',
         );
     }
     public function dealer_transfer_export()
     {
-        $vehicles = Vehicle::where('vehicle_status', 18)
+        $query = Vehicle::where('vehicle_status', 18)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
             ->with('manufacturer:id,name')
-            ->with('broker')
-            ->get();
+            ->with('broker');
+
         $date = Carbon::now()->format('Y-m-d');
 
         return Excel::download(
-            new DashboardExports($vehicles),
+            new DashboardExports($query),
             'dealer-transfer-' . $date . '.xlsx',
         );
     }

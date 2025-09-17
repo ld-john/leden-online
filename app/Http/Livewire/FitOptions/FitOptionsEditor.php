@@ -40,7 +40,7 @@ class FitOptionsEditor extends Component
     ];
     public $paginate = 10;
 
-    public function mount($fitType)
+    public function mount($fitType): void
     {
         $this->fitType = $fitType;
         $this->dealers = Company::where('company_type', 'dealer')->get();
@@ -75,7 +75,7 @@ class FitOptionsEditor extends Component
                     );
                 })
                 ->when($this->model, function ($query) {
-                    $query->where('model', 'like', '%' . $this->model . '%');
+                    $query->where('model', '=', $this->model);
                 })
                 ->when($this->dealer, function ($query) {
                     $query->where('dealer_id', '=', $this->dealer);

@@ -14,6 +14,7 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use LaravelIdea\Helper\App\_IH_Vehicle_C;
 use Maatwebsite\Excel\Facades\Excel;
@@ -529,23 +530,20 @@ class ReportingController extends Controller
      * When given a report type and a selection of dates, prepare the data for a report.
      * @param string $type
      * @param array $dates
-     * @return \Illuminate\Database\Eloquent\Collection|\LaravelIdea\Helper\App\Models\_IH_Vehicle_C|Vehicle[]
+     * @return Vehicle
      */
     public function returnDataForReports(string $type, array $dates)
     {
         if ($type === 'placed') {
             $data = Vehicle::whereHas('order', function ($query) use ($dates) {
                 $query->whereBetween('created_at', $dates);
-            })->get();
+            });
         } elseif ($type === 'registered') {
-            $data = Vehicle::whereBetween(
-                'vehicle_registered_on',
-                $dates,
-            )->get();
+            $data = Vehicle::whereBetween('vehicle_registered_on', $dates);
         } else {
             $data = Vehicle::whereHas('order', function ($query) use ($dates) {
                 $query->whereBetween('completed_date', $dates);
-            })->get();
+            });
         }
         return $data;
     }

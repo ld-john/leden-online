@@ -68,9 +68,9 @@ class Vehicle extends Model
         return $this->hasOne(Reservation::class, 'vehicle_id', 'id');
     }
 
-    public function manufacturer(): HasOne
+    public function manufacturer(): belongsTo
     {
-        return $this->hasOne(Manufacturer::class, 'id', 'make');
+        return $this->belongsTo(Manufacturer::class, 'make');
     }
 
     public function dealer(): BelongsTo
@@ -202,6 +202,7 @@ class Vehicle extends Model
             17 => 'In Stock (Awaiting Dealer Options)',
             18 => 'Dealer Transfer',
             19 => 'Order In Query',
+            20 => 'Deferred',
         ];
     }
 
