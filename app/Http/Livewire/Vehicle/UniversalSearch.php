@@ -37,7 +37,6 @@ class UniversalSearch extends Component
     public $searchCustomer;
     public $searchType;
     public $searchDetails;
-    public $searchChassisPrefix;
     public $searchChassis;
     public $searchRegistration;
     public $searchBuildDate;
@@ -170,19 +169,17 @@ class UniversalSearch extends Component
                         '%' . $this->searchDetails . '%',
                     );
             })
-            ->when($this->searchChassisPrefix, function ($query) {
-                $query->where(
-                    'chassis_prefix',
-                    'like',
-                    '%' . $this->searchChassisPrefix . '%',
-                );
-            })
             ->when($this->searchChassis, function ($query) {
                 $query->where(
                     'chassis',
                     'like',
                     '%' . $this->searchChassis . '%',
-                );
+                )
+                    ->orWhere(
+                        'chassis_prefix',
+                        'like',
+                        '%' . $this->searchChassis . '%'
+                    );
             })
             ->when($this->searchRegistration, function ($query) {
                 $query->where(

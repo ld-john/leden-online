@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\VehicleStatus;
 use App\Exports\BrokersStockDownload;
 use App\Exports\DashboardExports;
 use App\Mail\LoginRequest;
@@ -171,7 +172,7 @@ class VehicleController extends Controller
      */
     public function factory_order_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 4)
+        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::FACTORY_ORDER)
             ->with('manufacturer:id,name')
             ->with('order')
             ->with('order.customer')
@@ -193,7 +194,7 @@ class VehicleController extends Controller
      */
     public function europe_vhc_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 10)
+        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::EUROPE_VHC)
             ->with('manufacturer:id,name')
             ->with('order')
             ->with('order.customer')
@@ -215,7 +216,7 @@ class VehicleController extends Controller
      */
     public function uk_vhc_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 11)
+        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::UK_VHC)
             ->with('manufacturer:id,name')
             ->with('order')
             ->with('order.customer')
@@ -237,7 +238,7 @@ class VehicleController extends Controller
      */
     public function in_stock_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 1)
+        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::IN_STOCK)
             ->with('manufacturer:id,name')
             ->with('order')
             ->with('order.customer')
@@ -259,7 +260,7 @@ class VehicleController extends Controller
      */
     public function in_stock_registered_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 15)
+        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::IN_STOCK_REGISTERED)
             ->with('manufacturer:id,name')
             ->with('order')
             ->with('order.customer')
@@ -281,7 +282,7 @@ class VehicleController extends Controller
      */
     public function in_stock_dealer_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 17)
+        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::AWAITING_DEALER_OPTIONS)
             ->with('manufacturer:id,name')
             ->with('order')
             ->with('order.customer')
@@ -303,7 +304,7 @@ class VehicleController extends Controller
      */
     public function ready_for_delivery_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 3)
+        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::READY_FOR_DELIVERY)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
@@ -325,7 +326,7 @@ class VehicleController extends Controller
      */
     public function delivery_booked_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 6)
+        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::DELIVERY_BOOKED)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
@@ -347,7 +348,7 @@ class VehicleController extends Controller
      */
     public function awaiting_ship_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 13)
+        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::AWAITING_SHIP)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
@@ -369,7 +370,7 @@ class VehicleController extends Controller
      */
     public function at_converter_export(): BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', 12)
+        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::AT_CONVERTER)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
@@ -387,7 +388,7 @@ class VehicleController extends Controller
 
     public function damaged_export()
     {
-        $vehicles = Vehicle::where('vehicle_status', 16)
+        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::DAMAGED_RECALLED)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
@@ -404,7 +405,7 @@ class VehicleController extends Controller
 
     public function query_export()
     {
-        $vehicles = Vehicle::where('vehicle_status', 19)
+        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::ORDER_IN_QUERY)
             ->with('order')
             ->with('order.customer')
             ->with('order.broker')
@@ -470,7 +471,7 @@ class VehicleController extends Controller
 
     /**
      * Show the Vehicle Recycle bin, allowing the user to either restore or permanently remove deleted vehicles
-     * @return Application|Factory|View
+     * @return Factory|View
      */
     public function recycle()
     {
@@ -514,7 +515,7 @@ class VehicleController extends Controller
 
     /**
      * Returns Universal Vehicle search page
-     * @return Application|Factory|View
+     * @return Factory|View
      */
     public function searchVehicles()
     {

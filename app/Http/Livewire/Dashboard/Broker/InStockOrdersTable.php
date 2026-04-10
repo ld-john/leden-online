@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dashboard\Broker;
 
+use App\Enums\VehicleStatus;
 use App\Models\Order;
 use Auth;
 use Illuminate\Contracts\Foundation\Application;
@@ -16,7 +17,7 @@ class InStockOrdersTable extends Component
     public function render(): Factory|View|Application
     {
         $orders = Order::whereHas('vehicle', function ($query) {
-            $query->where('vehicle_status', '1');
+            $query->whereIn('vehicle_status', [VehicleStatus::IN_STOCK, VehicleStatus::IN_STOCK_REGISTERED]);
         })
             ->where('broker_id', Auth::user()->company_id)
             ->with('vehicle')

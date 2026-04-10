@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\VehicleStatus;
 use App\Exports\BrokersOrderDownload;
 use App\Models\Comment;
 use App\Models\Company;
@@ -178,7 +179,7 @@ class OrderController extends Controller
             'title' => 'Order Bank',
             'active_page' => 'order-bank',
             'route' => 'order_bank',
-            'status' => [1, 4, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+            'status' => VehicleStatus::orderBankStatuses(),
         ]);
     }
 
@@ -188,13 +189,13 @@ class OrderController extends Controller
             'title' => 'Completed Orders',
             'active_page' => 'completed-orders',
             'route' => 'completed_orders',
-            'status' => [7],
+            'status' => [VehicleStatus::COMPLETED_ORDERS],
         ]);
     }
 
     public function showManageDeliveries()
     {
-        return view('order.deliveries', ['status' => [3, 5, 6]]);
+        return view('order.deliveries', ['status' => VehicleStatus::deliveryStatuses()]);
     }
 
     /**
@@ -271,7 +272,7 @@ class OrderController extends Controller
 
         $brokerName = $order->broker->company_name ?? '--';
 
-        $vehicle_status = Vehicle::statusMatch($order->vehicle->vehicle_status);
+        $vehicle_status = $order->vehicle->vehicle_status->label();
 
         if ($order->finance_broker) {
             $brokerName .= ' | ' . $order->finance_broker->company_name;
@@ -431,7 +432,7 @@ class OrderController extends Controller
     function broker_orders_export(Company $broker)
     {
         $orders = Order::whereHas('vehicle', function ($q) {
-            $q->where('vehicle_status', '!=', '7');
+            $q->where('vehicle_status', '!=', VehicleStatus::COMPLETED_ORDERS);
         })
             ->where('broker_id', '=', $broker->id)
             ->with('vehicle')

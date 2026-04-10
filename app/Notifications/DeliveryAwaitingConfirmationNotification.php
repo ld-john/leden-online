@@ -12,7 +12,7 @@ class DeliveryAwaitingConfirmationNotification extends Notification
 
     public function __construct(Order $order)
     {
-        $this->order = $order;
+        $this->order = $order->loadMissing(['vehicle.manufacturer', 'broker']);
     }
 
     public function via($notifiable): array
@@ -22,23 +22,19 @@ class DeliveryAwaitingConfirmationNotification extends Notification
 
     public function toArray($notifiable): array
     {
+        $vehicle = $this->order->vehicle;
         return [
-            'order' => $this->order,
-            'vehicle' => $this->order->vehicle,
+            'order_id' => $this->order->id,
+            'vehicle_id' => $vehicle->id,
             'type' => 'vehicle',
-            'message' =>
-                $this->order->broker->company_name .
-                ' has requested delivery of ' .
-                $this->order->vehicle->manufacturer->name .
-                ' ' .
-                $this->order->vehicle->model .
-                ' - ' .
-                $this->order->vehicle->reg .
-                ' ' .
-                ' Orbit Number: ' .
-                $this->order->vehicle->orbit_number .
-                ' on ' .
+            'message' => sprintf( '%s has requested delivery of %s %s (%s) Orbit: %s on %s',
+                $this->order->broker->company_name,
+                $vehicle->manufacturer->name,
+                $vehicle->model,
+                $vehicle->reg,
+                $vehicle->orbit_number,
                 Carbon::parse($this->order->delivery_date)->format('d/m/Y'),
+            ),
         ];
     }
 }

@@ -49,6 +49,7 @@
                          <option value="dealer">Dealer</option>
                          <option value="registration">Registration</option>
                          <option value="invoice">Invoice</option>
+                         <option value="delivery">Delivery Agent</option>
                     </select>
                </th>
                <th></th>

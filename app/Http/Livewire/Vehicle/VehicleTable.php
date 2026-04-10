@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Vehicle;
 
+use App\Enums\VehicleStatus;
 use App\Models\Vehicle;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -199,14 +200,12 @@ class VehicleTable extends Component
             })
             ->paginate($this->paginate);
 
-        $status = Vehicle::where('ring_fenced_stock', $this->ringfenced)
+        $status = Vehicle::query()
+            ->where('ring_fenced_stock', $this->ringfenced)
             ->where('show_in_ford_pipeline', $this->fordpipeline)
             ->doesntHave('order')
-            ->get();
-        $status = $status->map
-            ->only(['vehicle_status'])
-            ->flatten()
-            ->unique();
+            ->distinct()
+            ->pluck('vehicle_status');
 
         return view('livewire.vehicle.vehicle-table', [
             'vehicles' => $data,

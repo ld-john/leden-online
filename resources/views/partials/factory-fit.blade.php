@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        @forelse($factory_options as $option)
+        @forelse($this->factory_options as $option)
             <tr>
                 <td><input type="checkbox" value="{{$option->id}}" wire:model.live="factoryFitOptions"></td>
                 <td>{{$option->option_name}}</td>
@@ -37,18 +37,18 @@
         @endforelse
     </table>
     <div class="d-flex justify-content-between">
-        @if(!$factory_options->isEmpty())
-            <p>Showing {{ $factory_options->firstItem() }} - {{ $factory_options->lastItem() }}
-                of {{$factory_options->total()}}</p>
+        @if(!$this->factory_options->isEmpty())
+            <p>Showing {{ $this->factory_options->firstItem() }} - {{ $this->factory_options->lastItem() }}
+                of {{$this->factory_options->total()}}</p>
         @endif
 
-        {{ $factory_options->links(data: ['scrollTo' => '#factory-fit']) }}
+        {{ $this->factory_options->links(data: ['scrollTo' => '#factory-fit']) }}
 
     </div>
 @else
     Please select the Model and Model Year above
 @endif
-@if($factoryFitOptionsArray)
+@if($this->selectedFactoryFitOptions)
 <div class="form-group row" style="margin-top: 10px">
     <table class="table table-bordered">
         <thead>
@@ -58,7 +58,7 @@
         </thead>
         <tbody>
 
-        @foreach($factoryFitOptionsArray as $option)
+        @foreach($this->selectedFactoryFitOptions as $option)
             <tr>
                 <td>{{ $option->option_name }}</td>
             </tr>

@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Delivery;
 
+use App\Models\Company;
 use App\Models\Delivery;
 use App\Models\Order;
 use App\Models\Permission;
+use App\Models\User;
 use App\Notifications\DeliveryAwaitingConfirmationEmailNotification;
 use App\Notifications\DeliveryAwaitingConfirmationNotification;
 use Carbon\Carbon;
@@ -13,9 +15,14 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
+use LaravelIdea\Helper\App\Models\_IH_Company_C;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Notification;
+use Throwable;
 
 class DeliveryForm extends Component
 {
@@ -38,6 +45,7 @@ class DeliveryForm extends Component
     public $delivery_postcode;
     public $contact_name;
     public $contact_number;
+    public $selectedDeliveryAgent;
     public $funder_confirmation;
     protected $rules = [
         'funder_confirmation' => 'nullable|mimes:jpeg,jpg,pdf,doc,docx',
@@ -72,6 +80,7 @@ class DeliveryForm extends Component
             $this->contact_name = $this->delivery->contact_name;
             $this->contact_number = $this->delivery->contact_number;
             $this->funder_confirmation = $this->delivery->funder_confirmation;
+            $this->selectedDeliveryAgent = $this->delivery->delivery_agent_id;
         } else {
             $this->delivery_address1 = $order->customer->address_1;
             $this->delivery_address2 = $order->customer->address_2;
@@ -88,60 +97,116 @@ class DeliveryForm extends Component
         return view('livewire.delivery.delivery-form');
     }
 
-    public function clearFunderConfirmation()
+    public function clearFunderConfirmation(): void
     {
         $this->funder_confirmation = null;
     }
 
-    public function requestBooking()
+    #[Computed]
+    public function deliveryAgents(): Collection|_IH_Company_C|array
     {
-        $this->validate();
-        $order = $this->order;
-        if ($this->delivery) {
-            $delivery = $this->delivery;
-        } else {
-            $delivery = new Delivery();
-        }
-        $delivery->delivery_date = Carbon::parse($this->delivery_date)
-            ->startOfDay()
-            ->format('Y-m-d h:i:s');
-        $delivery->delivery_address1 = $this->delivery_address1;
-        $delivery->delivery_address2 = $this->delivery_address2;
-        $delivery->delivery_town = $this->delivery_town;
-        $delivery->delivery_city = $this->delivery_city;
-        $delivery->delivery_postcode = $this->delivery_postcode;
-        $delivery->contact_name = $this->contact_name;
-        $delivery->contact_number = $this->contact_number;
-        if ($this->funder_confirmation) {
-            $delivery->funder_confirmation = $this->funder_confirmation->store(
-                '/public/files',
-            );
-        }
-        $delivery->save();
-        $order->update([
-            'delivery_id' => $delivery->id,
-            'delivery_date' => $this->delivery_date,
-        ]);
-        $vehicle = $order->vehicle;
-        $vehicle->update([
-            'vehicle_status' => 5,
-        ]);
-        $permission = Permission::where('name', 'manages-deliveries')->first();
-        $notify_user = $permission->users;
-        foreach ($notify_user as $user) {
-            $user->notify(new DeliveryAwaitingConfirmationNotification($order));
-        }
-        Notification::route('mail', 'deliveries@leden.co.uk')->notify(
-            new DeliveryAwaitingConfirmationEmailNotification($order),
-        );
-        notify()->success(
-            'Delivery Booked - Awaiting Confirmation',
-            'Delivery Booked',
-        );
-        return redirect(route('manage_deliveries'));
+        return Company::query()
+            ->where('company_type', 'delivery')
+            ->select('id', 'company_name')
+            ->orderBy('company_name')
+            ->get();
     }
 
-    public function cancelBooking()
+    /**
+     * @throws Throwable
+     */
+    public function requestBooking()
+    {
+        $validated = $this->validate();
+        DB::transaction(function () use ($validated) {
+            $delivery = Delivery::updateOrCreate(
+                ['id' => $this->delivery?->id],
+                [
+                    'delivery_date' => Carbon::parse($this->delivery_date)->startOfDay(),
+                    'delivery_address1' => $this->delivery_address1,
+                    'delivery_address2' => $this->delivery_address2,
+                    'delivery_town' => $this->delivery_town,
+                    'delivery_city' => $this->delivery_city,
+                    'delivery_postcode' => $this->delivery_postcode,
+                    'contact_name' => $this->contact_name,
+                    'contact_number' => $this->contact_number,
+                    'funder_confirmation' => $validated['funder_confirmation'] ? $validated['funder_confirmation']->store('/public/files') : $this->delivery?->funder_confirmation,
+                    'delivery_agent_id' => $this->selectedDeliveryAgent,
+                ]
+            );
+
+            $this->order->update([
+                'delivery_id' => $delivery->id,
+                'delivery_date' => $this->delivery_date,
+            ]);
+
+            $this->order->vehicle->update([
+                'vehicle_status' => 5,
+            ]);
+
+            $notifyUsers = User::withPermission('manages-deliveries')->get();
+
+            Notification::send($notifyUsers, new DeliveryAwaitingConfirmationNotification($this->order));
+
+            if (!app()->environment('local')) {
+                Notification::route('mail', 'deliveries@leden.co.uk')
+                    ->notify(new DeliveryAwaitingConfirmationEmailNotification($this->order));
+            }
+
+        });
+
+        notify()->success('Delivery Booked - Awaiting Confirmation', 'Delivery Booked');
+
+        return redirect(route('manage_deliveries'));
+
+//        $this->validate();
+//        $order = $this->order;
+//        if ($this->delivery) {
+//            $delivery = $this->delivery;
+//        } else {
+//            $delivery = new Delivery();
+//        }
+//        $delivery->delivery_date = Carbon::parse($this->delivery_date)
+//            ->startOfDay()
+//            ->format('Y-m-d h:i:s');
+//        $delivery->delivery_address1 = $this->delivery_address1;
+//        $delivery->delivery_address2 = $this->delivery_address2;
+//        $delivery->delivery_town = $this->delivery_town;
+//        $delivery->delivery_city = $this->delivery_city;
+//        $delivery->delivery_postcode = $this->delivery_postcode;
+//        $delivery->contact_name = $this->contact_name;
+//        $delivery->contact_number = $this->contact_number;
+//        if ($this->funder_confirmation) {
+//            $delivery->funder_confirmation = $this->funder_confirmation->store(
+//                '/public/files',
+//            );
+//        }
+//        $delivery->delivery_agent_id = $this->selectedDeliveryAgent;
+//        $delivery->save();
+//        $order->update([
+//            'delivery_id' => $delivery->id,
+//            'delivery_date' => $this->delivery_date,
+//        ]);
+//        $vehicle = $order->vehicle;
+//        $vehicle->update([
+//            'vehicle_status' => 5,
+//        ]);
+//        $permission = Permission::where('name', 'manages-deliveries')->first();
+//        $notify_user = $permission->users;
+//        foreach ($notify_user as $user) {
+//            $user->notify(new DeliveryAwaitingConfirmationNotification($order));
+//        }
+//        Notification::route('mail', 'deliveries@leden.co.uk')->notify(
+//            new DeliveryAwaitingConfirmationEmailNotification($order),
+//        );
+//        notify()->success(
+//            'Delivery Booked - Awaiting Confirmation',
+//            'Delivery Booked',
+//        );
+//        return redirect(route('manage_deliveries'));
+    }
+
+    public function cancelBooking(): void
     {
         $order = $this->order;
         $delivery = $this->delivery;

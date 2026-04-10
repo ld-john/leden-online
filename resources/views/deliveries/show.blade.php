@@ -18,91 +18,48 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Ford Order no.</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $delivery->order->order_ref ?? '--' }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Customer Name</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $delivery->order->customer->name() ?? '--' }}</p>
-                            </div>
+                            <x-data-field label="Ford Order no" :value="$delivery->order->order_ref" />
+                            <x-data-field label="Customer Name" :value="$delivery->order->customer->name()" />
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Registration Number</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $delivery->order->vehicle->reg ?? '--' }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Chassis</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $delivery->order->vehicle->chassis ?? '--' }}</p>
-                            </div>
+                            <x-data-field label="Registration Number" :value="$delivery->order->vehicle->reg" />
+                            <x-data-field label="Chassis" :value="$delivery->order->vehicle->chassis" />
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Funder</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $delivery->order->invoice_company->company_name ?? '--' }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Partner</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $delivery->order->broker->company_name ?? '--' }}</p>
-                            </div>
+                            <x-data-field label="Funder" :value="$delivery->order->invoice_company->company_name" />
+                            <x-data-field label="Partner" :value="$delivery->order->broker->company_name" />
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Delivery Date</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ \Carbon\Carbon::parse($delivery->delivery_date)->format('d/m/Y') ?? '--' }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Delivery Address</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $delivery->delivery_address1 }}<br>{{ $delivery->delivery_address2 }}
-                                    <br>{{ $delivery->delivery_town }}<br>{{ $delivery->delivery_city }}<br>{{ $delivery->delivery_postcode }}</p>
-                            </div>
+                            <x-data-field label="Delivery Date" :value="\Carbon\Carbon::parse($delivery->delivery_date)->format('d/m/Y')" />
+                            <x-data-field label="Delivery Address">
+                                {{ $delivery->delivery_address1 }}<br>
+                                @if($delivery->delivery_address2)
+                                    {{ $delivery->delivery_address2 }}<br>
+                                @endif
+                                @if($delivery->delivery_town)
+                                    {{ $delivery->delivery_town }}<br>
+                                @endif
+                                @if($delivery->delivery_city)
+                                    {{ $delivery->delivery_city }}<br>
+                                @endif
+                                {{ $delivery->delivery_postcode }}
+                            </x-data-field>
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Contact Name</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $delivery->contact_name ?? '--' }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Contact Number</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $delivery->contact_number ?? '--' }}</p>
-                            </div>
+                            <x-data-field label="Contact Name" :value="$delivery->contact_name" />
+                            <x-data-field label="Contact Number" :value="$delivery->contact_number" />
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Funder Confirmation</p>
-                            </div>
-                            <div class="col-md-4">
+                            <x-data-field label="Funder Confirmation">
                                 @if($delivery->funder_confirmation)
                                     @if(Storage::exists($delivery->funder_confirmation))
                                         <a href="{{ asset(\Illuminate\Support\Facades\Storage::url($delivery->funder_confirmation)) }}" class="btn btn-primary" download>Download</a>
-
                                     @endif
                                 @else
-                                    <p>Funder Confirmation is not uploaded, or something went wrong</p>
-
+                                    Funder Confirmation is not uploaded, or something went wrong
                                 @endif
-                            </div>
+                            </x-data-field>
+                            <x-data-field label="Delivery Agent" :value="$delivery->deliveryAgent?->company_name" />
                         </div>
                     </div>
                     <div class="card-footer text-right">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\VehicleStatus;
 use App\Http\Requests\CsvImportRequest;
 use App\Imports\FitOptionImport;
 use App\Models\Company;
@@ -21,6 +22,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 
@@ -113,171 +115,358 @@ class CSVUploadController extends Controller
         return redirect()->route('ring_fenced_stock');
     }
 
-    public function executeCsvUpload(
-        Request $request,
-    ): bool|RedirectResponse|View {
-        $file = $request->file('file');
-
+    public function executeCsvUpload(Request $request): RedirectResponse
+    {
         $request->validate([
-            'upload_type' => 'required',
-            'file' => 'required|max:10240',
-            'show_in_ford_pipeline' => 'required',
+            'upload_type' => 'required|string',
+            'file' => 'required|file|max:10240|mimes:csv,txt',
+            'show_in_ford_pipeline' => 'required|boolean',
         ]);
 
-        $vehicle_uploads = $this->csvToArray($file);
+        $csvData = $this->csvToArray($request->file('file'));
+        $type = $request->input('upload_type');
 
-        if ($request->input('upload_type') === 'create') {
-            $i = 0;
-            foreach ($vehicle_uploads as $vehicle_upload) {
-                $upload_manufacturer = Manufacturer::where(
-                    'name',
-                    $vehicle_upload['make'],
-                )->firstOrCreate();
-
-                $values = [];
-
-                $values[$i]['vehicle_status'] = 1;
-                $values[$i]['reg'] = $vehicle_upload['registration'];
-                $values[$i]['make'] = $upload_manufacturer->id;
-                $values[$i]['model'] = $vehicle_upload['model'];
-                $values[$i]['derivative'] = $vehicle_upload['derivative'];
-                $values[$i]['engine'] = $vehicle_upload['engine'];
-                $values[$i]['transmission'] = $vehicle_upload['transmission'];
-                $values[$i]['fuel_type'] = $vehicle_upload['fuel_type'];
-                $values[$i]['doors'] = $vehicle_upload['doors'];
-                $values[$i]['colour'] = $vehicle_upload['colour'];
-                $values[$i]['trim'] = $vehicle_upload['trim'];
-                $values[$i]['chassis_prefix'] =
-                    $vehicle_upload['chassis_prefix'];
-                $values[$i]['chassis'] = $vehicle_upload['chassis'];
-                $values[$i]['model_year'] = $vehicle_upload['model_year'];
-                $values[$i]['list_price'] = $vehicle_upload['list_price'];
-                $values[$i]['metallic_paint'] =
-                    $vehicle_upload['metallic_paint'];
-                $values[$i]['first_reg_fee'] = $vehicle_upload['first_reg_fee'];
-                $values[$i]['rfl_cost'] = $vehicle_upload['rfl_cost'];
-                $values[$i]['onward_delivery'] =
-                    $vehicle_upload['onward_delivery'];
-                $values[$i]['dealer_id'] = $vehicle_upload['dealer_id'];
-                $values[$i]['show_in_ford_pipeline'] =
-                    $request->show_in_ford_pipeline;
-
-                Vehicle::insert($values[$i]);
-            }
-            notify()->success(
-                'Your orders have been added to the system. You can edit any extra information below.',
-                'Import Successful',
-            );
-            if ($request->show_in_ford_pipeline === '0') {
-                return redirect()->route('pipeline');
-            } else {
-                return redirect()->route('pipeline.ford');
-            }
-        } elseif ($request->input('upload_type') === 'delete') {
-            foreach ($vehicle_uploads as $delete_order) {
-                Vehicle::where('chassis', $delete_order['chassis'])
-                    ->where('vehicle_status', 1)
-                    ->delete();
-            }
-            notify()->success(
-                'All vehicles still in stock have been deleted',
-                'Import Deletion successful',
-            );
-            return redirect()->route('pipeline');
-        } elseif ($request->input('upload_type') === 'ford_create') {
-            $exclude_status = [1, 3, 5, 6, 7, 14, 15, 16, 17, 18, 19];
-
-            foreach ($vehicle_uploads as $ford_report) {
-                $vehicle = Vehicle::where(
-                    'orbit_number',
-                    '=',
-                    $ford_report['ORBITNO'],
-                )->first();
-
-                if ($vehicle) {
-                    if (in_array($vehicle->vehicle_status, $exclude_status)) {
-                        \Log::debug(
-                            $vehicle->id .
-                                ' ' .
-                                $vehicle->niceName() .
-                                ' has the vehicle status ' .
-                                Vehicle::statusMatch($vehicle->vehicle_status) .
-                                ' and was skipped in the Ford Report import.',
-                        );
-                    } else {
-                        $prefix = array_shift($ford_report);
-
-                        $location = Location::where(
-                            'location',
-                            '=',
-                            $ford_report['LOCATION'],
-                        )->first();
-
-                        if ($location) {
-                            $location = intval($location->status);
-                        } else {
-                            $location = 4;
-                        }
-
-                        $build_date = null;
-
-                        if ($ford_report['PLAN_BUILD_DATE']) {
-                            $build_date = Carbon::createFromFormat(
-                                'd/m/Y',
-                                $ford_report['PLAN_BUILD_DATE'],
-                            )->format('Y-m-d h:i:s');
-                        }
-
-                        if ($ford_report['ETA_DATE']) {
-                            $due_date = Carbon::createFromFormat(
-                                'd/m/Y',
-                                $ford_report['ETA_DATE'],
-                            )->format('Y-m-d h:i:s');
-                        } else {
-                            $due_date = null;
-                        }
-
-                        if ($location === 1) {
-                            $due_date = null;
-                        }
-
-                        $vehicle->update([
-                            'chassis' => $ford_report['VIN'],
-                            'chassis_prefix' => $prefix,
-                            'vehicle_status' => $location,
-                            'build_date' => $build_date,
-                            'due_date' => $due_date,
-                        ]);
-
-                        $order = $vehicle->order;
-                        if ($order) {
-                            if ($vehicle->wasChanged('vehicle_status')) {
-                                if ($vehicle->vehicle_status === '1') {
-                                    $brokers = User::where(
-                                        'company_id',
-                                        $order->broker,
-                                    )->get();
-                                    foreach ($brokers as $broker) {
-                                        $broker->notify(
-                                            new VehicleInStockNotification(
-                                                $vehicle,
-                                            ),
-                                        );
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            notify()->success(
-                'All vehicles have been updated',
-                'Import Update Successfully',
-            );
-            return redirect()->route('csv_upload');
-        }
-        return false;
+        return match ($type) {
+            'create' => $this->handleCreate($csvData, $request),
+            'delete' => $this->handleDelete($csvData),
+            'ford_create' => $this->handleFordUpdate($csvData),
+            default => redirect()->back()->withErrors(['Invalid upload type selected']),
+        };
     }
+
+    /**
+     * Handle Bulk Creation (Optimized for Speed)
+     */
+    private function handleCreate(array $csvData, Request $request)
+    {
+        $makeNames = collect($csvData)->pluck('make')->unique()->filter();
+
+        foreach($makeNames as $name) {
+            Manufacturer::firstOrCreate(['name' => $name]);
+        }
+
+        $manufacturerMap = Manufacturer::whereIn('name', $makeNames)->pluck('id', 'name');
+
+        $insertBatch = [];
+        $now = now();
+
+        foreach ($csvData as $row) {
+            if (empty($row['make'])) continue;
+
+            $contract_date = $this->parseDate($row['contract_date'] ?? null);
+
+            $insertBatch[] = [
+                'vehicle_status' => 1,
+                'reg' => $row['registration'] ?? null,
+                'make' => $manufacturerMap[$row['make']] ?? null,
+                'model' => $row['model'] ?? null,
+                'type' => $row['type'] ?? null,
+                'derivative' => $row['derivative'] ?? null,
+                'engine' => $row['engine'] ?? null,
+                'transmission' => $row['transmission'] ?? null,
+                'fuel_type' => $row['fuel_type'] ?? null,
+                'doors' => $row['doors'] ?? null,
+                'colour' => $row['colour'] ?? null,
+                'trim' => $row['trim'] ?? null,
+                'chassis_prefix' => $row['chassis_prefix'] ?? null,
+                'chassis' => $row['chassis'] ?? null,
+                'model_year' => $row['model_year'] ?? null,
+                'list_price' => $row['list_price'] ?? 0,
+                'metallic_paint' => $row['metallic_paint'] ?? 0,
+                'first_reg_fee' => $row['first_reg_fee'] ?? 0,
+                'rfl_cost' => $row['rfl_cost'] ?? 0,
+                'onward_delivery' => $row['onward_delivery'] ?? 0,
+                'dealer_id' => $row['dealer_id'] ?? null,
+                'show_in_ford_pipeline' => $request->show_in_ford_pipeline,
+                'contract_date' => $contract_date,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ];
+        }
+
+        foreach (array_chunk($insertBatch, 500) as $chunk) {
+            Vehicle::insert($chunk);
+        }
+
+        notify()->success(
+            'Your orders have been added to the system..',
+            'Import Successful',
+        );
+
+        return redirect()->route($request->show_in_ford_pipeline === '0' ? 'pipeline' : 'pipeline.ford');
+    }
+
+    /**
+     * Handle Bulk Deletion
+     */
+    private function handleDelete(array $csvData)
+    {
+        $chassisNumbers = collect($csvData)->pluck('chassis')->filter()->toArray();
+
+        if (empty($chassisNumbers)) {
+            notify()->warning('No chassis numbers found in file', 'Import failed');
+            return redirect()->route('pipeline');
+        }
+
+        Vehicle::whereIn('chassis', $chassisNumbers)
+            ->where('vehicle_status', 1)
+            ->delete();
+
+        notify()->success('All vehicles still in stock have been deleted', 'Import Deletion successful');
+        return redirect()->route('pipeline');
+    }
+
+    /**
+     * Handle Ford Report Updates
+     */
+    private function handleFordUpdate(array $csvData)
+    {
+        $orbitNumbers = collect($csvData)->pluck('orbit_number')->filter();
+
+        $vehicles = Vehicle::with('order')
+            ->whereIn('orbit_number', $orbitNumbers)
+            ->get()
+            ->keyBy('orbit_number');
+
+        $locationMap = Location::pluck('status', 'location')->toArray();
+
+        $excludeStatus = VehicleStatus::excludeFromPipeline();
+
+        foreach ($csvData as $row) {
+            $vehicle = $vehicles->get($row['ORBITNO']);
+
+            if (!$vehicle || in_array($vehicle->vehicle_status, $excludeStatus)) {
+                if ($vehicle) {
+                    Log::debug("Skipped vehicle {$vehicle->id}: Status {$vehicle->vehicle_status->label()}");
+                }
+                continue;
+            }
+            // Parse Data
+            // Note: array_shift removes the first element (prefix) from $row
+            $prefix = array_shift($row);
+            $locationName = $row['LOCATION'] ?? '';
+            $rawStatusId = $locationMap[$locationName] ?? 4;
+            $newStatus = VehicleStatus::tryFrom((int) $rawStatusId);
+
+            // Handle Dates safely
+            $buildDate = $this->parseDate($row['PLAN_BUILD_DATE'] ?? null);
+            $dueDate = $this->parseDate($row['ETA_DATE'] ?? null);
+
+            if ($newStatus === VehicleStatus::IN_STOCK) {
+                $dueDate = null;
+            }
+
+            $vehicle->fill([
+                'chassis' => $row['VIN'] ?? $vehicle->chassis,
+                'chassis_prefix' => $prefix,
+                'vehicle_status' => $newStatus,
+                'build_date' => $buildDate,
+                'due_date' => $dueDate,
+            ]);
+
+            if ($vehicle->isDirty('vehicle_status') && $vehicle->vehicle_status === VehicleStatus::IN_STOCK) {
+                $this->notifyBrokers($vehicle);
+            }
+            $vehicle->save();
+        }
+        notify()->success('All vehicles have been updated', 'Import Update Successfully');
+        return redirect()->route('csv_upload');
+    }
+
+    /**
+     * Helper to safely parse dates
+     */
+    private function parseDate(?string $dateString)
+    {
+        if (!$dateString) return null;
+        try {
+            return Carbon::createFromFormat('d/m/Y', $dateString)->format('Y-m-d h:i:s');
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Helper to notify brokers
+     */
+    private function notifyBrokers(Vehicle $vehicle)
+    {
+        if (!$vehicle->order || !$vehicle->order->broker) {
+            return;
+        }
+
+        $brokers = User::where('company_id', $vehicle->order->broker)->get();
+
+        foreach ($brokers as $broker) {
+            $broker->notify(new VehicleInStockNotification($vehicle));
+        }
+    }
+
+//    public function executeCsvUpload(
+//        Request $request,
+//    ): bool|RedirectResponse|View {
+//        $file = $request->file('file');
+//
+//        $request->validate([
+//            'upload_type' => 'required',
+//            'file' => 'required|max:10240',
+//            'show_in_ford_pipeline' => 'required',
+//        ]);
+//
+//        $vehicle_uploads = $this->csvToArray($file);
+//
+//        if ($request->input('upload_type') === 'create') {
+//            $i = 0;
+//            foreach ($vehicle_uploads as $vehicle_upload) {
+//                $upload_manufacturer = Manufacturer::where(
+//                    'name',
+//                    $vehicle_upload['make'],
+//                )->firstOrCreate();
+//
+//                $values = [];
+//
+//                $values[$i]['vehicle_status'] = 1;
+//                $values[$i]['reg'] = $vehicle_upload['registration'];
+//                $values[$i]['make'] = $upload_manufacturer->id;
+//                $values[$i]['model'] = $vehicle_upload['model'];
+//                $values[$i]['derivative'] = $vehicle_upload['derivative'];
+//                $values[$i]['engine'] = $vehicle_upload['engine'];
+//                $values[$i]['transmission'] = $vehicle_upload['transmission'];
+//                $values[$i]['fuel_type'] = $vehicle_upload['fuel_type'];
+//                $values[$i]['doors'] = $vehicle_upload['doors'];
+//                $values[$i]['colour'] = $vehicle_upload['colour'];
+//                $values[$i]['trim'] = $vehicle_upload['trim'];
+//                $values[$i]['chassis_prefix'] =
+//                    $vehicle_upload['chassis_prefix'];
+//                $values[$i]['chassis'] = $vehicle_upload['chassis'];
+//                $values[$i]['model_year'] = $vehicle_upload['model_year'];
+//                $values[$i]['list_price'] = $vehicle_upload['list_price'];
+//                $values[$i]['metallic_paint'] =
+//                    $vehicle_upload['metallic_paint'];
+//                $values[$i]['first_reg_fee'] = $vehicle_upload['first_reg_fee'];
+//                $values[$i]['rfl_cost'] = $vehicle_upload['rfl_cost'];
+//                $values[$i]['onward_delivery'] =
+//                    $vehicle_upload['onward_delivery'];
+//                $values[$i]['dealer_id'] = $vehicle_upload['dealer_id'];
+//                $values[$i]['show_in_ford_pipeline'] =
+//                    $request->show_in_ford_pipeline;
+//
+//                Vehicle::insert($values[$i]);
+//            }
+//            notify()->success(
+//                'Your orders have been added to the system. You can edit any extra information below.',
+//                'Import Successful',
+//            );
+//            if ($request->show_in_ford_pipeline === '0') {
+//                return redirect()->route('pipeline');
+//            } else {
+//                return redirect()->route('pipeline.ford');
+//            }
+//        } elseif ($request->input('upload_type') === 'delete') {
+//            foreach ($vehicle_uploads as $delete_order) {
+//                Vehicle::where('chassis', $delete_order['chassis'])
+//                    ->where('vehicle_status', 1)
+//                    ->delete();
+//            }
+//            notify()->success(
+//                'All vehicles still in stock have been deleted',
+//                'Import Deletion successful',
+//            );
+//            return redirect()->route('pipeline');
+//        } elseif ($request->input('upload_type') === 'ford_create') {
+//            $exclude_status = [1, 3, 5, 6, 7, 14, 15, 16, 17, 18, 19];
+//
+//            foreach ($vehicle_uploads as $ford_report) {
+//                $vehicle = Vehicle::where(
+//                    'orbit_number',
+//                    '=',
+//                    $ford_report['ORBITNO'],
+//                )->first();
+//
+//                if ($vehicle) {
+//                    if (in_array($vehicle->vehicle_status, $exclude_status)) {
+//                        \Log::debug(
+//                            $vehicle->id .
+//                                ' ' .
+//                                $vehicle->niceName() .
+//                                ' has the vehicle status ' .
+//                                Vehicle::statusMatch($vehicle->vehicle_status) .
+//                                ' and was skipped in the Ford Report import.',
+//                        );
+//                    } else {
+//                        $prefix = array_shift($ford_report);
+//
+//                        $location = Location::where(
+//                            'location',
+//                            '=',
+//                            $ford_report['LOCATION'],
+//                        )->first();
+//
+//                        if ($location) {
+//                            $location = intval($location->status);
+//                        } else {
+//                            $location = 4;
+//                        }
+//
+//                        $build_date = null;
+//
+//                        if ($ford_report['PLAN_BUILD_DATE']) {
+//                            $build_date = Carbon::createFromFormat(
+//                                'd/m/Y',
+//                                $ford_report['PLAN_BUILD_DATE'],
+//                            )->format('Y-m-d h:i:s');
+//                        }
+//
+//                        if ($ford_report['ETA_DATE']) {
+//                            $due_date = Carbon::createFromFormat(
+//                                'd/m/Y',
+//                                $ford_report['ETA_DATE'],
+//                            )->format('Y-m-d h:i:s');
+//                        } else {
+//                            $due_date = null;
+//                        }
+//
+//                        if ($location === 1) {
+//                            $due_date = null;
+//                        }
+//
+//                        $vehicle->update([
+//                            'chassis' => $ford_report['VIN'],
+//                            'chassis_prefix' => $prefix,
+//                            'vehicle_status' => $location,
+//                            'build_date' => $build_date,
+//                            'due_date' => $due_date,
+//                        ]);
+//
+//                        $order = $vehicle->order;
+//                        if ($order) {
+//                            if ($vehicle->wasChanged('vehicle_status')) {
+//                                if ($vehicle->vehicle_status === '1') {
+//                                    $brokers = User::where(
+//                                        'company_id',
+//                                        $order->broker,
+//                                    )->get();
+//                                    foreach ($brokers as $broker) {
+//                                        $broker->notify(
+//                                            new VehicleInStockNotification(
+//                                                $vehicle,
+//                                            ),
+//                                        );
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            notify()->success(
+//                'All vehicles have been updated',
+//                'Import Update Successfully',
+//            );
+//            return redirect()->route('csv_upload');
+//        }
+//        return false;
+//    }
 
     function csvToArray($filename = '', $delimiter = ','): array
     {

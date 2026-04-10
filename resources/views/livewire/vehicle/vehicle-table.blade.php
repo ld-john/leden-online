@@ -123,9 +123,9 @@
             <th class="p-1">
                 <select wire:model.live="searchStatus" name="status" id="status" class="form-select">
                     <option value="">Select Status</option>
-                    @foreach($status as $item)
-                        <option value="{{ $item }}">
-                            {{ \App\Models\Vehicle::statusMatch($item) }}
+                    @foreach($status as $s)
+                        <option value="{{ $s->value }}">
+                            {{ $s->label() }}
                         </option>
                     @endforeach
                 </select>
@@ -179,7 +179,7 @@
                         @endif
                     </td>
                 @endif
-                <td>{{ $vehicle->status() }}</td>
+                <td>{{ $vehicle->vehicle_status->label() }}</td>
                 <td>
                     {{ \Carbon\Carbon::parse($vehicle->updated_at)->format( 'd/m/Y h:ia') }}
                 </td>

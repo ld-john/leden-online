@@ -143,9 +143,9 @@ class Order extends Model
     public function metallicPaintDiscount(): float|int
     {
         $metallic_paint_discount = DealerDiscount::where(
-            'model_id',
-            VehicleModel::where('name', $this->vehicle->model)->first()?->id,
-        )
+                'model_id',
+                VehicleModel::where('name', $this->vehicle->model)->first()?->id,
+            )
             ->where('dealer_id', $this->dealer->id)
             ->first()?->paint_discount;
 
@@ -183,7 +183,9 @@ class Order extends Model
         return $this->vehicle->list_price -
             $this->basicDealerDiscount() -
             $this->basicManufacturerSupport() -
-            $this->invoice->leden_discount;
+            $this->invoice->leden_discount -
+            $this->tacticalOffers()->sum('applied_amount');
+
     }
 
     public function totalDiscount()
@@ -256,11 +258,18 @@ class Order extends Model
 
     public function invoiceDifferenceExVat(): float
     {
-        return $this->invoiceDifferenceIncVat() / 1.2;
+        $vatRate = config('app.vat_rate', 1.2);
+
+        return round($this->invoiceDifferenceIncVat() / $vatRate, 2);
     }
 
     public function comments(): MorphMany
     {
         return $this->morphMany(Comments::class, 'commentable');
+    }
+
+    public function tacticalOffers(): BelongsToMany
+    {
+        return $this->belongsToMany(TacticalOffer::class)->withPivot('applied_amount')->withTimestamps();
     }
 }

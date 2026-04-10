@@ -55,9 +55,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function canPerform(): BelongsToMany
+    public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(Permission::class);
+    }
+    public function canPerform(string $permission) : bool
+    {
+        return $this->permissions()->where('name', $permission)->exists();
+    }
+
+    public function scopeWithPermission($query, string $permissionName)
+    {
+        return $query->whereHas('permissions', function ($query) use ($permissionName) {
+            $query->where('name', $permissionName);
+        });
     }
 
     public function unreadMessagesCount(): int

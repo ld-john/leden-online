@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Order;
 
+use App\Enums\VehicleStatus;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Vehicle;
@@ -31,7 +32,7 @@ class DeleteOrder extends Component
         $this->order = $order;
         $this->vehicle = $order->vehicle;
         $this->vehicleStatus = $order->vehicle?->vehicle_status;
-        $this->vehicle_status = Vehicle::statusList();
+        $this->vehicle_status = VehicleStatus::cases();
     }
 
     /**
@@ -54,9 +55,9 @@ class DeleteOrder extends Component
 
     /**
      * When the delete order button is pressed, delete the order and delete or update the vehicle based on the choices selected
-     * @return Application|RedirectResponse|Redirector
+     * @return Redirector|RedirectResponse
      */
-    public function deleteOrder()
+    public function deleteOrder(): Redirector|RedirectResponse
     {
         if ($this->deleteVehicle === 'yes') {
             Vehicle::destroy($this->vehicle->id);

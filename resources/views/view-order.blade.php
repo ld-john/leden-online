@@ -223,6 +223,7 @@
                 <hr>
                 <div class="row">
                     <div class="col">
+                        <x-view-order-cost-section name="Manufacturer Delivery Cost" :value="$order->manufacturer_delivery_cost" />
                         @include('partials.view-order-cost-section', ['name' => 'Manufacturer Delivery Cost', 'value' => $order->manufacturer_delivery_cost])
                         @include('partials.view-order-cost-section', ['name' => 'Onward Delivery', 'value' => $order->onward_delivery])
                         @include('partials.view-order-cost-section', ['name' => 'Sub Total', 'value' => $order->invoiceSubTotal()])

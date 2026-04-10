@@ -193,6 +193,20 @@
                         </div>
                     </div>
                     @can('admin')
+                        @if($vehicle->tactical_offers)
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-l-blue">Available Tactical Offers - will be applied if still valid when order is placed.</h6>
+                            </div>
+                            <div class="card-body">
+                                <ul>
+                                    @foreach($vehicle->tactical_offers as $offer)
+                                        <li>{{ $offer->name }} - £{{ number_format($offer->value, 2) }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    @endcan
+                    @can('admin')
                         @livewire('comment-box', ['commentable_id' => $vehicle->id, 'commentable_type' => 'vehicle'])
                     @endcan
                     <div class="card-footer text-right">

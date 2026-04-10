@@ -166,8 +166,8 @@
                     <select wire:model.live="searchStatus" name="status" id="status" class="form-select">
                         <option value="">Select Status</option>
                         @foreach($status as $item)
-                            <option value="{{ $item }}">
-                                {{ \App\Models\Vehicle::statusMatch($item) }}
+                            <option value="{{ $item->value }}">
+                                {{ $item->label() }}
                             </option>
                         @endforeach
                     </select>
@@ -238,7 +238,7 @@
                         @endif
                     @endif
 
-                    <td>{{ $order->vehicle->status() }}</td>
+                    <td>{{ $order->vehicle->vehicle_status->label() }}</td>
 
                     <td>
                         {{ $order->customer->customer_name ?? ''}}
@@ -444,8 +444,8 @@
                     <select wire:model.live="searchStatus" name="status" id="status" class="form-select">
                         <option value="">Select Status</option>
                         @foreach($status as $item)
-                            <option value="{{ $item }}">
-                                {{ \App\Models\Vehicle::statusMatch($item) }}
+                            <option value="{{ $item->value }}">
+                                {{ $item->label() }}
                             </option>
                         @endforeach
                     </select>
@@ -499,7 +499,7 @@
                     @else
                         <td>{{ \Carbon\Carbon::parse($order->vehicle->vehicle_registered_on ?? '')->format('d/m/Y') }}</td>
                     @endif
-                    <td>{{ $order->vehicle->status() }}</td>
+                    <td>{{ $order->vehicle->vehicle_status->label() }}</td>
                     <td>
                         {{ $order->customer->customer_name ?? ''}}
                     </td>
@@ -535,6 +535,15 @@
                                 >
                                     <livewire:order.quick-edit-order :order="$order->id" :vehicle="$order->vehicle" view="delivery" :key="time().$order->id"/>
                                 </a>
+                                @if(!$order->delivery)
+                                    <a
+                                            href="{{ route('delivery.create', $order->id) }}"
+                                            class="btn btn-outline-secondary"
+                                            title="Request Delivery"
+                                    >
+                                        <i class="fa-solid fa-truck"></i>
+                                    </a>
+                                @endif
                                 @if($order->vehicle->vehicle_registered_on && $order->vehicle->vehicle_registered_on !== '0000-00-00 00:00:00' && $order->vehicle->vehicle_registered_on < $now)
                                     <a
                                             wire:click="markCompleted({{$order->id}})"

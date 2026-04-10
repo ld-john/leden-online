@@ -24,6 +24,7 @@ class DeliveryAwaitingConfirmationEmailNotification extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage())
+            ->from(config('mail.from.address'), config('mail.from.name'))
             ->subject(
                 'Delivery booking request ' .
                     $this->order->id .

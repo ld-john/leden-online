@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\VehicleStatus;
 use App\Mail\LoginRequest;
 use App\Models\Order;
 use App\Models\Updates;
@@ -34,106 +35,87 @@ class DashboardController extends Controller
      */
     public function index(): Renderable
     {
-        $statuses = $this->GetAllVehiclesByStatus(Auth::user()->role);
-        $live_orders =
-            $statuses['Factory Order'] +
-            $statuses['Europe VHC'] +
-            $statuses['UK VHC'] +
-            $statuses['In Stock'] +
-            $statuses['In Stock (Registered)'] +
-            $statuses['In Stock (Awaiting Dealer Options)'] +
-            $statuses['Ready for Delivery'] +
-            $statuses['Delivery Booked'] +
-            $statuses['Awaiting Ship'] +
-            $statuses['At Converter'] +
-            $statuses['Dealer Transfer'];
+        $role = Auth::user()->role;
+        $statuses = $this->GetAllVehiclesByStatus($role);
+        $live_orders = collect(VehicleStatus::orderBankStatuses())->sum(fn($status) => $statuses[$status->label() ?? 0]);
 
-        if (Auth::user()->role == 'admin') {
-            $pie_labels = collect($statuses)
-                ->except(['Completed Orders'])
-                ->map(function ($item, $key) {
-                    return ['label' => $key . ' - ' . $item, 'value' => $item];
-                });
+        return match ($role) {
+            'admin' => $this->renderAdminDashboard($statuses, $live_orders),
+            'dealer' => view('dashboard.dashboard-dealer', compact('live_orders', 'statuses')),
+            default => $this->renderBrokerDashboard($statuses, $live_orders)
+        };
 
-            return view('dashboard.dashboard-admin', [
-                'vehicle_statuses' => $statuses,
-                'pie_labels' => $pie_labels,
-                'live_orders' => $live_orders,
-            ]);
-        } elseif (Auth::user()->role === 'dealer') {
-            return view('dashboard.dashboard-dealer', [
-                'live_orders' => $live_orders,
-                'vehicle_statuses' => $statuses,
-            ]);
-        } else {
-            $data = Vehicle::where('vehicle_status', 1)
-                ->select(['id', 'make', 'model', 'reg', 'type'])
-                ->with('manufacturer:id,name')
-                ->where('show_offer', true)
-                ->get();
+    }
 
-            $updates = Updates::where('dashboard', '=', 'broker')
-                ->where('update_type', '=', 'update')
-                ->get();
+    private function renderAdminDashboard($statuses, $live_orders)
+    {
+        $pie_labels = collect($statuses)->except([VehicleStatus::COMPLETED_ORDERS->label()])->map(fn($item, $key) => ['label' => "$key - $item", 'value' => $item]);
 
-            $banners = Updates::where('dashboard', '=', 'broker')
-                ->where('update_type', '=', 'promo')
-                ->get();
+        return view('dashboard.dashboard-admin', [
+            'vehicle_statuses' => $statuses,
+            'pie_labels' => $pie_labels,
+            'live_orders' => $live_orders
+        ]);
+    }
 
-            return view('dashboard.dashboard-broker', [
-                'updates' => $updates,
-                'banners' => $banners,
-                'data' => $data,
-                'live_orders' => $live_orders,
-                'vehicle_statuses' => $statuses,
-            ]);
-        }
+    private function renderBrokerDashboard($statuses, $live_orders)
+    {
+        $data = Vehicle::query()
+            ->where('vehicle_status', VehicleStatus::IN_STOCK)
+            ->where('show_offer', true)
+            ->with('manufacturer.name')
+            ->select(['id', 'make', 'model', 'reg', 'type'])
+            ->get();
+
+        $updates = Updates::where('dashboard', 'broker')->get()->groupBy('update_type');
+
+        return view('dashboard.dashboard-broker', [
+            'updates' => $updates->get('update', collect()),
+            'banners' => $updates->get('promo', collect()),
+            'data' => $data,
+            'live_orders' => $live_orders,
+            'vehicle_statuses' => $statuses,
+        ]);
+
     }
 
     public function GetAllVehiclesByStatus($role = 'admin')
     {
-        $vehicles = collect([]);
-        if ($role === 'admin') {
-            $vehicles = collect(Vehicle::all());
-        } elseif ($role === 'broker') {
-            $vehicles = collect(
-                Vehicle::where('broker_id', Auth::user()->company_id)->get(),
-            );
-        } elseif ($role === 'dealer') {
-            $vehicles = collect(
-                Vehicle::where('dealer_id', Auth::user()->company_id)->get(),
-            );
-        }
+        $query = Vehicle::query();
 
-        $vehicle_statuses = $vehicles->groupBy('vehicle_status')->all();
+        $query->when($role === 'broker', fn($q) => $q->where('broker_id', Auth::user()->company_id))
+            ->when($role === 'dealer', fn($q) => $q->where('dealer_id', Auth::user()->company_id));
 
-        $statuses = collect(Vehicle::statusList())
-            ->mapWithKeys(function ($item, $key) {
-                return [$item => 0];
-            })
-            ->toArray();
+        $counts = $query->selectRaw('vehicle_status, count(*) as total')->groupBy('vehicle_status')->pluck('total', 'vehicle_status');
 
-        foreach ($vehicle_statuses as $key => $status) {
-            $statuses[Vehicle::statusMatch($key)] = $status->count();
-        }
+        return collect(VehicleStatus::cases())->mapWithKeys(function($status) use ($counts) {
+            return [
+                $status->label() => $counts->get($status->value, 0)
+            ];
+        })->toArray();
 
-        return $statuses;
     }
 
     public static function GetOrdersByVehicleStatus($status)
     {
-        if (Auth::user()->role != 'admin') {
-            $searchField = Auth::user()->role . '_id';
+        $user = Auth::user();
 
-            $orders = Order::whereHas('vehicle', function ($q) use ($status) {
-                $q->where('vehicle_status', $status);
-            })->where($searchField, Auth::user()->company_id);
-        } else {
-            $orders = Order::whereHas('vehicle', function ($q) use ($status) {
-                $q->where('vehicle_status', $status);
-            });
-        }
-        return $orders->count();
+        // Ensure we are working with an Enum instance even if an ID was passed
+        $statusEnum = $status instanceof VehicleStatus
+            ? $status
+            : VehicleStatus::tryFrom($status);
+
+        return Order::query()
+            // 1. Filter by Vehicle Status via Relationship
+            ->whereHas('vehicle', fn($q) => $q->where('vehicle_status', $statusEnum))
+
+            // 2. Apply Role-based scoping (Brokers/Dealers see only their own)
+            ->when($user->role !== 'admin', function ($query) use ($user) {
+                $foreignKey = "{$user->role}_id"; // e.g., broker_id or dealer_id
+                return $query->where($foreignKey, $user->company_id);
+            })
+
+            ->count();
     }
 
     /* Show all notification page */

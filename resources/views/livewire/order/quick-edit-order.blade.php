@@ -1,10 +1,10 @@
 <div class="d-inline-block">
-        <i
-                class="fa-solid fa-pencil"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvas-{{$order->id}}"
-                aria-controls="offcanvasExample"
-        ></i>
+    <i
+            class="fa-solid fa-pencil"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvas-{{$order->id}}"
+            aria-controls="offcanvasExample"
+    ></i>
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-{{$order->id}}" aria-labelledby="offcanvasExampleLabel" wire:ignore.self>
         <div class="offcanvas-header">
@@ -27,7 +27,7 @@
                            autocomplete="off"
                     />
                     <label for="delivery_month">Desired Delivery Month</label>
-                    <select wire:model.live="delivery_month" id="delivery_month" class="form-control">
+                    <select wire:model.live="delivery_month" id="delivery_month" class="form-select">
                         <option value="">---</option>
                         <option value="Jan">January</option>
                         <option value="Feb">February</option>
@@ -59,43 +59,37 @@
                     <input wire:model.live="due_date" type="date" name="due_date" id="due_date" class="form-control"
                            autocomplete="off"
                     />
-                    @if($vehicleStatus === 1)
+                    @if($vehicleStatus === \App\Enums\VehicleStatus::IN_STOCK)
                         <label for="delivery_date" class="mb-0 mt-2">Proposed Delivery Date</label>
                         <input wire:model.live="delivery_date" id="delivery_date" type="date" name="delivery_date" class="form-control" autocomplete="off">
                     @endif
                 @endif
                 @if($view === 'delivery')
-                        
+
                     <label for="delivery_date" class="mb-0 mt-2">Proposed Delivery Date</label>
                     <input wire:model.live="delivery_date" id="delivery_date" type="date" name="delivery_date" class="form-control" autocomplete="off">
                     <label for="registration_date" class="mb-0 mt-2">Registration Date</label>
                     <input wire:model.live="registered_date" type="date" name="registration_date" id="registration_date" class="form-control"
                            autocomplete="off" />
+                    @if($order->delivery)
+                    <label for="delivery_agent" class="mb-0 mt-2">Delivery Agent</label>
+                        <select name="agent" id="delivery_agent" class="form-select" wire:model.live="selectedDeliveryAgent">
+                            <option value="">-- Select an Agent --</option>
+                            @foreach($this->deliveryAgents as $agent)
+                                <option value="{{ $agent->id }}">{{ $agent->company_name }}</option>
+                            @endforeach
+                        </select>
+                    @endif
                 @endif
                 <label for="vehicle_status" class="mb-0 mt-2">Status</label>
-                <select wire:model.live="vehicleStatus" class="form-control" name="vehicle_status" id="vehicle_status">
+                <select wire:model.live="vehicleStatus" class="form-select" name="vehicle_status" id="vehicle_status">
                     <option value="">Please Select Status</option>
-                    <option value="4">Factory Order</option>
-                    @if ($registered_date)
-                        <option value="15">In Stock (Registered)</option>
-                    @endif
-                    <option value="1">In Stock</option>
-                    <option value="3">Ready for Delivery</option>
-                    <option value="5">Awaiting Delivery Confirmation</option>
-                    <option value="6">Delivery Booked</option>
-                    @if ($registered_date && $registered_date < $now)
-                        <option value="7">Completed Orders</option>
-                    @endif
-                    <option value="10">Europe VHC</option>
-                    <option value="11">UK VHC</option>
-                    <option value="12">At Converter</option>
-                    <option value="13">Awaiting Ship</option>
-                    <option value="14">Recall</option>
-                    <option value="16">Damaged/Recalled</option>
-                    <option value="17">In Stock (Awaiting Dealer Options)</option>
-                    <option value="18">Dealer Transfer</option>
-                    <option value="19">Order in Query</option>
+                    @foreach($this->availableStatuses as $status)
+                        <option value="{{ $status->value }}">
+                            {{ $status->label() }}
+                        </option>
 
+                    @endforeach
                 </select>
             </div>
             @if($errors->count())

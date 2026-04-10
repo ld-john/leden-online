@@ -24,15 +24,34 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Delivery extends Model
 {
+    protected $fillable = [
+        'id',
+        'delivery_date',
+        'delivery_address1',
+        'delivery_address2',
+        'delivery_town',
+        'delivery_city',
+        'delivery_postcode',
+        'contact_name',
+        'contact_number',
+        'funder_confirmation',
+        'delivery_agent_id',
+    ];
+
     public function order(): HasOne
     {
         return $this->hasOne(Order::class, 'delivery_id', 'id');
     }
 
+    public function deliveryAgent(): HasOne
+    {
+        return $this->hasOne(Company::class, 'id', 'delivery_agent_id');
+    }
+
     public function checkDeliveries(): void
     {
-        $tomorrow = Carbon::now()->addWeekday(1);
-        $yesterday = Carbon::now()->subWeekday(1);
+        $tomorrow = Carbon::now()->addWeekday();
+        $yesterday = Carbon::now()->subWeekday();
         $tomorrowsDeliveries = Delivery::where(
             'delivery_date',
             '=',

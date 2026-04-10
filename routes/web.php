@@ -19,6 +19,7 @@ use App\Http\Controllers\DeliveriesController;
 use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\TacticalOfferController;
 use App\Http\Controllers\UpdatesController;
 
 Auth::routes();
@@ -116,6 +117,15 @@ Route::middleware('auth')->group(function () {
                 Route::get('/{user}/toggle', 'toggle')->name('toggle');
                 Route::get('/{vehicle}/admin', 'admin_create')->name('admin');
             });
+        });
+
+    Route::controller(TacticalOfferController::class)
+        ->name('offers.')
+        ->group(function () {
+            Route::get('/tactical-offers/', 'index')->name('index');
+            Route::get('/tactical-offers/create', 'create')->name('create');
+            Route::get('/tactical-offers/delete/{tacticalOffer}', 'delete')->name('delete');
+            Route::get('/tactical-offers/edit/{tacticalOffer}', 'edit')->name('edit');
         });
 
     /* Vehicle Controller Routes */

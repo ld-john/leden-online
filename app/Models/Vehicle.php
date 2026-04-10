@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\VehicleStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,6 +60,10 @@ class Vehicle extends Model
      */
     protected $touches = ['order'];
 
+    protected $casts = [
+        'vehicle_status' => VehicleStatus::class,
+    ];
+
     public function order(): HasOne
     {
         return $this->hasOne(Order::class, 'vehicle_id', 'id');
@@ -107,11 +113,6 @@ class Vehicle extends Model
             ->get();
     }
 
-    public function status(): string
-    {
-        return $this->statusMatch($this->vehicle_status);
-    }
-
     public function websiteLocation(): array
     {
         $data = [
@@ -120,50 +121,36 @@ class Vehicle extends Model
             'status' => 'danger',
         ];
 
-        if (!$this->order) {
-            $data['status'] = 'warning';
-            if ($this->ring_fenced_stock) {
-                $data['location'] = 'Ring-fenced Stock';
-                $data['route'] = 'ring_fenced_stock';
-            } else {
-                $data['location'] = 'Leden Stock';
-                $data['route'] = 'pipeline';
-            }
-        } else {
-            $data['status'] = 'primary';
-            if (
-                $this->vehicle_status === 1 ||
-                $this->vehicle_status === 4 ||
-                $this->vehicle_status === 10 ||
-                $this->vehicle_status === 11 ||
-                $this->vehicle_status === 12 ||
-                $this->vehicle_status === 13 ||
-                $this->vehicle_status === 14 ||
-                $this->vehicle_status === 15 ||
-                $this->vehicle_status === 16 ||
-                $this->vehicle_status === 17 ||
-                $this->vehicle_status === 18 ||
-                $this->vehicle_status === 19
-            ) {
-                $data['location'] = 'Order Bank';
-                $data['route'] = 'order_bank';
-            } elseif ($this->vehicle_status === 7) {
-                $data['location'] = 'Completed Orders';
-                $data['route'] = 'completed_orders';
-            } elseif (
-                $this->vehicle_status === 3 ||
-                $this->vehicle_status === 5 ||
-                $this->vehicle_status === 6
-            ) {
-                $data['location'] = 'Manage Deliveries';
-                $data['route'] = 'manage_deliveries';
-            }
+        if ($this->reservation) {
+            return [
+                'location' => 'Reservation',
+                'route' => 'reservation.index',
+                'status' => 'danager'
+            ];
         }
 
-        if ($this->reservation) {
-            $data['location'] = 'Reservation';
-            $data['route'] = 'reservation.index';
-            $data['status'] = 'danger';
+        if (!$this->order)
+        {
+            return [
+                'location' => $this->ring_fenced_stock ? 'Ring-fenced Stock' : 'Leden Stock',
+                'route' => $this->ring_fenced_stock ? 'ring_fenced_stock' : 'pipeline',
+                'status' => 'warning'
+            ];
+        }
+
+        $data['status'] = 'primary';
+
+        $status = $this->vehicle_status;
+
+        if ($status?->isOrderBank()) {
+            $data['location'] = 'Order Bank';
+            $data['route'] = 'order_bank';
+        } elseif ($status === VehicleStatus::COMPLETED_ORDERS) {
+            $data['location'] = 'Completed Orders';
+            $data['route'] = 'completed_orders';
+        } elseif($status?->isDeliveryManaged()) {
+            $data['location'] = 'Manage Deliveries';
+            $data['route'] = 'manage_deliveries';
         }
 
         return $data;
@@ -176,41 +163,21 @@ class Vehicle extends Model
         return $type[0];
     }
 
-    public static function statusMatch($value): string
+    public function niceName(): Attribute
     {
-        $statuses = Vehicle::statusList();
-
-        return $statuses[$value] ?? 'Status Not Known';
+        return Attribute::make(
+            get: fn () => "{$this->manufacturer->name} {$this->model} {$this->derivative}",
+        );
     }
 
-    public static function statusList(): array
+    public function getAvailableOffersAttribute(): Collection
     {
-        return [
-            1 => 'In Stock',
-            3 => 'Ready for Delivery',
-            4 => 'Factory Order',
-            5 => 'Awaiting Delivery Confirmation',
-            6 => 'Delivery Booked',
-            7 => 'Completed Orders',
-            10 => 'Europe VHC',
-            12 => 'At Converter',
-            13 => 'Awaiting Ship',
-            11 => 'UK VHC',
-            14 => 'Recall',
-            15 => 'In Stock (Registered)',
-            16 => 'Damaged/Recalled',
-            17 => 'In Stock (Awaiting Dealer Options)',
-            18 => 'Dealer Transfer',
-            19 => 'Order In Query',
-        ];
-    }
-
-    public function niceName(): string
-    {
-        return $this->manufacturer->name .
-            ' ' .
-            $this->model .
-            ' ' .
-            $this->derivative;
+        return TacticalOffer::active()
+            ->where('manufacturer_id', $this->make)
+            ->where(function ($query) {
+                $query->whereNull('applicable_model')
+                    ->orWhere('applicable_model', $this->model);
+            })
+            ->get();
     }
 }

@@ -14,6 +14,8 @@ return [
 
     'name' => env('APP_NAME', 'Leden Online'),
 
+    'vat_rate' => env('VAT_RATE', 1.2),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

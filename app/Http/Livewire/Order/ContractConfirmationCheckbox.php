@@ -17,7 +17,7 @@ class ContractConfirmationCheckbox extends Component
         $this->order = $order;
         $this->contract = $order->contract_confirmation;
         $this->userPermissions = Auth::user()
-            ->canPerform->pluck('name')
+            ->permissions->pluck('name')
             ->toArray();
     }
 

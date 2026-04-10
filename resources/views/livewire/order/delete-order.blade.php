@@ -24,8 +24,8 @@
                         <label for="vehicle_status">Does the Vehicle Status need to change?</label>
                         <select wire:model.live="vehicleStatus" class="form-select" name="vehicle_status" id="vehicle_status">
                             <option value="">Please Select Status</option>
-                            @foreach($vehicle_status as $key => $status)
-                                <option value="{{ $key }}">{{ $status }}</option>
+                            @foreach($vehicle_status as $status)
+                                <option value="{{ $status->value }}">{{ $status->label() }}</option>
                             @endforeach
                         </select>
                     @endif

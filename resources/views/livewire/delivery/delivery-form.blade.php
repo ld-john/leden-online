@@ -21,119 +21,53 @@
             </div>
         @endif
         <div class="card mb-3">
+            <x-ui.section-header>Delivery Information</x-ui.section-header>
             <div class="card-body">
                 {{-- Ford Order Number --}}
-                <div class="form-group row">
-                    <label for="order_ref" class="col-md-2 col-form-label">Ford Order Number</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="order_ref" type="text" name="order_ref" id="order_ref" class="form-control"
-                               autocomplete="off" disabled />
-                    </div>
-                </div>
+                <x-inputs.text label="Ford Order Number" name="order_ref" disabled />
+
                 {{-- Customer Name --}}
-                <div class="form-group row">
-                    <label for="customer_name" class="col-md-2 col-form-label">Customer Name</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="customer_name" type="text" name="customer_name" id="customer_name" class="form-control"
-                               autocomplete="off" disabled />
-                    </div>
-                </div>
+                <x-inputs.text label="Customer Name" name="customer_name" disabled />
+
                 {{-- Registration Number --}}
-                <div class="form-group row">
-                    <label for="reg" class="col-md-2 col-form-label">Registration Number</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="reg" type="text" name="reg" id="reg" class="form-control"
-                               autocomplete="off" disabled />
-                    </div>
-                </div>
+                <x-inputs.text label="Registration Number" name="reg" disabled />
+
                 {{-- Chassis --}}
-                <div class="form-group row">
-                    <label for="chassis" class="col-md-2 col-form-label">Chassis</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="chassis" type="text" name="chassis" id="chassis" class="form-control"
-                               autocomplete="off" disabled />
-                    </div>
-                </div>
+                <x-inputs.text label="Chassis" name="chassis" disabled />
+
                 {{-- Funder --}}
-                <div class="form-group row">
-                    <label for="funder" class="col-md-2 col-form-label">Funder</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="funder" type="text" name="funder" id="funder" class="form-control"
-                               autocomplete="off" disabled />
-                    </div>
-                </div>
+                <x-inputs.text label="Funder" name="funder" disabled />
+
                 {{-- Partner --}}
-                <div class="form-group row">
-                    <label for="partner" class="col-md-2 col-form-label">Partner</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="partner" type="text" name="partner" id="partner" class="form-control"
-                               autocomplete="off" disabled />
-                    </div>
-                </div>
+                <x-inputs.text label="Partner" name="partner" disabled />
+
                 {{-- Delivery Date --}}
-                <div class="form-group row">
-                    <label for="delivery_date" class="col-md-2 col-form-label">Delivery Date</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="delivery_date"  type="date" name="delivery_date" id="proposed_delivery_date" class="form-control" min="{{ $earliest_delivery_date }}"
-                               autocomplete="off" />
-                    </div>
-                </div>
+                <x-inputs.date label="Delivery Date" name="delivery_date" />
+
                 {{-- Delivery Address 1 --}}
-                <div class="form-group row">
-                    <label for="delivery_address1" class="col-md-2 col-form-label">Delivery Address 1</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="delivery_address1"  type="text" name="delivery_address1" id="delivery_address1" class="form-control"
-                               autocomplete="off" />
-                    </div>
-                </div>
+                <x-inputs.text label="Delivery Address 1" name="delivery_address1" />
+
                 {{-- Delivery Address 2 --}}
-                <div class="form-group row">
-                    <label for="delivery_address2" class="col-md-2 col-form-label">Delivery Address 2</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="delivery_address2"  type="text" name="delivery_address2" id="delivery_address2" class="form-control"
-                               autocomplete="off" />
-                    </div>
-                </div>
+                <x-inputs.text label="Delivery Address 2" name="delivery_address2" />
+
                 {{-- Delivery Town --}}
-                <div class="form-group row">
-                    <label for="delivery_town" class="col-md-2 col-form-label">Delivery Town</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="delivery_town"  type="text" name="delivery_town" id="delivery_town" class="form-control"
-                               autocomplete="off" />
-                    </div>
-                </div>
+                <x-inputs.text label="Delivery Town" name="delivery_town" />
+
                 {{-- Delivery City --}}
-                <div class="form-group row">
-                    <label for="delivery_city" class="col-md-2 col-form-label">Delivery City</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="delivery_city"  type="text" name="delivery_city" id="delivery_city" class="form-control"
-                               autocomplete="off" />
-                    </div>
-                </div>
+                <x-inputs.text label="Delivery City" name="delivery_city" />
+
                 {{-- Delivery Postcode --}}
-                <div class="form-group row">
-                    <label for="delivery_postcode" class="col-md-2 col-form-label">Delivery Postcode</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="delivery_postcode"  type="text" name="delivery_postcode" id="delivery_postcode" class="form-control"
-                               autocomplete="off" />
-                    </div>
-                </div>
+                <x-inputs.text label="Delivery Postcode" name="delivery_postcode" />
+
                 {{-- Contact Name --}}
-                <div class="form-group row">
-                    <label for="contact_name" class="col-md-2 col-form-label">Contact Name</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="contact_name"  type="text" name="contact_name" id="contact_name" class="form-control"
-                               autocomplete="off" />
-                    </div>
-                </div>
+                <x-inputs.text label="Contact Name" name="contact_name" />
+
                 {{-- Contact Number --}}
-                <div class="form-group row">
-                    <label for="contact_number" class="col-md-2 col-form-label">Contact Number</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="contact_number"  type="text" name="contact_number" id="contact_number" class="form-control"
-                               autocomplete="off" />
-                    </div>
-                </div>
+                <x-inputs.text label="Contact Number" name="contact_number" />
+
+                {{-- Delivery Agent --}}
+                <x-inputs.select label="Delivery Agent" name="selectedDeliveryAgent" :options="$this->deliveryAgents" option-label="company_name" />
+
                 {{-- Funder Confirmation --}}
                 <div class="form-group row">
                     <label for="funder_confirmation" class="col-md-2 col-form-label">Funder Confirmation</label>

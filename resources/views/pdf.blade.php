@@ -30,46 +30,6 @@
 
         .contents tr td:last-child {
             border-right: 1px solid #e3e6f0;
-        }<!DOCTYPE html>
-        <html lang="en">
-
-        <head>
-        <title>Leden Order - # {{$order->id}}</title>
-
-        <style>
-         body {
-             font-family:Arial, Helvetica, sans-serif;
-             color: #464646;
-             font-size: 10px;
-         }
-        .contents tr th, .details tr th {
-            padding: 5px 20px;
-            background: #1f3458;
-            color: #ffffff;
-        }
-
-        .contents tr td, .details tr td {
-            padding: 5px 20px;
-        }
-
-        .contents tr td, .details tr td {
-            border-bottom: 1px solid #e3e6f0;
-        }
-
-        .contents tr td:first-child, .details tr td {
-            border-left: 1px solid #e3e6f0;
-        }
-
-        .contents tr td:last-child {
-            border-right: 1px solid #e3e6f0;
-        }
-
-        .contents tr:nth-child(odd), .details tr:nth-child(odd) {
-            background: #f8f9fc;
-        }
-
-        .details tr td {
-            border-right: 1px solid #e3e6f0;
         }
 
     </style>
@@ -78,7 +38,7 @@
 <table cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
 
     <tr>
-        <td style="padding:40px 0px 0px 0px;">
+        <td style="padding:40px 0 0 0;">
             <table cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
                     <td valign="top" width="25%">
@@ -247,9 +207,21 @@
                                     Onward Delivery
                                 </td>
                                 <td style="text-align: right;">
-                                    £{{number_format($order->vehicle->onward_delivery, '2', '.', ',')}}
+                                    £{{number_format($order->vehicle->onward_delivery, '2')}}
                                 </td>
                             </tr>
+                            @if($order->tacticalOffers)
+                                @foreach($order->tacticalOffers as $offer)
+                                    <tr>
+                                        <th style="text-align: left;">
+                                            Tactical Offer: {{$offer->name}}
+                                        </th>
+                                        <th style="text-align: right;">
+                                            £{{ number_format($offer->value, 2) }}
+                                        </th>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </table>
                         <table cellspacing="0" cellpadding="0" border="0" width="100%" class="contents" style="margin-top: 10px">
                             <tr>

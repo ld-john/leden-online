@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Order;
 
+use App\Enums\VehicleStatus;
 use App\Http\Controllers\OrderController;
+use App\Models\Company;
 use App\Models\Order;
 use App\Models\Permission;
 use App\Models\User;
@@ -18,6 +20,9 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use LaravelIdea\Helper\App\Models\_IH_Company_C;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class QuickEditOrder extends Component
@@ -35,6 +40,7 @@ class QuickEditOrder extends Component
     public $delivery_date;
     public $registered_date;
     public $delivery_month;
+    public $selectedDeliveryAgent;
     public $view;
     public $now;
     public $return;
@@ -74,6 +80,8 @@ class QuickEditOrder extends Component
         $this->delivery_month = $order->delivery_month;
 
         $this->compound = $vehicle->compound;
+
+        $this->selectedDeliveryAgent = $order->delivery?->delivery_agent_id;
 
         $this->order_number = $vehicle->ford_order_number;
         $this->registration = $vehicle->reg;
@@ -135,9 +143,18 @@ class QuickEditOrder extends Component
         ]);
         $order = $this->order;
 
+        $delivery = $this->order->delivery;
+
+        if ($delivery) {
+            $delivery->update([
+                'delivery_agent_id' => $this->selectedDeliveryAgent
+            ]);
+        }
+
         $order->update([
             'delivery_month' => $this->delivery_month,
         ]);
+
 
         $brokers = User::where('company_id', $order->broker->id)->get();
         $permission = Permission::where('name', 'receive-emails')->first();
@@ -169,6 +186,7 @@ class QuickEditOrder extends Component
                 ]);
             }
         }
+
         if ($this->vehicle->wasChanged('reg')) {
             foreach ($brokers as $broker) {
                 $broker->notify(
@@ -204,6 +222,34 @@ class QuickEditOrder extends Component
         OrderController::setProvisionalRegDate($this->vehicle);
         notify()->success('Order was updated successfully', 'Order Updated');
         return $this->redirect(route($this->return));
+    }
+
+    #[Computed]
+    public function deliveryAgents(): Collection|_IH_Company_C|array
+    {
+        return Company::query()
+            ->where('company_type', 'delivery')
+            ->select('id', 'company_name')
+            ->orderBy('company_name')
+            ->get();
+    }
+
+    #[Computed]
+    public function availableStatuses(): \Illuminate\Support\Collection
+    {
+        $statuses = VehicleStatus::cases();
+
+        return collect($statuses)->filter(function($status) {
+            if ($status === VehicleStatus::IN_STOCK_REGISTERED && !$this->registered_date) {
+                return false;
+            }
+
+            if ($status === VehicleStatus::COMPLETED_ORDERS) {
+                return $this->registered_date && $this->registered_date < now();
+            }
+
+            return true;
+        });
     }
 
     public function render(): Factory|View|Application

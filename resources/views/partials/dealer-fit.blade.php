@@ -26,7 +26,7 @@
         </tr>
         </thead>
         <tbody>
-        @forelse($dealer_options as $option)
+        @forelse($this->dealer_options as $option)
             <tr>
                 <td><input type="checkbox" value="{{$option->id}}" wire:model.live="dealerFitOptions"></td>
                 <td>{{$option->option_name}}</td>
@@ -39,17 +39,17 @@
         @endforelse
     </table>
     <div class="d-flex justify-content-between">
-        @if(!$dealer_options->isEmpty())
-            <p>Showing {{ $dealer_options->firstItem() }} - {{ $dealer_options->lastItem() }}
-                of {{$dealer_options->total()}}</p>
+        @if(!$this->dealer_options->isEmpty())
+            <p>Showing {{ $this->dealer_options->firstItem() }} - {{ $this->dealer_options->lastItem() }}
+                of {{$this->dealer_options->total()}}</p>
         @endif
-        {{ $dealer_options->links(data: ['scrollTo' => '#dealer-fit']) }}
+        {{ $this->dealer_options->links(data: ['scrollTo' => '#dealer-fit']) }}
     </div>
 @else
     Please select the Model and Dealership above
 @endif
 
-@if($dealerFitOptionsArray)
+@if($this->selectedDealerFitOptions)
     <div class="form-group row" style="margin-top: 10px">
         <table class="table table-bordered">
             <thead>
@@ -59,7 +59,7 @@
             </thead>
             <tbody>
 
-            @foreach($dealerFitOptionsArray as $option)
+            @foreach($this->selectedDealerFitOptions as $option)
                 <tr>
                     <td>{{ $option->option_name }}</td>
                 </tr>

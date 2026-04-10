@@ -310,17 +310,15 @@
                 </li>
             @endcan
             @can('admin')
-                <li class="nav-item @if($activePage == 'manage-updates') active @endif">
-                    <a class="nav-link" href="{{ route('updates.create') }}">
-                        <i class="fa-solid fa-newspaper"></i>
-                        Manage Promos
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Admin Management
                     </a>
-                </li>
-                <li class="nav-item @if($activePage == 'log_viewer') active @endif">
-                    <a class="nav-link" href="{{ route('log-viewer.index') }}">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        View Logs
-                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ route('updates.create') }}"><i class="fa-solid fa-newspaper"></i> Manage Promos</a></li>
+                        <li><a class="dropdown-item" href="{{ route('offers.index') }}"><i class="fa-solid fa-percent"></i> Tactical Offers</a></li>
+                        <li><a class="dropdown-item" href="{{ route('log-viewer.index') }}"><i class="fa-solid fa-magnifying-glass"></i> View Logs</a></li>
+                    </ul>
                 </li>
             @endcan
         </ul>

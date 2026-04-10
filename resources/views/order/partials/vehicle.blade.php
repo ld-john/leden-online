@@ -261,26 +261,12 @@
             @enderror
             <select wire:model.live="status" class="form-select" name="vehicle_status" id="inputGroupSelectStatus">
                 <option value="">Please Select Status</option>
-                <option value="4">Factory Order</option>
-                @if ($registered_date)
-                    <option value="15">In Stock (Registered)</option>
-                @endif
-                <option value="1">In Stock</option>
-                <option value="3">Ready for Delivery</option>
-                <option value="5">Awaiting Delivery Confirmation</option>
-                <option value="6">Delivery Booked</option>
-                @if ($registered_date && $registered_date < $now)
-                    <option value="7">Completed Orders</option>
-                @endif
-                <option value="10">Europe VHC</option>
-                <option value="11">UK VHC</option>
-                <option value="12">At Converter</option>
-                <option value="13">Awaiting Ship</option>
-                <option value="14">Recall</option>
-                <option value="16">Damaged/Recalled</option>
-                <option value="17">In Stock (Awaiting Dealer Options)</option>
-                <option value="18">Dealer Transfer</option>
-                <option value="19">Order in Query</option>
+                @foreach($this->availableStatuses as $status)
+                    <option value="{{ $status->value }}">
+                        {{ $status->label() }}
+                    </option>
+
+                @endforeach
             </select>
         </div>
     </div>
@@ -302,7 +288,7 @@
         <input wire:model.live="build_date" type="date" name="build_date" id="build_date" class="form-control" autocomplete="off" />
     </div>
 </div>
-@if($status === 1 || $status === 3 || $status === 5 || $status === 6 || $status === 15 )
+@if($status?->isDeliveryEligible() )
     {{-- Delivery Date --}}
     <div class="form-group row">
         <label class="col-md-2 col-form-label" for="delivery_date">Delivery Date</label>
@@ -318,6 +304,13 @@
     <div class="col-md-6">
         <input wire:model.live="order_date" type="date" name="order_date" id="order_date" class="form-control"
                autocomplete="off" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="contract_date" class="col-md-2 col-form-label">Contract Date</label>
+    <div class="col-md-6">
+        <input type="date" wire:model.live="contract_date" name="contract_date" id="contract_date" class="form-control" autocomplete="off">
     </div>
 </div>
 

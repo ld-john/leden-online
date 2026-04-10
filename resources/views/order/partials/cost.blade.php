@@ -1,300 +1,102 @@
 {{-- List Price --}}
-<div class="form-group row">
-    <label for="list_price" class="col-md-2 col-form-label">List Price</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <div class="input-group-text">
-                £
-            </div>
-            <input wire:model.blur="list_price" type="number" name="list_price" id="list_price" step=".01" class="form-control" autocomplete="off" onchange="invoiceValueChange()"/>
-        </div>
-    </div>
-</div>
+<x-inputs.currency label="List Price" name="list_price" />
 {{-- Metallic Paint --}}
-<div class="form-group row">
-    <label for="metallic_paint" class="col-md-2 col-form-label">Metallic Paint</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <div class="input-group-text">
-                £
-            </div>
-            <input wire:model.blur="metallic_paint" type="number" name="metallic_paint" id="metallic_paint" step=".01" class="form-control" autocomplete="off" onchange="invoiceValueChange()" />
-        </div>
-    </div>
-</div>
+<x-inputs.currency label="Metallic Paint" name="metallic_paint" />
 {{-- Dealer Discount --}}
-<div class="form-group row">
-    <label for="dealer_discount" class="col-md-2 col-form-label">Dealer Discount</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <div class="input-group-text">
-                <span class="form-check-label me-2">Override?</span>
-                <input type="checkbox" class="form-check" aria-label="Checkbox for Invoice Value Override" wire:model.live="dealer_discount_override">
-            </div>
-            <input
-                    wire:model.blur="dealer_discount"
-                    type="number"
-                    name="dealer_discount"
-                    id="dealer_discount"
-                    step=".01"
-                    class="form-control discount"
-                    autocomplete="off"
-                    onchange="invoiceValueChange()"
-                    @if(!$dealer_discount_override) disabled @endif
-            />
-            <div class="input-group-text">
-                %
-            </div>
-        </div>
-    </div>
-</div>
+<x-inputs.percentage
+        label="Dealer Discount"
+        name="dealer_discount"
+        override-name="dealer_discount_override"
+        :is-overridden="$dealer_discount_override"
+        wire:model.blur="dealer_discount"
+/>
 {{-- Manufacturer Discount --}}
-<div class="form-group row">
-    <label for="manufacturer_discount" class="col-md-2 col-form-label">Manufacturer Discount</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <input
-                    wire:model.blur="manufacturer_discount"
-                    type="number"
-                    name="manufacturer_discount"
-                    id="manufacturer_discount"
-                    step=".01"
-                    class="form-control discount"
-                    autocomplete="off"
-                    onchange="invoiceValueChange()"
-            />
-            <div class="input-group-text">
-                %
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
+<x-inputs.percentage
+        label="Manufacturer Discount"
+        name="manufacturer_discount"
+        wire:model.blur="manufacturer_discount"
+/>
 {{-- Total Discount --}}
-<div class="form-group row">
-    <label for="total_discount" class="col-md-2 col-form-label">Total Discount</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <input
-                    type="number"
-                    name="total_discount"
-                    id="total_discount"
-                    class="form-control"
-                    step="0.01"
-                    placeholder="Dealer + Manufacturer"
-                    disabled
-            />
-            <div class="input-group-text">
-                %
-            </div>
-        </div>
-    </div>
-</div>
+<x-inputs.percentage
+        label="Total Discount"
+        name="total_discount"
+        :value="$this->invoiceData['total_discount_percent']"
+        readonly
+/>
 
 {{-- Metallic Paint Discount --}}
-<input id="metallic_paint_discount_raw" type="hidden" value="{{ $metallic_paint_discount }}">
-<div class="form-group row">
-    <label for="metallic_paint_discount" class="col-md-2 col-form-label">Metallic Paint Discount</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <input
-                    type="number"
-                    name="metallic_paint_discount"
-                    id="metallic_paint_discount"
-                    class="form-control"
-                    step="0.01"
-                    placeholder="Metallic Paint Discount"
-                    disabled
-            />
-            <div class="input-group-text">
-                %
-            </div>
-        </div>
-    </div>
-</div>
+<x-inputs.percentage
+    label="Metallic Paint Discount"
+    name="metallic_paint_discount"
+    :value="$this->invoiceData['metallic_discount_percent']"
+    readonly
+/>
 
 {{-- Leden Flat Discount --}}
-<div class="form-group row">
-    <label for="leden_discount" class="col-md-2 col-form-label">Leden Discount</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <div class="input-group-text">
-                £
-            </div>
-            <input wire:model.blur="leden_discount" type="number" name="leden_discount" id="leden_discount" step=".01"
-                   class="form-control" autocomplete="off" />
-        </div>
-    </div>
-</div>
+<x-inputs.currency label="Leden Flat Discount" name="leden_discount" />
 
 {{-- Manufacturer Delivery Cost --}}
-<div class="form-group row">
-    <label for="manufacturer_delivery_cost" class="col-md-2 col-form-label">Manufacturer Delivery Cost</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <div class="input-group-text">
-                £
-            </div>
-            <input
-                    wire:model.blur="manufacturer_delivery_cost"
-                    type="number"
-                    name="manufacturer_delivery_cost"
-                    id="manufacturer_delivery_cost"
-                    step=".01"
-                    class="form-control invoice-total"
-                    autocomplete="off"
-                    onchange="invoiceValueChange()"
-            />
-        </div>
-    </div>
-</div>
+<x-inputs.currency label="Manufacturer Delivery Cost" name="manufacturer_delivery_cost" />
+
 {{-- 1st Reg Fee --}}
-<div class="form-group row">
-    <label for="first_reg_fee" class="col-md-2 col-form-label">1st Reg Fee</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <div class="input-group-text">
-                £
-            </div>
-            <input
-                    wire:model.blur="first_reg_fee"
-                    type="number"
-                    name="first_reg_fee"
-                    id="first_reg_fee"
-                    step=".01"
-                    class="form-control"
-                    autocomplete="off"
-                    onchange="invoiceValueChange()"
-            />
-        </div>
-    </div>
-</div>
+<x-inputs.currency label="1st Reg Fee" name="first_reg_fee" />
+
 {{-- RFL --}}
-<div class="form-group row">
-    <label for="rfl_cost" class="col-md-2 col-form-label">RFL</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <div class="input-group-text">
-                £
-            </div>
-            <input
-                    wire:model.blur="rfl_cost"
-                    type="number"
-                    name="rfl_cost"
-                    id="rfl_cost"
-                    step=".01"
-                    class="form-control"
-                    autocomplete="off"
-                    onchange="invoiceValueChange()"
-            />
-        </div>
-    </div>
-</div>
+<x-inputs.currency label="RFL" name="rfl_cost" />
+
 {{-- Onward Delivery --}}
-<div class="form-group row">
-    <label for="onward_delivery" class="col-md-2 col-form-label">Onward Delivery</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <div class="input-group-text">
-                £
+<x-inputs.currency label="Onward Delivery" name="onward_delivery" />
+
+{{-- Available Offers --}}
+@if ($this->availableOffers->isNotEmpty())
+    <div class="mb-3 p-3 border rounded bg-light">
+        <label class="form-label d-block fw-bold">Available Tactical Offers</label>
+        @foreach($this->availableOffers as $offer)
+            <div class="form-check border-bottom py-2">
+                <input
+                        class="form-check-input"
+                        type="checkbox"
+                        wire:model.live="selectedOffers"
+                        value="{{ $offer->id }}"
+                        id="offer-{{ $offer->id }}"
+                        wire:key="checkbox-{{ $offer->id }}"
+                >
+                <label class="form-check-label d-flex justify-content-between w-100" for="offer-{{ $offer->id }}">
+                    <span>{{ $offer->name }}</span>
+                    <span class="text-success fw-bold">- £{{ number_format($offer->value, 2) }}</span>
+                </label>
             </div>
-            <input
-                    wire:model.blur="onward_delivery"
-                    type="number"
-                    name="onward_delivery"
-                    id="onward_delivery"
-                    step=".01"
-                    class="form-control invoice-total"
-                    autocomplete="off"
-                    onchange="invoiceValueChange()"
-            />
+        @endforeach
+
+        <div class="form-check py-2">
+            <input class="form-check-input"
+                   type="checkbox"
+                   value="none"
+                   wire:model.live="selectedOffers"
+                   id="offer-none"
+                   wire:key="checkbox-none"
+            >
+            <label class="form-check-label text-muted" for="offer-none">
+                No offer applied
+            </label>
         </div>
     </div>
-</div>
+@endif
+
 {{-- Invoice Funder For --}}
-<div class="form-group row">
-    <label for="invoice_funder_for" class="col-md-2 col-form-label">Invoice Funder For</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <div class="input-group-text">
-                £
-            </div>
-            <input
-                    wire:model.blur="invoice_funder_for"
-                    type="number"
-                    name="invoice_funder_for"
-                    id="invoice_funder_for"
-                    step=".01"
-                    class="form-control"
-                    autocomplete="off"
-                    onchange="invoiceValueChange()"
-            />
-        </div>
-    </div>
-</div>
+<x-inputs.currency label="Invoice Funder For" name="invoice_funder_for" />
+
 {{-- Estimated Invoice Value --}}
-<div class="form-group row">
-    <label for="invoice_value" class="col-md-2 col-form-label">Estimated Invoice Value</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            <div class="input-group-text">
-                £
-            </div>
-            <input type="text" name="invoice_value" id="invoice_value" class="form-control" disabled/>
-        </div>
-    </div>
-</div>
+<x-inputs.currency-readonly label="Estimated Invoice Value" name="invoice_value" :value="$this->invoiceData['invoice_value']" />
+
 {{-- Show Discount Applied --}}
-<div class="form-group row">
-    <label for="show_discount" class="col-md-2 col-form-label">Show Discount Applied</label>
-    <div class="col-md-6">
-        <select wire:model.blur="show_discount" name="show_discount" id="show_discount" class="form-control">
-            <option value="0">No
-            </option>
-            <option value="1">Yes
-            </option>
-        </select>
-    </div>
-</div>
+<x-inputs.boolean label="Show Discount Applied" name="show_discount" />
+
 {{-- Show as Offer --}}
-<div class="form-group row">
-    <label for="show_offer" class="col-md-2 col-form-label">Show as Offer</label>
-    <div class="col-md-6">
-        <select wire:model.blur="show_offer" name="show_offer" id="show_offer" class="form-control">
-            <option value="0">No
-            </option>
-            <option value="1">Yes
-            </option>
-        </select>
-    </div>
-</div>
+<x-inputs.boolean label="Show as Offer" name="show_offer" />
+
 {{-- Hide From Broker --}}
-<div class="form-group row">
-    <label for="hide_from_broker" class="col-md-2 col-form-label">Hide From Broker List</label>
-    <div class="col-md-6">
-        <select wire:model.blur="hide_from_broker" name="hide_from_broker" id="hide_from_broker" class="form-control">
-            <option value="0">
-                No
-            </option>
-            <option value="1">
-                Yes
-            </option>
-        </select>
-    </div>
-</div>
+<x-inputs.boolean label="Hide From Broker List" name="hide_from_broker" />
+
 {{-- Hide From Dealer --}}
-<div class="form-group row">
-    <label for="hide_from_dealer" class="col-md-2 col-form-label">Hide From Dealer List</label>
-    <div class="col-md-6">
-        <select wire:model.blur="hide_from_dealer" name="hide_from_dealer" id="hide_from_dealer" class="form-control">
-            <option value="0">
-                No
-            </option>
-            <option value="1">
-                Yes
-            </option>
-        </select>
-    </div>
-</div>
+<x-inputs.boolean label="Hide From Dealer List" name="hide_from_dealer" />

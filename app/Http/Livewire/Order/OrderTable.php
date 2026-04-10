@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire\Order;
 
+use App\Enums\VehicleStatus;
 use App\Models\Order;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -81,15 +83,17 @@ class OrderTable extends Component
     {
         $vehicle = $order->vehicle;
 
-        $vehicle->update(['vehicle_status' => 7]);
+        $vehicle->update(['vehicle_status' => VehicleStatus::COMPLETED_ORDERS]);
 
         $order->update(['completed_date' => $this->now]);
     }
 
     public function render(): Factory|View|Application
     {
-        $orders = Order::whereHas('vehicle', function ($q) {
-            $q->whereIn('vehicle_status', $this->status);
+        $statuses = Arr::wrap($this->status);
+
+        $orders = Order::whereHas('vehicle', function ($q) use ($statuses) {
+            $q->whereIn('vehicle_status', $statuses);
         })
             ->with([
                 'vehicle',

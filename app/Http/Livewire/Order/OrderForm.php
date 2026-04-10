@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Order;
 
+use App\Enums\VehicleStatus;
 use App\Http\Controllers\OrderController;
 use App\Models\Company;
 use App\Models\Customer;
@@ -18,6 +19,7 @@ use App\Models\Order;
 use App\Models\OrderUpload;
 use App\Models\Permission;
 use App\Models\Reservation;
+use App\Models\TacticalOffer;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\VehicleMeta;
@@ -32,6 +34,11 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use LaravelIdea\Helper\App\Models\_IH_FitOption_C;
+use LaravelIdea\Helper\App\Models\_IH_TacticalOffer_C;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -74,26 +81,28 @@ class OrderForm extends Component
     public $order_ref;
     public $chassis_prefix;
     public $chassis;
-    public $status;
+    public ?VehicleStatus $status = null;
     public $build_date; //Vehicle
     public $due_date; // Vehicle
     public $delivery_date; // Order
     public $model_year;
     public $registered_date;
+    public $contract_date;
     public $ford_pipeline = '0';
     public $factoryFitOptions = []; // Vehicle -> JSON of IDs to fit_options
     public $dealerFitOptions = []; // Vehicle
     public $dealership;
     public $registration_company; // Order
     public $invoice_company; // Order
-    public $list_price;
-    public $metallic_paint;
-    public $dealer_discount;
-    public $manufacturer_discount;
-    public $manufacturer_delivery_cost;
-    public $first_reg_fee;
-    public $rfl_cost;
-    public $onward_delivery;
+    public $list_price = 0;
+    public $metallic_paint = 0;
+    public $metallic_paint_discount_raw = 0;
+    public $dealer_discount = 0;
+    public $manufacturer_discount = 0;
+    public $manufacturer_delivery_cost = 0;
+    public $onward_delivery = 0;
+    public $first_reg_fee = 0;
+    public $rfl_cost = 0;
     public string|float $leden_discount = 0;
     public $invoice_funder_for;
     public $show_discount = '0'; // Vehicle
@@ -158,6 +167,7 @@ class OrderForm extends Component
     public $maintenance_rental_value;
     public $renewal_date;
     public $delivery_month;
+    public ?array $selectedOffers = [];
     public $now;
     protected $rules = [
         'make' => 'required_without:newmake',
@@ -179,6 +189,7 @@ class OrderForm extends Component
         'build_date' => 'nullable|date',
         'due_date' => 'nullable|date',
         'registered_date' => 'nullable|date',
+        'contract_date' => 'nullable|date',
         'dealer_pay_date' => 'nullable|date',
         'invoice_broker_paid' => 'nullable|date',
         'commission_broker_paid' => 'nullable|date',
@@ -227,6 +238,7 @@ class OrderForm extends Component
             $this->registered_date = $this->vehicle->vehicle_registered_on;
             $this->due_date = $this->vehicle->due_date;
             $this->build_date = $this->vehicle->build_date;
+            $this->contract_date = $this->vehicle->contract_date;
 
             $this->make = $this->vehicle->make;
             $this->model = VehicleModel::where(
@@ -405,7 +417,13 @@ class OrderForm extends Component
             $this->maintenance_rental_value = $this->order->maintenance_rental;
             $this->renewal_date = $this->order->renewal_date;
             $this->exclusion = $this->order->exception;
+            $this->selectedOffers = $this->order->tacticalOffers()->pluck('tactical_offers.id')->toArray();
         }
+    }
+
+    public function updatedStatus($value): void
+    {
+        $this->status = VehicleStatus::tryFrom($value);
     }
 
     /**
@@ -415,6 +433,18 @@ class OrderForm extends Component
     public function updatedMake(): void
     {
         $this->model = null;
+        $this->reset('selectedOffers');
+    }
+
+
+    public function updatedSelectedOffers(): void
+    {
+        if (end($this->selectedOffers) === 'none') {
+            $this->selectedOffers = ['none'];
+        } elseif (count($this->selectedOffers) > 1 && in_array('none', $this->selectedOffers)) {
+            $this->selectedOffers = array_diff($this->selectedOffers, ['none']);
+            $this->selectedOffers = array_values($this->selectedOffers);
+        }
     }
 
     /**
@@ -431,6 +461,73 @@ class OrderForm extends Component
         $this->colour = null;
         $this->trim = null;
         $this->getDealerDiscount();
+        $this->reset('selectedOffers');
+    }
+
+    /**
+     * This replaces your invoiceValueChange() function.
+     * It recalculates automatically whenever any of the above properties change.
+     */
+    #[Computed]
+    public function invoiceData(): array
+    {
+        $vatRate = 20;
+
+        $totalDiscountPercent = (float)$this->dealer_discount + (float)$this->manufacturer_discount;
+
+        $metallicDiscountPercent = ($this->metallic_paint_discount_raw != 0) ? (float)$this->metallic_paint_discount_raw : $totalDiscountPercent;
+
+        $tacticalOfferAmount = TacticalOffer::whereIn('id', $this->selectedOffers)
+            ->where('id', '!=', 'none')
+            ->active()
+            ->sum('value');
+
+        $priceAfterDiscount = $this->list_price - ($this->list_price * $totalDiscountPercent / 100);
+        $paintAfterDiscount = $this->metallic_paint - ($this->metallic_paint * $metallicDiscountPercent / 100);
+
+        $sumExVat = $priceAfterDiscount +
+            $paintAfterDiscount +
+            (float)$this->onward_delivery +
+            (float)$this->manufacturer_delivery_cost -
+            $tacticalOfferAmount;
+
+        $fees = (float)$this->first_reg_fee + (float)$this->rfl_cost;
+
+        $totalVat = ($sumExVat / 100) * $vatRate;
+        $finalInvoiceValue = $sumExVat + $fees + $totalVat;
+
+        return [
+            'total_discount_percent' => $totalDiscountPercent,
+            'metallic_discount_percent' => $metallicDiscountPercent,
+            'tactical_offer_amount' => $tacticalOfferAmount,
+            'invoice_value' => $finalInvoiceValue
+        ];
+    }
+
+    public function scrollToTop()
+    {
+        $this->dispatch('scroll-to-top');
+    }
+
+    /**
+     * Get offers specifically for this vehicle.
+     * We use a Computed property so it refreshes if the vehicle changes.
+     */
+    #[Computed]
+    public function availableOffers(): _IH_TacticalOffer_C|array|Collection
+    {
+        if (!$this->make) {
+            return collect();
+        }
+
+        return TacticalOffer::query()
+            ->active()
+            ->where('manufacturer_id', $this->make)
+            ->where(function ($query) {
+                $query->where('applicable_model', $this->model)
+                    ->orWhereNull('applicable_model');
+            })
+            ->get();
     }
 
     /**
@@ -441,6 +538,7 @@ class OrderForm extends Component
     {
         $this->getDealerDiscount();
     }
+
 
     /**
      * Updates the factory fit options array when changes are made in the form
@@ -499,9 +597,24 @@ class OrderForm extends Component
 
         if (
             $this->delivery_date === '-0001-11-30' ||
-            $this->delivery_date === ''
+            $this->delivery_date === '' ||
+            $this->delivery_date === '0000-00-00'
         ) {
             $this->delivery_date = null;
+        }
+
+        if ($this->registered_date === '-0001-11-30' ||
+            $this->registered_date === '' ||
+            $this->registered_date === '0000-00-00'
+        ) {
+            $this->registered_date = null;
+        }
+
+        if ($this->contract_date === '-0001-11-30' ||
+            $this->contract_date === '' ||
+            $this->contract_date === '0000-00-00'
+        ) {
+            $this->contract_date = null;
         }
 
         $this->validate();
@@ -566,15 +679,7 @@ class OrderForm extends Component
 
             $this->saveVehicleDetails($vehicle);
 
-            $this->setInvoiceValue($order, $invoice);
-            foreach ($this->attachments as $attachment) {
-                $file = new OrderUpload();
-                $file->file_name = $attachment->store('attachments');
-                $file->uploaded_by = auth()->id();
-                $file->order_id = $order->id;
-                $file->file_type = $attachment->getClientOriginalExtension();
-                $file->save();
-            }
+            $this->setInvoiceAndAttachments($order, $invoice);
             notify()->success(
                 'Order was created successfully',
                 'Order Created',
@@ -634,21 +739,13 @@ class OrderForm extends Component
                 }
             }
 
-            $this->setInvoiceValue($order, $invoice);
-
-            foreach ($this->attachments as $attachment) {
-                $file = new OrderUpload();
-                $file->file_name = $attachment->store('attachments');
-                $file->uploaded_by = auth()->id();
-                $file->order_id = $order->id;
-                $file->file_type = $attachment->getClientOriginalExtension();
-                $file->save();
-            }
+            $this->setInvoiceAndAttachments($order, $invoice);
             notify()->success(
                 'Order was updated successfully',
                 'Order Updated',
             );
         }
+
         OrderController::setProvisionalRegDate($vehicle);
         Reservation::where('vehicle_id', $vehicle->id)->delete();
 
@@ -662,6 +759,51 @@ class OrderForm extends Component
     public function clearCustomerID(): void
     {
         $this->customer_id = null;
+    }
+
+    #[Computed]
+    public function factory_options(): _IH_FitOption_C|array|LengthAwarePaginator
+    {
+        return FitOption::latest()
+            ->where('option_type', 'factory')
+            ->whereNull('archived_at')
+            ->when($this->model, fn($q) => $q->where('model', $this->model))
+            ->when($this->model_year, fn($q) => $q->where('model_year'), $this->model_year)
+            ->where($this->factoryFitSearch, fn($q) => $q->where('option_name', 'like', '%' . $this->factoryFitSearch . '%'))
+            ->paginate(5, ['*'], 'factory_page');
+    }
+
+    #[Computed]
+    public function dealer_options(): _IH_FitOption_C|array|LengthAwarePaginator
+    {
+        return FitOption::latest()
+            ->where('option_type', 'dealer')
+            ->whereNull('archived_at')
+            ->when($this->model, fn($q) => $q->where('model', $this->model))
+            ->when($this->dealership, fn($q) => $q->where('dealer_id', $this->dealership))
+            ->when($this->dealerFitSearch, fn($q) => $q->where('option_name', 'like', '%' . $this->dealerFitSearch . '%'))
+            ->paginate(5, ['*'], 'dealer_options');
+    }
+
+    #[Computed]
+    public function selectedFactoryFitOptions(): _IH_FitOption_C|array|Collection|FitOption|null
+    {
+        if (empty($this->factoryFitOptions))
+        {
+            return collect();
+        }
+
+        return FitOption::find($this->factoryFitOptions);
+    }
+
+    #[Computed]
+    public function selectedDealerFitOptions(): _IH_FitOption_C|array|Collection|FitOption|null
+    {
+        if (empty($this->dealerFitOptions))
+        {
+            return collect();
+        }
+        return FitOption::find($this->dealerFitOptions);
     }
 
     /**
@@ -761,46 +903,26 @@ class OrderForm extends Component
                 ->get(),
             'brokers' => $companies->where('company_type', 'broker'),
             'dealers' => $companies->where('company_type', 'dealer'),
+            'delivery_agents' => $companies->where('company_type', 'delivery'),
             'registration_companies' => $companies->where(
                 'company_type',
                 'registration',
             ),
             'invoice_companies' => $companies->where('company_type', 'invoice'),
-
-            'factory_options' => FitOption::latest()
-                ->where('option_type', 'factory')
-                ->whereNull('archived_at')
-                ->when($this->model, function ($query) {
-                    $query->where('model', $this->model);
-                })
-                ->when($this->model_year, function ($query) {
-                    $query->where('model_year', $this->model_year);
-                })
-                ->when($this->factoryFitSearch, function ($query) {
-                    $query->where(
-                        'option_name',
-                        'like',
-                        '%' . $this->factoryFitSearch . '%',
-                    );
-                })
-                ->paginate(5, ['*'], 'factoryOptionsPage'),
-            'dealer_options' => FitOption::latest()
-                ->where('option_type', 'dealer')
-                ->whereNull('archived_at')
-                ->when($this->model, function ($query) {
-                    $query->where('model', $this->model);
-                })
-                ->when($this->dealership, function ($query) {
-                    $query->where('dealer_id', $this->dealership);
-                })
-                ->when($this->dealerFitSearch, function ($query) {
-                    $query->where(
-                        'option_name',
-                        'like',
-                        '%' . $this->dealerFitSearch . '%',
-                    );
-                })
-                ->paginate(5, ['*'], 'dealerOptionsPage'),
+            'delivery_months' => [
+                ['id' => 'Jan', 'name' => 'January'],
+                ['id' => 'Feb', 'name' => 'February'],
+                ['id' => 'Mar', 'name' => 'March'],
+                ['id' => 'Apr', 'name' => 'April'],
+                ['id' => 'May', 'name' => 'May'],
+                ['id' => 'Jun', 'name' => 'June'],
+                ['id' => 'Jul', 'name' => 'July'],
+                ['id' => 'Aug', 'name' => 'August'],
+                ['id' => 'Sep', 'name' => 'September'],
+                ['id' => 'Oct', 'name' => 'October'],
+                ['id' => 'Nov', 'name' => 'November'],
+                ['id' => 'Dec', 'name' => 'December']
+            ]
         ];
         return view('livewire.order.order-form', $options);
     }
@@ -867,6 +989,24 @@ class OrderForm extends Component
         ]);
     }
 
+    #[Computed]
+    public function availableStatuses(): Collection
+    {
+        $statuses = VehicleStatus::cases();
+
+        return collect($statuses)->filter(function($status) {
+            if ($status === VehicleStatus::IN_STOCK_REGISTERED && !$this->registered_date) {
+                return false;
+            }
+
+            if ($status === VehicleStatus::COMPLETED_ORDERS) {
+                return $this->registered_date && $this->registered_date < now();
+            }
+
+            return true;
+        });
+    }
+
     /**
      * Save the details to the Vehicle model
      * @param Vehicle $vehicle
@@ -886,6 +1026,7 @@ class OrderForm extends Component
             'vehicle_registered_on' => $this->registered_date,
             'due_date' => $this->due_date,
             'build_date' => $this->build_date,
+            'contract_date' => $this->contract_date,
             'model_year' => $this->model_year,
             'ford_order_number' => $this->order_ref,
             'make' => $this->make,
@@ -916,16 +1057,15 @@ class OrderForm extends Component
         }
         $brokers = User::where('company_id', $this->broker)->get();
         $permission = Permission::where('name', 'receive-emails')->first();
+
         $mailBrokers = $permission?->users
             ->where('company_id', $this->broker)
             ->all();
+
         if ($vehicle->wasChanged('vehicle_status')) {
-            if ($vehicle->vehicle_status == '7') {
+            if ($vehicle->vehicle_status == VehicleStatus::COMPLETED_ORDERS) {
                 $this->order->update(['completed_date' => now()]);
-            } elseif (
-                $vehicle->vehicle_status == '1' ||
-                $vehicle->vehicle_status == '15'
-            ) {
+            } elseif ( $vehicle->vehicle_status?->isInStock()) {
                 foreach ($brokers as $broker) {
                     $broker->notify(new VehicleInStockNotification($vehicle));
                 }
@@ -974,28 +1114,14 @@ class OrderForm extends Component
      */
     public function setInvoiceValue($order, $invoice): void
     {
-        if ($this->dealer_invoice_override_allowed) {
-            if ($this->dealer_invoice_override < 0) {
-                $invoice->invoice_value_from_dealer =
-                    $this->dealer_invoice_override * -1;
-                $invoice->invoice_value_to_dealer = null;
-            } else {
-                $invoice->invoice_value_to_dealer =
-                    $this->dealer_invoice_override;
-                $invoice->invoice_value_from_dealer = null;
-            }
-            $invoice->dealer_value_overruled = true;
-        } else {
-            $invoice_value = $order->invoiceDifferenceExVat();
-            if ($invoice_value < 0) {
-                $invoice->invoice_value_from_dealer = $invoice_value * -1;
-                $invoice->invoice_value_to_dealer = null;
-            } else {
-                $invoice->invoice_value_to_dealer = $invoice_value;
-                $invoice->invoice_value_from_dealer = null;
-            }
-            $invoice->dealer_value_overruled = false;
-        }
+        $isOverridden = $this->dealer_invoice_override_allowed;
+
+        $rawValue = $isOverridden ? $this->dealer_invoice_override : $order->invoiceDifferenceExVat();
+
+        $invoice->invoice_value_from_dealer = ($rawValue < 0) ? abs($rawValue) : null;
+        $invoice->invoice_value_to_dealer = ($rawValue >= 0) ? $rawValue : null;
+
+        $invoice->dealer_value_overruled = $isOverridden;
 
         $invoice->save();
     }
@@ -1024,5 +1150,36 @@ class OrderForm extends Component
     public function updatingDealerFitSearch(): void
     {
         $this->resetPage('dealerOptionsPage');
+    }
+
+    /**
+     * @param Order $order
+     * @param Invoice $invoice
+     * @return void
+     */
+    public function setInvoiceAndAttachments(Order $order, Invoice $invoice): void
+    {
+
+        $actualOffers = array_filter($this->selectedOffers, fn ($id) => $id !== 'none');
+
+        if (!empty($actualOffers)) {
+            $offers = TacticalOffer::whereIn('id', $actualOffers)->active()->get();
+
+            $pivotData = $offers->pluck('value', 'id')->mapWithKeys(function($value, $id) {
+                return [$id => ['applied_amount' => $value]];
+            })->toArray();
+
+            $order->tacticalOffers()->sync($pivotData);
+        }
+
+        $this->setInvoiceValue($order, $invoice);
+        foreach ($this->attachments as $attachment) {
+            $file = new OrderUpload();
+            $file->file_name = $attachment->store('attachments');
+            $file->uploaded_by = auth()->id();
+            $file->order_id = $order->id;
+            $file->file_type = $attachment->getClientOriginalExtension();
+            $file->save();
+        }
     }
 }

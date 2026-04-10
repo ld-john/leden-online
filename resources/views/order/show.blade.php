@@ -200,6 +200,28 @@
                                 <div class="col-6">
                                     @include('partials.view-order-cost-section', ['name' => 'Dealer Discount @ ' . $order->invoice->dealer_discount . '%', 'value' => $order->basicDealerDiscount()])
                                     @include('partials.view-order-cost-section', ['name' => 'Manufacturer Support @ ' . $order->invoice->manufacturer_discount . '%', 'value' => $order->basicManufacturerSupport()])
+                                    {{-- Tactical Offers Section --}}
+                                    @foreach($order->tacticalOffers as $offer)
+                                        <x-view-order-cost-section
+                                                :name="'Tactical Offer: ' . $offer->name"
+                                                :value="$offer->pivot->applied_amount"
+                                        />
+                                    @endforeach
+
+                                    @if($order->tacticalOffers->isNotEmpty())
+                                        <x-view-order-cost-section
+                                                name="Total Tactical Offers"
+                                                :value="$order->tacticalOffers->sum('pivot.applied_amount')"
+                                                class="text-success fw-bold"
+                                        />
+                                    @endif
+
+
+                                    @can('admin')
+                                        @if($order->invoice?->leden_discount)
+                                            <x-view-order-cost-section name="Flat Discount" :value="$order->invoice->leden_discount" />
+                                        @endif
+                                    @endcan
                                     @include('partials.view-order-cost-section', ['name' => 'Sub Total', 'value' => $order->basicDiscountedTotal()])
                                 </div>
                             </div>
@@ -237,16 +259,10 @@
                             <hr>
                             <div class="row">
                                 <div class="col">
-                                    @include('partials.view-order-cost-section', ['name' => 'Manufacturer Delivery Cost', 'value' => $order->invoice->manufacturer_delivery_cost])
-                                    @include('partials.view-order-cost-section', ['name' => 'Onward Delivery', 'value' => $order->invoice->onward_delivery])
-                                    @can('admin')
-                                        @if($order->invoice?->leden_discount)
-                                            @include('partials.view-order-cost-section', ['name' => 'Flat Discount', 'value' => $order->invoice->leden_discount])
-                                        @endif
-                                    @endcan
-                                    @include('partials.view-order-cost-section', ['name' => 'Sub Total', 'value' => $order->invoiceSubTotal()])
-                                    @include('partials.view-order-cost-section', ['name' => 'VAT @ 20%', 'value' => $order->invoiceVat()])
-
+                                    <x-view-order-cost-section name="Manufacturer Delivery Cost" :value="$order->invoice->manufacturer_delivery_cost" />
+                                    <x-view-order-cost-section name="Onward Delivery" :value="$order->invoice->onward_delivery" />
+                                    <x-view-order-cost-section name="Sub Total" :value="$order->invoiceSubTotal()" />
+                                    <x-view-order-cost-section name="VAT @ 20%" :value="$order->invoiceVat()" />
                                 </div>
                                 <div class="col">
                                     @include('partials.view-order-cost-section', ['name' => '1st Registration Fee', 'value' => $order->vehicle->first_reg_fee])
@@ -272,7 +288,7 @@
                                         @include('partials.view-order-cost-section', ['name' => 'exc VAT', 'value' => $order->invoice->invoice_value_to_dealer])
                                     @else
                                         <h6 class="font-weight-bold">Invoice from Dealer</h6>
-                                        @include('partials.view-order-cost-section', ['name' => 'Dealer Invoice Value', 'value' => ($order->invoice->invoice_value_from_dealer)])
+                                        @include('partials.view-order-cost-section', ['name' => 'Dealer Invoice Value (exc. VAT)', 'value' => ($order->invoice->invoice_value_from_dealer)])
                                         @if(isset ($order->invoice->dealer_pay_date) && ( $order->invoice->dealer_pay_date != '0000-00-00 00:00:00'))
                                             @include('partials.view-order-date-section', ['name' => 'Dealer Invoice Pay Date', 'value' => $order->invoice->dealer_pay_date])
                                         @else

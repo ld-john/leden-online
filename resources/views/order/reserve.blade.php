@@ -1,5 +1,5 @@
 @extends('layouts.main', [
-    'title' => 'Order Vehicle - #{{ vehicle->id }}',
+    'title' => "Order Vehicle - #$vehicle->id",
     'activePage' => 'edit-order'
     ])
 

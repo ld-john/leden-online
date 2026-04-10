@@ -28,6 +28,7 @@
         <th>Desired Delivery Month</th>
         <th>Website Location</th>
         <th>Exclusion</th>
+        <th>Tactical Offers</th>
     </tr>
     </thead>
     <tbody>
@@ -89,6 +90,13 @@
             @else
                 <td>No</td>
             @endif
+            <td>
+                @if($vehicle->order?->tacticalOffers)
+                    @foreach($vehicle->order->tacticalOffers as $offer)
+                        {{ $offer->name }} - £{{ $offer->value }}
+                    @endforeach
+                @endif
+            </td>
         </tr>
     @endforeach
     </tbody>

@@ -8,322 +8,43 @@
                 </div>
             @endif
             <!-- Vehicle Information -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-l-blue">Car Information</h6>
-            </div>
+            <x-ui.section-header>Car Information</x-ui.section-header>
             <div class="card-body">
                 {{-- Make (Required) --}}
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_make"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Make</label>
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            @error('make')
-                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectMake"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <select wire:model.live="make" class="form-select" id="inputGroupSelectMake">
-                                <option selected>Choose...</option>
-                                @foreach ( $manufacturers as $manufacturer )
-                                    <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2">
-                        <a class="btn btn-secondary switch-inputs"
-                           href="{{ route('meta.make.index') }}"
-                           data-toggle="tooltip"
-                           title="Add a new Make or Model"
-                        >
-                            <i class="fa-solid fa-plus"></i>
-                        </a>
-                    </div>
-
-                </div>
+                <x-inputs.select label="Make" name="make" :options="$this->manufacturers" add-url="{{ route('meta.make.index') }}" required />
                 {{-- Model (Required) --}}
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_model">
-                        <i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>
-                        Vehicle Model
-                    </label>
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            @error('model')
-                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectModel"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <select class="form-select" @if(count($vehicle_models) === 0) disabled @endif field-parent="vehicle_model" wire:model.live="model" id="inputGroupSelectModel">
-                                <option value="" selected>Choose...</option>
-                                @foreach($vehicle_models as $vehicle_model)
-                                    <option value="{{$vehicle_model->id}}">{{ $vehicle_model->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                <x-inputs.select label="Model" name="model" :options="$this->vehicle_models" required />
                 {{-- Orbit Number (Unique ID) --}}
-                <div class="form-group row">
-                    <label for="orbit_number" class="col-md-2 col-form-label">Orbit Number</label>
-                    <div class="col-md-6">
-                        @error('orbit_number')
-                            <label for="inputGroupOrbitNumberText" class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
-                        @enderror
-                        <input wire:model.live="orbit_number" type="text" name="orbit_number" id="orbit_number" class="form-control" autocomplete="off" />
-                    </div>
-                </div>
+                <x-inputs.text label="Orbit Number" name="orbit_number" />
                 {{-- Ford Order Number --}}
-                <div class="form-group row">
-                    <label for="order_ref" class="col-md-2 col-form-label">Order Ref</label>
-                    <div class="col-md-6">
-                        @error('order_ref')
-                        <label class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
-                        @enderror
-                        <input wire:model.live="order_ref" type="text" name="order_ref" id="order_ref" class="form-control" autocomplete="off" />
-                    </div>
-                </div>
+                <x-inputs.text label="Order Ref" name="order_ref" />
                 {{-- Type (Required) --}}
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_type"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Vehicle Type</label>
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            @error('type')
-                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectType"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <select @if(count($types) === 0) disabled @endif wire:model.live="type" class="form-select" id="inputGroupSelectType">
-                                <option selected>Choose...</option>
-                                @foreach ($types as $type)
-                                    <option value="{{$type->name}}">{{$type->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                <x-inputs.select label="Vehicle Type" name="type" :options="$this->vehicleTypes" option-value="name" required />
                 {{-- Reg Number --}}
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_reg">Registration Number</label>
-                    <div class="col-md-6 mb-3">
-                        <input wire:model.live="registration" type="text" name="vehicle_reg" id="vehicle_reg" class="form-control" />
-                    </div>
-                </div>
+                <x-inputs.text label="Registration Number" name="registration" />
                 {{-- Derivative (Required) --}}
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_derivative"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Derivative</label>
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            @error('derivative')
-                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectDerivatives"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <select wire:model.live="derivative" @if(count($derivatives) === 0) disabled @endif class="form-select" id="inputGroupSelectDerivatives">
-                                <option selected>Choose...</option>
-                                @foreach ($derivatives as $vehicle_derivative)
-                                    <option value="{{ $vehicle_derivative->name }}">{{ $vehicle_derivative->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <a class="btn btn-secondary remove-selected"
-                           data-toggle="tooltip"
-                           title="Add or Edit Derivatives"
-                           href="{{ route('meta.derivative.index') }}"
-                        >
-                            <i class="fa-solid fa-plus"></i>
-                        </a>
-                    </div>
-                </div>
+                <x-inputs.select label="Derivative" name="derivative" :options="$this->derivatives" option-value="name" add-url="{{ route('meta.derivative.index') }}" required />
                 {{-- Engine (Required) --}}
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_engine"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Engine</label>
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            @error('engine')
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectEngine"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <select wire:model.live="engine" @if(count($engines) === 0) disabled @endif class="form-select" id="inputGroupSelectEngine">
-                                <option selected>Choose...</option>
-                                @foreach ($engines as $vehicle_engine)
-                                    <option value="{{ $vehicle_engine->name }}">{{ $vehicle_engine->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <a class="btn btn-secondary remove-selected"
-                           data-toggle="tooltip"
-                           title="Add or Edit Engines"
-                           href="{{ route('meta.engine.index') }}"
-                        >
-                            <i class="fa-solid fa-plus"></i>
-                        </a>
-                    </div>
-                </div>
+                <x-inputs.select label="Engine" name="engine" :options="$this->engines" option-value="name" add-url="{{ route('meta.engine.index') }}" required />
                 {{-- Transmission (Required) --}}
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_trans"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Transmission</label>
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            @error('transmission')
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectTransmission"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <select wire:model.live="transmission" @if(count($transmissions) === 0) disabled @endif class="form-select" id="inputGroupSelectTransmission">
-                                <option selected>Choose...</option>
-                                @foreach ($transmissions as $vehicle_trans)
-                                    <option value="{{ $vehicle_trans->name }}">{{ $vehicle_trans->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2">
-                        <a class="btn btn-secondary remove-selected"
-                           data-toggle="tooltip"
-                           title="Add or Edit Transmission"
-                           href="{{ route('meta.transmission.index') }}"
-                        >
-                            <i class="fa-solid fa-plus"></i>
-                        </a>
-                    </div>
-                </div>
+                <x-inputs.select label="Transmission" name="transmission" :options="$this->vehicleTransmission" option-value="name" add-url="{{ route('meta.transmission.index') }}" required />
                 {{-- Fuel Type --}}
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_fuel"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Fuel Type</label>
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            @error('fuel_type')
-                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectFuel"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <select wire:model.live="fuel_type" @if(count($fuel_types) === 0) disabled @endif class="form-select" id="inputGroupSelectFuel">
-                                <option selected>Choose...</option>
-                                @foreach ($fuel_types as $vehicle_fuel_type)
-                                    <option value="{{ $vehicle_fuel_type->name }}">{{ $vehicle_fuel_type->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <a class="btn btn-secondary remove-selected"
-                           data-toggle="tooltip"
-                           title="Add or Edit Fuel"
-                           href="{{ route('meta.fuel.index') }}"
-                        >
-                            <i class="fa-solid fa-plus"></i>
-                        </a>
-                    </div>
-                </div>
+                <x-inputs.select label="Fuel Type" name="fuel_type" :options="$this->fuel_types" option-value="name" add-url="{{ route('meta.fuel.index') }}" required />
                 {{-- Colour --}}
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_colour"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Colour</label>
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            @error('colour')
-                                <label class="input-group-text bg-danger text-white" for="inputGroupSelectColour"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <select wire:model.live="colour" @if(count($colours) === 0) disabled @endif class="form-select" id="inputGroupSelectColour">
-                                <option selected>Choose...</option>
-                                @foreach ($colours as $vehicle_colour)
-                                    <option value="{{ $vehicle_colour->name }}">{{ $vehicle_colour->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <a class="btn btn-secondary remove-selected"
-                           data-toggle="tooltip"
-                           title="Add or Edit Colours"
-                           href="{{ route('meta.colour.index') }}"
-                        >
-                            <i class="fa-solid fa-plus"></i>
-                        </a>
-                    </div>
-                </div>
+                <x-inputs.select label="Colour" name="colour" :options="$this->colours" option-value="name" add-url="{{ route('meta.colour.index') }}" required />
                 {{-- Trim --}}
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_trim"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i>Trim</label>
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            @error('trim')
-                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <select wire:model.live="trim" @if(count($trims) === 0) disabled @endif class="form-select" id="inputGroupSelectTrim">
-                                <option selected>Choose...</option>
-                                @foreach ($trims as $vehicle_trim)
-                                    <option value="{{ $vehicle_trim->name }}">{{ $vehicle_trim->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <a class="btn btn-secondary remove-selected"
-                           data-toggle="tooltip"
-                           title="Add or Edit Trim"
-                           href="{{ route('meta.trim.index') }}"
-                        >
-                            <i class="fa-solid fa-plus"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="dealership" class="col-md-2 col-form-label"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Dealership</label>
-                    <div class="col-md-6 mb-3">
-                        <select wire:model.live="dealership" name="dealership" id="dealership" class="form-select">
-                            <option value="">Select Dealership</option>
-                            @foreach ($dealers as $dealer)
-                                <option value="{{ $dealer->id }}">{{ $dealer->company_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="compound">Compound</label>
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            @error('compound')
-                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectCompound"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <select wire:model.live="compound" @if(count($compounds) === 0) disabled @endif class="form-select" id="inputGroupSelectCompound">
-                                <option selected>Choose...</option>
-                                @foreach ($compounds as $vehicle_compound)
-                                    <option value="{{ $vehicle_compound->name }}">{{ $vehicle_compound->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <a class="btn btn-secondary remove-selected"
-                           data-toggle="tooltip"
-                           title="Add or Edit Compounds"
-                           href="{{ route('meta.compound.index') }}"
-                        >
-                            <i class="fa-solid fa-plus"></i>
-                        </a>
-                    </div>
-                </div>
+                <x-inputs.select label="Trim" name="trim" :options="$this->trims" option-value="name" add-url="{{ route('meta.trim.index') }}" required />
+                {{-- Dealership --}}
+                <x-inputs.select label="Dealership" name="dealership" placeholder="Select Dealership" :options="$this->dealers" option-label="company_name" required />
+                {{-- Compound--}}
+                <x-inputs.select label="Compound" name="compound" :options="$this->compounds" option-value="name" add-url="{{ route('meta.compound.index') }}" />
                 @if($vehicle)
                     @if($vehicle->ring_fenced_stock)
-                        <div class="form-group row">
-                            <label for="broker" class="col-md-2 col-form-label">Select Broker</label>
-                            <div class="col-md-6 mb-3">
-                                <select wire:model.live="broker" name="broker" id="broker" class="form-select">
-                                    <option value="">Select Broker</option>
-                                    @foreach($brokers as $broker)
-                                        <option value="{{ $broker->id }}">{{ $broker->company_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                        <x-inputs.select label="Select Broker" name="broker" :options="$this->brokers" />
                     @endif
                 @endif
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="chassis_prefix">Chassis Prefix</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="chassis_prefix" type="text" name="chassis_prefix" id="chassis_prefix" class="form-control" autocomplete="off" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="chassis">Chassis</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="chassis" type="text" name="chassis" id="chassis" class="form-control" autocomplete="off" />
-                    </div>
-                </div>
+                <x-inputs.text label="Chassis Prefix" name="chassis_prefix" />
+                <x-inputs.text label="Chassis" name="chassis" />
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="vehicle_status"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Vehicle Status</label>
                     <div class="col-md-6">
@@ -333,82 +54,24 @@
                             @enderror
                             <select wire:model.live="status" class="form-control" name="vehicle_status" id="vehicle_status">
                                 <option value="">Please Select Status</option>
-                                <option value="4">Factory Order</option>
-                                @if ($registered_date)
-                                    <option value="15">In Stock (Registered)</option>
-                                @endif
-                                <option value="1">In Stock</option>
-                                <option value="3">Ready for Delivery</option>
-                                <option value="5">Awaiting Delivery Confirmation</option>
-                                <option value="6">Delivery Booked</option>
-                                @if ($registered_date && $registered_date < $now)
-                                    <option value="7">Completed Orders</option>
-                                @endif
-                                <option value="10">Europe VHC</option>
-                                <option value="11">UK VHC</option>
-                                <option value="12">At Converter</option>
-                                <option value="13">Awaiting Ship</option>
-                                <option value="14">Recall</option>
-                                <option value="16">Damaged/Recalled</option>
-                                <option value="17">In Stock (Awaiting Dealer Options)</option>
-                                <option value="18">Dealer Transfer</option>
-                                <option value="19">Order in Query</option>
+                                @foreach($this->availableStatuses as $status)
+                                    <option value="{{ $status->value }}">
+                                        {{ $status->label() }}
+                                    </option>
+
+                                @endforeach
                             </select>
                         </div>
 
                     </div>
                 </div>
                 @if(Auth()->user()->role != 'broker')
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label" for="model_year">Model Year</label>
-                        <div class="col-md-6">
-                            <input type="text" name="model_year" id="model_year" class="form-control"
-                                   autocomplete="off" wire:model.live="model_year"
-                                   onchange="this.dispatchEvent(new InputEvent('input'))"/>
-                        </div>
-                    </div>
+                    <x-inputs.text label="Model Year" name="model_year" onchange="this.dispatchEvent(new InputEvent('input'))" />
                 @endif
-                <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="vehicle_registered_on">Vehicle
-                        Registered</label>
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            @error('registered_date')
-                            <label class="input-group-text bg-danger text-white" for="inputGroupSelectTrim"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <input type="date"
-                                   name="vehicle_registered_on"
-                                   class="form-control"
-                                   autocomplete="off"
-                                   wire:model.live="registered_date"
-                                   id="vehicle_registered_on"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="build_date" class="col-md-2 col-form-label">Proposed Build Date</label>
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            @error('build_date')
-                            <label class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <input type="date" name="build_date" id="build_date" autocomplete="off" wire:model.live="build_date" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="due_date" class="col-md-2 col-form-label">Due Date</label>
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            @error('due_date')
-                            <label class="input-group-text bg-danger text-white"><i class="fa fa-exclamation-triangle"></i></label>
-                            @enderror
-                            <input type="date" name="due_date" id="due_date" autocomplete="off" wire:model.live="due_date" class="form-control">
-                        </div>
-
-                    </div>
-                </div>
+                <x-inputs.date label="Vehicle Registered" name="vehicle_registered_on" />
+                <x-inputs.date label="Proposed Build Date" name="build_date" />
+                <x-inputs.date label="Due Date" name="due_date" />
+                <x-inputs.date label="Contract Date" name="contract_date" />
                 <div class="form-group row">
                     <label for="show_in_ford_pipeline" class="col-md-2 col-form-label">Show in Ford
                         Pipeline</label>
@@ -424,107 +87,31 @@
                 </div>
             </div>
             <!-- Card Header -->
-            <div id="factory-fit" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-l-blue">Factory Fit Options</h6>
-            </div>
+            <x-ui.section-header id="factory-fit">Factory Fit Options</x-ui.section-header>
             <!-- Card Body -->
             <div class="card-body">
                 @include('partials.factory-fit')
             </div>
             <!-- Card Header -->
-            <div id="dealer-fit" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-l-blue">Dealer Fit Options</h6>
-            </div>
+            <x-ui.section-header id="dealer-fit">Dealer Fit Options</x-ui.section-header>
             <!-- Card Body -->
             <div class="card-body">
                 @include('partials.dealer-fit')
             </div>
             <!-- Card Header -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-l-blue">Cost Breakdown</h6>
-            </div>
+            <x-ui.section-header>Cost Breakdown</x-ui.section-header>
             <!-- Card Body -->
             <div class="card-body">
-                <div class="form-group row">
-                    <label for="list_price" class="col-md-2 col-form-label">List Price (£)</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="list_price" type="number" name="list_price" id="list_price" step=".01" class="form-control" autocomplete="off" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="metallic_paint" class="col-md-2 col-form-label">Metallic Paint (£)</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="metallic_paint" type="number" name="metallic_paint" id="metallic_paint" step=".01" class="form-control" autocomplete="off" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="first_reg_fee" class="col-md-2 col-form-label">1st Reg Fee (£)</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="first_reg_fee" type="number" name="first_reg_fee" id="first_reg_fee" step=".01" class="form-control" autocomplete="off"  />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="rfl_cost" class="col-md-2 col-form-label">RFL (£)</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="rfl_cost" type="number" name="rfl_cost" id="rfl_cost" step=".01" class="form-control" autocomplete="off" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="onward_delivery" class="col-md-2 col-form-label">Onward Delivery (£)</label>
-                    <div class="col-md-6">
-                        <input wire:model.live="onward_delivery" type="number" name="onward_delivery" id="onward_delivery" step=".01" class="form-control invoice-total" autocomplete="off" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="show_discount" class="col-md-2 col-form-label">Show Discount Applied</label>
-                    <div class="col-md-6">
-                        <select wire:model.live="show_discount" name="show_discount" id="show_discount" class="form-control">
-                            <option value="0">No
-                            </option>
-                            <option value="1">Yes
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="show_offer" class="col-md-2 col-form-label">Show as Offer</label>
-                    <div class="col-md-6">
-                        <select wire:model.live="show_offer" name="show_offer" id="show_offer" class="form-control">
-                            <option value="0">No
-                            </option>
-                            <option value="1">Yes
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="hide_from_broker" class="col-md-2 col-form-label">Hide From Broker
-                        List</label>
-                    <div class="col-md-6">
-                        <select wire:model.live="hide_from_broker" name="hide_from_broker" id="hide_from_broker" class="form-control">
-                            <option value="0">
-                                No
-                            </option>
-                            <option value="1">
-                                Yes
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="hide_from_dealer" class="col-md-2 col-form-label">Hide From Dealer
-                        List</label>
-                    <div class="col-md-6">
-                        <select wire:model.live="hide_from_dealer" name="hide_from_dealer" id="hide_from_dealer" class="form-control">
-                            <option value="0">
-                                No
-                            </option>
-                            <option value="1">
-                                Yes
-                            </option>
-                        </select>
-                    </div>
-                </div>
+                <x-inputs.currency label="List Price" name="list_price" />
+                <x-inputs.currency label="Metallic Paint" name="metallic_paint" />
+                <x-inputs.currency label="1st Reg Fee" name="first_reg_fee" />
+                <x-inputs.currency label="RFL" name="rfl_cost" />
+                <x-inputs.currency label="Onward Delivery" name="onward_delivery" />
+                <x-inputs.currency label="Tactical Offers" name="tactical_offer" />
+                <x-inputs.boolean label="Show Discount Applied" name="show_discount" />
+                <x-inputs.boolean label="Show as Offer" name="show_offer" />
+                <x-inputs.boolean label="Hide from Broker List" name="hide_from_broker" />
+                <x-inputs.boolean label="Hide from Dealer List" name="hide_from_dealer" />
             </div>
             @if($errors->count())
                 <div class="alert alert-danger alert-dismissible fade show m-5">

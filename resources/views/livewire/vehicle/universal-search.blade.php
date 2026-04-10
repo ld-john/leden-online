@@ -10,17 +10,48 @@
             </select>
             Vehicles
         </div>
-        <div>
+        <div class="d-flex align-items-center gap-2">
             <a wire:click="downloadCurrentData" class="btn btn-success text-white">Download Current View</a>
-            <div class="form-check form-switch">
-                <label for="deliveriesBookedFilter" class="form-check-label">Include Deliveries Booked</label>
-                <input wire:model.live="deliveriesBookedFilter" type="checkbox" id="deliveriesBookedFilter"
-                       class="form-check-input" role="switch">
+            <div class="dropdown d-inline-block">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    Status Filters
+                </button>
+                <ul class="dropdown-menu p-3">
+                    <li>
+                        <div class="form-check form-switch">
+                            <label for="deliveriesBookedFilter" class="form-check-label">Include Deliveries Booked</label>
+                            <input wire:model.live="deliveriesBookedFilter" type="checkbox" id="deliveriesBookedFilter"
+                                   class="form-check-input" role="switch">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <label for="completedOrdersFilter" class="form-check-label">Include Completed Orders</label>
+                            <input wire:model.live="completedOrdersFilter" type="checkbox" id="completedOrdersFilter"
+                                   class="form-check-input" role="switch">
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="form-check form-switch">
-                <label for="completedOrdersFilter" class="form-check-label">Include Completed Orders</label>
-                <input wire:model.live="completedOrdersFilter" type="checkbox" id="completedOrdersFilter"
-                       class="form-check-input" role="switch">
+
+            <div class="dropdown d-inline-block">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    Date Filters
+                </button>
+                <ul class="dropdown-menu p-3">
+                    <li>
+                        <div class="form-check form-switch">
+                            <input wire:model.live="filterBuildDate" type="checkbox" id="filterBuildDate" class="form-check-input">
+                            <label for="filterBuildDate" class="form-check-label">Filter Build Date</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-check form-switch">
+                            <input wire:model.live="filterDueDate" type="checkbox" id="filterDueDate" class="form-check-input">
+                            <label for="filterDueDate" class="form-check-label">Filter Due Date</label>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -34,25 +65,10 @@
             <th>Vehicle Type</th>
             <th>Make / Model</th>
             <th>Details</th>
-            <th>Chassis Prefix</th>
             <th>Chassis</th>
             <th>Registration</th>
-            <th>
-                <label for="BuildDateFilter" class="form-check-label small">Filter Build Date</label>
-                <div class="form-check form-switch">
-                    <input wire:model.live="filterBuildDate" type="checkbox" id="BuildDateFilter" class="form-check-input"
-                           role="switch">
-                </div>
-                Planned Build Date
-            </th>
-            <th>
-                <label for="DueDateFilter" class="form-check-label small">Filter Due Date</label>
-                <div class="form-check form-switch">
-                    <input wire:model.live="filterDueDate" type="checkbox" id="DueDateFilter" class="form-check-input"
-                           role="switch">
-                </div>
-                Due Date
-            </th>
+            <th>Planned Build Date</th>
+            <th>Due Date</th>
             <th>Status</th>
             <th>Broker</th>
             <th>Broker Reference</th>
@@ -95,10 +111,6 @@
                        placeholder="Search Details">
             </th>
             <th class="p-1">
-                <input wire:model.live.debounce:500ms="searchChassisPrefix" type="text" class="form-control"
-                       placeholder="Search Chassis Prefix">
-            </th>
-            <th class="p-1">
                 <input wire:model.live.debounce:500ms="searchChassis" type="text" class="form-control"
                        placeholder="Search Chassis">
             </th>
@@ -118,8 +130,8 @@
                 <select wire:model.live="searchStatus" name="status" id="status" class="form-select">
                     <option value="">Select Status</option>
                     @foreach($status as $item)
-                        <option value="{{ $item }}">
-                            {{ \App\Models\Vehicle::statusMatch($item) }}
+                        <option value="{{ $item->value }}">
+                            {{ $item->label() }}
                         </option>
                     @endforeach
                 </select>
@@ -143,6 +155,9 @@
                     @if($vehicle->order)
                         <a href="{{ route('order.show', $vehicle->order->id) }}" class="btn btn-primary">Leden Order
                             #{{ $vehicle->order->id }}</a>
+                        @if(count($vehicle->order->tacticalOffers) > 0)
+                            <span class="badge rounded-pill bg-primary" title="Tactical Offers">TO: {{ count($vehicle->order->tacticalOffers)  }}</span>
+                        @endif
                     @else
                         Not on Order
                     @endif
@@ -162,8 +177,12 @@
                         <li class="list-group-item"><strong>Colour:</strong><br> {{ $vehicle->colour }}</li>
                     </ul>
                 </td>
-                <td>{{ $vehicle->chassis_prefix }}</td>
-                <td>{{ $vehicle->chassis }}</td>
+                <td>
+                    <span class="fw-bold">{{ $vehicle->chassis_prefix }}</span>
+                    <small class="text-muted">
+                        {{ $vehicle->chassis }}
+                    </small>
+                </td>
                 <td>{{ $vehicle->reg }}</td>
                 @if ( empty( $vehicle->build_date) || $vehicle->build_date == '0000-00-00 00:00:00')
                     <td></td>
@@ -175,7 +194,7 @@
                 @else
                     <td>{{ \Carbon\Carbon::parse($vehicle->due_date)->format('d/m/Y') }}</td>
                 @endif
-                <td>{{ $vehicle->status() }}</td>
+                <td>{{ $vehicle->vehicle_status->label() }}</td>
                 <td class="p-0">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">{{ $vehicle?->order->broker->company_name ?? ''}}</li>
@@ -185,31 +204,13 @@
                     </ul>
                 </td>
                 <td>{{ $vehicle->order?->broker_ref }}</td>
-                <td class="p-0">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <strong>Factory Fit Options:</strong> <br>
-                            @if(count($vehicle->factoryFitOptions()) === 0)
-                                No
-                            @else
-                                <button class="btn btn-primary">
-                                    Yes
-                                    <span class="badge bg-light text-dark">{{ count($vehicle->factoryFitOptions()) }}</span>
-                                </button>
-                            @endif
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Dealer Fit Options:</strong> <br>
-                            @if((count($vehicle->dealerFitOptions()) === 0))
-                                No
-                            @else
-                                <button class="btn btn-primary">
-                                    Yes
-                                    <span class="badge bg-light text-dark">{{ count($vehicle->dealerFitOptions()) }}</span>
-                                </button>
-                            @endif
-                        </li>
-                    </ul>
+                <td class="text-center">
+                    @if(count($vehicle->factoryFitOptions()) > 0)
+                        <span class="badge rounded-pill bg-info" title="Factory Fit">F: {{ count($vehicle->factoryFitOptions()) }}</span>
+                    @endif
+                    @if(count($vehicle->dealerFitOptions()) > 0)
+                        <span class="badge rounded-pill bg-warning text-dark" title="Dealer Fit">D: {{ count($vehicle->dealerFitOptions()) }}</span>
+                    @endif
                 </td>
                 <td>
                     @php
