@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\VehicleStatus;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -50,10 +51,50 @@ class Vehicle extends Model
 {
     use SoftDeletes;
 
-    /**
-     * @var mixed
-     */
-    protected $guarded = [];
+    protected $fillable = [
+        'vehicle_status',
+        'reg',
+        'ford_order_number',
+        'model_year',
+        'make',
+        'model',
+        'derivative',
+        'engine',
+        'transmission',
+        'fuel_type',
+        'show_in_ford_pipeline',
+        'show_discount',
+        'show_offer',
+        'hide_from_dealer',
+        'hide_from_broker',
+        'vehicle_registered_on',
+        'contract_date',
+        'due_date',
+        'build_date',
+        'tactical_offer',
+        'onward_delivery',
+        'rfl_cost',
+        'first_reg_fee',
+        'list_price',
+        'metallic_paint',
+        'type',
+        'chassis_prefix',
+        'compound',
+        'trim',
+        'broker_id',
+        'dealer_id',
+        'chassis',
+        'colour',
+        'ring_fenced_stock',
+        'orbit_number',
+        'factory_fit_options',
+        'dealer_fit_options',
+        'manufacturer',
+        'order',
+        'doors',
+        'vehicle_reg_date',
+        'recall_reason'
+    ];
 
     /**
      * @var mixed|string
@@ -62,6 +103,9 @@ class Vehicle extends Model
 
     protected $casts = [
         'vehicle_status' => VehicleStatus::class,
+        'build_date' => 'datetime',
+        'in_stock_at' => 'datetime',
+        'due_date' => 'date'
     ];
 
     public function order(): HasOne
@@ -179,5 +223,34 @@ class Vehicle extends Model
                     ->orWhere('applicable_model', $this->model);
             })
             ->get();
+    }
+
+    public function tacticalOffers(): BelongsToMany
+    {
+        return $this->belongsToMany(TacticalOffer::class, 'tactical_offer_vehicle')
+            ->withPivot('order_id', 'applied_amount')
+            ->withTimestamps();
+    }
+
+    protected static function booted(): void
+    {
+        static::saving(function (Vehicle $vehicle) {
+            if ($vehicle->isDirty('vehicle_status')) {
+                if ($vehicle->vehicle_status?->isInStock()) {
+                    if (is_null($vehicle->in_stock_at)) {
+                        $vehicle->in_stock_at = now();
+                    }
+                } else {
+                    $vehicle->in_stock_at = null;
+                }
+            }
+        });
+    }
+
+    protected function timeInStock(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->in_stock_at?->diffForHumans(syntax: CarbonInterface::DIFF_ABSOLUTE)
+        );
     }
 }

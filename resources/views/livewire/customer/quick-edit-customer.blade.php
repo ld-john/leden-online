@@ -10,21 +10,21 @@
         </div>
         <div class="offcanvas-body">
             <p class="mb-0 mt-2">Customer Name</p>
-            <input wire:model.live="customer_name" class="form-control" type="text">
+            <input wire:model.live="customer.name" class="form-control" type="text">
             <p class="mb-0 mt-2">Address Line 1</p>
-            <input wire:model.live="address_1" class="form-control" type="text">
+            <input wire:model.live="customer.address_1" class="form-control" type="text">
             <p class="mb-0 mt-2">Address Line 2</p>
-            <input wire:model.live="address_2" class="form-control" type="text">
+            <input wire:model.live="customer.address_2" class="form-control" type="text">
             <p class="mb-0 mt-2">Town</p>
-            <input wire:model.live="town" class="form-control" type="text">
+            <input wire:model.live="customer.town" class="form-control" type="text">
             <p class="mb-0 mt-2">City</p>
-            <input wire:model.live="city" class="form-control" type="text">
+            <input wire:model.live="customer.city" class="form-control" type="text">
             <p class="mb-0 mt-2">County</p>
-            <input wire:model.live="county" class="form-control" type="text">
+            <input wire:model.live="customer.county" class="form-control" type="text">
             <p class="mb-0 mt-2">Postcode</p>
-            <input wire:model.live="postcode" class="form-control" type="text">
+            <input wire:model.live="customer.postcode" class="form-control" type="text">
             <p class="mb-0 mt-2">Phone Number</p>
-            <input wire:model.live="phone_number" class="form-control" type="text">
+            <input wire:model.live="customer.phone_number" class="form-control" type="text">
 
             @if($errors->count())
                 <div class="alert alert-danger alert-dismissible fade show m-5">

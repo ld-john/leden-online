@@ -107,7 +107,41 @@
                 <x-inputs.currency label="1st Reg Fee" name="first_reg_fee" />
                 <x-inputs.currency label="RFL" name="rfl_cost" />
                 <x-inputs.currency label="Onward Delivery" name="onward_delivery" />
-                <x-inputs.currency label="Tactical Offers" name="tactical_offer" />
+                {{-- Available Offers --}}
+                @if ($this->availableOffers->isNotEmpty())
+                    <div class="mb-3 p-3 border rounded bg-light">
+                        <label class="form-label d-block fw-bold">Available Tactical Offers</label>
+                        @foreach($this->availableOffers as $offer)
+                            <div class="form-check border-bottom py-2">
+                                <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        wire:model.live="selectedOffers"
+                                        value="{{ $offer->id }}"
+                                        id="offer-{{ $offer->id }}"
+                                        wire:key="checkbox-{{ $offer->id }}"
+                                >
+                                <label class="form-check-label d-flex justify-content-between w-100" for="offer-{{ $offer->id }}">
+                                    <span>{{ $offer->name }}</span>
+                                    <span class="text-success fw-bold">- £{{ number_format($offer->value, 2) }}</span>
+                                </label>
+                            </div>
+                        @endforeach
+
+                        <div class="form-check py-2">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="none"
+                                   wire:model.live="selectedOffers"
+                                   id="offer-none"
+                                   wire:key="checkbox-none"
+                            >
+                            <label class="form-check-label text-muted" for="offer-none">
+                                No offer applied
+                            </label>
+                        </div>
+                    </div>
+                @endif
                 <x-inputs.boolean label="Show Discount Applied" name="show_discount" />
                 <x-inputs.boolean label="Show as Offer" name="show_offer" />
                 <x-inputs.boolean label="Hide from Broker List" name="hide_from_broker" />

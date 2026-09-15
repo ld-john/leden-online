@@ -143,10 +143,6 @@ Route::middleware('auth')->group(function () {
                 Route::get('/view/{vehicle}', 'show')->name('show');
                 Route::get('/edit/{vehicle}', 'edit')->name('edit');
                 Route::get('/recycle-bin', 'recycle')->name('recycle_bin');
-                Route::get('/force-delete/{vehicle}', 'forceDelete')->name(
-                    'force-delete',
-                );
-                Route::get('/restore/{vehicle}', 'restore')->name('restore');
                 Route::get('/search/', 'searchVehicles')->name('search');
             });
             Route::name('export.')
@@ -160,50 +156,8 @@ Route::middleware('auth')->group(function () {
                         '/{export}/dashboard-download',
                         'dashboard_download',
                     )->name('dashboardDownload');
-                    Route::get('/foexport/', 'factory_order_export')->name(
-                        'factory_order',
-                    );
-                    Route::get('/eurovhcexport/', 'europe_vhc_export')->name(
-                        'europe_v_h_c',
-                    );
-                    Route::get('/ukvhcexport/', 'uk_vhc_export')->name(
-                        'u_k_v_h_c',
-                    );
-                    Route::get('/instockexport/', 'in_stock_export')->name(
-                        'in_stock',
-                    );
-                    Route::get(
-                        '/instockregisteredexport/',
-                        'in_stock_registered_export',
-                    )->name('in_stock_registered');
-                    Route::get(
-                        '/instockdealerexport/',
-                        'in_stock_dealer_export',
-                    )->name('in_stock_awaiting_dealer_options');
-                    Route::get(
-                        '/readyfordeliveryexport/',
-                        'ready_for_delivery_export',
-                    )->name('ready_for_delivery');
-                    Route::get(
-                        '/deliverybooked/',
-                        'delivery_booked_export',
-                    )->name('delivery_booked');
-                    Route::get('/awaitingship/', 'awaiting_ship_export')->name(
-                        'awaiting_ship',
-                    );
-                    Route::get('/atconverter/', 'at_converter_export')->name(
-                        'at_converter',
-                    );
-                    Route::get('/damaged/', 'damaged_export')->name(
-                        'damaged/_recalled',
-                    );
-                    Route::get(
-                        '/dealertransfer',
-                        'dealer_transfer_export',
-                    )->name('dealer_transfer');
-                    Route::get('/orderinquery', 'query_export')->name(
-                        'order_in_query',
-                    );
+
+                    Route::get('/status/{status_slug}', 'status_export')->name('status_export');
                 });
         });
     });
@@ -214,11 +168,11 @@ Route::middleware('auth')->group(function () {
         ->group(function () {
             Route::get('/', 'showReporting')->name('reporting');
             Route::get('/new', 'index')->name('new-reporting');
-            Route::get('/monthly-{report}/{year}/{month}', 'monthlyDownload');
+            Route::get('/monthly-{report}/{year}/{month}', 'monthlyDownload')->name('monthly-download');
             Route::get(
                 '/quarterly-{report}/{year}/{quarter}',
                 'quarterlyDownload',
-            );
+            )->name('quarterly-download');
             Route::get(
                 '/registeredMonthly/{month}/{year}',
                 'registeredMonth',
@@ -227,7 +181,7 @@ Route::middleware('auth')->group(function () {
                 '/registeredQuarterly/{quarter?}/{year?}',
                 'registeredQuarter',
             )->name('quarter-registered');
-            Route::get('/weekly-{report}/{year}/{quarter}', 'weeklyDownload');
+            Route::get('/weekly-{report}/{year}/{quarter}', 'weeklyDownload')->name('weekly-download');
             Route::get('/financeMonthly/{month}/{year}', 'financeMonth')->name(
                 'monthly-finance',
             );
@@ -235,6 +189,13 @@ Route::middleware('auth')->group(function () {
                 '/financeQuarterly/{quarter}/{year}',
                 'financeQuarter',
             )->name('quarter-finance');
+            Route::name('bonds.')->prefix('bonds')
+                ->group(function () {
+                   Route::get('/outstanding-bonds', 'outstandingBondsDownload')
+                       ->name('outstanding-download');
+                   Route::get('/completed-bonds/{year}', 'completedBondsDownload')
+                       ->name('completed-download');
+                });
         });
 
     /* CSVUploadController routes */

@@ -44,7 +44,7 @@
         @forelse($locations as $location)
             <tr>
                 <td>{{ $location->location }}</td>
-                <td>{{ \App\Models\Vehicle::statusMatch(intval($location->status))  }}</td>
+                <td>{{ $location->status->label()  }}</td>
                 <td class="text-center" style="width: 120px">
                     <div class="btn-group">
                         <button wire:click="editLocation({{ $location }})" class="btn btn-warning"><i

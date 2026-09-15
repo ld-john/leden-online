@@ -1,7 +1,7 @@
 @props([
     'label',
     'name',
-    'required' => false
+    'required' => false,
 ])
 
 <div class="form-group row">
@@ -26,6 +26,7 @@
                     class="form-control"
                     autocomplete="off"
                     {{ $attributes }}
+
             />
         </div>
     </div>

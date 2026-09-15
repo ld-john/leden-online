@@ -1,1 +1,1 @@
-make,model,type,registration,derivative,engine,transmission,fuel_type,doors,colour,trim,chassis_prefix,chassis,model_year,list_price,metallic_paint,first_reg_fee,rfl_cost,onward_delivery,dealer_id
+orbit_number,status,ford_order_number,make,model,type,registration,derivative,engine,transmission,fuel_type,doors,colour,trim,chassis_prefix,chassis,model_year,list_price,metallic_paint,first_reg_fee,rfl_cost,onward_delivery,dealer_id,contract_date,tactical_offers

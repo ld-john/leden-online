@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
@@ -42,9 +43,9 @@ class FitOption extends Model
         return $this->hasOne(Company::class, 'id', 'dealer_id');
     }
 
-    public function vehicle_model(): HasOne
+    public function vehicle_model(): belongsTo
     {
-        return $this->hasOne(VehicleModel::class, 'id', 'model');
+        return $this->belongsTo(VehicleModel::class, 'id', 'model');
     }
 
     public function vehicles(): BelongsToMany

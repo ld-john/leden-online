@@ -23,6 +23,7 @@
         <th>Commission to Broker</th>
         <th>Leden Commission</th>
         <th>Exception</th>
+        <th>Tactical Offers</th>
     </tr>
     </thead>
     <tbody>
@@ -103,6 +104,13 @@
             @else
                 <td>No</td>
             @endif
+            <td>
+                @forelse($vehicle->tacticalOffers as $offer)
+                    <p>{{ $offer->name }} - £{{ number_format($offer->value, 2) }}</p>
+                @empty
+                    --
+                @endforelse
+            </td>
         </tr>
         @endforeach
     </tbody>

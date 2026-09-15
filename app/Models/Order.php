@@ -9,6 +9,7 @@ use App\Models\Finance\Mileage;
 use App\Models\Finance\Term;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -58,6 +59,13 @@ class Order extends Model
 
     protected $guarded = [];
 
+    protected function casts():array
+    {
+        return [
+            'delivery_date' => 'datetime'
+        ];
+    }
+
     public function vehicle(): HasOne
     {
         return $this->hasOne(Vehicle::class, 'id', 'vehicle_id');
@@ -66,6 +74,11 @@ class Order extends Model
     public function invoice(): HasOne
     {
         return $this->hasOne(Invoice::class, 'id', 'invoice_id');
+    }
+
+    public function bond(): HasOne
+    {
+        return $this->hasOne(Bond::class, 'id', 'bond_id');
     }
 
     public function customer(): HasOne
@@ -103,29 +116,29 @@ class Order extends Model
         return $this->hasOne(Delivery::class, 'id', 'delivery_id');
     }
 
-    public function FinanceType(): HasOne
+    public function financeType(): BelongsTo
     {
-        return $this->hasOne(FinanceType::class, 'id', 'finance_type');
+        return $this->belongsTo(FinanceType::class);
     }
 
-    public function Maintenance(): HasOne
+    public function maintenance(): BelongsTo
     {
-        return $this->hasOne(Maintenance::class, 'id', 'maintenance');
+        return $this->BelongsTo(Maintenance::class);
     }
 
-    public function Term(): HasOne
+    public function term(): BelongsTo
     {
-        return $this->hasOne(Term::class, 'id', 'term');
+        return $this->belongsTo(Term::class);
     }
 
-    public function InitialPayment(): HasOne
+    public function initialPayment(): BelongsTo
     {
-        return $this->hasOne(InitialPayment::class, 'id', 'initial_payment');
+        return $this->belongsTo(InitialPayment::class);
     }
 
-    public function Mileage(): HasOne
+    public function mileage(): BelongsTo
     {
-        return $this->hasOne(Mileage::class, 'id', 'mileage');
+        return $this->belongsTo(Mileage::class);
     }
 
     public function basicDealerDiscount(): float|int
@@ -184,7 +197,7 @@ class Order extends Model
             $this->basicDealerDiscount() -
             $this->basicManufacturerSupport() -
             $this->invoice->leden_discount -
-            $this->tacticalOffers()->sum('applied_amount');
+            $this->vehicle?->tacticalOffers()->sum('applied_amount');
 
     }
 
@@ -241,14 +254,15 @@ class Order extends Model
 
     public function invoiceTotal(): float|int
     {
-        return $this->invoiceSubTotal() + $this->invoiceVat();
+        return ($this->invoiceSubTotal() + $this->invoiceVat());
     }
 
     public function invoiceValue(): float|int
     {
         return $this->invoiceTotal() +
             $this->vehicle->first_reg_fee +
-            $this->vehicle->rfl_cost;
+            $this->vehicle->rfl_cost -
+            $this->invoice?->grant;
     }
 
     public function invoiceDifferenceIncVat(): float|int

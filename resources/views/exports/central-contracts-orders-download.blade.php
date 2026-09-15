@@ -12,7 +12,7 @@
         <tr>
             <td>{{ $order->broker_ref }}</td>
             <td>
-                @if($order->vehicle->vehicle_status === '1' || $order->vehicle->vehicle_status === '15')
+                @if($order->vehicle?->vehicle_status?->isInStock())
                     IN STOCK
                 @else
                     {{ $order->vehicle->due_date }}

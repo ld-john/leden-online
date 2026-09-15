@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use LaravelIdea\Helper\App\Models\_IH_TacticalOffer;
 
 class TacticalOffer extends Model
 {
@@ -24,6 +24,14 @@ class TacticalOffer extends Model
     public function manufacturer(): BelongsTo
     {
         return $this->belongsTo(Manufacturer::class);
+    }
+
+    public function vehicles(): BelongsToMany
+    {
+        return $this->belongsToMany(Vehicle::class, 'tactical_offer_vehicle')
+            ->withPivot('order_id', 'applied_amount')
+            ->withTimestamps();
+
     }
 
     public function applicableModel(): BelongsTo

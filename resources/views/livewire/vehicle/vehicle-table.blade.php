@@ -150,8 +150,19 @@
                 <td>{{ $vehicle->engine }}</td>
                 <td>{{ $vehicle->transmission }}</td>
                 <td>{{ $vehicle->colour }}</td>
-                <td>
-                    <livewire:vehicle.fit-options-modal :vehicle="$vehicle->id" :wire:key="'fit-options'.time().$vehicle->id"/>
+                <td class="p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <livewire:vehicle.fit-options-modal :vehicle="$vehicle->id" :wire:key="'fit-options'.time().$vehicle->id"/>
+                        </li>
+
+
+                        @forelse($vehicle->tacticalOffers as $offer)
+                            <li class="list-group-item list-group-item-dark">{{ $offer->name }} - £{{ number_format($offer->value, 2) }}</li>
+                        @empty
+                            <li class="list-group-item list-group-item-dark">No Tactical Offers</li>
+                        @endforelse
+                    </ul>
                 </td>
                 <td>{{ $vehicle->type }}</td>
                 <td>{{ $vehicle->chassis }}</td>

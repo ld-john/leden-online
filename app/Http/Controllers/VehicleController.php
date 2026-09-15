@@ -5,20 +5,19 @@ namespace App\Http\Controllers;
 use App\Enums\VehicleStatus;
 use App\Exports\BrokersStockDownload;
 use App\Exports\DashboardExports;
-use App\Mail\LoginRequest;
 use App\Mail\RequestOTR;
 use App\Models\Company;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Vehicle;
 use Carbon\Carbon;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -27,7 +26,7 @@ class VehicleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Application|Factory|View
+     * @return Factory|View
      */
     public function create()
     {
@@ -38,7 +37,7 @@ class VehicleController extends Controller
      * Display the specified resource.
      *
      * @param Vehicle $vehicle
-     * @return Application|Factory|View
+     * @return Factory|View
      */
     public function show(Vehicle $vehicle)
     {
@@ -73,7 +72,7 @@ class VehicleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Vehicle $vehicle
-     * @return Application|Factory|View
+     * @return Factory|View
      */
     public function edit(Vehicle $vehicle)
     {
@@ -101,7 +100,7 @@ class VehicleController extends Controller
 
     /**
      * Show the vehicles in the Ford Pipeline (Not Available for Ordering)
-     * @return Application|Factory|View
+     * @return Factory|View
      */
     public function showFordPipeline()
     {
@@ -123,7 +122,7 @@ class VehicleController extends Controller
 
     /**
      * Show the vehicles in Leden Stock which are not on order
-     * @return Application|Factory|View
+     * @return Factory|View
      */
     public function showLedenStock()
     {
@@ -145,7 +144,7 @@ class VehicleController extends Controller
 
     /**
      * Show the items that have been ring-fenced for a specific broker
-     * @return Application|Factory|View
+     * @return Factory|View
      */
     public function showRingFencedStock()
     {
@@ -166,279 +165,33 @@ class VehicleController extends Controller
         ]);
     }
 
-    /**
-     * Download an Excel file of the Vehicles in the Factory Order
-     * @return BinaryFileResponse
-     */
-    public function factory_order_export(): BinaryFileResponse
+    public function status_export(VehicleStatus $status) : BinaryFileResponse
     {
-        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::FACTORY_ORDER)
-            ->with('manufacturer:id,name')
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('broker')
-            ->get();
+        $vehicles = Vehicle::where('vehicle_status', $status->value)
+            ->with([
+                'manufacturer:id,name',
+                'order',
+                'order.customer',
+                'order.broker',
+                'broker'
+            ])->get();
 
         $date = Carbon::now()->format('Y-m-d');
 
-        return Excel::download(
-            new DashboardExports($vehicles),
-            'factory-orders-' . $date . '.xlsx',
-        );
-    }
-
-    /**
-     * Download an Excel file of the Vehicles in the Europe VHC status
-     * @return BinaryFileResponse
-     */
-    public function europe_vhc_export(): BinaryFileResponse
-    {
-        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::EUROPE_VHC)
-            ->with('manufacturer:id,name')
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('broker')
-            ->get();
-
-        $date = Carbon::now()->format('Y-m-d');
+        $slug = $status->slug();
 
         return Excel::download(
             new DashboardExports($vehicles),
-            'europe-vhc-orders-' . $date . '.xlsx',
-        );
-    }
-
-    /**
-     * Download an Excel file of the Vehicles in the UK VHC status
-     * @return BinaryFileResponse
-     */
-    public function uk_vhc_export(): BinaryFileResponse
-    {
-        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::UK_VHC)
-            ->with('manufacturer:id,name')
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('broker')
-            ->get();
-
-        $date = Carbon::now()->format('Y-m-d');
-
-        return Excel::download(
-            new DashboardExports($vehicles),
-            'uk-vhc-orders-' . $date . '.xlsx',
-        );
-    }
-
-    /**
-     * Download an Excel file of the Vehicles in the In Stock
-     * @return BinaryFileResponse
-     */
-    public function in_stock_export(): BinaryFileResponse
-    {
-        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::IN_STOCK)
-            ->with('manufacturer:id,name')
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('broker')
-            ->get();
-
-        $date = Carbon::now()->format('Y-m-d');
-
-        return Excel::download(
-            new DashboardExports($vehicles),
-            'in-stock-orders-' . $date . '.xlsx',
-        );
-    }
-
-    /**
-     * Download an Excel file of the Vehicles in the In Stock
-     * @return BinaryFileResponse
-     */
-    public function in_stock_registered_export(): BinaryFileResponse
-    {
-        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::IN_STOCK_REGISTERED)
-            ->with('manufacturer:id,name')
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('broker')
-            ->get();
-
-        $date = Carbon::now()->format('Y-m-d');
-
-        return Excel::download(
-            new DashboardExports($vehicles),
-            'in-stock-registered-orders-' . $date . '.xlsx',
-        );
-    }
-
-    /**
-     * Download an Excel file of the Vehicles in the In Stock
-     * @return BinaryFileResponse
-     */
-    public function in_stock_dealer_export(): BinaryFileResponse
-    {
-        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::AWAITING_DEALER_OPTIONS)
-            ->with('manufacturer:id,name')
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('broker')
-            ->get();
-
-        $date = Carbon::now()->format('Y-m-d');
-
-        return Excel::download(
-            new DashboardExports($vehicles),
-            'in-stock-awaiting-dealer-orders-' . $date . '.xlsx',
-        );
-    }
-
-    /**
-     * Download an Excel file of the Vehicles in the Ready for Delivery status
-     * @return BinaryFileResponse
-     */
-    public function ready_for_delivery_export(): BinaryFileResponse
-    {
-        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::READY_FOR_DELIVERY)
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('broker')
-            ->with('manufacturer:id,name')
-            ->get();
-
-        $date = Carbon::now()->format('Y-m-d');
-
-        return Excel::download(
-            new DashboardExports($vehicles),
-            'ready-for-delivery-orders-' . $date . '.xlsx',
-        );
-    }
-
-    /**
-     * Download an Excel file of the Vehicles in the Delivery Booked status
-     * @return BinaryFileResponse
-     */
-    public function delivery_booked_export(): BinaryFileResponse
-    {
-        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::DELIVERY_BOOKED)
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('manufacturer:id,name')
-            ->with('broker')
-            ->get();
-
-        $date = Carbon::now()->format('Y-m-d');
-
-        return Excel::download(
-            new DashboardExports($vehicles),
-            'delivery-booked-orders-' . $date . '.xlsx',
-        );
-    }
-
-    /**
-     * Download an Excel file of the Vehicles in the Awaiting Ship status
-     * @return BinaryFileResponse
-     */
-    public function awaiting_ship_export(): BinaryFileResponse
-    {
-        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::AWAITING_SHIP)
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('manufacturer:id,name')
-            ->with('broker')
-            ->get();
-
-        $date = Carbon::now()->format('Y-m_d');
-
-        return Excel::download(
-            new DashboardExports($vehicles),
-            'awaiting-ship-orders-' . $date . '.xlsx',
-        );
-    }
-
-    /**
-     * Download an Excel file of the Vehicles in the At Converter status
-     * @return BinaryFileResponse
-     */
-    public function at_converter_export(): BinaryFileResponse
-    {
-        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::AT_CONVERTER)
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('manufacturer:id,name')
-            ->with('broker')
-            ->get();
-
-        $date = Carbon::now()->format('Y-m_d');
-
-        return Excel::download(
-            new DashboardExports($vehicles),
-            'awaiting-ship-orders-' . $date . '.xlsx',
-        );
-    }
-
-    public function damaged_export()
-    {
-        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::DAMAGED_RECALLED)
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('manufacturer:id,name')
-            ->with('broker')
-            ->get();
-        $date = Carbon::now()->format('Y-m-d');
-
-        return Excel::download(
-            new DashboardExports($vehicles),
-            'damaged-' . $date . '.xlsx',
-        );
-    }
-
-    public function query_export()
-    {
-        $vehicles = Vehicle::where('vehicle_status', VehicleStatus::ORDER_IN_QUERY)
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('manufacturer:id,name')
-            ->with('broker')
-            ->get();
-        $date = Carbon::now()->format('Y-m-d');
-
-        return Excel::download(
-            new DashboardExports($vehicles),
-            'order-query-' . $date . '.xlsx',
-        );
-    }
-    public function dealer_transfer_export()
-    {
-        $vehicles = Vehicle::where('vehicle_status', 18)
-            ->with('order')
-            ->with('order.customer')
-            ->with('order.broker')
-            ->with('manufacturer:id,name')
-            ->with('broker')
-            ->get();
-        $date = Carbon::now()->format('Y-m-d');
-
-        return Excel::download(
-            new DashboardExports($vehicles),
-            'dealer-transfer-' . $date . '.xlsx',
+            "{$slug}-export-{$date}.xlsx"
         );
     }
 
     /**
      * Export a list of vehicles available for ordering by specific brokers
+     * @param Company $broker
      * @return BinaryFileResponse
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
     public function brokers_stock_export(Company $broker)
     {
@@ -475,42 +228,10 @@ class VehicleController extends Controller
      */
     public function recycle()
     {
-        $vehicles = Vehicle::onlyTrashed()
-            ->latest()
-            ->with('manufacturer')
-            ->paginate(10);
-
         return view('vehicles.deleted', [
             'title' => 'Recycle Bin',
-            'active_page' => 'vehicle-recycle-bin',
-            'vehicles' => $vehicles,
+            'active_page' => 'vehicle-recycle-bin'
         ]);
-    }
-
-    /**
-     * Forcibly remove a vehicle from the database, completely removing it rather than soft deleting.
-     * @param $vehicle
-     * @return RedirectResponse
-     */
-    public function forceDelete($vehicle): RedirectResponse
-    {
-        Vehicle::withTrashed()
-            ->where('id', $vehicle)
-            ->forceDelete();
-        return redirect()->route('vehicle.recycle_bin');
-    }
-
-    /**
-     * Restore a vehicle which has been soft-deleted to the Leden Stock List.
-     * @param $vehicle
-     * @return RedirectResponse
-     */
-    public function restore($vehicle): RedirectResponse
-    {
-        Vehicle::withTrashed()
-            ->where('id', $vehicle)
-            ->restore();
-        return redirect()->route('vehicle.recycle_bin');
     }
 
     /**
@@ -520,67 +241,6 @@ class VehicleController extends Controller
     public function searchVehicles()
     {
         return view('vehicles.search');
-    }
-
-    /**
-     * A temporary clean-up function to switch date/time fields to date fields.
-     * @return void
-     */
-    public function cleanDates()
-    {
-        set_time_limit(300);
-        Vehicle::chunk('50', function ($vehicles) {
-            foreach ($vehicles as $vehicle) {
-                if ($vehicle->vehicle_registered_on_OLD) {
-                    $vehicle->update([
-                        'vehicle_registered_on' =>
-                            $vehicle->vehicle_registered_on_OLD,
-                    ]);
-                    var_dump('registration date moved');
-                }
-                if ($vehicle->due_date_OLD) {
-                    $vehicle->update([
-                        'due_date' => $vehicle->due_date_OLD,
-                    ]);
-                    var_dump('Due date moved');
-                }
-                if ($vehicle->build_date_OLD) {
-                    $vehicle->update([
-                        'build_date' => $vehicle->build_date_OLD,
-                    ]);
-                    var_dump('build date moved');
-                }
-                if ($vehicle->vehicle_reg_date_OLD) {
-                    $vehicle->update([
-                        'vehicle_reg_date' => $vehicle->vehicle_reg_date_OLD,
-                    ]);
-                    var_dump('provisional registration date moved');
-                }
-                if ($vehicle->order?->exists()) {
-                    OrderController::setProvisionalRegDate($vehicle);
-                    var_dump(
-                        'provisional registration date checked against records',
-                    );
-                }
-            }
-        });
-    }
-
-    /**
-     * A temporary clean-up function to ensure that all vehicles have a provisional registration date, regardless of being on order.
-     * @return void
-     */
-
-    public function checkProvisionalDates()
-    {
-        set_time_limit(300);
-        Vehicle::chunk('50', function ($vehicles) {
-            foreach ($vehicles as $vehicle) {
-                OrderController::setProvisionalRegDate($vehicle);
-                var_dump($vehicle->id . ' checked');
-            }
-        });
-        var_dump('Check Completed');
     }
 
     public function request_otr(Vehicle $vehicle)

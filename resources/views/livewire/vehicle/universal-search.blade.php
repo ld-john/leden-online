@@ -155,11 +155,13 @@
                     @if($vehicle->order)
                         <a href="{{ route('order.show', $vehicle->order->id) }}" class="btn btn-primary">Leden Order
                             #{{ $vehicle->order->id }}</a>
-                        @if(count($vehicle->order->tacticalOffers) > 0)
-                            <span class="badge rounded-pill bg-primary" title="Tactical Offers">TO: {{ count($vehicle->order->tacticalOffers)  }}</span>
-                        @endif
+
                     @else
                         Not on Order
+                    @endif
+
+                    @if(count($vehicle->tacticalOffers) > 0)
+                        <span class="badge rounded-pill bg-primary" title="Tactical Offers">TO: {{ count($vehicle->tacticalOffers)  }}</span>
                     @endif
                 </td>
                 <td>
@@ -194,7 +196,24 @@
                 @else
                     <td>{{ \Carbon\Carbon::parse($vehicle->due_date)->format('d/m/Y') }}</td>
                 @endif
-                <td>{{ $vehicle->vehicle_status->label() }}</td>
+                <td class="p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            {{ $vehicle->vehicle_status->label() }}
+                        </li>
+                        @if(!empty($vehicle->recall_reason))
+                            <li class="list-group-item">
+                                <strong>Reason for recall:</strong>
+                                {{ $vehicle->recall_reason }}
+                            </li>
+                        @endif
+                    @if(!empty($vehicle->in_stock_at))
+                            <li class="list-group-item">
+                                <strong>In Stock Since:</strong>
+                                {{ $vehicle->in_stock_at?->diffForHumans() }}
+                            </li>
+                    @endif
+                </td>
                 <td class="p-0">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">{{ $vehicle?->order->broker->company_name ?? ''}}</li>

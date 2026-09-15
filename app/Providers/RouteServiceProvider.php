@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\VehicleStatus;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -29,9 +30,11 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        //
+        Route::bind('status_slug', function (string $value) {
+            return VehicleStatus::tryFromSlug($value) ?? abort(404);
+        });
 
         parent::boot();
     }

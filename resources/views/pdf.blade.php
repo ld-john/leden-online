@@ -210,8 +210,8 @@
                                     £{{number_format($order->vehicle->onward_delivery, '2')}}
                                 </td>
                             </tr>
-                            @if($order->tacticalOffers)
-                                @foreach($order->tacticalOffers as $offer)
+                            @if($order->vehicle->tacticalOffers)
+                                @foreach($order->vehicle->tacticalOffers as $offer)
                                     <tr>
                                         <th style="text-align: left;">
                                             Tactical Offer: {{$offer->name}}
@@ -274,6 +274,16 @@
                                     £{{number_format($vat, '2', '.', ',')}}
                                 </td>
                             </tr>
+                            @if(!empty($grant))
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e3e6f0; padding: 10px 20px 20px 20px;">
+                                        Grant
+                                    </td>
+                                    <td style="border-bottom: 1px solid #e3e6f0; text-align: right; padding: 10px 20px 20px 20px;">
+                                        £{{number_format($grant, '2', '.', ',')}}
+                                    </td>
+                                </tr>
+                            @endif
                             <tr>
                                 <td  style="border-bottom: 1px solid #e3e6f0; padding: 10px 20px 20px 20px;">
                                     <strong>Total</strong>

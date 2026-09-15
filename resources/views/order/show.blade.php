@@ -1,5 +1,5 @@
 @extends('layouts.main', [
-    'title' => 'View Order',
+    'title' => "View Order - #{$order->id}",
     'activePage' => 'view-order'
     ])
 
@@ -19,173 +19,83 @@
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-l-blue">Vehicle Details</h6>
                         <div class="d-flex align-items-center">
-                            <strong>Vehicle Status:</strong> <span class="badge bg-primary ms-3"> {{ $order->vehicle->status() }}</span>
+                            <strong>Vehicle Status:</strong>
+                            <span class="badge bg-primary ms-3">
+                                {{ $order->vehicle->status?->label() }}
+                                @if($order->vehicle->vehicle_status->isInStock() && $order->vehicle->in_stock_at)
+                                    ({{ $order->vehicle->time_in_stock }})
+                                @endif
+                            </span>
                         </div>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Vehicle Make</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->manufacturer->name ?? '--' }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Vehicle Model</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->model ?? '--' }}</p>
-                            </div>
+                            <x-detail-pair label="Vehicle Make" :value="$order->vehicle->manufacturer?->name" />
+                            <x-detail-pair label="Vehicle Model" :value="$order->vehicle->model" />
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Orbit Number</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->orbit_number ?? '--' }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Ford Order Ref</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->ford_order_number ?? '--'}}</p>
-                            </div>
+                            <x-detail-pair label="Orbit Number" :value="$order->vehicle->orbit_number" />
+                            <x-detail-pair label="Ford Order Ref" :value="$order->vehicle->ford_order_number" />
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Vehicle Type</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->type ?? '--'}}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Vehicle Derivative</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->derivative ?? '--'}}</p>
-                            </div>
+                            <x-detail-pair label="Vehicle Type" :value="$order->vehicle->type" />
+                            <x-detail-pair label="Vehicle Derivative" :value="$order->vehicle->derivative" />
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Vehicle Engine</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->engine ?? '--'}}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Vehicle Transmission</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->transmission ?? '--'}}</p>
-                            </div>
+                            <x-detail-pair label="Vehicle Engine" :value="$order->vehicle->engine" />
+                            <x-detail-pair label="Vehicle Transmission" :value="$order->vehicle->transmission" />
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Vehicle Reg</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->reg ?? '--'}}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Vehicle Colour</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->colour ?? '--'}}</p>
-                            </div>
+                            <x-detail-pair label="Vehicle Reg" :value="$order->vehicle->reg" />
+                            <x-detail-pair label="Vehicle Colour" :value="$order->vehicle->colour" />
                         </div>
 
                         <div class="row">
                             <div class="col-md-6">
                                 <!-- This space left intentionally blank --->
                             </div>
-                            <div class="col-md-2">
-                                <p>Vehicle Trim</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->trim ?? '--'}}</p>
-                            </div>
+                            <x-detail-pair label="Vehicle Trim" :value="$order->vehicle->trim" />
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Chassis Prefix</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->chassis_prefix ?? '--'}}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Chassis</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->vehicle->chassis ?? '--'}}</p>
-                            </div>
+                            <x-detail-pair label="Chassis Prefix" :value="$order->vehicle->chassis_prefix" />
+                            <x-detail-pair label="Chassis" :value="$order->vehicle->chassis" />
                         </div>
 
                         <div class="row">
-                            @if (Auth::user()->role != 'broker')
-                                <div class="col-md-2">
-                                    <p>Model Year</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->vehicle->model_year ?? '--'}}</p>
-                                </div>
-                            @endif
-                            <div class="col-md-2">
-                                @if ($order->admin_accepted == 1 && $order->dealer_accepted == 1 && $order->broker_accepted == 1)
-                                    <p>Delivery Date</p>
-                                @else
-                                    <p>Proposed Delivery Date</p>
-                                @endif
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">
-                                    @if( isset ($order->delivery_date) && ( $order->delivery_date != '0000-00-00 00:00:00') )
-                                        {{ date('d/m/Y', strtotime($order->delivery_date)) }}
-                                    @else
-                                        TBC
-                                    @endif
-                                </p>
-                            </div>
+                            @cannot('broker')
+                                <x-detail-pair label="Model Year" :value="$order->vehicle->model_year" />
+                            @else
+                                <div class="col-md-6 d-none d-md-block"></div>
+                            @endcannot
+
+                            @php
+                                $isFullyAccepted = $order->admin_accepted && $order->dealer_accepted && $order->broker_accepted;
+                                $deliveryLabel = $isFullyAccepted ? 'Delivery Date' : 'Proposed Delivery Date';
+                                $formattedDeliveryDate = $order->delivery_date?->format('d/m/Y') ?? 'TBC';
+                                $formattedBuildDate = $order->vehicle->build_date?->format('d/m/Y') ?? 'TBC';
+                            @endphp
+
+                            <x-detail-pair :label="$deliveryLabel" :value="$formattedDeliveryDate" />
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <!-- This space left intentionally blank --->
                             </div>
-                            <div class="col-md-2">
-                                <p>Planned Build Date</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">
-                                    @if( isset ($order->vehicle->build_date) && ( $order->vehicle->build_date != '0000-00-00 00:00:00') )
-                                        {{ date('d/m/Y', strtotime($order->vehicle->build_date)) }}
-                                    @else
-                                        TBC
-                                    @endif
-                                </p>
-                            </div>
+                            <x-detail-pair label="Planned Build Date" :value="$formattedBuildDate" />
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Registration Company</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->registration_company?->company_name }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Invoice Company</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $order->invoice_company?->company_name }}</p>
-                            </div>
+                            <x-detail-pair label="Registration Company" :value="$order->registration_company?->company_name" />
+                            <x-detail-pair label="Invoice Company" :value="$order->invoice_company?->company_name" />
                         </div>
                     </div>
-                    @if (Auth::user()->role != 'broker')
-                        <!-- Card Header -->
+                    @cannot('broker')
+                        {{-- Vehicle Pricing Section --}}
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-l-blue">Vehicle Pricing</h6>
                         </div>
@@ -193,25 +103,25 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6">
-                                    @include('partials.view-order-cost-section', ['name' => 'Basic Cost', 'value' => $order->vehicle->list_price])
-                                    @include('partials.view-order-cost-section', ['name' => 'Metallic Paint', 'value' => $order->vehicle->metallic_paint])
-                                    @include('partials.view-order-cost-section', ['name' => 'Sub Total', 'value' => $order->basicSubTotal()])
+                                    <x-view-order-cost-section name="Basic Cost" :value="$order->vehicle->list_price" />
+                                    <x-view-order-cost-section name="Metallic Paint" :value="$order->vehicle->metallic_paint" />
+                                    <x-view-order-cost-section name="Sub Total" :value="$order->basicSubTotal()" />
                                 </div>
                                 <div class="col-6">
-                                    @include('partials.view-order-cost-section', ['name' => 'Dealer Discount @ ' . $order->invoice->dealer_discount . '%', 'value' => $order->basicDealerDiscount()])
-                                    @include('partials.view-order-cost-section', ['name' => 'Manufacturer Support @ ' . $order->invoice->manufacturer_discount . '%', 'value' => $order->basicManufacturerSupport()])
+                                    <x-view-order-cost-section :name="'Dealer Discount @ ' . ($order->invoice->dealer_discount ?? 0) . '%'" :value="$order->basicDealerDiscount()" />
+                                    <x-view-order-cost-section :name="'Manufacturer Support @ ' . ($order->invoice->manufacturer_discount ?? 0) . '%'" :value="$order->basicManufacturerSupport()" />
                                     {{-- Tactical Offers Section --}}
-                                    @foreach($order->tacticalOffers as $offer)
+                                    @foreach($order->vehicle?->tacticalOffers as $offer)
                                         <x-view-order-cost-section
                                                 :name="'Tactical Offer: ' . $offer->name"
                                                 :value="$offer->pivot->applied_amount"
                                         />
                                     @endforeach
 
-                                    @if($order->tacticalOffers->isNotEmpty())
+                                    @if($order->vehicle?->tacticalOffers->isNotEmpty())
                                         <x-view-order-cost-section
                                                 name="Total Tactical Offers"
-                                                :value="$order->tacticalOffers->sum('pivot.applied_amount')"
+                                                :value="$order->vehicle?->tacticalOffers->sum('pivot.applied_amount')"
                                                 class="text-success fw-bold"
                                         />
                                     @endif
@@ -222,7 +132,7 @@
                                             <x-view-order-cost-section name="Flat Discount" :value="$order->invoice->leden_discount" />
                                         @endif
                                     @endcan
-                                    @include('partials.view-order-cost-section', ['name' => 'Sub Total', 'value' => $order->basicDiscountedTotal()])
+                                    <x-view-order-cost-section name="Sub Total" :value="$order->basicDiscountedTotal()" />
                                 </div>
                             </div>
                             <hr>
@@ -233,14 +143,14 @@
                                             <h6 class="font-weight-bold">Factory Options</h6>
                                             <ul>
                                                 @forelse($order->vehicle->factoryFitOptions() as $option)
-                                                    @include('partials.view-order-cost-section', ['name' => $option->factoryOptionName, 'value' => $option->option_price])
+                                                    <x-view-order-cost-section :name="$option->factoryOptionName" :value="$option->option_price" />
                                                 @empty
                                                     <li>No options selected</li>
                                                 @endforelse
                                             </ul>
-                                            @include('partials.view-order-cost-section', ['name' => 'Sub Total', 'value' => $order->factoryOptionsSubTotal()])
-                                            @include('partials.view-order-cost-section', ['name' => 'Discount', 'value' => $order->factoryOptionsDiscount()])
-                                            @include('partials.view-order-cost-section', ['name' => 'Total', 'value' => $order->factoryOptionsTotal()])
+                                            <x-view-order-cost-section name="Sub Total" :value="$order->factoryOptionsSubTotal()" />
+                                            <x-view-order-cost-section name="Discount" :value="$order->factoryOptionsDiscount()" />
+                                            <x-view-order-cost-section name="Total" :value="$order->factoryOptionsTotal()" />
                                         </div>
                                     </div>
                                 </div>
@@ -248,12 +158,12 @@
                                     <h6 class="font-weight-bold">Dealer Fit Options</h6>
                                     <ul>
                                         @forelse($order->vehicle->dealerFitOptions() as $option)
-                                            @include('partials.view-order-cost-section', ['name' => $option->dealerOptionName, 'value' => $option->option_price])
+                                            <x-view-order-cost-section :name="$option->dealerOptionName" :value="$option->option_price" />
                                         @empty
                                             <li>No options selected</li>
                                         @endforelse
                                     </ul>
-                                    @include('partials.view-order-cost-section', ['name' => 'Total', 'value' => $order->dealerOptionsTotal()])
+                                    <x-view-order-cost-section name="Total" :value="$order->dealerOptionsTotal()" />
                                 </div>
                             </div>
                             <hr>
@@ -263,223 +173,140 @@
                                     <x-view-order-cost-section name="Onward Delivery" :value="$order->invoice->onward_delivery" />
                                     <x-view-order-cost-section name="Sub Total" :value="$order->invoiceSubTotal()" />
                                     <x-view-order-cost-section name="VAT @ 20%" :value="$order->invoiceVat()" />
+
                                 </div>
                                 <div class="col">
-                                    @include('partials.view-order-cost-section', ['name' => '1st Registration Fee', 'value' => $order->vehicle->first_reg_fee])
-                                    @include('partials.view-order-cost-section', ['name' => 'Road Fund Licence', 'value' => $order->vehicle->rfl_cost])
-
+                                    <x-view-order-cost-section name="1st Registration Fee" :value="$order->vehicle->first_reg_fee" />
+                                    <x-view-order-cost-section name="Road Fund Licence" :value="$order->vehicle->rfl_cost" />
+                                    <hr>
+                                    <x-view-order-cost-section name="Grant" :value="$order->invoice->grant" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    @include('partials.view-order-cost-section', ['name' => 'Total', 'value' => $order->invoiceTotal()])
+                                    <x-view-order-cost-section name="Total" :value="$order->invoiceTotal()" />
                                 </div>
                                 <div class="col">
-                                    @include('partials.view-order-cost-section', ['name' => 'Invoice Value', 'value' => $order->invoiceValue()])
+                                    <x-view-order-cost-section name="Invoice Value" :value="$order->invoiceValue()" />
                                 </div>
                             </div>
                             <hr>
+                            {{-- Invoicing Breakdown --}}
                             <div class="row">
-                                <div class="col">
-                                    @include('partials.view-order-cost-section', ['name' => 'Please invoice funder for', 'value' => $order->invoice->invoice_funder_for])
+                                <div class="col-md-12">
+                                    <x-view-order-cost-section name="Please invoice funder for" :value="$order->invoice->invoice_funder_for" />
+
                                     @if ($order->invoice->invoice_value_to_dealer)
-                                        <h6 class="font-weight-bold">We will invoice you for the difference</h6>
-                                        @include('partials.view-order-cost-section', ['name' => 'inc VAT', 'value' => $order->invoice->inc_vat_value()])
-                                        @include('partials.view-order-cost-section', ['name' => 'exc VAT', 'value' => $order->invoice->invoice_value_to_dealer])
+                                        <h6 class="fw-bold mt-3">We will invoice you for the difference</h6>
+                                        <x-view-order-cost-section name="inc VAT" :value="$order->invoice->inc_vat_value()" />
+                                        <x-view-order-cost-section name="exc VAT" :value="$order->invoice->invoice_value_to_dealer" />
                                     @else
-                                        <h6 class="font-weight-bold">Invoice from Dealer</h6>
-                                        @include('partials.view-order-cost-section', ['name' => 'Dealer Invoice Value (exc. VAT)', 'value' => ($order->invoice->invoice_value_from_dealer)])
-                                        @if(isset ($order->invoice->dealer_pay_date) && ( $order->invoice->dealer_pay_date != '0000-00-00 00:00:00'))
-                                            @include('partials.view-order-date-section', ['name' => 'Dealer Invoice Pay Date', 'value' => $order->invoice->dealer_pay_date])
-                                        @else
-                                            <div class="row">
-                                                <div class="col">
-                                                    <p>Dealer Invoice Pay Date</p>
-                                                </div>
-                                                <div class="col-4 text-right">
-                                                    <p class="font-weight-bold">TBC</p>
-                                                </div>
-                                            </div>
-                                        @endif
+                                        <h6 class="fw-bold mt-3">Invoice from Dealer</h6>
+                                        <x-view-order-cost-section name="Dealer Invoice Value (exc. VAT)" :value="$order->invoice->invoice_value_from_dealer" />
+
+                                        @php
+                                            $dealerPayDate = $order->invoice->dealer_pay_date?->format('d/m/Y') ?? 'TBC';
+                                        @endphp
+                                            <x-detail-pair label="Dealer Invpoce Pay Date" :value="$dealerPayDate" />
+
+
                                         @if($order->invoice->dealer_invoice_number)
-                                            <div class="row">
-                                                <div class="col">
-                                                    <p>Dealer Invoice Number</p>
-                                                </div>
-                                                <div class="col-4 text-right">
-                                                    <p class="font-weight-bold">
-                                                        {{$order->invoice->dealer_invoice_number}}
-                                                    </p>
-                                                </div>
-                                            </div>
+                                            <x-view-order-cost-section name="Dealer Invoice Number" :value="$order->invoice->dealer_invoice_number" />
                                         @endif
                                     @endif
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    @endcannot
 
+                    @can('admin')
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-l-blue">Finance Information</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <x-detail-pair label="Finance Type" :value="$order->financeType?->option" />
+                                <x-detail-pair label="Maintenance" :value="$order->maintenance?->option" />
 
+                                <x-detail-pair label="Term" :value="$order->term?->option" />
+                                <x-detail-pair label="Initial Payment" :value="$order->initialPayment?->option" />
 
-                    @if (Auth::user()->role == 'admin')
-                        <!-- Card Header - Finance Information -->
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-l-blue">Finance Information</h6>
-                    </div>
-                    <!-- Card Body - Finance Information  -->
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-2">
-                                Finance Type
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $finance_type ?? '--' }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                Maintenance
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $maintenance ?? '--'}}</p>
+                                <x-detail-pair label="Terminal Pause" :value="$order->terminal_pause ? 'Yes' : 'No'" />
+                                <x-detail-pair label="Mileage" :value="$order->mileage?->option" />
+
+                                <div class="col-md-6">
+                                    <x-view-order-cost-section name="Rental" :value="$order->rental" />
+                                </div>
+                                <div class="col-md-6">
+                                    <x-view-order-cost-section name="Maintenance Rental" :value="$order->maintenance_rental" />
+                                </div>
+
+                                @php
+                                    $renewalDate = $order->renewal_date?->format('d/m/Y') ?? '--';
+                                @endphp
+                                <x-detail-pair label="Renewal Date" :value="$renewalDate" />
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                Term
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $term ?? '--' }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                Initial Payment
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $initial_payment ?? '--'}}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                Terminal Pause
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">
-                                    @if($order->terminal_pause)
-                                        Yes
-                                    @else
-                                        No
-                                    @endif
-                                </p>
-                            </div>
-                            <div class="col-md-2">
-                                Mileage
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $mileage ?? '--'}}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                @include('partials.view-order-cost-section', ['name' => 'Rental', 'value' => ($order->rental)])
-                            </div>
-                            <div class="col-md-6">
-                                @include('partials.view-order-cost-section', ['name' => 'Maintenance Rental', 'value' => ($order->maintenance_rental)])
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                Renewal Date
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">
-                                    @if( isset ($order->renewal_date) && ( $order->renewal_date != '0000-00-00 00:00:00') )
-                                        {{ date('d/m/Y', strtotime($order->renewal_date)) }}
-                                    @else
-                                        --
-                                    @endif
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                {{-- This space left intentionally blank --}}
-                            </div>
-                        </div>
-                    </div>
-                        <!-- Card Header -->
+
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-l-blue">Admin Information</h6>
                         </div>
-                        <!-- Card Body -->
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-2">
-                                    <p>Customer Name</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->customer->customer_name ?? '--'}}</p>
-                                </div>
-                                <div class="col-md-2">
-                                    <p>Company Name</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->customer->company_name ?? '--'}}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <p>Dealership</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->dealer->company_name ?? '--'}}</p>
-                                </div>
-                                <div class="col-md-2">
-                                    <p>Broker</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->broker->company_name ?? '--'}} @if($order->finance_broker) | {{ $order->finance_broker->company_name }} @endif</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <p>Customer Phone Number</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->customer->phone_number ?? '--'}}</p>
-                                </div>
-                                <div class="col-md-2">
-                                    <p>Broker Order Ref</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $order->broker_ref ?? '--'}}</p>
-                                </div>
+                                <x-detail-pair label="Customer Name" :value="$order->customer?->customer_name" />
+                                <x-detail-pair label="Company Name" :value="$order->customer?->company_name" />
+
+                                <x-detail-pair label="Dealership" :value="$order->dealer?->company_name" />
+
+                                @php
+                                    $brokerValue = $order->broker?->company_name;
+                                    if ($order->finance_broker) {
+                                        $brokerValue .= ' | ' . $order->finance_broker->company_name;
+                                    }
+                                @endphp
+                                <x-detail-pair label="Broker" :value="$brokerValue" />
+
+                                <x-detail-pair label="Customer Phone Number" :value="$order->customer?->phone_number" />
+                                <x-detail-pair label="Broker Order Ref" :value="$order->broker_ref" />
                             </div>
                         </div>
-                    @endif
+                    @endcan
 
-
-                    <!-- Card Footer -->
-                    <div class="card-footer text-right">
+                    {{-- Card Footer Actions --}}
+                    <div class="card-footer text-end">
                         <a href="{{ route('pipeline') }}" class="btn btn-secondary">Back</a>
-                        @if (Auth::user()->role != 'broker')
+
+                        @cannot('broker')
                             <a href="{{ route('order.pdf', $order->id) }}" class="btn btn-secondary">Download Order PDF</a>
-                            @if( Auth::user()->role == 'admin')
+                            @can('admin')
                                 <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning">Edit Order</a>
-                            @endif
-                        @endif
+                            @endcan
+                        @endcannot
+
                         @if ($order->vehicle->vehicle_status == 3)
-                            @if (Auth::user()->role == 'admin' && $order->admin_accepted == 0)
-                                @if($order->delivery_date)
+                            @can('admin')
+                                @if(!$order->admin_accepted && $order->delivery_date)
                                     <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
                                 @endif
-{{--                                <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>--}}
-                            @elseif (Auth::user()->role == 'dealer' && $order->admin_accepted == 1 && $order->dealer_accepted == 0)
-                                @if($order->delivery_date)
-                                    <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
+                            @endcan
+
+                            @can('dealer')
+                                @if($order->admin_accepted && !$order->dealer_accepted)
+                                    @if($order->delivery_date)
+                                        <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
+                                    @endif
+                                    <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
                                 @endif
-                                <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
-                            @elseif (Auth::user()->role == 'broker' && $order->admin_accepted == 1 && $order->broker_accepted == 0)
-                                @if($order->delivery_date)
-                                    <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
+                            @endcan
+
+                            @can('broker')
+                                @if($order->admin_accepted && !$order->broker_accepted)
+                                    @if($order->delivery_date)
+                                        <a href="{{ route('order.date.accept', $order->id) }}" class="btn btn-success">Accept Delivery Date</a>
+                                    @endif
+                                    <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
                                 @endif
-                                <a href="{{ route('order.date.change', $order->id) }}" class="btn btn-danger">Change Delivery Date</a>
-                            @endif
+                            @endcan
                         @endif
                     </div>
                 </div>

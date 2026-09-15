@@ -44,7 +44,7 @@
         <tbody>
         @forelse($offers as $offer)
             <tr>
-                <td></td>
+                <td>{{ $offer->id }}</td>
                 <td>{{ $offer->name }}</td>
                 <td>£{{ number_format($offer->value, 2) }}</td>
                 <td> {{ $offer->manufacturer?->name ?? '-' }} </td>

@@ -18,7 +18,7 @@
             <td>{{ $order->customer->customer_name }}</td>
             <td>{{ $order->vehicle->niceName() }}</td>
             <td>
-                @if($order->vehicle->vehicle_status === 1 || $order->vehicle->vehicle_status === 15)
+                @if($order->vehicle?->vehicle_status?->isInStock())
                     IN STOCK
                 @else
                     {{ $order->vehicle->due_date }}
@@ -28,7 +28,7 @@
             <td>{{ $order->vehicle->reg }}</td>
             <td>{{ $order->vehicle->chassis }}</td>
             <td>
-                @if($order->vehicle->vehicle_status === 3 || $order->vehicle->vehicle_status === 5 || $order->vehicle->vehicle_status === 6)
+                @if($order->vehicle?->vehicle_status?->isDeliveryManaged())
                     Vehicle is in Delivery Phase
                 @else
                     Vehicle is in Order Phase

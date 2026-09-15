@@ -6,11 +6,6 @@ use App\Enums\VehicleStatus;
 use App\Exports\BrokersOrderDownload;
 use App\Models\Comment;
 use App\Models\Company;
-use App\Models\Finance\FinanceType;
-use App\Models\Finance\InitialPayment;
-use App\Models\Finance\Maintenance;
-use App\Models\Finance\Mileage;
-use App\Models\Finance\Term;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Vehicle;
@@ -62,42 +57,22 @@ class OrderController extends Controller
      * Display the specified resource.
      *
      * @param Order $order
-     * @return Application|Factory|View
+     * @return Factory|View
      */
     public function show(Order $order)
     {
-        $finance_type = FinanceType::where('id', $order->finance_type)->first()
-            ?->option;
-        $maintenance = Maintenance::where('id', $order->maintenance)->first()
-            ?->option;
-        $term = Term::where('id', $order->term)->first()?->option;
-        $initial_payment = InitialPayment::where(
-            'id',
-            $order->initial_payment,
-        )->first()?->option;
-        $mileage = Mileage::where('id', $order->mileage)->first()?->option;
 
-        return view('order.show', [
-            'order' => $order,
-            'finance_type' => $finance_type,
-            'maintenance' => $maintenance,
-            'term' => $term,
-            'initial_payment' => $initial_payment,
-            'mileage' => $mileage,
-        ]);
+        $order->load(['financeType', 'maintenance', 'term', 'initialPayment', 'mileage']);
+
+        return view('order.show', compact('order'));
     }
 
     public function recycle()
     {
-        $orders = Order::onlyTrashed()
-            ->latest()
-            ->with('vehicle')
-            ->paginate(10);
 
         return view('order.deleted', [
             'title' => 'Recycle Bin',
-            'active_page' => 'order-recycle-bin',
-            'orders' => $orders,
+            'active_page' => 'order-recycle-bin'
         ]);
     }
 
@@ -105,7 +80,7 @@ class OrderController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Order $order
-     * @return Application|Factory|View
+     * @return Factory|View
      */
     public function edit(Order $order)
     {
@@ -366,6 +341,7 @@ class OrderController extends Controller
             'dealer_fit_options' => $dealer_fit_options,
             'subtotal' => $subtotal,
             'vat' => $vat,
+            'grant' => $order->invoice?->grant ?? '',
             'total' => $total,
             'comments_table' => $comments_table,
             'orbit_number' => $orbit_number,
@@ -380,54 +356,12 @@ class OrderController extends Controller
         return $pdf->download('leden-order-' . $order->id . '.pdf');
     }
 
-    function date_cleanup()
-    {
-        Order::chunk('50', function ($orders) {
-            foreach ($orders as $order) {
-                if ($order->delivery_date_OLD) {
-                    $order->update([
-                        'delivery_date' => $order->delivery_date_OLD,
-                    ]);
-                    var_dump('delivery date moved');
-                }
-                if ($order->due_date_OLD) {
-                    $order->update([
-                        'due_date' => $order->due_date_OLD,
-                    ]);
-                    var_dump('due date moved');
-                }
-                if ($order->completed_date_OLD) {
-                    $order->update([
-                        'completed_date' => $order->completed_date_OLD,
-                    ]);
-                    var_dump('completed date moved');
-                }
-            }
-        });
-    }
-
-    /**
-     * Forcibly remove a vehicle from the database, completely removing it rather than soft deleting.
-     * @param $order
-     * @return RedirectResponse
-     */
-    public function forceDelete($order): RedirectResponse
-    {
-        Order::withTrashed()
-            ->where('id', $order)
-            ->forceDelete();
-
-        notify()->success(
-            'Order  #' . $order . ' has been successfully deleted',
-            'Order Deleted',
-        );
-
-        return redirect()->route('order.recycle-bin');
-    }
-
     /**
      * Export the Orders for Central Contracts with the required fields for their CSV
+     * @param Company $broker
      * @return BinaryFileResponse
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
     function broker_orders_export(Company $broker)
     {

@@ -4,96 +4,101 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Rework the Logging View - Again">
-      <change afterPath="$PROJECT_DIR$/app/Enums/VehicleStatus.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/TacticalOfferController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Company/CompanyCreate.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Company/Edit.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/TacticalOffers/OfferForm.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/TacticalOffers/Table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Livewire/Forms/CompanyForm.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/TacticalOffer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/View/Components/DataField.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_01_08_100407_add_tactical_offer_to_vehicles_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_01_16_114341_create_tactical_offers_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_01_21_122413_create_many_to_many_relationship_between_tactical_offers_and_vehicles.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_02_04_125427_create_order_tactical_offer_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_02_04_134149_add_dates_to_tactical_offers.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_02_05_101908_add_contract_date_to_vehicles.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_02_13_115752_update_tactical_offers_table_for_model_matching.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_02_23_163255_add_delivery_agent_to_deliveries.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/data-field.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/inputs/boolean.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/inputs/currency-readonly.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/inputs/currency.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/inputs/date.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/inputs/percentage.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/inputs/select.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/inputs/text.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/ui/section-header.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/view-order-cost-section.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/company/company-form.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/tactical-offers/offer-form.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/tactical-offers/table.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/tactical-offer/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/tactical-offer/edit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/tactical-offer/index.blade.php" afterDir="false" />
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Change vehicle status from a magic number to a backed Enum">
+      <change afterPath="$PROJECT_DIR$/app/Actions/ProcessDeliveryNotifications.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Actions/ProcessReservationExpires.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/CleanCustomers.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/CleanNoOrderCustomers.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/CleanOrders.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/CleanVehicles.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/DatabaseClean.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Exports/CompletedBondsExport.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Exports/OutstandingBondsDownload.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/RecycleBin.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/QuickAddFitOption.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/RecycleBin.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Livewire/Forms/BondForm.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Livewire/Forms/CostForm.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Livewire/Forms/CustomerForm.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Bond.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/DeliveryEtaRequestNotification.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/ExportCompleted.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Traits/FormatsExportData.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2026_04_27_150748_change_tactical_offers_to_vehicle.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2026_07_24_111957_add_grant_to_invoices.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2026_07_27_120007_add_in_stock_at_to_vehicles_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2026_07_29_110149_add_recall_reasons_to_vehicles.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2026_09_03_103010_create_bonds_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2026_09_03_103101_add_bond_id_to_orders.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/components/accordion-item.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/components/detail-pair.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/components/inputs/textarea.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/components/report-card.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/order/recycle-bin.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/quick-add-fit-option.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/recycle-bin.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/order/partials/bond.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Enums/VehicleStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Enums/VehicleStatus.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exports/UniversalExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exports/UniversalExport.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Dashboard/Broker/InStockOrdersTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Dashboard/Broker/InStockOrdersTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Delivery/DeliveryForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Delivery/DeliveryForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/ContractConfirmationCheckbox.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/ContractConfirmationCheckbox.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/DeleteOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/DeleteOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Customer/QuickEditCustomer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/QuickEditCustomer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/FitOptionsEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/FitOptionsEditor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Locations/ManageLocations.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Locations/ManageLocations.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/RestoreOrder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Reporting/ReportingTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Reporting/ReportingTable.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/UniversalSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/UniversalSearch.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleTable.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Delivery.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Delivery.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/FitOption.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/FitOption.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Location.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Location.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Reservation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TacticalOffer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TacticalOffer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Vehicle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationEmailNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationEmailNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryAwaitingConfirmationNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.esm.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.esm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.esm.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.esm.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/companies/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/companies/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/companies/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/companies/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/deliveries/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/deliveries/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/exports/universal.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/universal.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/customer/company-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/customer/company-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/customer/dealer-discount-editor.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/customer/dealer-discount-editor.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/delivery/delivery-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/delivery/delivery-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/delete-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/delete-order.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/VehicleModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/VehicleModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/user-uploads/csv-uploads/csv_order_upload_template.csv" beforeDir="false" afterPath="$PROJECT_DIR$/public/user-uploads/csv-uploads/csv_order_upload_template.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/components/inputs/currency.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/inputs/currency.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/components/inputs/date.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/inputs/date.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/components/inputs/select.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/inputs/select.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/dashboard-admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/dashboard-admin.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/exports/brokers-orders-download.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/brokers-orders-download.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/exports/central-contracts-orders-download.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/central-contracts-orders-download.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/exports/reports.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/reports.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/exports/universal.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/customer/quick-edit-customer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/customer/quick-edit-customer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/fit-options/fit-options-editor.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/fit-options/fit-options-editor.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/locations/manage-locations.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/locations/manage-locations.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/restore-order.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/tactical-offers/table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/tactical-offers/table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/fit-options-modal.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/fit-options-modal.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/universal-search.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/universal-search.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/deleted.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/deleted.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/customer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/customer.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/order/partials/delivery.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/delivery.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/finance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/finance.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/reserve.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/reserve.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/dealer-fit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/dealer-fit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/factory-fit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/factory-fit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/top_bar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/top_bar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pdf.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pdf.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/reporting/reporting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/reporting/reporting.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/deleted.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/deleted.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/view-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/view-order.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/console.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/console.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -145,7 +150,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/ld-john/leden-online.git&quot;,
-    &quot;accountId&quot;: &quot;2899ccbb-8c06-4b2e-84d7-1ca05af56627&quot;
+    &quot;accountId&quot;: &quot;6f0e0d7a-625e-49ac-9277-2d8edf57407f&quot;
   }
 }</component>
   <component name="MarkdownSettingsMigration">
@@ -327,6 +332,7 @@
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.laravel-idea.update-module-directories&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.laravel_idea.move_run_console_settings&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
@@ -349,15 +355,20 @@
     &quot;laravel_idea.dialogs.code_generation:createLivewireForm.width&quot;: &quot;416&quot;,
     &quot;laravel_idea.dialogs.code_generation:createLivewireForm.x&quot;: &quot;752&quot;,
     &quot;laravel_idea.dialogs.code_generation:createLivewireForm.y&quot;: &quot;407&quot;,
+    &quot;laravel_idea.dialogs.rename_laravel_related_items.width&quot;: &quot;485&quot;,
+    &quot;laravel_idea.dialogs.rename_laravel_related_items.x&quot;: &quot;717&quot;,
+    &quot;laravel_idea.dialogs.rename_laravel_related_items.y&quot;: &quot;413&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/majesticTrade&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;php.override.implement.member.chooser.php.doc&quot;: &quot;NONE&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\wamp64\\www\\leden\\node_modules\\prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PhpStorm 2023.1.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -1126,9 +1137,23 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="javascript:npm:prettier" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:vite" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="088572e4-ffc7-458c-8b95-777998b9a539" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
+        <entry key="088572e4-ffc7-458c-8b95-777998b9a539">
+          <value>
+            <State />
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State>
@@ -1151,7 +1176,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Refine in-stock export query in VehicleController&#10;&#10;Updated the query for in-stock export in VehicleController to exclusively target vehicles with status '1'. This eliminates the redundancy and inefficiency of the previous implementation which considered vehicles with statuses of '1', '15', and '17'." />
     <MESSAGE value="Change to the additional.blade.php swapping exception for exclusion to match the phrasing on the parent class." />
     <MESSAGE value="Reporting fix for missing February." />
     <MESSAGE value="Nulling Due Dates should work properly now. &#10;&#10;Clearing the dashboard so the admin dashboard doesn't have to load every single vehicle in the system twice." />
@@ -1176,7 +1200,8 @@
     <MESSAGE value="Updates to the latest version of Laravel and Livewire among other packages." />
     <MESSAGE value="Rework the Logging View" />
     <MESSAGE value="Rework the Logging View - Again" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rework the Logging View - Again" />
+    <MESSAGE value="Change vehicle status from a magic number to a backed Enum" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change vehicle status from a magic number to a backed Enum" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -31,7 +31,7 @@ class ReportingTable extends Component
     public $years = ['2020', '2021', '2022'];
     public $monthFilter;
 
-    public function clickMonth($month, $year)
+    public function clickMonth($month, $year): void
     {
         $this->monthFilter = [$month, $year];
     }

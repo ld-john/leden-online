@@ -41,7 +41,7 @@ class DashboardController extends Controller
 
         return match ($role) {
             'admin' => $this->renderAdminDashboard($statuses, $live_orders),
-            'dealer' => view('dashboard.dashboard-dealer', compact('live_orders', 'statuses')),
+            'dealer' => $this->renderDealerDashboard($statuses, $live_orders),
             default => $this->renderBrokerDashboard($statuses, $live_orders)
         };
 
@@ -49,11 +49,12 @@ class DashboardController extends Controller
 
     private function renderAdminDashboard($statuses, $live_orders)
     {
-        $pie_labels = collect($statuses)->except([VehicleStatus::COMPLETED_ORDERS->label()])->map(fn($item, $key) => ['label' => "$key - $item", 'value' => $item]);
+
+        $all_statuses = VehicleStatus::cases();
 
         return view('dashboard.dashboard-admin', [
+            'statuses' => $all_statuses,
             'vehicle_statuses' => $statuses,
-            'pie_labels' => $pie_labels,
             'live_orders' => $live_orders
         ]);
     }
@@ -77,6 +78,13 @@ class DashboardController extends Controller
             'vehicle_statuses' => $statuses,
         ]);
 
+    }
+
+    private function renderDealerDashboard($statuses, $liveOrders) {
+        return view('dashboard.dashboard-dealer', [
+            'vehicle_statuses' => $statuses,
+            'live_orders' => $liveOrders
+        ]);
     }
 
     public function GetAllVehiclesByStatus($role = 'admin')

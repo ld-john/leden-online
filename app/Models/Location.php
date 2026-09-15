@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\VehicleStatus;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -11,5 +12,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Location extends Model
 {
-    protected $guarded = [];
+    protected $fillable = ['name', 'status', 'location'];
+
+    protected $casts = [
+        'status' => VehicleStatus::class
+    ];
 }

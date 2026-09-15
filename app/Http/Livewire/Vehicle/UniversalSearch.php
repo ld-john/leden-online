@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Vehicle;
 
+use App\Enums\VehicleStatus;
 use App\Exports\UniversalExport;
 use App\Models\Vehicle;
 use Excel;
@@ -11,6 +12,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class UniversalSearch extends Component
@@ -37,6 +39,7 @@ class UniversalSearch extends Component
     public $searchCustomer;
     public $searchType;
     public $searchDetails;
+    public $searchChassisPrefix;
     public $searchChassis;
     public $searchRegistration;
     public $searchBuildDate;
@@ -66,12 +69,16 @@ class UniversalSearch extends Component
         $this->vehicles = Vehicle::paginate(10);
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     public function downloadCurrentData(): BinaryFileResponse
     {
-        $data = $this->filterVehiclesForDisplay()->get();
+        $query = $this->filterVehiclesForDisplay();
 
         return Excel::download(
-            new UniversalExport($data),
+            new UniversalExport($query),
             'leden-vehicle-download.xls',
         );
     }
@@ -86,28 +93,15 @@ class UniversalSearch extends Component
 
     private function filterVehiclesForDisplay(): Builder|Vehicle
     {
-        $statusFilter = [
-            '1',
-            '3',
-            '4',
-            '5',
-            '10',
-            '11',
-            '12',
-            '13',
-            '14',
-            '15',
-            '16',
-            '17',
-            '18',
-        ];
+
+        $statusFilter = VehicleStatus::mainSearchBase();
 
         if ($this->completedOrdersFilter) {
-            $statusFilter[] = '7';
+            $statusFilter = array_merge($statusFilter, VehicleStatus::completedStatuses());
         }
 
         if ($this->deliveriesBookedFilter) {
-            $statusFilter[] = '6';
+            $statusFilter = array_merge($statusFilter, VehicleStatus::bookedStatuses());
         }
 
         return Vehicle::whereIn('vehicle_status', $statusFilter)
@@ -169,17 +163,19 @@ class UniversalSearch extends Component
                         '%' . $this->searchDetails . '%',
                     );
             })
+            ->when($this->searchChassisPrefix, function ($query) {
+                $query->where(
+                    'chassis_prefix',
+                    'like',
+                    '%' . $this->searchChassisPrefix . '%',
+                );
+            })
             ->when($this->searchChassis, function ($query) {
                 $query->where(
                     'chassis',
                     'like',
                     '%' . $this->searchChassis . '%',
-                )
-                    ->orWhere(
-                        'chassis_prefix',
-                        'like',
-                        '%' . $this->searchChassis . '%'
-                    );
+                );
             })
             ->when($this->searchRegistration, function ($query) {
                 $query->where(

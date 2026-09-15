@@ -1,6 +1,9 @@
 <?php
 namespace App\Enums;
 
+use mysql_xdevapi\Collection;
+use function Laravel\Prompts\select;
+
 enum VehicleStatus : int
 {
     case IN_STOCK = 1;
@@ -19,6 +22,7 @@ enum VehicleStatus : int
     case AWAITING_DEALER_OPTIONS = 17;
     case DEALER_TRANSFER = 18;
     case ORDER_IN_QUERY = 19;
+    case REGISTERED_RECALL = 20;
     public function label(): string
     {
         return match($this) {
@@ -38,7 +42,44 @@ enum VehicleStatus : int
             self::AWAITING_DEALER_OPTIONS => 'In Stock (Awaiting Dealer Options)',
             self::DEALER_TRANSFER => 'Dealer Transfer',
             self::ORDER_IN_QUERY => 'Order in Query',
+            self::REGISTERED_RECALL => 'Registered (Recall)'
         };
+    }
+
+    public function slug(): string
+    {
+        return match($this) {
+            self::IN_STOCK => 'in-stock',
+            self::READY_FOR_DELIVERY => 'ready-for-delivery',
+            self::FACTORY_ORDER => 'factory-order',
+            self::AWAITING_DELIVERY_CONFIRMATION => 'awaiting-delivery-confirmation',
+            self::DELIVERY_BOOKED => 'delivery-booked',
+            self::COMPLETED_ORDERS => 'completed-orders',
+            self::EUROPE_VHC => 'europe-vhc',
+            self::UK_VHC => 'uk-vhc',
+            self::AT_CONVERTER => 'at-converter',
+            self::AWAITING_SHIP => 'awaiting-ship',
+            self::RECALL => 'recall',
+            self::IN_STOCK_REGISTERED => 'in-stock-registered',
+            self::DAMAGED_RECALLED => 'damaged-recalled',
+            self::AWAITING_DEALER_OPTIONS => 'in-stock-awaiting-dealer-options',
+            self::DEALER_TRANSFER => 'dealer-transfer',
+            self::ORDER_IN_QUERY => 'order-in-query',
+            self::REGISTERED_RECALL => 'registered-recall',
+        };
+    }
+
+    /**
+     * Helper to find the Enum instance by its slug
+     */
+    public static function tryFromSlug(string $slug): ?self
+    {
+        foreach (self::cases() as $status) {
+            if ($status->slug() === $slug) {
+                return $status;
+            }
+        }
+        return null;
     }
 
     public static function deliveryStatuses(): array
@@ -76,6 +117,7 @@ enum VehicleStatus : int
             self::AWAITING_DEALER_OPTIONS,
             self::DEALER_TRANSFER,
             self::ORDER_IN_QUERY,
+            self::REGISTERED_RECALL
         ];
     }
 
@@ -93,6 +135,7 @@ enum VehicleStatus : int
             self::AWAITING_DEALER_OPTIONS,
             self::DEALER_TRANSFER,
             self::ORDER_IN_QUERY,
+            self::REGISTERED_RECALL
         ];
     }
 
@@ -111,9 +154,55 @@ enum VehicleStatus : int
         return in_array($this, [self::IN_STOCK, self::IN_STOCK_REGISTERED]);
     }
 
+    public function isRecalled(): bool
+    {
+        return in_array($this, [self::RECALL, self::REGISTERED_RECALL, self::DAMAGED_RECALLED]);
+    }
+
     public function isExcludedFromImport(): bool
     {
         return in_array($this, self::excludeFromPipeline());
+    }
+
+    public static function fromLabel(string $label): self
+    {
+        return match (strtolower(trim($label))) {
+            'in stock' => self::IN_STOCK,
+            'ready for delivery' => self::READY_FOR_DELIVERY,
+            'uk vhc' => self::UK_VHC,
+            'delivery booked' => self::DELIVERY_BOOKED,
+            'completed orders' => self::COMPLETED_ORDERS,
+            'europe vhc' => self::EUROPE_VHC,
+            'at converter' => self::AT_CONVERTER,
+            'awaiting ship' => self::AWAITING_SHIP,
+            default => self::FACTORY_ORDER,
+        };
+    }
+
+    public static function completedStatuses() : array
+    {
+        return [
+            self::COMPLETED_ORDERS
+        ];
+    }
+
+    public static function bookedStatuses() : array
+    {
+        return [
+            self::DELIVERY_BOOKED
+        ];
+    }
+
+    public static function mainSearchBase() : array
+    {
+        $exclude = array_merge(
+            self::completedStatuses(),
+            self::bookedStatuses()
+        );
+
+        return collect(self::cases())
+            ->reject(fn(self $status) => in_array($status, $exclude))
+            ->toArray();
     }
 }
 

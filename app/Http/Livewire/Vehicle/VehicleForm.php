@@ -8,27 +8,26 @@ use App\Models\Company;
 use App\Models\FitOption;
 use App\Models\Manufacturer;
 use App\Models\Permission;
+use App\Models\TacticalOffer;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\VehicleMeta;
 use App\Models\VehicleModel;
 use App\Notifications\RegistrationNumberAddedEmailNotification;
 use App\Notifications\RegistrationNumberAddedNotification;
-use Carbon\Carbon;
-use DateTime;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
 use LaravelIdea\Helper\App\Models\_IH_FitOption_C;
+use LaravelIdea\Helper\App\Models\_IH_TacticalOffer_C;
 use LaravelIdea\Helper\App\Models\_IH_VehicleModel_C;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithPagination;
 
 class VehicleForm extends Component
@@ -61,7 +60,7 @@ class VehicleForm extends Component
     public $chassis;
     public $status;
     public $model_year;
-    public $registered_date;
+    public $vehicle_registered_on;
     public $due_date;
     public $contract_date;
     public $build_date;
@@ -81,6 +80,7 @@ class VehicleForm extends Component
     public $show_offer = '0'; // Vehicle
     public $hide_from_broker = '0';
     public $hide_from_dealer = '0';
+    public ?array $selectedOffers = [];
     public $factoryFitSearch;
     public $dealerFitSearch;
     public $successMsg = '';
@@ -96,7 +96,7 @@ class VehicleForm extends Component
         'colour' => 'required',
         'trim' => 'required',
         'status' => 'required',
-        'registered_date' => 'nullable|date',
+        'vehicle_registered_on' => 'nullable|date',
         'build_date' => 'nullable|date',
         'contract_date' => 'nullable|date',
         'due_date' => 'nullable|date',
@@ -138,7 +138,7 @@ class VehicleForm extends Component
             $this->vehicle->model,
         )->first()->id;
 
-        $this->registered_date = $this->vehicle->vehicle_registered_on;
+        $this->vehicle_registered_on = $this->vehicle->vehicle_registered_on;
         $this->build_date = $this->vehicle->build_date;
         $this->due_date = $this->vehicle->due_date;
         $this->contract_date = $this->vehicle->contract_date;
@@ -178,6 +178,7 @@ class VehicleForm extends Component
         $this->show_offer = $this->vehicle->show_offer;
         $this->hide_from_broker = $this->vehicle->hide_from_broker;
         $this->hide_from_dealer = $this->vehicle->hide_from_dealer;
+        $this->selectedOffers = $this->vehicle->tacticalOffers()->pluck('tactical_offers.id')->toArray();
 
     }
 
@@ -192,9 +193,8 @@ class VehicleForm extends Component
 
     /**
      * Save the vehicle when the form is submitted
-     * @return RedirectResponse
      */
-    public function orderFormSubmit(): RedirectResponse
+    public function orderFormSubmit(): Redirector
     {
         $this->sanitizeDates();
         $this->orbit_number = $this->orbit_number === '' ? null : $this->orbit_number;
@@ -205,13 +205,74 @@ class VehicleForm extends Component
 
         $isExistingVehicle = (bool) $this->vehicle;
 
-        $vehicle->fill($this->getVehicleAttributes());
+        $vehicle->fill(
+            [
+                'vehicle_status'        => $this->status,
+                'reg'                   => $this->registration,
+                'ford_order_number'     => $this->order_ref,
+                'model_year'            => $this->model_year,
+                'make'                  => $this->make,
+                'model'                 => VehicleModel::find($this->model)?->name, // Safer query
+                'derivative'            => $this->derivative,
+                'engine'                => $this->engine,
+                'transmission'          => $this->transmission,
+                'fuel_type'             => $this->fuel_type,
+                'colour'                => $this->colour,
+                'chassis'               => $this->chassis,
+                'dealer_id'             => $this->dealership,
+                'broker_id'             => $this->broker,
+                'trim'                  => $this->trim,
+                'compound'              => $this->compound,
+                'chassis_prefix'        => $this->chassis_prefix,
+                'type'                  => $this->type,
+                'metallic_paint'        => $this->metallic_paint,
+                'list_price'            => $this->list_price,
+                'first_reg_fee'         => $this->first_reg_fee,
+                'rfl_cost'              => $this->rfl_cost,
+                'onward_delivery'       => $this->onward_delivery,
+                'tactical_offer'        => $this->tactical_offer,
+                'build_date'            => $this->build_date,
+                'due_date'              => $this->due_date,
+                'contract_date'         => $this->contract_date,
+                'vehicle_registered_on' => $this->vehicle_registered_on,
+                'hide_from_broker'      => $this->hide_from_broker,
+                'hide_from_dealer'      => $this->hide_from_dealer,
+                'show_offer'            => $this->show_offer,
+                'show_discount'         => $this->show_discount,
+                'show_in_ford_pipeline' => $this->ford_pipeline,
+            ]
+        );
         $vehicle->orbit_number = $this->orbit_number;
         $vehicle->save();
 
         $vehicle->fitOptions()->sync(
             array_merge($this->factoryFitOptions, $this->dealerFitOptions)
         );
+
+        $actualOffers = array_filter($this->selectedOffers, fn ($id) => $id !== 'none');
+
+        $pivotData = [];
+
+        if (!empty($actualOffers)) {
+            $offers = TacticalOffer::whereIn('id', $actualOffers)
+                ->active()
+                ->get();
+
+            $pivotData = $offers->pluck('value', 'id')
+                ->mapWithKeys(function($value, $id) {
+                    return [
+                        $id => [
+                            'applied_amount' => $value,
+                            'order_id' => null
+                        ]
+                    ];
+                })
+                ->toArray();
+
+        }
+        $vehicle
+            ->tacticalOffers()
+            ->sync($pivotData);
 
         if ($isExistingVehicle) {
             notify()->success('Vehicle was updated successfully', 'Vehicle Updated');
@@ -248,12 +309,12 @@ class VehicleForm extends Component
         $statuses = VehicleStatus::cases();
 
         return collect($statuses)->filter(function($status) {
-            if ($status === VehicleStatus::IN_STOCK_REGISTERED && !$this->registered_date) {
+            if ($status === VehicleStatus::IN_STOCK_REGISTERED && !$this->vehicle_registered_on) {
                 return false;
             }
 
             if ($status === VehicleStatus::COMPLETED_ORDERS) {
-                return $this->registered_date && $this->registered_date < now();
+                return $this->vehicle_registered_on && $this->vehicle_registered_on < now();
             }
 
             return true;
@@ -352,9 +413,30 @@ class VehicleForm extends Component
             ->where('option_type', 'factory')
             ->whereNull('archived_at')
             ->when($this->model, fn($q) => $q->where('model', $this->model))
-            ->when($this->model_year, fn($q) => $q->where('model_year'), $this->model_year)
-            ->where($this->factoryFitSearch, fn($q) => $q->where('option_name', 'like', '%' . $this->factoryFitSearch . '%'))
+            ->when($this->model_year, fn($q) => $q->where('model_year', $this->model_year))
+            ->when($this->factoryFitSearch, fn($q) => $q->where('option_name', 'like', '%' . $this->factoryFitSearch . '%'))
             ->paginate(5, ['*'], 'factory_page');
+    }
+
+    /**
+     * Get offers specifically for this vehicle.
+     * We use a Computed property so it refreshes if the vehicle changes.
+     */
+    #[Computed]
+    public function availableOffers(): _IH_TacticalOffer_C|array|Collection
+    {
+        if (!$this->make) {
+            return collect();
+        }
+
+        return TacticalOffer::query()
+            ->active()
+            ->where('manufacturer_id', $this->make)
+            ->where(function ($query) {
+                $query->where('applicable_model', $this->model)
+                    ->orWhereNull('applicable_model');
+            })
+            ->get();
     }
 
     #[Computed]
@@ -447,47 +529,7 @@ class VehicleForm extends Component
         return Vehicle::create();
     }
 
-    /**
-     * Consolidate the large data mapping array here.
-     */
-    protected function getVehicleAttributes(): array
-    {
-        return [
-            'vehicle_status'        => $this->status,
-            'reg'                   => $this->registration,
-            'ford_order_number'     => $this->order_ref,
-            'model_year'            => $this->model_year,
-            'make'                  => $this->make,
-            'model'                 => VehicleModel::find($this->model)?->name, // Safer query
-            'derivative'            => $this->derivative,
-            'engine'                => $this->engine,
-            'transmission'          => $this->transmission,
-            'fuel_type'             => $this->fuel_type,
-            'colour'                => $this->colour,
-            'chassis'               => $this->chassis,
-            'dealer_id'             => $this->dealership,
-            'broker_id'             => $this->broker,
-            'trim'                  => $this->trim,
-            'compound'              => $this->compound,
-            'chassis_prefix'        => $this->chassis_prefix,
-            'type'                  => $this->type,
-            'metallic_paint'        => $this->metallic_paint,
-            'list_price'            => $this->list_price,
-            'first_reg_fee'         => $this->first_reg_fee,
-            'rfl_cost'              => $this->rfl_cost,
-            'onward_delivery'       => $this->onward_delivery,
-            'tactical_offer'        => $this->tactical_offer,
-            'build_date'            => $this->build_date,
-            'due_date'              => $this->due_date,
-            'contract_date'         => $this->contract_date,
-            'vehicle_registered_on' => $this->registered_date,
-            'hide_from_broker'      => $this->hide_from_broker,
-            'hide_from_dealer'      => $this->hide_from_dealer,
-            'show_offer'            => $this->show_offer,
-            'show_discount'         => $this->show_discount,
-            'show_in_ford_pipeline' => $this->ford_pipeline,
-        ];
-    }
+
     /**
      * Fix bad date formats.
      */

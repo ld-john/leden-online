@@ -4,12 +4,8 @@
     ])
 
 @section('content')
-    <!-- Begin Page Content -->
     <div class="container-fluid force-min-height">
-
-        <!-- Content Row -->
         <div class="row justify-content-center">
-
             <div class="col-lg-10">
                 <h1 class="h3 mb-4 text-gray-800">View Vehicle - #{{ $vehicle->id }}</h1>
                 <div class="card shadow mb-4">
@@ -17,7 +13,12 @@
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-l-blue">Vehicle Details</h6>
                         <div class="d-flex align-items-center"><strong>Vehicle Status:</strong>
-                            <span class="badge bg-primary ms-3">{{ $vehicle->status() }}</span>
+                            <span class="badge bg-primary ms-3">
+                                {{ $vehicle->vehicle_status->label() }}
+                                @if($vehicle->vehicle_status->isInStock() && $vehicle->in_stock_at)
+                                    ({{ $vehicle->time_in_stock }})
+                                @endif
+                            </span>
                             @if( $vehicle->reservation )
                                 <span class="badge bg-success ms-3">Reserved</span>
                             @elseif($vehicle->order )
@@ -25,145 +26,62 @@
                             @endif
                         </div>
                     </div>
-                    <!-- Card Body -->
+                    {{-- Vehicle Details Body --}}
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Vehicle Make</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->manufacturer->name ?? '--' }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Vehicle Model</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->model ?? '--'}}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <p>Orbit Number</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->orbit_number ?? '--' }}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Ford Order Ref</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->ford_order_number ?? '--'}}</p>
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                <p>Vehicle Type</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->type ?? '--'}}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Vehicle Derivative</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->derivative ?? '--'}}</p>
-                            </div>
+                            <x-detail-pair label="Vehicle Make" :value="$vehicle->manufacturer?->name" />
+                            <x-detail-pair label="Vehicle Model" :value="$vehicle->model" />
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Vehicle Engine</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->engine ?? '--'}}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Vehicle Transmission</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->transmission ?? '--'}}</p>
-                            </div>
+                            <x-detail-pair label="Orbit Number" :value="$vehicle->orbit_number" />
+                            <x-detail-pair label="Ford Order Ref" :value="$vehicle->ford_order_number" />
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Vehicle Reg</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->reg ?? '--'}}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Vehicle Colour</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->colour ?? '--'}}</p>
-                            </div>
+                            <x-detail-pair label="Vehicle Type" :value="$vehicle->type" />
+                            <x-detail-pair label="Vehicle Derivative" :value="$vehicle->derivative" />
+                        </div>
+
+                        <div class="row">
+                            <x-detail-pair label="Vehicle Engine" :value="$vehicle->engine" />
+                            <x-detail-pair label="Vehicle Transmission" :value="$vehicle->transmission" />
+                        </div>
+
+                        <div class="row">
+                            <x-detail-pair label="Vehicle Reg" :value="$vehicle->reg" />
+                            <x-detail-pair label="Vehicle Colour" :value="$vehicle->colour" />
                         </div>
 
                         <div class="row">
                             <div class="col-md-6">
                                 <!-- This space left intentionally blank --->
                             </div>
-                            <div class="col-md-2">
-                                <p>Vehicle Trim</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->trim ?? '--'}}</p>
-                            </div>
+                            <x-detail-pair label="Vehicle Trim" :value="$vehicle->trim" />
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2">
-                                <p>Chassis Prefix</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->chassis_prefix ?? '--'}}</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Chassis</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">{{ $vehicle->chassis ?? '--'}}</p>
-                            </div>
+                            <x-detail-pair label="Chassis Prefix" :value="$vehicle->chassis_prefix" />
+                            <x-detail-pair label="Chassis" :value="$vehicle->chassis" />
                         </div>
 
-                        @if (Auth::user()->role != 'broker')
+                        @cannot('broker')
                             <div class="row">
-                                <div class="col-md-2">
-                                    <p>Model Year</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $vehicle->model_year ?? '--'}}</p>
-                                </div>
-                                <div class="col-md-2">
-                                    <p>Dealer</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="font-weight-bold">{{ $vehicle->dealer->company_name ?? '--'}}</p>
-                                </div>
+                                <x-detail-pair label="Model Year" :value="$vehicle->model_year" />
+                                <x-detail-pair label="Dealer" :value="$vehicle->dealer?->company_name" />
                             </div>
-                        @endif
+                        @endcannot
+                        @php
+                            $formattedBuildDate = $vehicle->build_date?->format('d/m/Y') ?? 'TBC';
+                        @endphp
                         <div class="row">
                             <div class="col-md-6">
                                 <!-- This space left intentionally blank --->
                             </div>
-                            <div class="col-md-2">
-                                <p>Planned Build Date</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="font-weight-bold">
-                                    @if( isset ($vehicle->build_date) && ( $vehicle->build_date != '0000-00-00 00:00:00') )
-                                        {{ date('d/m/Y', strtotime($vehicle->build_date)) }}
-                                    @else
-                                        TBC
-                                    @endif
-                                </p>
-                            </div>
+                            <x-detail-pair label="Planned Build Date" :value="$formattedBuildDate" />
                         </div>
                     </div>
-                    <!-- Card Header -->
+                    {{-- Extra Options Section --}}
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-l-blue">Extra Vehicle Options</h6>
                     </div>
@@ -193,13 +111,13 @@
                         </div>
                     </div>
                     @can('admin')
-                        @if($vehicle->tactical_offers)
+                        @if($vehicle->tacticalOffers)
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-l-blue">Available Tactical Offers - will be applied if still valid when order is placed.</h6>
+                                <h6 class="m-0 font-weight-bold text-l-blue">Tactical Offers - will be applied if still valid when order is placed.</h6>
                             </div>
                             <div class="card-body">
                                 <ul>
-                                    @foreach($vehicle->tactical_offers as $offer)
+                                    @foreach($vehicle->tacticalOffers as $offer)
                                         <li>{{ $offer->name }} - £{{ number_format($offer->value, 2) }}</li>
                                     @endforeach
                                 </ul>

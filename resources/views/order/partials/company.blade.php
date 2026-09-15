@@ -1,99 +1,17 @@
 {{-- Dealership --}}
-<div class="form-group row">
-    <label for="dealership" class="col-md-2 col-form-label"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Dealership</label>
-    <div class="col-md-6">
-        <div class="input-group mb-3">
-        @error('dealership')
-            <label class="input-group-text bg-danger text-white" for="inputGroupSelectDealership"><i class="fa fa-exclamation-triangle"></i></label>
-        @enderror
-        <select wire:model.live="dealership" name="dealership" id="inputGroupSelectDealership" class="form-control">
-            <option value="">Select Dealership</option>
-            @foreach ($dealers as $dealer)
-                <option value="{{ $dealer->id }}">{{ $dealer->company_name }}</option>
-            @endforeach
-        </select>
-        </div>
-    </div>
-</div>
+<x-inputs.select name="dealership" label="Dealership" :options="$dealers" placeholder="Select Dealership" required option-label="company_name" />
+
 {{-- Registration Company --}}
-<div class="form-group row">
-    <label for="dealership" class="col-md-2 col-form-label">Registration Company</label>
-    <div class="col-md-6">
-        <select wire:model.live="registration_company" name="registration_company" id="registration_company" class="form-control">
-            <option value="">Select Registration Company</option>
+<x-inputs.select name="registration_company" label="Registration Company" :options="$registration_companies" placeholder="Select Registration Company" option-label="company_name" />
 
-            @if ( $registration_companies )
-
-                @foreach ($registration_companies as $company)
-                    <option value="{{ $company->id }}"
-                            @if ( !empty( $order_details )  && $company->id == $order_details->registration_company ) selected @endif>{{ $company->company_name }}</option>
-                @endforeach
-
-            @endif
-
-        </select>
-    </div>
-</div>
 {{-- Invoice Company --}}
-<div class="form-group row">
-    <label for="invoice_company" class="col-md-2 col-form-label">Invoice Company</label>
-    <div class="col-md-6">
-        <select wire:model.live="invoice_company" name="invoice_company" id="invoice_company" class="form-control">
-            <option value="">Select Invoice Company</option>
+<x-inputs.select name="invoice_company" label="Invoice Company" :options="$invoice_companies" placeholder="Select Invoice Company" option-label="company_name" />
 
-            @if ( $invoice_companies )
-
-                @foreach ($invoice_companies as $company)
-                    <option value="{{ $company->id }}"
-                            @if ( !empty( $order_details ) && $company->id == $order_details->invoice_company ) selected @endif>{{ $company->company_name }}</option>
-                @endforeach
-
-            @endif
-
-        </select>
-    </div>
-</div>
 {{-- Broker --}}
-<div class="form-group row">
-    <label class="col-md-2 col-form-label" for="broker"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Broker</label>
-    <div class="col-md-6">
+<x-inputs.select name="broker" label="Broker" :options="$brokers" required option-label="company_name" placeholder="Select Broker" />
 
-        <div class="input-group mb-3">
-            @error('broker')
-                <label class="input-group-text bg-danger text-white" for="inputGroupSelectBroker"><i class="fa fa-exclamation-triangle"></i></label>
-            @enderror
-            <select wire:model.live="broker" class="form-select" id="inputGroupSelectBroker">
-                <option selected>Choose...</option>
-
-                @if ( $brokers )
-
-                    @foreach ($brokers as $broker)
-                    <option value="{{ $broker->id }}">{{ $broker->company_name }}</option>
-
-                @endforeach
-
-                @endif
-            </select>
-        </div>
-    </div>
-</div>
 {{-- broker Order Ref --}}
-<div class="form-group row">
-    <label class="col-md-2 col-form-label" for="broker_order_ref">Broker Order Ref</label>
-    <div class="col-md-6">
-        <input wire:model.live="broker_ref" type="text" name="broker_order_ref" id="broker_order_ref" class="form-control" autocomplete="off" />
-    </div>
-</div>
-{{-- Order Ref --}}
-<div class="form-group row">
-    <label class="col-md-2 col-form-label" for="order_ref"><i class="fa fa-asterisk fa-fw text-danger" aria-hidden="true"></i> Order Ref</label>
-    <div class="col-md-6">
-        <div class="input-group">
-            @error('order_ref')
-            <label class="input-group-text bg-danger text-white" for="inputGroupSelectBroker"><i class="fa fa-exclamation-triangle"></i></label>
-            @enderror
-            <input wire:model.live="order_ref" type="text" name="order_ref" id="order_ref" class="form-control" autocomplete="off" />
-        </div>
+<x-inputs.text name="broker_ref" label="Broker Order Ref" />
 
-    </div>
-</div>
+{{-- Order Ref --}}
+<x-inputs.text name="order_ref" label="Order Ref" required />

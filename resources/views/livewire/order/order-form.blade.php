@@ -5,251 +5,58 @@
             <a href="{{ route('order.show', $order->id) }}" class="btn btn-primary">View Order</a>
         </div>
     @endif
-    <form wire:submit="orderFormSubmit" method="POST" enctype="multipart/form-data">
+
+    <form wire:submit="saveOrder" method="POST" enctype="multipart/form-data" onsubmit="this.querySelector('button[type=submit]').disabled = true;">
         @if($errors->count())
             <div class="alert alert-danger alert-dismissible fade show m-5">
                 <h4 class="alert-heading"><i class="fa fa-exclamation-triangle"></i> There are some issues.</h4>
                 <hr>
                 <ul>
-                    {!! implode($errors->all('<li>:message</li>')) !!}
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
                 </ul>
             </div>
         @endif
 
         <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingCustomer">
-                    <button
-                            class="accordion-button"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseCustomer"
-                            aria-expanded="true"
-                            aria-controls="collapseCustomer"
-                    >
-                        Customer Information
-                    </button>
-                </h2>
-                <div
-                        id="collapseCustomer"
-                        class="accordion-collapse collapse show"
-                        aria-labelledby="headingCustomer"
-                        wire:ignore.self
-                >
-                    <div class="accordion-body">
-                        @include('order.partials.customer')
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingCompany">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCompany" aria-expanded="false" aria-controls="collapseCompany">
-                        Company
-                    </button>
-                </h2>
-                <div id="collapseCompany" class="accordion-collapse collapse" aria-labelledby="headingCompany" wire:ignore.self>
-                    <div class="accordion-body">
-                        @include('order.partials.company')
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingVehicle">
-                    <button
-                            class="accordion-button collapsed"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseVehicle"
-                            aria-expanded="true"
-                            aria-controls="collapseVehicle"
-                    >
-                        Vehicle Information
-                    </button>
-                </h2>
-                <div
-                        id="collapseVehicle"
-                        class="accordion-collapse collapse"
-                        aria-labelledby="headingVehicle"
-                        wire:ignore.self
-                >
-                    <div class="accordion-body">
-                        @include('order.partials.vehicle')
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingFactoryFit">
-                    <button
-                            class="accordion-button collapsed"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseFactoryFit"
-                            aria-expanded="true"
-                            aria-controls="collapseFactoryFit"
-                    >
-                        Factory Fit Options
-                    </button>
-                </h2>
-                <div
-                        id="collapseFactoryFit"
-                        class="accordion-collapse collapse"
-                        aria-labelledby="headingFactoryFit"
-                        wire:ignore.self
-                >
-                    <div class="accordion-body">
-                        @include('partials.factory-fit')
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingDealerFit">
-                    <button
-                            class="accordion-button collapsed"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseDealerFit"
-                            aria-expanded="true"
-                            aria-controls="collapseDealerFit"
-                    >
-                        Dealer Fit
-                    </button>
-                </h2>
-                <div
-                        id="collapseDealerFit"
-                        class="accordion-collapse collapse"
-                        aria-labelledby="headingDealerFit"
-                        wire:ignore.self
-                >
-                    <div class="accordion-body">
-                        @include('partials.dealer-fit')
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingCost">
-                    <button
-                            class="accordion-button collapsed"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseCost"
-                            aria-expanded="true"
-                            aria-controls="collapseCost"
-                    >
-                        Cost Breakdown
-                    </button>
-                </h2>
-                <div
-                        id="collapseCost"
-                        class="accordion-collapse collapse"
-                        aria-labelledby="headingCost"
-                        wire:ignore.self
-                >
-                    <div class="accordion-body">
-
-                        @include('order.partials.cost')
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingFinanceInfo">
-                    <button
-                            class="accordion-button collapsed"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseFinanceInfo"
-                            aria-expanded="false"
-                            aria-controls="collapseFinanceInfo"
-                    >
-                        Finance Information
-                    </button>
-                </h2>
-                <div
-                        id="collapseFinanceInfo"
-                        class="accordion-collapse collapse"
-                        aria-labelledby="headingFinanceInfo"
-                        wire:ignore.self
-                >
-                    <div class="accordion-body">
-                        @include('order.partials.finance')
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingInvoice">
-                    <button
-                            class="accordion-button collapsed"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseInvoice"
-                            aria-expanded="true"
-                            aria-controls="collapseInvoice"
-                    >
-                        Invoicing Information
-                    </button>
-                </h2>
-                <div
-                        id="collapseInvoice"
-                        class="accordion-collapse collapse"
-                        aria-labelledby="headingInvoice"
-                        wire:ignore.self
-                >
-                    <div class="accordion-body">
-                        @include('order.partials.invoice')
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingDelivery">
-                    <button
-                            class="accordion-button collapsed"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseDelivery"
-                            aria-expanded="true"
-                            aria-controls="collapseDelivery"
-                    >
-                        Delivery Information
-                    </button>
-                </h2>
-                <div
-                        id="collapseDelivery"
-                        class="accordion-collapse collapse"
-                        aria-labelledby="headingDelivery"
-                        wire:ignore.self
-                >
-                    <div class="accordion-body">
-                        @include('order.partials.delivery')
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingAdditional">
-                    <button
-                            class="accordion-button collapsed"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseAdditional"
-                            aria-expanded="true"
-                            aria-controls="collapseAdditional"
-                    >
-                        Additional Information
-                    </button>
-                </h2>
-                <div
-                        id="collapseAdditional"
-                        class="accordion-collapse collapse"
-                        aria-labelledby="headingAdditional"
-                        wire:ignore.self
-                >
-                    <div class="accordion-body">
-                        @include('order.partials.additional')
-                    </div>
-                </div>
-            </div>
+            <x-accordion-item id="customer" title="Customer Information" :open="true">
+                @include('order.partials.customer')
+            </x-accordion-item>
+            <x-accordion-item id="company" title="Company">
+                @include('order.partials.company')
+            </x-accordion-item>
+            <x-accordion-item id="vehicle" title="Vehicle">
+                @include('order.partials.vehicle')
+            </x-accordion-item>
+            <x-accordion-item id="factory-fit" title="Factory Fit Options">
+                @include('partials.factory-fit')
+            </x-accordion-item>
+            <x-accordion-item id="dealer-fit" title="Dealer Fit Options">
+                @include('partials.dealer-fit')
+            </x-accordion-item>
+            <x-accordion-item id="cost" title="Cost Breakdown">
+                @include('order.partials.cost')
+            </x-accordion-item>
+            <x-accordion-item id="finance" title="Finance Information">
+                @include('order.partials.finance')
+            </x-accordion-item>
+            <x-accordion-item id="invoice" title="Invoicing Information">
+                @include('order.partials.invoice')
+            </x-accordion-item>
+            <x-accordion-item id="delivery" title="Delivery Information">
+                @include('order.partials.delivery')
+            </x-accordion-item>
+            <x-accordion-item id="additional" title="Additional Information">
+                @include('order.partials.additional')
+            </x-accordion-item>
+            <x-accordion-item id="bond" title="Bond Information">
+                @include('order.partials.bond')
+            </x-accordion-item>
         </div>
 
         <div class="mt-4 text-right">
-            <button class="btn btn-primary" id="goButton" type="submit">Save Order</button>
+            <button type="submit" class="btn btn-primary" id="goButton" type="submit" wire:loading.attr="disabled">Save Order</button>
         </div>
     </form>
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Locations;
 
+use App\Enums\VehicleStatus;
 use App\Models\Location;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -17,23 +18,12 @@ class ManageLocations extends Component
     public function mount()
     {
         $this->locations = Location::orderBy('location')->get();
-        $this->statuses = [
-            1 => 'In Stock',
-            3 => 'Ready for Delivery',
-            5 => 'Awaiting Delivery Confirmation',
-            6 => 'Delivery Booked',
-            7 => 'Completed Orders',
-            10 => 'Europe VHC',
-            12 => 'At Converter',
-            13 => 'Awaiting Ship',
-            11 => 'UK VHC',
-            14 => 'Recall',
-            15 => 'In Stock (Registered)',
-            16 => 'Damaged/Recalled',
-        ];
+        $this->statuses = collect(VehicleStatus::cases())
+            ->mapWithKeys(fn($status) => [$status->value => $status->label()])
+            ->toArray();
     }
 
-    public function editLocation(Location $location)
+    public function editLocation(Location $location): void
     {
         $this->editID = $location->id;
         $this->location = $location->location;

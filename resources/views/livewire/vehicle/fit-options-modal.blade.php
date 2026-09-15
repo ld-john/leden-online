@@ -2,7 +2,7 @@
     @if( count($vehicle->factoryFitOptions()) >= 1)
         <button class="btn btn-primary" wire:click="toggleModal()">Yes <span class="badge bg-light text-dark">{{ count($vehicle->factoryFitOptions()) }}</span></button>
     @else
-        No
+        No Factory Fit Options
     @endif
     <div class="modal @if($modalShow) show @endif">
         <div class="modal-dialog" role="document">

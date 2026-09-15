@@ -13,6 +13,7 @@
         <th>Desired Delivery Month</th>
         <th>Broker</th>
         <th>Broker Reference</th>
+        <th>Delivery Date</th>
     </tr>
     </thead>
     <tbody>
@@ -66,6 +67,7 @@
 
             </td>
             <td>{{ $vehicle->order?->broker_ref ?? '' }}</td>
+            <td>{{ $vehicle->order?->delivery_date ?? '' }}</td>
         </tr>
     @endforeach
     </tbody>

@@ -14,12 +14,13 @@
 
   <title>{{ config('app.name', 'Laravel') }}</title>
 
-  <link href="{{ asset('css/font-awesome/all.min.css') }}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css" integrity="sha512-ApSLB1Pd3/bZN8fWB/RG9YhN/7bd9Hkf3AGaE2mPfebjrxagjuBtx2GcgdqIlJkUzwylBo61r9Xa9NmgBI0swA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
   <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="{{ asset('js/custom.js') }}"></script>
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
