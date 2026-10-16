@@ -3,28 +3,28 @@
         <i class="fa-solid fa-pencil"></i>
     </button>
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCustomer{{ $customer->id }}" aria-labelledby="offcanvasExampleLabel">
+    <div wire:ignore.self class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCustomer{{ $customer->id }}" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Quick Edit Customer Record - {{ $customer->id }}</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <p class="mb-0 mt-2">Customer Name</p>
-            <input wire:model.live="customer.name" class="form-control" type="text">
+            <input wire:model.live="customerForm.name" class="form-control" type="text">
             <p class="mb-0 mt-2">Address Line 1</p>
-            <input wire:model.live="customer.address_1" class="form-control" type="text">
+            <input wire:model.live="customerForm.address_1" class="form-control" type="text">
             <p class="mb-0 mt-2">Address Line 2</p>
-            <input wire:model.live="customer.address_2" class="form-control" type="text">
+            <input wire:model.live="customerForm.address_2" class="form-control" type="text">
             <p class="mb-0 mt-2">Town</p>
-            <input wire:model.live="customer.town" class="form-control" type="text">
+            <input wire:model.live="customerForm.town" class="form-control" type="text">
             <p class="mb-0 mt-2">City</p>
-            <input wire:model.live="customer.city" class="form-control" type="text">
+            <input wire:model.live="customerForm.city" class="form-control" type="text">
             <p class="mb-0 mt-2">County</p>
-            <input wire:model.live="customer.county" class="form-control" type="text">
+            <input wire:model.live="customerForm.county" class="form-control" type="text">
             <p class="mb-0 mt-2">Postcode</p>
-            <input wire:model.live="customer.postcode" class="form-control" type="text">
+            <input wire:model.live="customerForm.postcode" class="form-control" type="text">
             <p class="mb-0 mt-2">Phone Number</p>
-            <input wire:model.live="customer.phone_number" class="form-control" type="text">
+            <input wire:model.live="customerForm.phone_number" class="form-control" type="text">
 
             @if($errors->count())
                 <div class="alert alert-danger alert-dismissible fade show m-5">
@@ -35,7 +35,7 @@
                     </ul>
                 </div>
             @endif
-            <button type="button" class="btn btn-primary mt-4" wire:click="saveCustomer">Save</button>
+            <button type="button" class="btn btn-primary mt-4" wire:click="saveCustomer(true)">Save</button>
         </div>
     </div>
 </div>

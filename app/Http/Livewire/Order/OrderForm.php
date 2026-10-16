@@ -41,6 +41,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use JetBrains\PhpStorm\NoReturn;
 use LaravelIdea\Helper\App\Models\_IH_FitOption_C;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -227,8 +228,8 @@ class OrderForm extends Component
 
         if (isset($this->vehicle)) {
             $this->registered_date = $this->vehicle->vehicle_registered_on;
-            $this->due_date = $this->vehicle->due_date?->format('Y-m-d') ?? '';
-            $this->build_date = $this->vehicle->build_date?->format('Y-m-d') ?? '';
+            $this->due_date = $this->vehicle->due_date?->format('Y-m-d') ?? null;
+            $this->build_date = $this->vehicle->build_date?->format('Y-m-d') ?? null;
             $this->contract_date = $this->vehicle->contract_date;
             $this->recall_reason = $this->vehicle->recall_reason;
 
@@ -353,8 +354,8 @@ class OrderForm extends Component
             $this->delivery_date = $this->order->delivery_date;
             $this->registered_date =
                 $this->order->vehicle->vehicle_registered_on;
-            $this->build_date = $this->order->vehicle->build_date?->format('Y-m-d') ?? '';
-            $this->due_date = $this->order->vehicle->due_date?->format('Y-m-d') ?? '';
+            $this->build_date = $this->order->vehicle->build_date?->format('Y-m-d') ?? null;
+            $this->due_date = $this->order->vehicle->due_date?->format('Y-m-d') ?? null;
             $this->make = $this->order->vehicle->make;
             $this->model = VehicleModel::where(
                 'name',
@@ -489,6 +490,14 @@ class OrderForm extends Component
         $this->factoryFitOptionsArray = FitOption::find(
             $this->factoryFitOptions,
         );
+    }
+
+    #[NoReturn]
+    public function updatedCustomerId($value): void
+    {
+        $customer = Customer::where('id', $value)->first();
+
+        $this->customer->customerDetails($customer);
     }
 
     /**
@@ -877,8 +886,12 @@ class OrderForm extends Component
      */
     public function saveVehicleDetails(Vehicle $vehicle): void
     {
-        if ($this->due_date === '') {
+        if ($this->due_date === '' || $this->due_date === '0000-00-00') {
             $this->due_date = null;
+        }
+
+        if ($this->build_date === '' || $this->build_date = '0000-00-00') {
+            $this->build_date = null;
         }
 
         $vehicle->update([

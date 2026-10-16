@@ -192,7 +192,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Model Year</label>
-                            <input type="text" class="form-control" wire:model="edit_model_year" required>
+                            <input type="text" class="form-control" wire:model="edit_model_year">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Price (&pound;)</label>

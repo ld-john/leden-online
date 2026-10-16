@@ -51,29 +51,45 @@ class BondForm extends Form
         $this->refund_date = $bond->refund_date?->format('Y-m-d') ?? '';
     }
 
+    /**
+     * Sanitise empty or invalid date strings to null.
+     */
+    private function sanitiseDate(?string $date): ?string
+    {
+        if (empty($date) || $date === '-0001-11-30' || $date === '0000-00-00') {
+            return null;
+        }
+
+        return $date;
+    }
+
     public function save() : ?Bond
     {
-        if (empty($this->bond_value) && empty($this->payment_date)) {
+        $refund_date = $this->sanitiseDate($this->refund_date);
+        $payment_date = $this->sanitiseDate($this->payment_date);
+
+        if (empty($this->bond_value) && empty($payment_date)) {
             return null;
         }
 
         $this->validate();
 
+
         if ($this->bond && $this->bond->exists) {
             $this->bond->update([
                 'bond_value' => $this->bond_value,
-                'payment_date' => $this->payment_date,
+                'payment_date' => $payment_date,
                 'refund_value' => $this->refund_value,
-                'refund_date' => $this->refund_date
+                'refund_date' => $refund_date
             ]);
             return $this->bond;
         }
 
         return Bond::create([
             'bond_value' => $this->bond_value,
-            'payment_date' => $this->payment_date,
+            'payment_date' => $payment_date,
             'refund_value' => $this->refund_value,
-            'refund_date' => $this->refund_date
+            'refund_date' => $refund_date
         ]);
     }
 }

@@ -654,7 +654,7 @@ class ReportingController extends Controller
         $year = $year ? (int) $year : (int)Carbon::now()->format('Y');
         $bonds = Bond::whereNotNull('refund_value')
             ->whereNotNull('refund_date')
-            ->whereYear($year, '=', 'payment_date')
+            ->whereYear('payment_date', '=', $year)
             ->latest('payment_date');
 
         return Excel::download(

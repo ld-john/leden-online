@@ -18,8 +18,19 @@
     <tbody>
     @forelse ( $customers as $c )
         <tr>
-            <td><input type="radio" value="{{$c->id}}" wire:model.live="customer.id"></td>
-            <td>{{ $c->name() }}</td>
+            <td>
+                <input
+                        type="radio"
+                        value="{{$c->id}}"
+                        wire:model.live="customer.id"
+                        id="customer_{{$c->id}}"
+                >
+            </td>
+            <td>
+                <label for="customer_{{ $c->id }}" style="cursor: pointer; display: block; margin-bottom: 0;">
+                    {{ $c->name() }}
+                </label>
+            </td>
             <td>{{ $c->address_1 }}</td>
         </tr>
     @empty

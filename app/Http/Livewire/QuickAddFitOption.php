@@ -54,12 +54,12 @@ class QuickAddFitOption extends Component
         $rules = [
             'vehicle_model_id' => 'required|exists:vehicle_models,id',
             'option_name' => 'required|string|max:255',
-            'model_year' => 'required|string|max:10',
+            'model_year' => 'nullable|string|max:10',
             'price' => 'required|numeric|min:0'
         ];
 
         if ($this->fitType === 'dealer') {
-            $rules['dealer_id'] = 'required|exists:company,id';
+            $rules['dealer_id'] = 'required|exists:companies,id';
         }
 
         $this->validate($rules);
@@ -69,7 +69,8 @@ class QuickAddFitOption extends Component
             'option_name' => trim($this->option_name),
             'model_year' => trim($this->model_year),
             'option_price' => $this->price,
-            'dealer_id' => $this->fitType === 'dealer' ? $this->dealer_id : null
+            'dealer_id' => $this->fitType === 'dealer' ? $this->dealer_id : null,
+            'option_type' => $this->fitType
         ]);
 
         $this->dispatch('fit-option-created');

@@ -5,100 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Change vehicle status from a magic number to a backed Enum">
-      <change afterPath="$PROJECT_DIR$/app/Actions/ProcessDeliveryNotifications.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Actions/ProcessReservationExpires.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Console/Commands/CleanCustomers.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Console/Commands/CleanNoOrderCustomers.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Console/Commands/CleanOrders.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Console/Commands/CleanVehicles.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Console/Commands/DatabaseClean.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Exports/CompletedBondsExport.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Exports/OutstandingBondsDownload.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/RecycleBin.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/QuickAddFitOption.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/RecycleBin.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Livewire/Forms/BondForm.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Livewire/Forms/CostForm.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Livewire/Forms/CustomerForm.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/Bond.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Notifications/DeliveryEtaRequestNotification.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Notifications/ExportCompleted.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Traits/FormatsExportData.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_04_27_150748_change_tactical_offers_to_vehicle.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_07_24_111957_add_grant_to_invoices.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_07_27_120007_add_in_stock_at_to_vehicles_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_07_29_110149_add_recall_reasons_to_vehicles.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_09_03_103010_create_bonds_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_09_03_103101_add_bond_id_to_orders.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/accordion-item.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/detail-pair.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/inputs/textarea.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/report-card.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/order/recycle-bin.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/quick-add-fit-option.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/recycle-bin.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/order/partials/bond.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Enums/VehicleStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Enums/VehicleStatus.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exports/UniversalExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exports/UniversalExport.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CSVUploadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Actions/ProcessDeliveryNotifications.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Actions/ProcessDeliveryNotifications.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DeliveriesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DeliveriesController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Customer/QuickEditCustomer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Customer/QuickEditCustomer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/FitOptionsEditor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/FitOptions/FitOptionsEditor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Locations/ManageLocations.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Locations/ManageLocations.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/RestoreOrder.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Reporting/ReportingTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Reporting/ReportingTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/UniversalSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/UniversalSearch.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Delivery.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Delivery.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/FitOption.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/FitOption.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Location.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Location.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Reservation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/TacticalOffer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TacticalOffer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Vehicle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/VehicleModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/VehicleModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/user-uploads/csv-uploads/csv_order_upload_template.csv" beforeDir="false" afterPath="$PROJECT_DIR$/public/user-uploads/csv-uploads/csv_order_upload_template.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/components/inputs/currency.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/inputs/currency.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/components/inputs/date.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/inputs/date.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/components/inputs/select.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/inputs/select.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/dashboard-admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/dashboard-admin.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/exports/brokers-orders-download.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/brokers-orders-download.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/exports/central-contracts-orders-download.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/central-contracts-orders-download.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/exports/reports.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/reports.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/exports/universal.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/exports/vehicles.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/QuickAddFitOption.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/QuickAddFitOption.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Livewire/Forms/BondForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/Forms/BondForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Livewire/Forms/CustomerForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/Forms/CustomerForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/DeliveryEtaRequestNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DeliveryEtaRequestNotification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2022_07_19_151159_change_comments_to_polymorphic_relationship.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2022_07_19_151159_change_comments_to_polymorphic_relationship.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/build/assets/app-CGeDxMCC.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/build/assets/app-Ddvz0-Le.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/build/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/build/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.esm.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.esm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.esm.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.esm.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/livewire.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/livewire.min.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vendor/livewire/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/vendor/livewire/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/_custom.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_custom.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/customer/customer-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/customer/customer-table.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/customer/quick-edit-customer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/customer/quick-edit-customer.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/fit-options/fit-options-editor.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/fit-options/fit-options-editor.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/locations/manage-locations.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/locations/manage-locations.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/restore-order.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/tactical-offers/table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/tactical-offers/table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/fit-options-modal.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/fit-options-modal.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/universal-search.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/universal-search.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/deleted.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/deleted.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/order/partials/customer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/customer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/delivery.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/delivery.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/finance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/finance.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/invoice.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pdf.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pdf.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/reporting/reporting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/reporting/reporting.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/deleted.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/deleted.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vehicles/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/console.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/console.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -206,7 +144,6 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
       <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
       <path value="$PROJECT_DIR$/vendor/filp/whoops" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
       <path value="$PROJECT_DIR$/vendor/nesbot/carbon" />
       <path value="$PROJECT_DIR$/vendor/dompdf/dompdf" />
       <path value="$PROJECT_DIR$/vendor/symfony/finder" />
@@ -277,14 +214,12 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
       <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
       <path value="$PROJECT_DIR$/vendor/nunomaduro/collision" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/reflection-docblock" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-ide-helper" />
       <path value="$PROJECT_DIR$/vendor/mockery/mockery" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-debugbar" />
       <path value="$PROJECT_DIR$/vendor/hamcrest/hamcrest-php" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-dompdf" />
-      <path value="$PROJECT_DIR$/vendor/opcodesio/mail-parser" />
       <path value="$PROJECT_DIR$/vendor/opcodesio/log-viewer" />
       <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
       <path value="$PROJECT_DIR$/vendor/spatie/ignition" />
@@ -296,7 +231,6 @@
       <path value="$PROJECT_DIR$/vendor/laravel/prompts" />
       <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
       <path value="$PROJECT_DIR$/vendor/myclabs/php-enum" />
-      <path value="$PROJECT_DIR$/vendor/laravel/serializable-closure" />
       <path value="$PROJECT_DIR$/vendor/laravel/tinker" />
       <path value="$PROJECT_DIR$/vendor/dompdf/php-font-lib" />
       <path value="$PROJECT_DIR$/vendor/dompdf/php-svg-lib" />
@@ -306,6 +240,10 @@
       <path value="$PROJECT_DIR$/vendor/staabm/side-effects-detector" />
       <path value="$PROJECT_DIR$/vendor/thecodingmachine/safe" />
       <path value="$PROJECT_DIR$/vendor/_laravel_idea" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/laravel/serializable-closure" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/vendor/opcodesio/mail-parser" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -323,64 +261,66 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Project.color&quot;: &quot;082c62&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.laravel-idea.update-module-directories&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.laravel_idea.move_run_console_settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createBladeComponent.width&quot;: &quot;416&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createBladeComponent.x&quot;: &quot;752&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createBladeComponent.y&quot;: &quot;407&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createController.width&quot;: &quot;416&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createController.x&quot;: &quot;752&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createController.y&quot;: &quot;422&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createDatabaseMigration.width&quot;: &quot;416&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createDatabaseMigration.x&quot;: &quot;752&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createDatabaseMigration.y&quot;: &quot;353&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createLivewireComponent.width&quot;: &quot;416&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createLivewireComponent.x&quot;: &quot;752&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createLivewireComponent.y&quot;: &quot;422&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createLivewireForm.width&quot;: &quot;416&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createLivewireForm.x&quot;: &quot;752&quot;,
-    &quot;laravel_idea.dialogs.code_generation:createLivewireForm.y&quot;: &quot;407&quot;,
-    &quot;laravel_idea.dialogs.rename_laravel_related_items.width&quot;: &quot;485&quot;,
-    &quot;laravel_idea.dialogs.rename_laravel_related_items.x&quot;: &quot;717&quot;,
-    &quot;laravel_idea.dialogs.rename_laravel_related_items.y&quot;: &quot;413&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/majesticTrade&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;php.override.implement.member.chooser.php.doc&quot;: &quot;NONE&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\wamp64\\www\\leden\\node_modules\\prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PhpStorm 2023.1.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Project.color": "082c62",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.laravel-idea.update-module-directories": "true",
+    "RunOnceActivity.laravel_idea.move_run_console_settings": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "junie.plugin.stays.banner.dismissed": "true",
+    "laravel_idea.dialogs.code_generation:createBladeComponent.width": "416",
+    "laravel_idea.dialogs.code_generation:createBladeComponent.x": "752",
+    "laravel_idea.dialogs.code_generation:createBladeComponent.y": "407",
+    "laravel_idea.dialogs.code_generation:createController.width": "416",
+    "laravel_idea.dialogs.code_generation:createController.x": "752",
+    "laravel_idea.dialogs.code_generation:createController.y": "422",
+    "laravel_idea.dialogs.code_generation:createDatabaseMigration.width": "416",
+    "laravel_idea.dialogs.code_generation:createDatabaseMigration.x": "752",
+    "laravel_idea.dialogs.code_generation:createDatabaseMigration.y": "353",
+    "laravel_idea.dialogs.code_generation:createLivewireComponent.width": "416",
+    "laravel_idea.dialogs.code_generation:createLivewireComponent.x": "752",
+    "laravel_idea.dialogs.code_generation:createLivewireComponent.y": "422",
+    "laravel_idea.dialogs.code_generation:createLivewireForm.width": "416",
+    "laravel_idea.dialogs.code_generation:createLivewireForm.x": "752",
+    "laravel_idea.dialogs.code_generation:createLivewireForm.y": "407",
+    "laravel_idea.dialogs.rename_laravel_related_items.width": "485",
+    "laravel_idea.dialogs.rename_laravel_related_items.x": "717",
+    "laravel_idea.dialogs.rename_laravel_related_items.y": "413",
+    "last_opened_file_path": "C:/wamp64/www/majesticTrade",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.jshint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.jshint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.dev.executor": "Run",
+    "php.override.implement.member.chooser.php.doc": "NONE",
+    "prettierjs.PrettierConfiguration.Package": "C:\\wamp64\\www\\leden\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PhpStorm 2023.1.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;HTML&quot;,
-      &quot;CSS&quot;,
-      &quot;PHP&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "HTML",
+      "CSS",
+      "PHP"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1768204828052" />
     <option name="spentUsd" value="0.18589064" />
@@ -402,7 +342,17 @@
       <recent name="C:\wamp64\www\leden\storage\app\images" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -415,6 +365,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
         <item itemvalue="npm.watch" />
       </list>
     </recent_temporary>

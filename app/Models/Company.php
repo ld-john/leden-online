@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * @property mixed $id
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Company extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
 
     protected $guarded = [];
 
@@ -24,5 +25,10 @@ class Company extends Model
     public function users(): HasMany
     {
         return $this->hasMany(User::class, 'company_id', 'id');
+    }
+
+    public function routeNotificationForMail( $notification = null)
+    {
+        return $this->company_email;
     }
 }

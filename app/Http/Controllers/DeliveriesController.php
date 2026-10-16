@@ -9,6 +9,7 @@ use App\Notifications\DeliveryBookedNotification;
 use App\Notifications\DeliveryScheduledTomorrowEmailNotification;
 use App\Notifications\DeliveryScheduledYesterdayEmailNotification;
 use Illuminate\Database\Eloquent\Collection;
+use JetBrains\PhpStorm\NoReturn;
 use LaravelIdea\Helper\App\Models\_IH_Delivery_C;
 
 class DeliveriesController extends Controller
@@ -53,6 +54,15 @@ class DeliveriesController extends Controller
     public function edit(Delivery $delivery)
     {
         return view('deliveries.edit', ['delivery' => $delivery]);
+    }
+
+    #[NoReturn]
+    public function testDeliveryEmailContent()
+    {
+        $delivery = Delivery::latest()->first();
+
+        dd($delivery->order->vehicle->reg);
+
     }
 
     public function testDeliveryEmails()

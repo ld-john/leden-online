@@ -21,14 +21,14 @@ class FitOptionsEditor extends Component
     public string $fitType = 'factory';
     public string $searchModel = '';
     public string $searchOptionName = '';
-    public string $filterModelYear = '';
+    public ?string $filterModelYear = '';
     public ?int $filterDealerId = null;
     public bool $showArchived = false;
 
     public array $openModels = [];
     public ?int $editingOptionId = null;
     public string $edit_option_name = '';
-    public string $edit_model_year = '';
+    public ?string $edit_model_year = '';
     public string $edit_price = '';
     public ?int $edit_dealer_id = null;
     public ?int $deletingOptionId = null;
@@ -52,7 +52,7 @@ class FitOptionsEditor extends Component
         $this->edit_option_name = $option->option_name;
         $this->edit_model_year = $option->model_year;
         $this->edit_price = (string) $option->option_price;
-        $this->edit_dealer_id = $option->dealer;
+        $this->edit_dealer_id = $option->dealer->id;
 
         $this->dispatch('show-edit-modal');
     }
@@ -61,7 +61,7 @@ class FitOptionsEditor extends Component
     {
         $this->validate([
             'edit_option_name' => 'required|string|max:255',
-            'edit_model_year' => 'required|string',
+            'edit_model_year' => 'nullable|string',
             'edit_price' => 'required|numeric'
         ]);
 
@@ -77,6 +77,8 @@ class FitOptionsEditor extends Component
 
         $this->editingOptionId = null;
         $this->dispatch('hide-edit-modal');
+        $this->dispatch('hide-group-modal');
+        $this->refreshOptionsList();
     }
 
     public function confirmDelete(int $optionId):void
@@ -91,7 +93,8 @@ class FitOptionsEditor extends Component
             FitOption::destroy($this->deletingOptionId);
         }
         $this->deletingOptionId = null;
-        $this->dispatch('hide_delete-modal');
+        $this->dispatch('hide-delete-modal');
+        $this->dispatch('hide-group-modal');
     }
 
     public function manageOptionGroup(string $optionName, int $modelId): void

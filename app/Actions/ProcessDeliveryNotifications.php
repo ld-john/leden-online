@@ -40,10 +40,13 @@ class ProcessDeliveryNotifications
 
         foreach ($todaysDeliveries as $delivery) {
             if ($delivery->deliveryAgent) {
-                Notification::send($delivery->agent, new DeliveryEtaRequestNotification($delivery));
 
-                Notification::route('mail', 'deliveries@leden.co.uk')
-                    ->notify(new DeliveryEtaRequestNotification($delivery));
+                $vehicle = $delivery->order->vehicle;
+
+                Log::info($delivery->order);
+                Log::info($vehicle);
+
+                Notification::send($delivery->deliveryAgent, new DeliveryEtaRequestNotification($delivery, $vehicle));
             }
         }
     }

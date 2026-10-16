@@ -70,7 +70,7 @@
                          <div>
                               <div class="btn-group">
                                    <a data-toggle="tooltip" title="Delete Customer"><livewire:customer.delete-customers :customer="$customer->id" :key="time().$customer->id" /></a>
-                                   <a data-toggle="tooltip" title="Edit Customer"><livewire:customer.quick-edit-customer :customer="$customer->id" :key="time().$customer->id" /></a>
+                                   <a data-toggle="tooltip" title="Edit Customer"><livewire:customer.quick-edit-customer :customer="$customer" :key="time().$customer->id" /></a>
                               </div>
                          </div>
                     </td>

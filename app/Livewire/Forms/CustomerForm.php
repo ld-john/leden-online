@@ -3,10 +3,8 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Customer;
-use Cassandra\Custom;
 use Illuminate\Pagination\LengthAwarePaginator;
 use JetBrains\PhpStorm\NoReturn;
-use Livewire\Component;
 use Livewire\Form;
 
 class CustomerForm extends Form
@@ -25,7 +23,7 @@ class CustomerForm extends Form
     public function rules(): array
     {
         return [
-            'id' => ['required', 'exists:customers,id'],
+            'id' => ['nullable', 'exists:customers,id'],
             'phone_number' => ['nullable', 'numeric'],
         ];
     }
@@ -33,17 +31,10 @@ class CustomerForm extends Form
     public function messages(): array
     {
         return [
-            'id.required' => 'Please select a customer from the list or create a new one.',
             'phone_number.numeric' => 'Please enter a valid phone number'
         ];
     }
 
-    #[NoReturn]
-    public function updatedId($value): void
-    {
-        $customer = Customer::where('id', $value)->first();
-        $this->customerDetails($customer);
-    }
 
     public function setCustomer(?Customer $customer) : void
     {
@@ -70,22 +61,12 @@ class CustomerForm extends Form
     {
         $this->validate();
 
-        if ($this->customer && $this->customer->exists) {
-            $this->customer->update([
-                'customer_name' => $this->name,
-                'address_1' => $this->address_1,
-                'address_2' => $this->address_2,
-                'town' => $this->town,
-                'city' => $this->city,
-                'county' => $this->county,
-                'postcode' => $this->postcode,
-                'phone_number' => $this->phone_number,
-            ]);
-
-            return $this->customer;
+        // Find the customer if an ID exists and isn't already loaded correctly
+        if ($this->id && (!$this->customer || $this->customer->id !== $this->id)) {
+            $this->customer = Customer::find($this->id);
         }
 
-        return Customer::create([
+        $customerData = [
             'customer_name' => $this->name,
             'address_1' => $this->address_1,
             'address_2' => $this->address_2,
@@ -94,7 +75,15 @@ class CustomerForm extends Form
             'county' => $this->county,
             'postcode' => $this->postcode,
             'phone_number' => $this->phone_number,
-        ]);
+        ];
+
+        if ($this->customer && $this->customer->exists) {
+            $this->customer->update($customerData);
+            return $this->customer;
+        }
+
+        // Create the customer and assign it to the form property
+        return $this->customer = Customer::create($customerData);
     }
 
     /**

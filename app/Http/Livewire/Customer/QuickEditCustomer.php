@@ -10,16 +10,22 @@ use Livewire\Component;
 
 class QuickEditCustomer extends Component
 {
-    public CustomerForm $customer;
+    public CustomerForm $customerForm;
+    public Customer $customer;
 
     public function mount(Customer $customer): void
     {
-        $this->customer->setCustomer($customer);
+        $this->customerForm->setCustomer($customer);
+        $this->customer = $customer;
     }
 
-    public function saveCustomer(): void
+    public function saveCustomer($redirect = false)
     {
-        $this->customer->save();
+        $this->customerForm->save();
+
+        if ($redirect) {
+            return $this->redirect(route('customer.index'));
+        }
     }
 
     public function render(): View|Factory|\Illuminate\View\View
