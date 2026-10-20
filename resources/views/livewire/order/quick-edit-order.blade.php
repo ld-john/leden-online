@@ -6,7 +6,8 @@
             aria-controls="offcanvasExample"
     ></i>
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-{{$order->id}}" aria-labelledby="offcanvasExampleLabel" wire:ignore.self>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-{{$order->id}}"
+         aria-labelledby="offcanvasExampleLabel" wire:ignore.self>
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Quick Edit Order - {{ $order->id }}</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -15,15 +16,18 @@
             <div>
                 @if($view === 'order')
                     <label for="order_number" class="mb-0 mt-2">Order number</label>
-                    <input wire:model.live="order_number" type="text" name="order_number" id="order_number" class="form-control"
+                    <input wire:model.live="order_number" type="text" name="order_number" id="order_number"
+                           class="form-control"
                            autocomplete="off"
                     />
                     <label for="registration" class="mb-0 mt-2">Registration</label>
-                    <input wire:model.live="registration" type="text" name="registration" id="registration" class="form-control"
+                    <input wire:model.live="registration" type="text" name="registration" id="registration"
+                           class="form-control"
                            autocomplete="off"
                     />
                     <label for="orbit_number" class="mb-0 mt-2">Orbit Number</label>
-                    <input wire:model.live="orbit_number" type="text" name="orbit_number" id="orbit_number" class="form-control"
+                    <input wire:model.live="orbit_number" type="text" name="orbit_number" id="orbit_number"
+                           class="form-control"
                            autocomplete="off"
                     />
                     <label for="delivery_month">Desired Delivery Month</label>
@@ -50,30 +54,36 @@
                         @endforeach
                     </select>
                     <label for="order_date" class="mb-0 mt-2">Order Date</label>
-                    <input wire:model.live="order_date" type="date" name="order_date" id="order_date" class="form-control"
-                           autocomplete="off" />
+                    <input wire:model.live="order_date" type="date" name="order_date" id="order_date"
+                           class="form-control"
+                           autocomplete="off"/>
                     <label for="build_date" class="mb-0 mt-2">Planned Build Date</label>
-                    <input wire:model.live="build_date" type="date" name="build_date" id="build_date" class="form-control"
-                           autocomplete="off" />
+                    <input wire:model.live="build_date" type="date" name="build_date" id="build_date"
+                           class="form-control"
+                           autocomplete="off"/>
                     <label for="due_date" class="mb-0 mt-2">Due Date</label>
                     <input wire:model.live="due_date" type="date" name="due_date" id="due_date" class="form-control"
                            autocomplete="off"
                     />
                     @if($vehicleStatus === \App\Enums\VehicleStatus::IN_STOCK)
                         <label for="delivery_date" class="mb-0 mt-2">Proposed Delivery Date</label>
-                        <input wire:model.live="delivery_date" id="delivery_date" type="date" name="delivery_date" class="form-control" autocomplete="off">
+                        <input wire:model.live="delivery_date" id="delivery_date" type="date" name="delivery_date"
+                               class="form-control" autocomplete="off">
                     @endif
                 @endif
                 @if($view === 'delivery')
 
                     <label for="delivery_date" class="mb-0 mt-2">Proposed Delivery Date</label>
-                    <input wire:model.live="delivery_date" id="delivery_date" type="date" name="delivery_date" class="form-control" autocomplete="off">
+                    <input wire:model.live="delivery_date" id="delivery_date" type="date" name="delivery_date"
+                           class="form-control" autocomplete="off">
                     <label for="registration_date" class="mb-0 mt-2">Registration Date</label>
-                    <input wire:model.live="registered_date" type="date" name="registration_date" id="registration_date" class="form-control"
-                           autocomplete="off" />
+                    <input wire:model.live="registered_date" type="date" name="registration_date" id="registration_date"
+                           class="form-control"
+                           autocomplete="off"/>
                     @if($order->delivery)
-                    <label for="delivery_agent" class="mb-0 mt-2">Delivery Agent</label>
-                        <select name="agent" id="delivery_agent" class="form-select" wire:model.live="selectedDeliveryAgent">
+                        <label for="delivery_agent" class="mb-0 mt-2">Delivery Agent</label>
+                        <select name="agent" id="delivery_agent" class="form-select"
+                                wire:model.live="selectedDeliveryAgent">
                             <option value="">-- Select an Agent --</option>
                             @foreach($this->deliveryAgents as $agent)
                                 <option value="{{ $agent->id }}">{{ $agent->company_name }}</option>
@@ -91,6 +101,14 @@
 
                     @endforeach
                 </select>
+
+                {{-- Invoice --}}
+                <label for="invoice__dealer_pay_date" class="mb-0 mt-2">Invoice from Dealer Pay Date</label>
+                <input wire:model="invoice__dealer_pay_date"
+                       type="date" name="invoice__dealer_pay_date" id="invoice__dealer_pay_date"
+                       class="form-control"
+                       autocomplete="off"
+                />
             </div>
             @if($errors->count())
                 <div class="alert alert-danger alert-dismissible fade show m-5">
