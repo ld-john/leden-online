@@ -105,7 +105,8 @@ class Vehicle extends Model
         'vehicle_status' => VehicleStatus::class,
         'build_date' => 'datetime',
         'in_stock_at' => 'datetime',
-        'due_date' => 'date'
+        'due_date' => 'date',
+        'contract_date' => 'date'
     ];
 
     public function order(): HasOne
