@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Notification;
 
 class ProcessDeliveryNotifications
 {
-    public function handle():void
+    public function handle(): void
     {
         $today = Carbon::today();
         $tomorrow = Carbon::now()->addWeekday()->startOfDay();
@@ -63,7 +63,7 @@ class ProcessDeliveryNotifications
             }
 
             // On-demand notification to internal team
-            Notification::route('mail', 'deliveries@leden.co.uk')
+            Notification::route('mail', config('leden.email.delivery'))
                 ->notify(new DeliveryScheduledTomorrowEmailNotification($delivery));
         }
     }
@@ -80,7 +80,7 @@ class ProcessDeliveryNotifications
             }
 
             // On-demand notification to internal team
-            Notification::route('mail', 'handovers@leden.co.uk')
+            Notification::route('mail', config('leden.email.handover'))
                 ->notify(new DeliveryScheduledYesterdayEmailNotification($delivery));
         }
     }
@@ -99,10 +99,18 @@ class ProcessDeliveryNotifications
 
         if ($timing === 'tomorrow') {
             Notification::send($dealers, new DeliveryScheduledTomorrowNotification($delivery));
-            Notification::send($emailDealers, new DeliveryScheduledTomorrowEmailNotification($delivery));
+            Notification::route(
+                'mail',
+                $delivery->order?->dealer?->handover_email ?: config('leden.email.handover')
+            )
+                ->notify(new DeliveryScheduledTomorrowEmailNotification($delivery));
         } else {
             Notification::send($dealers, new DeliveryScheduledYesterdayNotification($delivery));
-            Notification::send($emailDealers, new DeliveryScheduledYesterdayEmailNotification($delivery));
+            Notification::Notification::route(
+                'mail',
+                $delivery->order?->dealer?->handover_email ?: config('leden.email.handover')
+            )
+                ->notify(new DeliveryScheduledYesterdayEmailNotification($delivery));
         }
     }
 
