@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Pull Vehicle out of Order Form and Vehicle Form into it's own Form Object.">
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Add Broker Order Ref to Quick Edit Order.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/quick-edit-order.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Enums/VehicleStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Enums/VehicleStatus.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1097,7 +1096,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Reporting fix for missing February." />
     <MESSAGE value="Nulling Due Dates should work properly now. &#10;&#10;Clearing the dashboard so the admin dashboard doesn't have to load every single vehicle in the system twice." />
     <MESSAGE value="Added new Order In Query Status.&#10;Simplified the Excel Export Buttons" />
     <MESSAGE value="Added Order In Query to the excluded list for the Importer." />
@@ -1122,7 +1120,8 @@
     <MESSAGE value="Rework the Logging View - Again" />
     <MESSAGE value="Change vehicle status from a magic number to a backed Enum" />
     <MESSAGE value="Pull Vehicle out of Order Form and Vehicle Form into it's own Form Object." />
-    <option name="LAST_COMMIT_MESSAGE" value="Pull Vehicle out of Order Form and Vehicle Form into it's own Form Object." />
+    <MESSAGE value="Add Broker Order Ref to Quick Edit Order." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Broker Order Ref to Quick Edit Order." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
