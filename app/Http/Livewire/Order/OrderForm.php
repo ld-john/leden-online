@@ -180,6 +180,7 @@ class OrderForm extends Component
         if (isset($this->vehicle)) {
 
             $this->vehicleForm->setVehicle($this->vehicle);
+            $this->bond->setBond($this->vehicle->bond);
             $this->cost->setCosts($this->vehicle);
 
         }
@@ -395,7 +396,7 @@ class OrderForm extends Component
     /**
      * Compile order attributes into a reusable array.
      */
-    private function getOrderAttributes(int $vehicleId, Customer $customer, int $invoiceId, ?Bond $bond): array
+    private function getOrderAttributes(int $vehicleId, Customer $customer, int $invoiceId): array
     {
         return [
             'vehicle_id'               => $vehicleId,
@@ -424,7 +425,6 @@ class OrderForm extends Component
             'renewal_date'             => $this->renewal_date,
             'exception'                => $this->exclusion,
             'delivery_month'           => $this->delivery_month,
-            'bond_id'                  => $bond?->id,
         ];
     }
 
@@ -443,7 +443,9 @@ class OrderForm extends Component
 
             $vehicle = $this->vehicleForm->createOrFindVehicle();
 
-            $this->vehicleForm->save();
+            $bond = $this->bond->save();
+
+            $this->vehicleForm->save($bond);
 
             $this->cost->saveCosts($vehicle);
 
@@ -452,9 +454,9 @@ class OrderForm extends Component
             $invoice = $isNewOrder ? Invoice::create() : $this->order->invoice;
             $this->saveInvoice($invoice);
 
-            $bond = $this->bond->save();
 
-            $orderAttributes = $this->getOrderAttributes($vehicle->id, $customer, $invoice->id, $bond);
+
+            $orderAttributes = $this->getOrderAttributes($vehicle->id, $customer, $invoice->id);
 
             if ($isNewOrder) {
                 $order = Order::create($orderAttributes);

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Bond extends Model
@@ -25,8 +26,13 @@ class Bond extends Model
         ];
     }
 
-    public function order(): HasOne
+    public function vehicle(): HasOne
     {
-        return $this->hasOne(Order::class, 'bond_id', 'id');
+        return $this->hasOne(Vehicle::class);
+    }
+
+    public function order(): hasOneThrough
+    {
+        return $this->hasOneThrough(Order::class,Vehicle::class);
     }
 }

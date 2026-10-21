@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Vehicle;
 
 use App\Enums\VehicleStatus;
 use App\Http\Controllers\OrderController;
+use App\Livewire\Forms\BondForm;
 use App\Livewire\Forms\CostForm;
 use App\Models\Company;
 use App\Models\FitOption;
@@ -20,6 +21,7 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
@@ -39,6 +41,7 @@ class VehicleForm extends Component
 
     public \App\Livewire\Forms\VehicleForm $vehicleForm;
     public CostForm $cost;
+    public BondForm $bond;
 
     public function getQueryString(): array
     {
@@ -67,6 +70,8 @@ class VehicleForm extends Component
 
         $this->vehicleForm->setVehicle($this->vehicle);
 
+        $this->bond->setBond($this->vehicle->bond);
+
         $this->cost->setCosts($this->vehicle);
 
         $this->tactical_offer = $this->vehicle->tactical_offer;
@@ -84,11 +89,13 @@ class VehicleForm extends Component
     /**
      * Save the vehicle when the form is submitted
      */
-    public function orderFormSubmit(): Redirector
+    public function orderFormSubmit(): RedirectResponse|Redirector
     {
         $isExistingVehicle = (bool) $this->vehicle;
 
-        $vehicle = $this->vehicleForm->save();
+        $bond = $this->bond->save();
+
+        $vehicle = $this->vehicleForm->save($bond);
 
         $this->cost->saveCosts($vehicle);
 

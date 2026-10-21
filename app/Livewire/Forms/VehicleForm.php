@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Enums\VehicleStatus;
+use App\Models\Bond;
 use App\Models\Permission;
 use App\Models\TacticalOffer;
 use App\Models\User;
@@ -194,7 +195,7 @@ class VehicleForm extends Form
         return $date;
     }
 
-    public function save() : ?Vehicle
+    public function save(?Bond $bond) : ?Vehicle
     {
         $this->due_date = $this->sanitiseDate($this->due_date);
         $this->build_date = $this->sanitiseDate($this->build_date);
@@ -233,6 +234,12 @@ class VehicleForm extends Form
         if ($this->orbit_number !== $this->vehicle->orbit_number) {
             $this->vehicle->update([
                 'orbit_number' => $this->orbit_number,
+            ]);
+        }
+
+        if ($bond) {
+            $this->vehicle->update([
+                'bond_id' => $bond->id,
             ]);
         }
 

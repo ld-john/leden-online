@@ -93,7 +93,8 @@ class Vehicle extends Model
         'order',
         'doors',
         'vehicle_reg_date',
-        'recall_reason'
+        'recall_reason',
+        'bond_id'
     ];
 
     /**
@@ -132,6 +133,11 @@ class Vehicle extends Model
     public function broker(): BelongsTo
     {
         return $this->belongsTo(Company::class, 'broker_id', 'id');
+    }
+
+    public function bond(): BelongsTo
+    {
+        return $this->belongsTo(Bond::class);
     }
 
     public function fitOptions(): BelongsToMany

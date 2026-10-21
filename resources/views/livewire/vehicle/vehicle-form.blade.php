@@ -132,6 +132,18 @@
                 <x-inputs.boolean label="Hide from Broker List" name="cost.hide_from_broker" />
                 <x-inputs.boolean label="Hide from Dealer List" name="cost.hide_from_dealer" />
             </div>
+            <x-ui.section-header>Bond Information</x-ui.section-header>
+            <div class="card-body">
+                @if($vehicleForm->vehicle_status?->isDeliveryEligible() )
+                    {{-- Delivery Date --}}
+                    <x-inputs.date name="delivery_date" label="Delivery Date" disabled />
+                @endif
+
+                <x-inputs.currency name="bond.bond_value" label="Bond Value" />
+                <x-inputs.date name="bond.payment_date" label="Payment Date" />
+                <x-inputs.currency name="bond.refund_value" label="Refund Value" />
+                <x-inputs.date name="bond.refund_date" label="Refund Date" />
+            </div>
             @if($errors->count())
                 <div class="alert alert-danger alert-dismissible fade show m-5">
                     <h4 class="alert-heading"><i class="fa fa-exclamation-triangle"></i> There are some issues.</h4>

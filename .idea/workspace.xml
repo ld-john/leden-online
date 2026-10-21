@@ -4,21 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Change vehicle status from a magic number to a backed Enum">
-      <change afterPath="$PROJECT_DIR$/app/Livewire/Forms/VehicleForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Pull Vehicle out of Order Form and Vehicle Form into it's own Form Object.">
+      <change afterPath="$PROJECT_DIR$/database/migrations/2026_10_20_112611_move_bond_id_to_vehicles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/VehicleForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Livewire/Forms/CostForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/Forms/CostForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Livewire/Forms/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/Forms/VehicleForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Bond.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Bond.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Vehicle.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/bond.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/bond.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/company.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/cost.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/order/partials/vehicle.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/dealer-fit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/dealer-fit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/factory-fit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/factory-fit.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1108,7 +1103,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Change to the additional.blade.php swapping exception for exclusion to match the phrasing on the parent class." />
     <MESSAGE value="Reporting fix for missing February." />
     <MESSAGE value="Nulling Due Dates should work properly now. &#10;&#10;Clearing the dashboard so the admin dashboard doesn't have to load every single vehicle in the system twice." />
     <MESSAGE value="Added new Order In Query Status.&#10;Simplified the Excel Export Buttons" />
@@ -1133,7 +1127,8 @@
     <MESSAGE value="Rework the Logging View" />
     <MESSAGE value="Rework the Logging View - Again" />
     <MESSAGE value="Change vehicle status from a magic number to a backed Enum" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change vehicle status from a magic number to a backed Enum" />
+    <MESSAGE value="Pull Vehicle out of Order Form and Vehicle Form into it's own Form Object." />
+    <option name="LAST_COMMIT_MESSAGE" value="Pull Vehicle out of Order Form and Vehicle Form into it's own Form Object." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
