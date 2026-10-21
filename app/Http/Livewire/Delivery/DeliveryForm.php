@@ -149,7 +149,7 @@ class DeliveryForm extends Component
             Notification::send($notifyUsers, new DeliveryAwaitingConfirmationNotification($this->order));
 
             if (!app()->environment('local')) {
-                Notification::route('mail', 'deliveries@leden.co.uk')
+                Notification::route('mail', config('leden.email.delivery'))
                     ->notify(new DeliveryAwaitingConfirmationEmailNotification($this->order));
             }
 
