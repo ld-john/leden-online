@@ -3,7 +3,10 @@
 namespace App\Livewire\Forms;
 
 use App\Models\DealerDiscount;
+use App\Models\Invoice;
+use App\Models\Order;
 use App\Models\TacticalOffer;
+use App\Models\Vehicle;
 use Illuminate\Support\Collection;
 use Livewire\Form;
 
@@ -30,6 +33,43 @@ class CostForm extends Form
     public bool $show_offer = false;
     public bool $hide_from_broker = false;
     public bool $hide_from_dealer = false;
+
+    public function setCosts(?Vehicle $vehicle): void
+    {
+        if (!$vehicle) {
+            return;
+        }
+
+        $this->list_price = $vehicle->list_price;
+        $this->metallic_paint = $vehicle->metallic_paint;
+        $this->first_reg_fee = $vehicle->first_reg_fee;
+        $this->rfl_cost = $vehicle->rfl_cost;
+        $this->onward_delivery = $vehicle->onward_delivery;
+        $this->show_discount = $vehicle->show_discount;
+        $this->show_offer = $vehicle->show_offer;
+        $this->hide_from_broker = $vehicle->hide_from_broker;
+        $this->hide_from_dealer = $vehicle->hide_from_dealer;
+
+        $this->getDealerDiscount(intval($vehicle->model), $vehicle->dealer_id);
+
+    }
+
+    public function setInvoiceCosts(?Invoice $invoice): void
+    {
+        $this->dealer_discount_override = true;
+
+        if (!$invoice) {
+            return;
+        }
+
+        $this->leden_discount = $invoice->leden_discount;
+        $this->dealer_discount = $invoice->dealer_discount;
+        $this->manufacturer_discount = $invoice->manufacturer_discount;
+        $this->manufacturer_delivery_cost = $invoice->manufacturer_delivery_cost;
+        $this->invoice_funder_for = $invoice->invoice_funder_for;
+        $this->grant = $invoice->grant;
+
+    }
 
     public function rules(): array
     {
@@ -105,5 +145,35 @@ class CostForm extends Form
         $this->dealer_discount = (float) ($discount ?? 0);
 
 
+    }
+
+    public function saveInvoiceCosts(Invoice $invoice): void
+    {
+        $this->validate();
+
+        $invoice->update([
+            'leden_discount' => $this->leden_discount,
+            'grant' => $this->grant,
+            'dealer_discount' => $this->dealer_discount,
+            'manufacturer_discount' => $this->manufacturer_discount,
+            'manufacturer_delivery_cost' => $this->manufacturer_delivery_cost,
+            'onward_delivery' => $this->onward_delivery,
+            'invoice_funder_for' => $this->invoice_funder_for
+        ]);
+    }
+
+    public function saveCosts(Vehicle $vehicle): void
+    {
+        $this->validate();
+
+        $vehicle->update([
+            'metallic_paint' => $this->metallic_paint,
+            'list_price' => $this->list_price,
+            'first_reg_fee' => $this->first_reg_fee,
+            'rfl_cost' => $this->rfl_cost,
+            'onward_delivery' => $this->onward_delivery,
+            'hide_from_broker' => $this->hide_from_broker,
+            'hide_from_dealer' => $this->hide_from_dealer
+        ]);
     }
 }

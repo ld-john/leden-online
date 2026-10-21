@@ -56,7 +56,7 @@
                 <input
                         class="form-check-input"
                         type="checkbox"
-                        wire:model.live="selectedOffers"
+                        wire:model.live="cost.selectedOffers"
                         value="{{ $offer->id }}"
                         id="offer-{{ $offer->id }}"
                         wire:key="checkbox-{{ $offer->id }}"
