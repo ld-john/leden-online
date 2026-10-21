@@ -40,6 +40,7 @@ class QuickEditOrder extends Component
     public $delivery_date;
     public $registered_date;
     public $delivery_month;
+    public $broker_order_ref;
     public $selectedDeliveryAgent;
     public $view;
     public $now;
@@ -78,6 +79,8 @@ class QuickEditOrder extends Component
         }
 
         $this->delivery_month = $order->delivery_month;
+
+        $this->broker_order_ref = $order->broker_ref;
 
         $this->compound = $vehicle->compound;
 
@@ -153,6 +156,7 @@ class QuickEditOrder extends Component
 
         $order->update([
             'delivery_month' => $this->delivery_month,
+            'broker_ref' => $this->broker_order_ref
         ]);
 
 

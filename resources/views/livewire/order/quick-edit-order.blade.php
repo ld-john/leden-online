@@ -18,6 +18,8 @@
                     <input wire:model.live="order_number" type="text" name="order_number" id="order_number" class="form-control"
                            autocomplete="off"
                     />
+                    <label for="broker_order_ref">Broker Order Ref</label>
+                    <input wire:model.live="broker_order_ref" type="text" name="broker_order_ref" id="broker_order_ref" class="form-control" autocomplete="off" />
                     <label for="registration" class="mb-0 mt-2">Registration</label>
                     <input wire:model.live="registration" type="text" name="registration" id="registration" class="form-control"
                            autocomplete="off"
