@@ -120,7 +120,8 @@ enum VehicleStatus : int
             self::AWAITING_DEALER_OPTIONS,
             self::DEALER_TRANSFER,
             self::ORDER_IN_QUERY,
-            self::REGISTERED_RECALL
+            self::REGISTERED_RECALL,
+            self::DEFERRED
         ];
     }
 
