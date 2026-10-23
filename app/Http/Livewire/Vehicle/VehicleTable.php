@@ -34,6 +34,7 @@ class VehicleTable extends Component
     public $searchDerivative;
     public $searchEngine;
     public $searchColour;
+    public $searchHasOffer;
     public $searchType;
     public $searchChassis;
     public $searchRegistration;
@@ -130,6 +131,18 @@ class VehicleTable extends Component
                     'like',
                     '%' . $this->searchColour . '%',
                 );
+            })
+            ->when($this->searchHasOffer, function ($query) {
+                switch ($this->searchHasOffer) {
+                    case 'yes':
+                        $query->whereHas('tacticalOffers');
+                        break;
+                    case 'no';
+                        $query->whereDoesntHave('tacticalOffers');
+                        break;
+                    default:
+                        break;
+                }
             })
             ->when($this->searchType, function ($query) {
                 $query->where('type', 'like', '%' . $this->searchType . '%');

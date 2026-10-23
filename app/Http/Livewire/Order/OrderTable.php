@@ -39,6 +39,7 @@ class OrderTable extends Component
     public $searchBuildDate;
     public $searchDueDate;
     public $searchDeliveryDate;
+    public $searchHasOffer;
     public $searchStatus;
     public $searchCustomer;
     public $searchRegistrationDate;
@@ -192,6 +193,22 @@ class OrderTable extends Component
                     'like',
                     '%' . $this->searchDueDate . '%',
                 );
+            })
+            ->withExists([
+                'vehicle as has_tactical_offers' => function ($query) {
+                    $query->whereHas('tacticalOffers');
+                }])
+            ->when($this->searchHasOffer, function ($query) {
+                switch ($this->searchHasOffer) {
+                    case 'yes':
+                        $query->whereHas('vehicle.tacticalOffers');
+                        break;
+                    case 'no';
+                        $query->whereDoesntHave('vehicle.tacticalOffers');
+                        break;
+                    default:
+                        break;
+                }
             })
             ->when($this->searchStatus, function ($query) {
                 $query->whereHas('vehicle', function ($query) {
