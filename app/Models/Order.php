@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use LaravelIdea\Helper\App\Models\_IH_FitOption_QB;
@@ -76,9 +77,9 @@ class Order extends Model
         return $this->hasOne(Invoice::class, 'id', 'invoice_id');
     }
 
-    public function bond(): HasOne
+    public function bond(): HasOneThrough|Order
     {
-        return $this->hasOne(Bond::class, 'id', 'bond_id');
+        return $this->hasOneThrough(Bond::class, Vehicle::class, 'id', 'id', 'vehicle_id', 'bond_id');
     }
 
     public function customer(): HasOne

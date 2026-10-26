@@ -13,7 +13,7 @@ class AddFullAddressToDeliveries extends Migration
             $table
                 ->string('delivery_address2')
                 ->nullable()
-                ->after('delivery_address');
+                ->after('delivery_address1');
             $table
                 ->string('delivery_town')
                 ->nullable()

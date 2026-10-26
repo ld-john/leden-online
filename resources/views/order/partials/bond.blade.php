@@ -35,7 +35,7 @@
     </div>
 @endif
 
-@if($status?->isDeliveryEligible() )
+@if($vehicleForm->vehicle_status?->isDeliveryEligible() )
     {{-- Delivery Date --}}
     <x-inputs.date name="delivery_date" label="Delivery Date" disabled />
 @endif

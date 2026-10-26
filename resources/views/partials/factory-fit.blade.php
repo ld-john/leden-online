@@ -2,7 +2,7 @@
     <div class="col-md-4">
         <div><strong>Model:</strong></div>
         <input type="text" disabled
-               value="@if($model){{ \App\Models\VehicleModel::where('id', $model)->first()?->name }} @endif"
+               value="@if($vehicleForm->model){{ \App\Models\VehicleModel::where('id', $vehicleForm->model)->first()?->name }} @endif"
                class="form-control">
     </div>
     <div class="col-md-4">
@@ -14,7 +14,7 @@
         <input type="text" class="form-control" wire:model.live="factoryFitSearch">
     </div>
 </div>
-@if($model && $model_year)
+@if($vehicleForm->model && $vehicleForm->model_year)
     <table class="table table-bordered">
         <thead>
         <tr class="blue-background text-white">
