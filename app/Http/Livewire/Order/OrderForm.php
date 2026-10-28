@@ -34,11 +34,13 @@ use App\Notifications\RegistrationNumberAddedEmailNotification;
 use App\Notifications\RegistrationNumberAddedNotification;
 use App\Notifications\VehicleInStockEmailNotification;
 use App\Notifications\VehicleInStockNotification;
+use Carbon\Carbon;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -46,6 +48,7 @@ use JetBrains\PhpStorm\NoReturn;
 use LaravelIdea\Helper\App\Models\_IH_FitOption_C;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
@@ -139,28 +142,24 @@ class OrderForm extends Component
     public $maintenance_rental_value;
     public $renewal_date;
     public $delivery_month;
-    public ?string $order_date;
-    public ?string $terminal_pause;
+    public $order_date;
+    public ?string $terminal_pause = null;
 
     public $now;
     protected $rules = [
         'attachments.*' => 'max:4096',
-
-        'order_ref' => 'required',
         'delivery_date' => 'nullable|date',
         'dealer_pay_date' => 'nullable|date',
         'invoice_broker_paid' => 'nullable|date',
         'commission_broker_paid' => 'nullable|date',
         'finance_commission_paid' => 'nullable|date',
-        'finance_broker' => 'nullable|numeric|different:vehicleForm.broker',
+        'finance_broker' => 'nullable|numeric|different:vehicleForm.broker_id',
     ];
     protected $messages = [
         'finance_broker.different' =>
             '<strong>Broker</strong> and <strong>Finance Broker</strong> need to be different brokers',
         'attachments.*.max' =>
-            'An <strong>Attachment</strong> is too big! (Max 1Mb)',
-        'order_ref.required' =>
-            'You must supply an <strong>Order Ref.</strong>',
+            'An <strong>Attachment</strong> is too big! (Max 4Mb)',
     ];
 
     /**
@@ -192,6 +191,8 @@ class OrderForm extends Component
             $this->customer->setCustomer($this->order->customer);
             $this->vehicleForm->setVehicle($this->order->vehicle);
             $this->cost->setCosts($this->order->vehicle);
+
+            $this->order_date = $this->formatDate($this->order->order_date ?? $this->order->created_at);
 
             $this->dealer_pay_date = $this->order->invoice->dealer_pay_date;
             $this->invoice_broker_paid = $this->order->invoice->broker_pay_date;
@@ -244,7 +245,7 @@ class OrderForm extends Component
             $this->comments = $this->order->comments;
             $this->registration_company = $this->order->registration_company_id;
             $this->invoice_company = $this->order->invoice_company_id;
-            $this->delivery_date = $this->order->delivery_date;
+            $this->delivery_date = $this->formatDate($this->order->delivery_date);
             $this->fin_number = $this->order->fin_number;
             $this->deal_number = $this->order->deal_number;
             $this->financeType = $this->order->finance_type;
@@ -259,7 +260,7 @@ class OrderForm extends Component
             $this->mileage = $this->order->mileage;
             $this->rental_value = $this->order->rental;
             $this->maintenance_rental_value = $this->order->maintenance_rental;
-            $this->renewal_date = $this->order->renewal_date;
+            $this->renewal_date = $this->formatDate($this->order->renewal_date);
             $this->exclusion = $this->order->exception;
 
             $this->cost->setInvoiceCosts($this->order->invoice);
@@ -284,7 +285,7 @@ class OrderForm extends Component
     }
 
 
-    public function updatedSelectedOffers(): void
+    public function updatedVehicleFormSelectedOffers(): void
     {
         if (end($this->vehicleForm->selectedOffers) === 'none') {
             $this->vehicleForm->selectedOffers = ['none'];
@@ -307,7 +308,7 @@ class OrderForm extends Component
         $this->vehicleForm->fuel_type = null;
         $this->vehicleForm->colour = null;
         $this->vehicleForm->trim = null;
-        $this->cost->getDealerDiscount($this->vehicleForm->model, $this->dealership);
+        $this->cost->getDealerDiscount($this->vehicleForm->model, $this->vehicleForm->dealer_id);
         $this->reset('vehicleForm.selectedOffers');
     }
 
@@ -320,15 +321,15 @@ class OrderForm extends Component
      * When the Dealership is updated, check for the discount they offer
      * @return void
      */
-    public function updatedDealership(): void
+    public function updatedVehicleFormDealerId(): void
     {
-        $this->cost->getDealerDiscount($this->vehicleForm->model, $this->dealership);
+        $this->cost->getDealerDiscount($this->vehicleForm->model, $this->vehicleForm->dealer_id);
     }
 
     public function updatedCostDealerDiscountOverride(bool $value): void
     {
         if (! $value) {
-            $this->cost->getDealerDiscount($this->vehicleForm->model, $this->dealership);
+            $this->cost->getDealerDiscount($this->vehicleForm->model, $this->vehicleForm->dealer_id);
         }
     }
 
@@ -380,17 +381,13 @@ class OrderForm extends Component
     {
         unset($this->attachments[$key]);
     }
-
-    /**
-     * Sanitise empty or invalid date strings to null.
-     */
-    private function sanitiseDate(?string $date): ?string
+    public function formatDate(mixed $value) : ?string
     {
-        if (empty($date) || $date === '-0001-11-30' || $date === '0000-00-00') {
+        if (blank($value) || str_starts_with((string) $value, '0000-00-00')) {
             return null;
         }
 
-        return $date;
+        return Carbon::parse($value)->format('Y-m-d');
     }
 
     /**
@@ -425,15 +422,18 @@ class OrderForm extends Component
             'renewal_date'             => $this->renewal_date,
             'exception'                => $this->exclusion,
             'delivery_month'           => $this->delivery_month,
+            'order_date'               => $this->order_date
         ];
     }
 
-    public function saveOrder()
+    public function saveOrder(): RedirectResponse|Redirector
     {
 
         $this->terminalPause = ($this->terminalPause === 'yes' || $this->terminalPause === true);
 
-        $this->delivery_date = $this->sanitiseDate($this->delivery_date);
+        $this->delivery_date = $this->formatDate($this->delivery_date);
+
+        $this->order_date = $this->formatDate($this->order_date);
 
         $this->customer->validate();
         $this->validate();
@@ -453,8 +453,6 @@ class OrderForm extends Component
 
             $invoice = $isNewOrder ? Invoice::create() : $this->order->invoice;
             $this->saveInvoice($invoice);
-
-
 
             $orderAttributes = $this->getOrderAttributes($vehicle->id, $customer, $invoice->id);
 
@@ -514,7 +512,7 @@ class OrderForm extends Component
             ->where('option_type', 'dealer')
             ->whereNull('archived_at')
             ->when($this->vehicleForm->model, fn($q) => $q->where('model', $this->vehicleForm->model))
-            ->when($this->dealership, fn($q) => $q->where('dealer_id', $this->vehicleForm->dealer_id))
+            ->when($this->vehicleForm->dealer_id, fn($q) => $q->where('dealer_id', $this->vehicleForm->dealer_id))
             ->when($this->dealerFitSearch, fn($q) => $q->where('option_name', 'like', '%' . $this->dealerFitSearch . '%'))
             ->paginate(5, ['*'], 'dealer_options');
     }
@@ -550,14 +548,11 @@ class OrderForm extends Component
 
         $metallicPaintDiscount = DealerDiscount::where('model_id', $this->vehicleForm->model)
             ->where('dealer_id', $this->vehicleForm->dealer_id)
-            ->get()
-            ->pluck('paint_discount');
+            ->value('paint_discount') ?? 0;
 
-        if ($metallicPaintDiscount->isNotEmpty()) {
-            $metallicPaintDiscount = $metallicPaintDiscount[0];
-        } else {
-            $metallicPaintDiscount = 0;
-        }
+        $meta = VehicleMeta::whereRelation('vehicle_model', 'vehicle_model_id', $this->vehicleForm->model)
+            ->get()
+            ->groupBy('type');
 
         $options = [
             'metallic_paint_discount' => $metallicPaintDiscount,
@@ -571,62 +566,15 @@ class OrderForm extends Component
             )
                 ->orderBy('name')
                 ->get(),
-            'types' => VehicleMeta::where('type', 'type')
-                ->whereRelation(
-                    'vehicle_model',
-                    'vehicle_model_id',
-                    '=',
-                    $this->vehicleForm->model,
-                )
-                ->get(),
-            'derivatives' => VehicleMeta::where('type', 'derivative')
-                ->whereRelation(
-                    'vehicle_model',
-                    'vehicle_model_id',
-                    '=',
-                    $this->vehicleForm->model,
-                )
-                ->get(),
-            'engines' => VehicleMeta::where('type', 'engine')
-                ->whereRelation(
-                    'vehicle_model',
-                    'vehicle_model_id',
-                    '=',
-                    $this->vehicleForm->model,
-                )
-                ->get(),
-            'transmissions' => VehicleMeta::where('type', 'transmission')
-                ->whereRelation(
-                    'vehicle_model',
-                    'vehicle_model_id',
-                    '=',
-                    $this->vehicleForm->model,
-                )
-                ->get(),
-            'fuel_types' => VehicleMeta::where('type', 'fuel')
-                ->whereRelation(
-                    'vehicle_model',
-                    'vehicle_model_id',
-                    '=',
-                    $this->vehicleForm->model,
-                )
-                ->get(),
-            'colours' => VehicleMeta::where('type', 'colour')
-                ->whereRelation(
-                    'vehicle_model',
-                    'vehicle_model_id',
-                    '=',
-                    $this->vehicleForm->model,
-                )
-                ->get(),
-            'trims' => VehicleMeta::where('type', 'trim')
-                ->whereRelation(
-                    'vehicle_model',
-                    'vehicle_model_id',
-                    '=',
-                    $this->vehicleForm->model,
-                )
-                ->get(),
+
+            'types'         => $meta->get('type', collect()),
+            'derivatives'   => $meta->get('derivative', collect()),
+            'engines'       => $meta->get('engine', collect()),
+            'transmissions' => $meta->get('transmission', collect()),
+            'fuel_types'    => $meta->get('fuel', collect()),
+            'colours'       => $meta->get('colour', collect()),
+            'trims'         => $meta->get('trim', collect()),
+
             'brokers' => $companies->where('company_type', 'broker'),
             'dealers' => $companies->where('company_type', 'dealer'),
             'delivery_agents' => $companies->where('company_type', 'delivery'),
@@ -734,11 +682,11 @@ class OrderForm extends Component
 
     public function updatingFactoryFitSearch(): void
     {
-        $this->resetPage('factoryOptionsPage');
+        $this->resetPage('factory_page');
     }
     public function updatingDealerFitSearch(): void
     {
-        $this->resetPage('dealerOptionsPage');
+        $this->resetPage('dealer_page');
     }
 
     /**
