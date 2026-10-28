@@ -84,17 +84,11 @@ class VehicleForm extends Form
     #[Validate(['required'])]
     public $dealer_id = '';
 
-    #[Validate(['required'])]
-    public $manufacturer = '';
-
-
     #[Validate(['nullable'])]
     public $orbit_number = '';
 
-
     #[Validate(['nullable', 'date'])]
     public $build_date = '';
-
 
     #[Validate(['nullable'])]
     public $compound = '';
@@ -243,11 +237,11 @@ class VehicleForm extends Form
             ]);
         }
 
-        $brokers = User::where('company_id', $this->broker)->get();
+        $brokers = User::where('company_id', $this->broker_id)->get();
         $permission = Permission::where('name', 'receive-emails')->first();
 
         $mailBrokers = $permission?->users
-            ->where('company_id', $this->broker)
+            ->where('company_id', $this->broker_id)
             ->all();
 
         if ($this->vehicle->wasChanged('vehicle_status')) {

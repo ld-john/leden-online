@@ -63,7 +63,9 @@ class Order extends Model
     protected function casts():array
     {
         return [
-            'delivery_date' => 'datetime'
+            'delivery_date' => 'datetime',
+            'order_date' => 'datetime',
+            'created_at' => 'datetime'
         ];
     }
 

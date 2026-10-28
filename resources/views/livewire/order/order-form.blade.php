@@ -56,7 +56,14 @@
         </div>
 
         <div class="mt-4 text-right">
-            <button type="submit" class="btn btn-primary" id="goButton" type="submit" wire:loading.attr="disabled">Save Order</button>
+            <button type="submit" class="btn btn-primary" id="goButton" wire:target="saveOrder" wire:loading.attr="disabled">
+                <span wire:loading.remove wire:target="saveOrder">Save Order</span>
+
+                <span wire:loading wire:target="saveOrder">
+                    <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                    Saving...
+                </span>
+            </button>
         </div>
     </form>
 </div>

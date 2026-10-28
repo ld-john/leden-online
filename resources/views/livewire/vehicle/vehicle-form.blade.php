@@ -154,7 +154,14 @@
                 </div>
             @endif
             <div class="card-footer text-right">
-                <button class="btn btn-primary" type="submit">Save Vehicle</button>
+                <button class="btn btn-primary" type="submit" wire:target="orderFormSubmit" wire:loading.attr="disabled">
+                    <span wire:loading.remove wire:target="orderFormSubmit">Save Vehicle</span>
+
+                    <span wire:loading wire:target="orderFormSubmit">
+                        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                        Saving...
+                    </span>
+                </button>
             </div>
         </div>
     </form>

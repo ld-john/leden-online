@@ -18,11 +18,12 @@ enum VehicleStatus : int
     case AWAITING_SHIP = 13;
     case RECALL = 14;
     case IN_STOCK_REGISTERED = 15;
-    case DAMAGED_RECALLED = 16;
+    case DAMAGED = 16;
     case AWAITING_DEALER_OPTIONS = 17;
     case DEALER_TRANSFER = 18;
     case ORDER_IN_QUERY = 19;
     case REGISTERED_RECALL = 20;
+    case DEFERRED = 21;
     public function label(): string
     {
         return match($this) {
@@ -38,11 +39,12 @@ enum VehicleStatus : int
             self::AWAITING_SHIP => 'Awaiting Ship',
             self::RECALL => 'Recall',
             self::IN_STOCK_REGISTERED => 'In Stock (Registered)',
-            self::DAMAGED_RECALLED => 'Damaged/Recalled',
+            self::DAMAGED => 'Damaged',
             self::AWAITING_DEALER_OPTIONS => 'In Stock (Awaiting Dealer Options)',
             self::DEALER_TRANSFER => 'Dealer Transfer',
             self::ORDER_IN_QUERY => 'Order in Query',
-            self::REGISTERED_RECALL => 'Registered (Recall)'
+            self::REGISTERED_RECALL => 'Registered (Recall)',
+            self::DEFERRED => 'Deferred'
         };
     }
 
@@ -61,11 +63,12 @@ enum VehicleStatus : int
             self::AWAITING_SHIP => 'awaiting-ship',
             self::RECALL => 'recall',
             self::IN_STOCK_REGISTERED => 'in-stock-registered',
-            self::DAMAGED_RECALLED => 'damaged-recalled',
+            self::DAMAGED => 'damaged',
             self::AWAITING_DEALER_OPTIONS => 'in-stock-awaiting-dealer-options',
             self::DEALER_TRANSFER => 'dealer-transfer',
             self::ORDER_IN_QUERY => 'order-in-query',
             self::REGISTERED_RECALL => 'registered-recall',
+            self::DEFERRED => 'deferred'
         };
     }
 
@@ -113,11 +116,12 @@ enum VehicleStatus : int
             self::AWAITING_SHIP,
             self::RECALL,
             self::IN_STOCK_REGISTERED,
-            self::DAMAGED_RECALLED,
+            self::DAMAGED,
             self::AWAITING_DEALER_OPTIONS,
             self::DEALER_TRANSFER,
             self::ORDER_IN_QUERY,
-            self::REGISTERED_RECALL
+            self::REGISTERED_RECALL,
+            self::DEFERRED
         ];
     }
 
@@ -131,7 +135,7 @@ enum VehicleStatus : int
             self::COMPLETED_ORDERS,
             self::RECALL,
             self::IN_STOCK_REGISTERED,
-            self::DAMAGED_RECALLED,
+            self::DAMAGED,
             self::AWAITING_DEALER_OPTIONS,
             self::DEALER_TRANSFER,
             self::ORDER_IN_QUERY,
@@ -156,7 +160,7 @@ enum VehicleStatus : int
 
     public function isRecalled(): bool
     {
-        return in_array($this, [self::RECALL, self::REGISTERED_RECALL, self::DAMAGED_RECALLED]);
+        return in_array($this, [self::RECALL, self::REGISTERED_RECALL, self::DAMAGED]);
     }
 
     public function isExcludedFromImport(): bool

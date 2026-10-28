@@ -15,6 +15,7 @@ use App\Notifications\RegistrationNumberAddedEmailNotification;
 use App\Notifications\RegistrationNumberAddedNotification;
 use App\Notifications\VehicleInStockEmailNotification;
 use App\Notifications\VehicleInStockNotification;
+use Carbon\Carbon;
 use DateTime;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -40,6 +41,7 @@ class QuickEditOrder extends Component
     public $delivery_date;
     public $registered_date;
     public $delivery_month;
+    public $broker_order_ref;
     public $selectedDeliveryAgent;
     public $view;
     public $now;
@@ -67,49 +69,28 @@ class QuickEditOrder extends Component
         }
 
         $this->now = date('Y-m-d');
-        if (
-            $order->vehicle->vehicle_registered_on &&
-            $order->vehicle->vehicle_registered_on != '0000-00-00 00:00:00'
-        ) {
-            $tempDate = new DateTime($order->vehicle->vehicle_registered_on);
-            $this->registered_date = $tempDate->format('Y-m-d');
-        } else {
-            $this->registered_date = null;
-        }
-
+        $this->registered_date = $this->formatDate($order->vehicle?->vehicle_registered_on);
         $this->delivery_month = $order->delivery_month;
-
+        $this->broker_order_ref = $order->broker_ref;
         $this->compound = $vehicle->compound;
-
         $this->selectedDeliveryAgent = $order->delivery?->delivery_agent_id;
-
         $this->order_number = $vehicle->ford_order_number;
         $this->registration = $vehicle->reg;
         $this->orbit_number = $vehicle->orbit_number;
-        $orderDate = new DateTime($order->created_at);
-        $this->order_date = $orderDate->format('Y-m-d');
-        if (
-            $order->vehicle->build_date &&
-            $order->vehicle->build_date != '0000-00-00 00:00:00'
-        ) {
-            $del = new DateTime($order->vehicle->build_date);
-            $this->build_date = $del->format('Y-m-d');
-        }
-        if (
-            $order->delivery_date &&
-            $order->delivery_date != '0000-00-00 00:00:00'
-        ) {
-            $del = new DateTime($order->delivery_date);
-            $this->delivery_date = $del->format('Y-m-d');
-        }
-        if (
-            $order->vehicle->due_date &&
-            $order->vehicle->due_date != '0000-00-00 00:00:00'
-        ) {
-            $del = new DateTime($order->vehicle->due_date);
-            $this->due_date = $del->format('Y-m-d');
-        }
+        $this->order_date = $this->formatDate($order->order_date ?? $order->created_at);
+        $this->build_date = $this->formatDate($order->vehicle?->build_date);
+        $this->delivery_date = $this->formatDate($order->delivery_date);
+        $this->due_date = $this->formatDate($order->vehicle?->due_date);
         $this->vehicleStatus = $vehicle->vehicle_status;
+    }
+
+    public function formatDate(mixed $value) : ?string
+    {
+        if (blank($value) || str_starts_with((string) $value, '0000-00-00')) {
+            return null;
+        }
+
+        return Carbon::parse($value)->format('Y-m-d');
     }
 
     public function saveOrder(): null
@@ -153,6 +134,7 @@ class QuickEditOrder extends Component
 
         $order->update([
             'delivery_month' => $this->delivery_month,
+            'broker_ref' => $this->broker_order_ref
         ]);
 
 
@@ -206,7 +188,7 @@ class QuickEditOrder extends Component
 
         $order->update([
             'delivery_date' => $this->delivery_date,
-            'created_at' => $this->order_date,
+            'order_date' => $this->order_date,
         ]);
 
         if ($order->wasChanged('delivery_date')) {

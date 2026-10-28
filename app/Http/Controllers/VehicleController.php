@@ -243,19 +243,16 @@ class VehicleController extends Controller
         return view('vehicles.search');
     }
 
-    public function request_otr(Vehicle $vehicle)
+    public function request_otr(Vehicle $vehicle): RedirectResponse
     {
-        $user = Auth::user();
+        Mail::to(config('leden.otr_requests.address'), config('leden.otr_requests.name'))
+            ->queue(new RequestOTR(Auth::user(), $vehicle));
 
-        $mailUser = (new User())->forceFill([
-            'name' => 'Availabilities',
-            'email' => 'availabilities@leden.co.uk ',
-        ]);
-        Mail::to($mailUser)->send(new RequestOTR($user, $vehicle));
         notify()->success(
             'A request has been sent to Leden for an OTR. Someone will be in touch with you shortly.',
             'OTR Requested',
         );
-        return redirect(route('vehicle.show', $vehicle->id));
+
+        return to_route('vehicle.show', $vehicle);
     }
 }
