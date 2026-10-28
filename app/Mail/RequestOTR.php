@@ -25,7 +25,7 @@ class RequestOTR extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'OTR Requested for ' . $this->vehicle->niceName(),
+            subject: 'OTR Requested for ' . $this->vehicle->niceName,
         );
     }
 

@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Changes to Vehicle Status">
-      <change afterPath="$PROJECT_DIR$/database/migrations/2026_10_28_120320_add_order_date_to_orders.php" afterDir="false" />
+    <list default="true" id="d2b6bc27-4a1c-4be2-8016-6beba00c964e" name="Default Changelist" comment="Update to save Order Date">
+      <change afterPath="$PROJECT_DIR$/config/leden.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Order/QuickEditOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Livewire/Forms/VehicleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/Forms/VehicleForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/order/order-form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/vehicle-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Mail/RequestOTR.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Mail/RequestOTR.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Vehicle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Vehicle.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/emails/request-o-t-r.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/request-o-t-r.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1102,7 +1100,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Added new Order In Query Status.&#10;Simplified the Excel Export Buttons" />
     <MESSAGE value="Added Order In Query to the excluded list for the Importer." />
     <MESSAGE value="Added Order in Query to Order Bank&#10;&#10;Added Dealer to the download of Universal Search&#10;&#10;Added Finance Broker to the download of Universal Search" />
     <MESSAGE value="Update Laravel to v10&#10;Update Livewire to v3&#10;Assorted other package updates&#10;Added Vehicle Status to Order PDF&#10;Added Orbit Number to Order PDF" />
@@ -1127,7 +1124,8 @@
     <MESSAGE value="Pull Vehicle out of Order Form and Vehicle Form into it's own Form Object." />
     <MESSAGE value="Add Broker Order Ref to Quick Edit Order." />
     <MESSAGE value="Changes to Vehicle Status" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes to Vehicle Status" />
+    <MESSAGE value="Update to save Order Date" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update to save Order Date" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

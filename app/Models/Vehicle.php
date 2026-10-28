@@ -217,7 +217,7 @@ class Vehicle extends Model
     public function niceName(): Attribute
     {
         return Attribute::make(
-            get: fn () => "{$this->manufacturer->name} {$this->model} {$this->derivative}",
+            get: fn () => "{$this->manufacturer?->name} {$this->model} {$this->derivative}",
         );
     }
 
