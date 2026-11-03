@@ -29,6 +29,7 @@ use Livewire\Component;
 class QuickEditOrder extends Component
 {
     public $order;
+    public $invoice__dealer_pay_date;
     public $vehicle;
     public $vehicleStatus;
     public $due_date;
@@ -82,6 +83,8 @@ class QuickEditOrder extends Component
         $this->delivery_date = $this->formatDate($order->delivery_date);
         $this->due_date = $this->formatDate($order->vehicle?->due_date);
         $this->vehicleStatus = $vehicle->vehicle_status;
+
+        $this->invoice__dealer_pay_date = $this->order?->invoice?->dealer_pay_date;
     }
 
     public function formatDate(mixed $value) : ?string
@@ -202,6 +205,13 @@ class QuickEditOrder extends Component
             }
         }
         OrderController::setProvisionalRegDate($this->vehicle);
+
+        if ($order->invoice) {
+            $order->invoice->update([
+               'dealer_pay_date' => $this->invoice__dealer_pay_date ?: null,
+            ]);
+        }
+
         notify()->success('Order was updated successfully', 'Order Updated');
         return $this->redirect(route($this->return));
     }
