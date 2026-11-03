@@ -25,9 +25,6 @@ class CostForm extends Form
     public ?float $invoice_funder_for = 0.0;
     public ?float $grant = 0.0;
 
-    // Tactical Offers Selection
-    public array $selectedOffers = [];
-
     // Display Toggles
     public bool $show_discount = false;
     public bool $show_offer = false;
@@ -85,7 +82,7 @@ class CostForm extends Form
         return [];
     }
 
-    public function invoiceData() :array
+    public function invoiceData(array $selectedOffers) :array
     {
         $listPrice = (float) $this->list_price;
         $metallic = (float) $this->metallic_paint;
@@ -93,7 +90,7 @@ class CostForm extends Form
         $totalDiscountPercent = (float) $this->dealer_discount + (float) $this->manufacturer_discount;
         $metallicDiscountPercent = (float) $this->manufacturer_discount;
 
-        $offersDeduction = TacticalOffer::whereIn('id', array_filter($this->selectedOffers))
+        $offersDeduction = TacticalOffer::whereIn('id', array_filter($selectedOffers, fn ($id) => $id !== 'none'))
             ->sum('value');
 
         $discountAmount = ($listPrice * ($totalDiscountPercent / 100)) + (float) $this->leden_discount;

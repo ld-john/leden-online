@@ -6,7 +6,7 @@
                 <input
                         class="form-check-input"
                         type="checkbox"
-                        wire:model.live="selectedOffers"
+                        wire:model.live="vehicleForm.selectedOffers"
                         value="{{ $offer->id }}"
                         id="offer-{{ $offer->id }}"
                         wire:key="checkbox-{{ $offer->id }}"
@@ -23,7 +23,7 @@
             <input class="form-check-input"
                    type="checkbox"
                    value="none"
-                   wire:model.live="cost.selectedOffers"
+                   wire:model.live="vehicleForm.selectedOffers"
                    id="offer-none"
                    wire:key="checkbox-none"
                    disabled

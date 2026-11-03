@@ -20,7 +20,7 @@
 <x-inputs.percentage
         label="Total Discount"
         name="total_discount"
-        :value="$cost->invoiceData()['total_discount_percent']"
+        :value="$cost->invoiceData($vehicleForm->selectedOffers ?? [])['total_discount_percent']"
         readonly
 />
 
@@ -28,7 +28,7 @@
 <x-inputs.percentage
     label="Metallic Paint Discount"
     name="metallic_paint_discount"
-    :value="$cost->invoiceData()['metallic_discount_percent']"
+    :value="$cost->invoiceData($vehicleForm->selectedOffers ?? [])['metallic_discount_percent']"
     readonly
 />
 
@@ -56,7 +56,7 @@
                 <input
                         class="form-check-input"
                         type="checkbox"
-                        wire:model.live="cost.selectedOffers"
+                        wire:model.live="vehicleForm.selectedOffers"
                         value="{{ $offer->id }}"
                         id="offer-{{ $offer->id }}"
                         wire:key="checkbox-{{ $offer->id }}"
@@ -72,7 +72,7 @@
             <input class="form-check-input"
                    type="checkbox"
                    value="none"
-                   wire:model.live="cost.selectedOffers"
+                   wire:model.live="vehicleForm.selectedOffers"
                    id="offer-none"
                    wire:key="checkbox-none"
             >
@@ -89,7 +89,7 @@
 <x-inputs.currency label="Grant Value" name="cost.grant" />
 
 {{-- Estimated Invoice Value --}}
-<x-inputs.currency-readonly label="Estimated Invoice Value" name="invoice_value" :value="$cost->invoiceData()['invoice_value']" />
+<x-inputs.currency-readonly label="Estimated Invoice Value" name="invoice_value" :value="$cost->invoiceData($vehicleForm->selectedOffers ?? [])['invoice_value']" />
 
 {{-- Show Discount Applied --}}
 <x-inputs.boolean label="Show Discount Applied" name="cost.show_discount" />
