@@ -90,9 +90,9 @@
             </th>
             <th class="p-1">
                 <select wire:model.live="searchHasOffer" name="hasOffer" id="hasOffer" class="form-select">
-                    <option value="any">Any</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="any">All</option>
+                    <option value="yes">Has Offer</option>
+                    <option value="no">No Offer</option>
                 </select>
             </th>
             <th class="p-1">
