@@ -1,7 +1,7 @@
-@if ($cost->availableOffers()->isNotEmpty())
+@if ($cost->availableOffers($vehicleForm->make, $vehicleForm->model)->isNotEmpty())
     <div class="mb-3 p-3 border rounded bg-light">
         <label class="form-label d-block fw-bold">Available Tactical Offers</label>
-        @foreach($cost->availableOffers() as $offer)
+        @foreach($cost->availableOffers($vehicleForm->make, $vehicleForm->model) as $offer)
             <div class="form-check border-bottom py-2">
                 <input
                         class="form-check-input"

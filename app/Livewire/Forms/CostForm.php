@@ -106,12 +106,8 @@ class CostForm extends Form
         ];
     }
 
-    public function availableOffers(): Collection
+    public function availableOffers(mixed $make, mixed $model): Collection
     {
-        // Access vehicle make and model from the parent Livewire component or vehicle form object
-        $make = $this->component->vehicle->make ?? $this->component->make ?? null;
-        $model = $this->component->vehicle->model ?? $this->component->model ?? null;
-
         if (! $make) {
             return collect();
         }
