@@ -102,6 +102,7 @@
                         Delivery Date
                     </th>
                 @endif
+                <th>Has Offers</th>
                 <th>Status</th>
                 <th>Customer</th>
                 <th>Broker Order Ref</th>
@@ -162,6 +163,13 @@
                                placeholder="Search Delivery Date">
                     </th>
                 @endif
+                <th class="p-1">
+                    <select wire:model.live="searchHasOffer" name="hasOffer" id="hasOffer" class="form-select">
+                        <option value="any">Any</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </th>
                 <th class="p-1">
                     <select wire:model.live="searchStatus" name="status" id="status" class="form-select">
                         <option value="">Select Status</option>
@@ -237,6 +245,12 @@
                             <td>{{ \Carbon\Carbon::parse($order->delivery_date)->format('d/m/y') }}</td>
                         @endif
                     @endif
+
+                    <td>
+                        @if($order->has_tactical_offers)
+                            <i class="fa-solid fa-percent"/>
+                        @endif
+                    </td>
 
                     <td>{{ $order->vehicle->vehicle_status->label() }}</td>
 
