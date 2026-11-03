@@ -23,6 +23,7 @@ class DeliveryScheduledTomorrowEmailNotification extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage())
+            ->cc(config('leden.email.handover'))
             ->line(
                 'A delivery is scheduled for tomorrow for a ' .
                     $this->delivery->order->vehicle->manufacturer->name .
@@ -32,7 +33,7 @@ class DeliveryScheduledTomorrowEmailNotification extends Notification
                     $this->delivery->order?->id .
                     '. This vehicle has the registration number: ' .
                     $this->delivery->order?->vehicle?->reg .
-                    ' Please ensure that arrangements are made and paperwork is sent to Leden at handovers@leden.co.uk',
+                    ' Please ensure that arrangements are made and paperwork is sent to Leden at ' . config('leden.email.handover') . '.',
             )
             ->action(
                 'View the Order Here',
