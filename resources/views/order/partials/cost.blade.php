@@ -48,10 +48,10 @@
 <x-inputs.currency label="Onward Delivery" name="cost.onward_delivery" />
 
 {{-- Available Offers --}}
-@if ($cost->availableOffers($vehicleForm->make, $vehicleForm->model)->isNotEmpty())
+@if ($cost->availableOffers($vehicleForm->make, $vehicleForm->model, $vehicleForm->selectedOffers ?? [])->isNotEmpty())
     <div class="mb-3 p-3 border rounded bg-light">
         <label class="form-label d-block fw-bold">Available Tactical Offers</label>
-        @foreach($cost->availableOffers($vehicleForm->make, $vehicleForm->model) as $offer)
+        @foreach($cost->availableOffers($vehicleForm->make, $vehicleForm->model, $vehicleForm->selectedOffers ?? []) as $offer)
             <div class="form-check border-bottom py-2">
                 <input
                         class="form-check-input"

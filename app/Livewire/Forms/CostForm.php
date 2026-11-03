@@ -103,14 +103,20 @@ class CostForm extends Form
         ];
     }
 
-    public function availableOffers(mixed $make, mixed $model): Collection
+    public function availableOffers(mixed $make, mixed $model, array $selectedOffers = []): Collection
     {
         if (! $make) {
             return collect();
         }
 
+        // Keep offers already selected visible even once they have expired
+        $selectedIds = array_filter($selectedOffers, fn ($id) => $id !== 'none');
+
         return TacticalOffer::query()
-            ->active()
+            ->where(function ($query) use ($selectedIds) {
+                $query->active()
+                    ->orWhereIn('id', $selectedIds);
+            })
             ->where('manufacturer_id', $make)
             ->where(function ($query) use ($model) {
                 $query->where('applicable_model', $model)
