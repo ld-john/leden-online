@@ -63,7 +63,7 @@ class ProcessDeliveryNotifications
             }
 
             // On-demand notification to internal team
-            Notification::route('mail', config('leden.email.delivery'))
+            Notification::route('mail', config('leden.delivery.address'))
                 ->notify(new DeliveryScheduledTomorrowEmailNotification($delivery));
         }
     }
@@ -80,7 +80,7 @@ class ProcessDeliveryNotifications
             }
 
             // On-demand notification to internal team
-            Notification::route('mail', config('leden.email.handover'))
+            Notification::route('mail', config('leden.handover.address'))
                 ->notify(new DeliveryScheduledYesterdayEmailNotification($delivery));
         }
     }
@@ -101,14 +101,14 @@ class ProcessDeliveryNotifications
             Notification::send($dealers, new DeliveryScheduledTomorrowNotification($delivery));
             Notification::route(
                 'mail',
-                $delivery->order?->dealer?->handover_email ?: config('leden.email.handover')
+                $delivery->order?->dealer?->handover_email ?: config('leden.handover.address')
             )
                 ->notify(new DeliveryScheduledTomorrowEmailNotification($delivery));
         } else {
             Notification::send($dealers, new DeliveryScheduledYesterdayNotification($delivery));
             Notification::Notification::route(
                 'mail',
-                $delivery->order?->dealer?->handover_email ?: config('leden.email.handover')
+                $delivery->order?->dealer?->handover_email ?: config('leden.handover.address')
             )
                 ->notify(new DeliveryScheduledYesterdayEmailNotification($delivery));
         }

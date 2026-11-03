@@ -42,7 +42,7 @@ class DeliveryEtaRequestNotification extends Notification
         $vehicleRef = $this->vehicle->reg ?? $this->vehicle->chassis ?? 'the scheduled vehicle';
 
         $mailMessage = (new MailMessage)
-            ->cc(config('leden.email.delivery'))
+            ->cc(config('leden.delivery.address'))
             ->subject("Delivery of {$vehicleRef}")
             ->greeting("Hello,")
             ->line("Thank you for taking the delivery job for this vehicle today. In order to set our customer's expectations could you please give us an indication of the estimated delivery time today. If you could also ensure your driver calls the customer an hour in advance that would be appreciated")
