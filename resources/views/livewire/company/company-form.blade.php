@@ -13,6 +13,8 @@
             <x-inputs.text label="Country" name="form.company_country" />
             <x-inputs.text label="Postcode" name="form.company_postcode" required />
             <x-inputs.text label="Company Email" name="form.company_email" required />
+            <x-inputs.text label="Handover Email" name="form.handover_email" />
+            <x-inputs.text label="Delivery Email" name="form.delivery_email" />
             <x-inputs.text label="Company Phone" name="form.company_phone"  />
             <x-inputs.boolean label="Fleet Procure Member" name="form.fleet_procure_member" />
         </div>

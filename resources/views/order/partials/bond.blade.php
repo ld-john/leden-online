@@ -1,12 +1,12 @@
-@if ($cost->availableOffers()->isNotEmpty())
+@if ($cost->availableOffers($vehicleForm->make, $vehicleForm->model, $vehicleForm->selectedOffers ?? [])->isNotEmpty())
     <div class="mb-3 p-3 border rounded bg-light">
         <label class="form-label d-block fw-bold">Available Tactical Offers</label>
-        @foreach($cost->availableOffers() as $offer)
+        @foreach($cost->availableOffers($vehicleForm->make, $vehicleForm->model, $vehicleForm->selectedOffers ?? []) as $offer)
             <div class="form-check border-bottom py-2">
                 <input
                         class="form-check-input"
                         type="checkbox"
-                        wire:model.live="selectedOffers"
+                        wire:model.live="vehicleForm.selectedOffers"
                         value="{{ $offer->id }}"
                         id="offer-{{ $offer->id }}"
                         wire:key="checkbox-{{ $offer->id }}"
@@ -23,7 +23,7 @@
             <input class="form-check-input"
                    type="checkbox"
                    value="none"
-                   wire:model.live="cost.selectedOffers"
+                   wire:model.live="vehicleForm.selectedOffers"
                    id="offer-none"
                    wire:key="checkbox-none"
                    disabled

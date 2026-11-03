@@ -35,6 +35,12 @@ class CompanyForm extends Form
     #[Validate(['nullable', 'email', 'max:254'])]
     public ?string $company_email = '';
 
+    #[Validate(['nullable', 'email', 'max:254'])]
+    public ?string $handover_email = '';
+
+    #[Validate(['nullable', 'email', 'max:254'])]
+    public ?string $delivery_email = '';
+
     #[Validate(['nullable'])]
     public ?string $company_phone = '';
 
@@ -55,6 +61,8 @@ class CompanyForm extends Form
         $this->company_country = $company->company_country;
         $this->company_postcode = $company->company_postcode;
         $this->company_email = $company->company_email;
+        $this->handover_email = $company->handover_email;
+        $this->delivery_email = $company->delivery_email;
         $this->company_phone = $company->company_phone;
         $this->company_type = $company->company_type;
         $this->fleet_procure_member = $company->fleet_procure_member;
@@ -78,6 +86,8 @@ class CompanyForm extends Form
             'company_country',
             'company_postcode',
             'company_email',
+            'handover_email',
+            'delivery_email',
             'company_phone',
             'fleet_procure_member'
         ]));
